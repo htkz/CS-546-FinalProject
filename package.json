@@ -4,6 +4,7 @@
   "description": "The final project for CS-546",
   "main": "app.js",
   "scripts": {
+    "start": "node ./back-end/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

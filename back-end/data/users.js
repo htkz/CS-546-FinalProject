@@ -1,4 +1,4 @@
-const mongoCollections = require("../config/mongoCollections");
+const mongoCollections = require("../config/mongoCollection");
 const users = mongoCollections.users;
 
 let exportedMethods = {
