@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const userData = data.users;
+var path = require('path');
+
 
 router.get("/:id", async(req, res) => {
     try {
@@ -15,6 +17,7 @@ router.get("/:id", async(req, res) => {
 router.get("/", async(req, res) => {
     try {
         const userList = await userData.getAllUsers();
+        res.sendFile(path.join(__dirname + '/signin.html'));
         res.json(userList);
     } catch (e) {
         // Something went wrong with the server!
