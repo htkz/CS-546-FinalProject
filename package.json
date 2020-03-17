@@ -1,28 +1,28 @@
 {
-  "name": "ticket",
-  "version": "1.0.0",
-  "description": "The final project for CS-546",
-  "main": "app.js",
-  "scripts": {
-    "start": "node ./back-end/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/htkz/CS-546-FinalProject.git"
-  },
-  "keywords": [
-    "Ticket"
-  ],
-  "author": "Mo Sun, Yuqi Wang, Zechen Feng, Xunzhi Li",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/htkz/CS-546-FinalProject/issues"
-  },
-  "homepage": "https://github.com/htkz/CS-546-FinalProject#readme",
-  "dependencies": {
-    "express": "^4.17.1",
-    "mongodb": "^3.5.4",
-    "nodemon": "^2.0.2"
-  }
+    "name": "ticket",
+    "version": "1.0.0",
+    "description": "The final project for CS-546",
+    "main": "app.js",
+    "scripts": {
+        "start": "node ./back-end/app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/htkz/CS-546-FinalProject.git"
+    },
+    "keywords": [
+        "Ticket"
+    ],
+    "author": "Mo Sun, Yuqi Wang, Zechen Feng, Xunzhi Li",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/htkz/CS-546-FinalProject/issues"
+    },
+    "homepage": "https://github.com/htkz/CS-546-FinalProject#readme",
+    "dependencies": {
+        "express": "^4.17.1",
+        "mongodb": "^3.5.4",
+        "nodemon": "^2.0.2"
+    }
 }
