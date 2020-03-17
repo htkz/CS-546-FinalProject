@@ -188,7 +188,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 ```json
 {
-    "_id": ObjectId("5vjlel8893020f23dad348d1"),
+    "_id": "5vjlel8893020f23dad348d1",
     "item_name": "guns"
 }
 ```
