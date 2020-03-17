@@ -36,7 +36,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 ```json
 {
-    "_id": ObjectId("5db0ce05a5778f23dad348d1"),
+    "_id": "5db0ce05a5778f23dad348d1",
     "gender": "male",
     "dob": "04/21/1995",
     "firstName": "Lun-Wei",
@@ -71,8 +71,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
                 "location": "Sheikh Zayed Road",
                 "cost": 41,
                 "avgTimeSpent": 2,
-                "type": event
-                //type is either restaurant or event
+                "type": "event"
             }
         ]
     }
@@ -104,7 +103,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 ```json
 {
-    "_id": ObjectId("5d93f38389a490113aa11c11"),
+    "_id": "5d93f38389a490113aa11c11",
     "d_name": "New Jersey",
     "country": "USA",
     "weather": [
@@ -173,7 +172,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 ```json
 {
-    "_id": ObjectId("5vj093848820f23dad348d1"),
+    "_id": "5vj093848820f23dad348d1",
     "description": "Drinking on the street is not allowed."
 }
 ```
@@ -205,7 +204,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 ```json
 {
-    "_id": ObjectId("5vj0ce05a5784820f23dad348d1"),
+    "_id": "5vj0ce05a5784820f23dad348d1",
     "type": "hiking",
     "items": ["clothes", "backpack", "snacks", "water bottle"]
 }
