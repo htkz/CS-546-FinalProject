@@ -50,7 +50,7 @@ let exportedMethods = {
             votedComments: [],
         };
 
-        const insertInfo = await userCollection.insertOne(newBand);
+        const insertInfo = await userCollection.insertOne(newUser);
         if (insertInfo.insertedCount === 0) {
             throw 'Insert failed!';
         }

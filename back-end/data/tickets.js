@@ -3,19 +3,19 @@ const tickets = mongoCollections.tickets;
 const ObjectId = require('mongodb').ObjectId;
 
 let exportedMethods = {
-    async getAllUsers() {
+    async getAllTictets() {
         const ticketCollection = await tickets();
 
         const allTickets = await ticketCollection.find({}).toArray();
 
         if (!allTickets) {
-            throw 'No users in system!';
+            throw 'No tickets in system!';
         }
 
         return allTickets;
     },
 
-    async getUserById(id) {
+    async getTicketById(id) {
         const ticketCollection = await tickets();
 
         id = await this.checkId(id);
@@ -28,11 +28,29 @@ let exportedMethods = {
         return ticket;
     },
 
-    async addUser(userInfo) {
-        return;
+    async addTicket(userId, placeId, ticketNo, orderedDate, effectDate, price) {
+        const ticketCollection = await tickets();
+
+        let newTicket = {
+            userId: userId,
+            placeId: placeId,
+            ticketNo: ticketNo,
+            orderedDate: orderedDate,
+            effectDate: effectDate,
+            price: price,
+        };
+
+        const insertInfo = await ticketCollection.insertOne(newTicket);
+        if (insertInfo.insertedCount === 0) {
+            throw 'Insert failed!';
+        }
+
+        const newID = insertInfo.insertedId;
+
+        return await this.getTicketById(newID);
     },
 
-    async removeUser(id) {
+    async removeTicket(id) {
         const ticketCollection = await tickets();
 
         id = await this.checkId(id);
@@ -45,10 +63,24 @@ let exportedMethods = {
         return true;
     },
 
-    async updateUser(id, userInfo) {
+    async updateTicket(id, effectDate) {
+        const ticketCollection = await tickets();
+
         id = await this.checkId(id);
 
-        return;
+        let updateTicket = {
+            effectDate: effectDate,
+        };
+
+        const updateInfo = await ticketCollection.updateOne(
+            { _id: id },
+            { $set: updateTicket }
+        );
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw 'could not update band successfully';
+        }
+
+        return await this.getBandById(id);
     },
 
     async checkId(id) {
