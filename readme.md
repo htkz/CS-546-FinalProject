@@ -130,11 +130,11 @@ The idea of the application is to allow users to book tickets for tourism. The v
 }
 ```
 
-| Name          | Type   | Description                            |
-| :------------ | :----- | :------------------------------------- |
-| \_id          | string | The place id.                          |
-| content       | string | The descriptive content of this place. |
-| name          | string | The name of this place.                |
-| address       | string | The address of this place.             |
-| zip_code      | string | The zip code of this place.            |
-| user_comments | array  | Comments user comment on this place.   |
+| Name              | Type   | Description                            |
+| :---------------- | :----- | :------------------------------------- |
+| \_id              | string | The place id.                          |
+| description       | string | The descriptive content of this place. |
+| placeName         | string | The name of this place.                |
+| placeAddress      | string | The address of this place.             |
+| placeZipCode      | string | The zip code of this place.            |
+| placeUserComments | array  | Comments user comment on this place.   |
