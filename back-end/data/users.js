@@ -28,17 +28,36 @@ let exportedMethods = {
         return user;
     },
 
-    async addUser(userInfo) {
-        return users().then(userCollection => {
-            return userCollection
-                .insertOne(userInfo)
-                .then(newInsertInformation => {
-                    return newInsertInformation.insertedId;
-                })
-                .then(newId => {
-                    return this.getUserById(newId);
-                });
-        });
+    async addUser(
+        userName,
+        email,
+        phoneNumber,
+        address,
+        zipCode,
+        hashedPassword
+    ) {
+        const userCollection = await users();
+
+        let newUser = {
+            userName: userName,
+            email: email,
+            phoneNumber: phoneNumber,
+            address: address,
+            zipCode: zipCode,
+            hashedPassword: hashedPassword,
+            userTicketInfo: [],
+            userComments: [],
+            votedComments: [],
+        };
+
+        const insertInfo = await userCollection.insertOne(newBand);
+        if (insertInfo.insertedCount === 0) {
+            throw 'Insert failed!';
+        }
+
+        const newID = insertInfo.insertedId;
+
+        return await this.getUserById(newID);
     },
 
     async removeUser(id) {
@@ -54,16 +73,37 @@ let exportedMethods = {
         return true;
     },
 
-    async updateUser(id, userInfo) {
+    async updateUser(
+        id,
+        userName,
+        email,
+        phoneNumber,
+        address,
+        zipCode,
+        hashedPassword
+    ) {
+        const userCollection = await users();
+
         id = await this.checkId(id);
 
-        return this.getUserById(id).then(currentUser => {
-            return userCollection
-                .updateOne({ _id: id }, updatedUser)
-                .then(() => {
-                    return this.getUserById(id);
-                });
-        });
+        const updateUser = {
+            userName: userName,
+            email: email,
+            phoneNumber: phoneNumber,
+            address: address,
+            zipCode: zipCode,
+            hashedPassword: hashedPassword,
+        };
+
+        const updateInfo = await userCollection.updateOne(
+            { _id: id },
+            { $set: updateUser }
+        );
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw 'could not update band successfully';
+        }
+
+        return await this.getUserById(id);
     },
 
     async checkId(id) {
