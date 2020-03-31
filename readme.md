@@ -73,8 +73,8 @@ The idea of the application is to allow users to book tickets for tourism. The v
 ```json
 {
     "_id": "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710",
-    "user_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "place_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "userId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "placeId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "ticketNo": "000058",
     "orderedDate": "2020-03-04 15:02:00",
     "effectDate": "2020-05-18",
@@ -85,8 +85,8 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | Name        | Type   | Description                                                    |
 | :---------- | :----- | :------------------------------------------------------------- |
 | \_id        | string | A globally unique identifier to represent the ticket.          |
-| user_id     | string | A globally unique identifier to represent who owns the ticket. |
-| place_id    | string | The place the ticket takes effect on.                          |
+| userId      | string | A globally unique identifier to represent who owns the ticket. |
+| placeId     | string | The place the ticket takes effect on.                          |
 | ticketNo    | number | A number printed on the ticket.                                |
 | orderedDate | date   | The date the user bought the ticket.                           |
 | effectDate  | date   | The date ticket takes effect.                                  |
