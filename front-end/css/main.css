@@ -1,0 +1,37 @@
+.tickets {
+    padding: 20px;
+}
+
+.card {
+    width: 30%;
+    margin: 10px;
+}
+
+.card > img {
+    height: 200px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.card-bottom .remain {
+    color: #6c757d;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.buttons button {
+    margin: 0 4px;
+}
