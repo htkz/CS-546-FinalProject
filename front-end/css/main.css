@@ -30,3 +30,13 @@ header .username {
           padding-bottom: 20px; }
           .tickets .container .cards .card .card-bottom .buttons button {
             margin: 0 4px; }
+
+footer {
+  display: flex;
+  justify-content: center;
+  padding: 10px; }
+  footer .content {
+    color: #ccc; }
+    footer .content p {
+      padding: 5px 0;
+      margin: 0; }
