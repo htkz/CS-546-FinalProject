@@ -1,22 +1,27 @@
 .tickets {
   padding: 20px; }
-  .tickets .container {
+  .tickets .container .topBar {
+    display: flex; }
+    .tickets .container .topBar .filter {
+      padding: 10px;
+      justify-content: center; }
+  .tickets .container .cards {
     display: flex;
     flex-wrap: wrap; }
-    .tickets .container .card {
+    .tickets .container .cards .card {
       width: 30%;
-      margin: 10px; }
-      .tickets .container .card img {
+      margin: 10px 4px; }
+      .tickets .container .cards .card img {
         height: 200px; }
-      .tickets .container .card .card-bottom {
+      .tickets .container .cards .card .card-bottom {
         display: flex;
         justify-content: space-between;
         padding: 0 20px; }
-        .tickets .container .card .card-bottom .remain {
+        .tickets .container .cards .card .card-bottom .remain {
           color: #6c757d; }
-        .tickets .container .card .card-bottom .buttons {
+        .tickets .container .cards .card .card-bottom .buttons {
           display: flex;
           justify-content: center;
           padding-bottom: 20px; }
-          .tickets .container .card .card-bottom .buttons button {
+          .tickets .container .cards .card .card-bottom .buttons button {
             margin: 0 4px; }
