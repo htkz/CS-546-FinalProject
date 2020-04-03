@@ -1,37 +1,22 @@
 .tickets {
-    padding: 20px;
-}
-
-.card {
-    width: 30%;
-    margin: 10px;
-}
-
-.card > img {
-    height: 200px;
-}
-
-.container {
+  padding: 20px; }
+  .tickets .container {
     display: flex;
-    flex-wrap: wrap;
-}
-
-.card-bottom {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
-}
-
-.card-bottom .remain {
-    color: #6c757d;
-}
-
-.buttons {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 20px;
-}
-
-.buttons button {
-    margin: 0 4px;
-}
+    flex-wrap: wrap; }
+    .tickets .container .card {
+      width: 30%;
+      margin: 10px; }
+      .tickets .container .card img {
+        height: 200px; }
+      .tickets .container .card .card-bottom {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px; }
+        .tickets .container .card .card-bottom .remain {
+          color: #6c757d; }
+        .tickets .container .card .card-bottom .buttons {
+          display: flex;
+          justify-content: center;
+          padding-bottom: 20px; }
+          .tickets .container .card .card-bottom .buttons button {
+            margin: 0 4px; }
