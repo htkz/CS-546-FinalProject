@@ -5,7 +5,10 @@
     "main": "app.js",
     "scripts": {
         "start": "node ./back-end/app.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "scss": "node-sass -o front-end/css/ front-end/css/",
+        "watch:scss": "onchange 'css/*.scss' -- npm run scss",
+        "watch:all": "parallelshell 'npm run watch:scss' 'node ./back-end/app.js' "
     },
     "repository": {
         "type": "git",
@@ -25,5 +28,10 @@
         "mongodb": "^3.5.4",
         "nodemon": "^2.0.2",
         "react": "^16.13.0"
+    },
+    "devDependencies": {
+        "node-sass": "^4.13.1",
+        "onchange": "^6.1.0",
+        "parallelshell": "^3.0.2"
     }
 }
