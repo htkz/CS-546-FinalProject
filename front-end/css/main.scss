@@ -1,6 +1,13 @@
+header {
+    .username {
+        border: thick;
+        color: white;
+        margin-right: 10px;
+    }
+}
+
 .tickets {
     padding: 20px;
-    
     .container {
         .topBar {
             display: flex;
