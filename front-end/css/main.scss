@@ -1,3 +1,10 @@
+ul,
+ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 header {
     .username {
         border: thick;
@@ -46,6 +53,37 @@ header {
     }
 }
 
+.modal {
+    .placeDetail {
+        img {
+            width: 100%;
+        }
+    }
+    .comment {
+        .commentContainer {
+            padding: 5px 0;
+            border-top: 1px solid #ccc;
+            max-height: 250px;
+            overflow: scroll;
+            li {
+                border-bottom: 1px solid #ccc;
+                padding: 8px 0;
+                .username {
+                    font-weight: bold;
+                }
+            }
+        }
+        .inputContainer {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            button {
+                margin-left: 4px;
+            }
+        }
+    }
+}
+
 footer {
     display: flex;
     justify-content: center;
@@ -57,5 +95,4 @@ footer {
             margin: 0;
         }
     }
-    
 }
