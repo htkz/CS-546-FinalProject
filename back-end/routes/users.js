@@ -26,7 +26,34 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     // Not implemented
-    res.status(501).send();
+    let userData = req.body;
+    let error = [];
+
+    if (!body.email) {
+        error.push('No email address provided');
+    }
+
+    if (!body.userName) {
+        error.push('No user name provided');
+    }
+
+    if (!body.hashedPassword) {
+        error.push('No password provided');
+    }
+
+    if (error.length > 0) {
+        console.log(error);
+    }
+
+    try {
+        const newUser = await userData.addUser(
+            userData.email,
+            userData.userName,
+            userData.hashedPassword
+        );
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
 });
 
 module.exports = router;
