@@ -6,7 +6,7 @@ const placeData = data.places;
 router.get('/:id', async (req, res) => {
     try {
         const place = await placeData.getPlaceById(req.params.id);
-        res.json(user);
+        res.json(place);
     } catch (e) {
         res.status(404).json({ message: 'Not found!' });
     }
@@ -141,7 +141,7 @@ router.patch('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-    let id = eq.params.id;
+    let id = req.params.id;
     if (!id) {
         throw 'You must specify an ID to delete';
     }
@@ -155,6 +155,9 @@ router.delete('/:id', async (req, res) => {
     try {
         const deletePlace = await placeData.removePlace(id);
         res.json(deletePlace);
+    } catch (error) {
+        res.status(500).json({ error: error });
+        console.log(error);
     }
 });
 

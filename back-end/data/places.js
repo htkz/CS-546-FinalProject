@@ -28,7 +28,7 @@ let exportedMethods = {
         return place;
     },
 
-    async addPlace(description, placeName, placeAddress, placeZipCode) {
+    async addPlace(placeName, description, placeAddress, placeZipCode) {
         const placeCollection = await places();
 
         let newPlace = {
@@ -63,7 +63,7 @@ let exportedMethods = {
         return true;
     },
 
-    async updatePlace(id, updatePlace) {
+    async updatedPlace(id, updatePlace) {
         const placeCollection = await places();
 
         id = await this.checkId(id);
