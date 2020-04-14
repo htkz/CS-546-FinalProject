@@ -28,7 +28,13 @@ let exportedMethods = {
         return place;
     },
 
-    async addPlace(placeName, description, placeAddress, placeZipCode) {
+    async addPlace(
+        placeName,
+        description,
+        placeAddress,
+        placeZipCode,
+        placePrice
+    ) {
         const placeCollection = await places();
 
         let newPlace = {
@@ -36,6 +42,7 @@ let exportedMethods = {
             description: description,
             placeAddress: placeAddress,
             placeZipCode: placeZipCode,
+            placePrice: placePrice,
             placeUserComments: [],
         };
 
@@ -84,6 +91,10 @@ let exportedMethods = {
 
         if (updatePlace.placeZipCode) {
             updatePlaceData.placeZipCode = updatePlace.placeZipCode;
+        }
+
+        if (updatePlace.placePrice) {
+            updatePlaceData.placePrice = updatePlace.placePrice;
         }
 
         const updateInfo = await placeCollection.updateOne(

@@ -53,12 +53,17 @@ router.post('/', async (req, res) => {
         return;
     }
 
+    if (!placeInfo.placePrice) {
+        error.push('No place price provided');
+    }
+
     try {
         const newPlace = await placeData.addPlace(
             placeInfo.placeName,
             placeInfo.description,
             placeInfo.placeAddress,
-            placeInfo.placeZipCode
+            placeInfo.placeZipCode,
+            placeInfo.placePrice
         );
         res.status(200).json(newPlace);
     } catch (error) {
@@ -77,11 +82,12 @@ router.patch('/:id', async (req, res) => {
         !requestBody.newPlaceName &&
         !requestBody.newDescription &&
         !requestBody.newPlaceAddress &&
-        !requestBody.newPlaceZipCode
+        !requestBody.newPlaceZipCode &&
+        !requestBody.newPlacePrice
     ) {
         res.status(400).json({
             error:
-                'You must provide place name, description, place address or place zip code',
+                'You must provide place name, description, place address, place zip code or place price',
         });
         return;
     } else if (requestBody.newPlaceZipCode) {
@@ -122,6 +128,13 @@ router.patch('/:id', async (req, res) => {
             requestBody.newPlaceZipCode !== oldPlace.placeZipCode
         ) {
             updatedObject.placeZipCode = requestBody.newPlaceZipCode;
+        }
+
+        if (
+            requestBody.newPlacePrice &&
+            requestBody.newPlacePrice !== oldPlace.placePrice
+        ) {
+            updatedObject.placePrice = requestBody.newPlacePrice;
         }
     } catch (error) {
         res.status(404).json({ error: 'Place not found' });
