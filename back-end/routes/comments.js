@@ -37,6 +37,7 @@ router.post('/', async (req, res) => {
     try {
         const newComment = await commentData.addComment(
             commentInfo.userId,
+            commentInfo.placeId,
             commentInfo.comment,
             commentInfo.votedCount
         );

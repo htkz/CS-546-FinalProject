@@ -104,6 +104,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 {
     "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "userId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "placeId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "comment": "You should go with the pixel!",
     "votedCount": 10
 }
@@ -113,6 +114,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | :--------- | :----- | :----------------------------------------------- |
 | \_id       | string | The comment ID.                                  |
 | userId     | string | The userId of the person who posted the comment. |
+| placeId    | string | The place the ticket takes effect on.            |
 | comment    | string | The comment text.                                |
 | votedCount | number | The upvoted count of the comment.                |
 

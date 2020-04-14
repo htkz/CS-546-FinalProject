@@ -108,6 +108,42 @@ let exportedMethods = {
         return await this.getPlaceById(id);
     },
 
+    async addCommentToPlace(placeId, commentId) {
+        const placeCollection = await places();
+
+        placeId = await this.checkId(placeId);
+        commentId = await this.checkId(commentId);
+
+        const updateInfo = await placeCollection.updateOne(
+            { _id: placeId },
+            { $addToSet: { placeUserComments: commentId.toString() } }
+        );
+
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw 'Update failed';
+        }
+
+        return await this.getPlaceById(placeId);
+    },
+
+    async removeCommentFromPlace(placeId, commentId) {
+        const placeCollection = await places();
+
+        placeId = await this.checkId(placeId);
+        commentId = await this.checkId(commentId);
+
+        const updateInfo = await placeCollection.updateOne(
+            { _id: placeId },
+            { $pull: { placeUserComments: commentId.toString() } }
+        );
+
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw 'Update failed';
+        }
+
+        return await this.getPlaceById(placeId);
+    },
+
     async checkId(id) {
         if (typeof id == 'string') {
             return ObjectId(id);
