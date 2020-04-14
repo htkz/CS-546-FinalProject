@@ -25,20 +25,29 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    // Not implemented
-    let userData = req.body;
+    let userInfo = req.body;
+    console.log(userInfo);
     let error = [];
 
-    if (!body.email) {
-        error.push('No email address provided');
+    if (!userInfo) {
+        res.status(400).json({
+            error: 'You must provide data to create a user',
+        });
     }
 
-    if (!body.userName) {
+    if (!userInfo.userName) {
         error.push('No user name provided');
+        return;
     }
 
-    if (!body.hashedPassword) {
+    if (!userInfo.email) {
+        error.push('No email address provided');
+        return;
+    }
+
+    if (!userInfo.hashedPassword) {
         error.push('No password provided');
+        return;
     }
 
     if (error.length > 0) {
@@ -47,26 +56,30 @@ router.post('/', async (req, res) => {
 
     try {
         const newUser = await userData.addUser(
-            userData.email,
-            userData.userName,
-            userData.hashedPassword
+            userInfo.userName,
+            userInfo.email,
+            userInfo.hashedPassword
         );
+        res.status(200).json(newUser);
     } catch (e) {
         res.status(500).json({ error: e });
+        console.log(e);
     }
 });
 
 router.patch('/:id', async (req, res) => {
     const requestBody = req.body;
+    console.log(requestBody);
     let updatedObject = {};
 
     // check data structure
     if (
         !requestBody.newUserName &&
         !requestBody.newEmail &&
-        !requestBody.newPhoneNumer &&
+        !requestBody.newPhoneNumber &&
         !requestBody.newAddress &&
-        !requestBody.newZipCode
+        !requestBody.newZipCode &&
+        !requestBody.newHashedPassword
     ) {
         res.status(400).json({
             error:
@@ -75,8 +88,8 @@ router.patch('/:id', async (req, res) => {
         return;
     }
     // check newPhoneNumber field
-    else if (requestBody.newPhoneNumer) {
-        if ((typeof requestBody.newPhoneNumer == 'number') == false) {
+    else if (requestBody.newPhoneNumber) {
+        if ((typeof requestBody.newPhoneNumber == 'number') == false) {
             res.status(400).json({
                 error: 'The type of phoneNumber must be number',
             });
@@ -85,7 +98,7 @@ router.patch('/:id', async (req, res) => {
     }
     // check newZipCode field
     else if (requestBody.newZipCode) {
-        if ((typeof requestBody.newSongs == 'number') == false) {
+        if ((typeof requestBody.newZipCode == 'string') == false) {
             res.status(400).json({
                 error: 'The type of zipCode must be string',
             });
@@ -108,10 +121,10 @@ router.patch('/:id', async (req, res) => {
         }
 
         if (
-            requestBody.newPhoneNumer &&
-            requestBody.newPhoneNumer !== oldUser.phoneNumber
+            requestBody.newPhoneNumber &&
+            requestBody.newPhoneNumber !== oldUser.phoneNumber
         ) {
-            updatedObject.phoneNumber = requestBody.newPhoneNumer;
+            updatedObject.phoneNumber = requestBody.newPhoneNumber;
         }
 
         if (
@@ -127,6 +140,13 @@ router.patch('/:id', async (req, res) => {
         ) {
             updatedObject.zipCode = requestBody.newZipCode;
         }
+
+        if (
+            requestBody.newHashedPassword &&
+            requestBody.newHashedPassword !== oldUser.hashedPassword
+        ) {
+            updatedObject.hashedPassword = requestBody.newHashedPassword;
+        }
     } catch (error) {
         res.status(404).json({ error: 'User not found' });
         return;
@@ -140,12 +160,13 @@ router.patch('/:id', async (req, res) => {
         res.json(updatedUser);
     } catch (error) {
         res.status(500).json({ error: error });
+        console.log(error);
     }
 });
 
 router.put('/:id', async (req, res) => {
     let userInfo = req.body;
-
+    console.log(userInfo);
     /*
      phoneNumber
      address
@@ -182,7 +203,7 @@ router.put('/:id', async (req, res) => {
     }
 
     // check zip code fields
-    if (!userInfo.zipCode || userData.zipCode.length === 0) {
+    if (!userInfo.zipCode || userInfo.zipCode.length === 0) {
         res.status(400).json({ error: 'You must provide a zip code' });
         return;
     }
@@ -209,6 +230,7 @@ router.put('/:id', async (req, res) => {
         res.json(updateUser);
     } catch (error) {
         res.status(500).json({ error: error });
+        console.log(error);
     }
 });
 

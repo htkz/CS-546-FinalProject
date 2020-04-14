@@ -93,6 +93,10 @@ let exportedMethods = {
             updateUserData.zipCode = updateUser.zipCode;
         }
 
+        if (updateUser.hashedPassword) {
+            updateUserData.hashedPassword = updateUser.hashedPassword;
+        }
+
         const updateInfo = await userCollection.updateOne(
             { _id: id },
             { $set: updateUserData }
@@ -105,7 +109,7 @@ let exportedMethods = {
     },
 
     async completeUserInfo(id, phoneNumber, address, zipCode) {
-        const userCollection = await user();
+        const userCollection = await users();
 
         id = await this.checkId(id);
 
