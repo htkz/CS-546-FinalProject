@@ -37,9 +37,9 @@ The idea of the application is to allow users to book tickets for tourism. The v
 ```json
 {
     "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "name": "JJ Doeny",
+    "userName": "JJ Doeny",
     "email": "JDoe@gmail.com",
-    "phoneNumber": "5513008708",
+    "phoneNumber": 5513008708,
     "address": "1 Castle Point Terrace, Hoboken",
     "zipCode": "07030",
     "hashedPassword": "$2a$08$XdvNkfdNIL8F8xsuIUeSbNOFgK0M0iV5HOskfVn7.PWncShU.O",
@@ -61,6 +61,10 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | Name           | Type   | Description                                               |
 | :------------- | :----- | :-------------------------------------------------------- |
 | \_id           | string | A globally unique identifier to represent the user.       |
+| userName       | string | User name                                                 |
+| phoneNumber    | number | User phone number                                         |
+| address        | string | User address                                              |
+| zipCpde        | string | User address zip code                                     |
 | userComments   | array  | An array that stores the comment_id that users created.   |
 | votedComments  | array  | An array that stores the comment_id which users voted on. |
 | hashPassword   | string | The password when users log in.                           |
@@ -119,11 +123,12 @@ The idea of the application is to allow users to book tickets for tourism. The v
 ```json
 {
     "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "content": "This place is a famous school in Hoboken NJ.",
-    "name": "Stevens Institute of Technology",
-    "address": "1 Castle Point Terrace, Hoboken",
-    "zipCode": "07030",
-    "userComments": [
+    "description": "This place is a famous school in Hoboken NJ.",
+    "placeName": "Stevens Institute of Technology",
+    "placeAddress": "1 Castle Point Terrace, Hoboken",
+    "placeZipCode": "07030",
+    "placePrice": "100",
+    "placeUserComments": [
         "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
         "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710"
     ]
@@ -137,4 +142,5 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | placeName         | string | The name of this place.                |
 | placeAddress      | string | The address of this place.             |
 | placeZipCode      | string | The zip code of this place.            |
+| placePrice        | string | The price for the place                |
 | placeUserComments | array  | Comments user comment on this place.   |
