@@ -32,6 +32,6 @@
     "devDependencies": {
         "node-sass": "^4.13.1",
         "onchange": "^6.1.0",
-        "parallelshell": "^3.0.2"
+        "parallelshell": "^3.0.1"
     }
 }
