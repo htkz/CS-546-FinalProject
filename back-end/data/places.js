@@ -32,8 +32,8 @@ let exportedMethods = {
         const placeCollection = await places();
 
         let newPlace = {
-            description: description,
             placeName: placeName,
+            description: description,
             placeAddress: placeAddress,
             placeZipCode: placeZipCode,
             placeUserComments: [],
