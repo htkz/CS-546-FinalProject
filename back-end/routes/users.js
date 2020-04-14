@@ -9,7 +9,7 @@ router.get('/:id', async (req, res) => {
         const user = await userData.getUserById(req.params.id);
         res.json(user);
     } catch (e) {
-        res.status(404).json({ message: 'not found!' });
+        res.status(404).json({ message: 'Not found!' });
     }
 });
 
@@ -27,6 +27,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     let userInfo = req.body;
     console.log(userInfo);
+
     let error = [];
 
     if (!userInfo) {
@@ -70,6 +71,7 @@ router.post('/', async (req, res) => {
 router.patch('/:id', async (req, res) => {
     const requestBody = req.body;
     console.log(requestBody);
+
     let updatedObject = {};
 
     // check data structure
