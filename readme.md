@@ -64,7 +64,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | userName       | string | User name                                                 |
 | phoneNumber    | number | User phone number                                         |
 | address        | string | User address                                              |
-| zipCpde        | string | User address zip code                                     |
+| zipCode        | string | User address zip code                                     |
 | userComments   | array  | An array that stores the comment_id that users created.   |
 | votedComments  | array  | An array that stores the comment_id which users voted on. |
 | hashPassword   | string | The password when users log in.                           |

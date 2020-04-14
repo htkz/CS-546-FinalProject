@@ -77,10 +77,10 @@ let exportedMethods = {
             { $set: updateTicket }
         );
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'could not update band successfully';
+            throw 'could not update ticket successfully';
         }
 
-        return await this.getBandById(id);
+        return await this.getTicketById(id);
     },
 
     async checkId(id) {

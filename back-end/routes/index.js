@@ -6,7 +6,7 @@ const express = require('express');
 
 const constructorMethod = (app) => {
     app.use('/users', userRoutes);
-    // app.use('/tickts', ticketRoutes);
+    app.use('/tickets', ticketRoutes);
     // app.use('/commemts', commentRoutes);
     app.use('/places', placeRoutes);
 
