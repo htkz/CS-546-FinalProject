@@ -28,22 +28,15 @@ let exportedMethods = {
         return user;
     },
 
-    async addUser(
-        userName,
-        email,
-        phoneNumber,
-        address,
-        zipCode,
-        hashedPassword
-    ) {
+    async addUser(userName, email, hashedPassword) {
         const userCollection = await users();
 
         let newUser = {
             userName: userName,
             email: email,
-            phoneNumber: phoneNumber,
-            address: address,
-            zipCode: zipCode,
+            phoneNumber: '',
+            address: '',
+            zipCode: '',
             hashedPassword: hashedPassword,
             userTicketInfo: [],
             userComments: [],
@@ -100,7 +93,30 @@ let exportedMethods = {
             { $set: updateUser }
         );
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'could not update band successfully';
+            throw 'could not update user successfully';
+        }
+
+        return await this.getUserById(id);
+    },
+
+    async completeUserInfo(id, phoneNumber, address, zipCode) {
+        const userCollection = await user();
+
+        id = await this.checkId(id);
+
+        const updateUser = {
+            phoneNumber: phoneNumber,
+            address: address,
+            zipCode: zipCode,
+        };
+
+        const updateInfo = await userCollection.updateOne(
+            { _id: id },
+            { $set: updateUser }
+        );
+
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw 'could not update user successfully';
         }
 
         return await this.getUserById(id);
