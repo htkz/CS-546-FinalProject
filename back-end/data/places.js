@@ -28,13 +28,7 @@ let exportedMethods = {
         return place;
     },
 
-    async addPlace(
-        description,
-        placeName,
-        placeAddress,
-        placeZipCode,
-        placeUserComments
-    ) {
+    async addPlace(description, placeName, placeAddress, placeZipCode) {
         const placeCollection = await places();
 
         let newPlace = {
@@ -42,7 +36,7 @@ let exportedMethods = {
             placeName: placeName,
             placeAddress: placeAddress,
             placeZipCode: placeZipCode,
-            placeUserComments: placeUserComments,
+            placeUserComments: [],
         };
 
         const insertInfo = await placeCollection.insertOne(newPlace);
@@ -69,29 +63,32 @@ let exportedMethods = {
         return true;
     },
 
-    async updatePlace(
-        id,
-        description,
-        placeName,
-        placeAddress,
-        placeZipCode,
-        placeUserComments
-    ) {
+    async updatePlace(id, updatePlace) {
         const placeCollection = await places();
 
         id = await this.checkId(id);
 
-        const updatePlace = {
-            description: description,
-            placeName: placeName,
-            placeAddress: placeAddress,
-            placeZipCode: placeZipCode,
-            placeUserComments: placeUserComments,
-        };
+        const updatePlaceData = {};
+
+        if (updatePlace.description) {
+            updatePlaceData.description = updatePlace.description;
+        }
+
+        if (updatePlace.placeName) {
+            updatePlaceData.placeName = updatePlace.placeName;
+        }
+
+        if (updatePlace.placeAddress) {
+            updatePlaceData.placeAddress = updatePlace.placeAddress;
+        }
+
+        if (updatePlace.placeZipCode) {
+            updatePlaceData.placeZipCode = updatePlace.placeZipCode;
+        }
 
         const updateInfo = await placeCollection.updateOne(
             { _id: id },
-            { $set: updatePlace }
+            { $set: updatePlaceData }
         );
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
             throw 'could not update place successfully';
