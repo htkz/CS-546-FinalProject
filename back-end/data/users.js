@@ -66,31 +66,36 @@ let exportedMethods = {
         return true;
     },
 
-    async updateUser(
-        id,
-        userName,
-        email,
-        phoneNumber,
-        address,
-        zipCode,
-        hashedPassword
-    ) {
+    async updateUser(id, updateUser) {
         const userCollection = await users();
 
         id = await this.checkId(id);
 
-        const updateUser = {
-            userName: userName,
-            email: email,
-            phoneNumber: phoneNumber,
-            address: address,
-            zipCode: zipCode,
-            hashedPassword: hashedPassword,
-        };
+        const updateUserData = {};
+
+        if (updateUser.userName) {
+            updateUserData.userName = updateUser.userName;
+        }
+
+        if (updateUser.email) {
+            updateUserData.email = updateUser.email;
+        }
+
+        if (updateUser.phoneNumber) {
+            updateUserData.phoneNumber = updateUser.phoneNumber;
+        }
+
+        if (updateUser.address) {
+            updateUserData.address = updateUser.address;
+        }
+
+        if (updateUser.zipCode) {
+            updateUserData.zipCode = updateUser.zipCode;
+        }
 
         const updateInfo = await userCollection.updateOne(
             { _id: id },
-            { $set: updateUser }
+            { $set: updateUserData }
         );
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
             throw 'could not update user successfully';
