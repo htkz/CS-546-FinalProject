@@ -103,18 +103,18 @@ The idea of the application is to allow users to book tickets for tourism. The v
 ```json
 {
     "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "name": "Patrick Hill",
-    "content": "You should go with the pixel!",
+    "userId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "comment": "You should go with the pixel!",
     "votedCount": 10
 }
 ```
 
-| Name       | Type   | Description                                    |
-| :--------- | :----- | :--------------------------------------------- |
-| \_id       | string | The comment ID.                                |
-| name       | string | The name of the person who posted the comment. |
-| comment    | string | The comment text.                              |
-| votedCount | number | The upvoted count of the comment.              |
+| Name       | Type   | Description                                      |
+| :--------- | :----- | :----------------------------------------------- |
+| \_id       | string | The comment ID.                                  |
+| userId     | string | The userId of the person who posted the comment. |
+| comment    | string | The comment text.                                |
+| votedCount | number | The upvoted count of the comment.                |
 
 #### Places Collection
 

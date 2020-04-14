@@ -28,11 +28,11 @@ let exportedMethods = {
         return comment;
     },
 
-    async addComment(commentName, comment, votedCount) {
+    async addComment(userId, comment, votedCount) {
         const commentCollection = await comments();
 
         let newComment = {
-            commentName: commentName,
+            userId: userId,
             comment: comment,
             votedCount: votedCount,
         };

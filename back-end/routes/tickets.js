@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
 
     if (!ticketInfo) {
         res.status(400).json({
-            error: 'You must provide data to create a place',
+            error: 'You must provide data to create a ticket',
         });
     }
 
