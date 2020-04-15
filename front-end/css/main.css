@@ -28,14 +28,13 @@ header .username {
         display: flex;
         justify-content: space-between;
         padding: 0 20px; }
-        .tickets .container .cards .card .card-bottom .remain {
+        .tickets .container .cards .card .card-bottom .card-info {
           color: #6c757d; }
         .tickets .container .cards .card .card-bottom .buttons {
           display: flex;
-          justify-content: center;
-          padding-bottom: 20px; }
+          padding: 10px 0; }
           .tickets .container .cards .card .card-bottom .buttons button {
-            margin: 0 4px; }
+            margin-right: 8px; }
 
 .modal .placeDetail img {
   width: 100%; }

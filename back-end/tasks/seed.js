@@ -4,11 +4,13 @@ const places = data.places;
 
 const main = async () => {
     const db = await dbConnection();
-    const allPlaces = await places.getAllPlaces();
-    if (allPlaces.length !== 0) {
-        console.log('Database already exist, stop seeding!');
-        return;
-    }
+    await db.dropDatabase();
+
+    // const allPlaces = await places.getAllPlaces();
+    // if (allPlaces.length !== 0) {
+    //     console.log('Database already exist, stop seeding!');
+    //     return;
+    // }
     await places.addPlace(
         'Stevens',
         'A famous school in New Jersey',
@@ -17,8 +19,56 @@ const main = async () => {
         20000,
         ['school', 'quiet'],
         '2020-03-17',
-        400,
-        'stevens.jpg'
+        300,
+        'ticket1.jpeg'
+    );
+
+    await places.addPlace(
+        'Gateway South',
+        'A famous building in Stevens Institute of Technology',
+        '1 Castle Point Terrace, Hoboken',
+        '07310',
+        500,
+        ['building', 'quiet'],
+        '2020-02-18',
+        200,
+        'ticket2.jpg'
+    );
+
+    await places.addPlace(
+        'Stevens',
+        'A famous school in New Jersey',
+        '1 Castle Point Terrace, Hoboken',
+        '07310',
+        20000,
+        ['school', 'quiet'],
+        '2019-12-13',
+        100,
+        'ticket3.jpg'
+    );
+
+    await places.addPlace(
+        'Stevens',
+        'A famous school in New Jersey',
+        '1 Castle Point Terrace, Hoboken',
+        '07310',
+        20000,
+        ['school', 'quiet'],
+        '2018-04-17',
+        50,
+        'ticket2.jpg'
+    );
+
+    await places.addPlace(
+        'Stevens',
+        'A famous school in New Jersey',
+        '1 Castle Point Terrace, Hoboken',
+        '07310',
+        20000,
+        ['school', 'quiet'],
+        '2022-04-27',
+        1000,
+        'ticket3.jpg'
     );
 
     console.log('Done seeding database');

@@ -36,15 +36,14 @@ header {
                     display: flex;
                     justify-content: space-between;
                     padding: 0 20px;
-                    .remain {
+                    .card-info {
                         color: #6c757d;
                     }
                     .buttons {
                         display: flex;
-                        justify-content: center;
-                        padding-bottom: 20px;
+                        padding: 10px 0;
                         button {
-                            margin: 0 4px;
+                            margin-right: 8px;
                         }
                     }
                 }
