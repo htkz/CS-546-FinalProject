@@ -36,7 +36,8 @@ let exportedMethods = {
         placePrice,
         category,
         displayTime,
-        remainNum
+        remainNum,
+        imageName
     ) {
         const placeCollection = await places();
 
@@ -49,6 +50,7 @@ let exportedMethods = {
             category: category,
             displayTime: displayTime,
             remainNum: remainNum,
+            imageName: imageName,
             placeUserComments: [],
         };
 
@@ -113,6 +115,10 @@ let exportedMethods = {
 
         if (updatePlace.remainNum) {
             updatePlaceData.remainNum = updatePlace.remainNum;
+        }
+
+        if (updatePlace.imageName) {
+            updatePlaceData.imageName = updatePlace.imageName;
         }
 
         const updateInfo = await placeCollection.updateOne(
