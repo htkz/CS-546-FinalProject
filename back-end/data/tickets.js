@@ -1,5 +1,6 @@
 const mongoCollections = require('../config/mongoCollection');
 const tickets = mongoCollections.tickets;
+const users = require('./users');
 const ObjectId = require('mongodb').ObjectId;
 
 let exportedMethods = {
@@ -47,6 +48,8 @@ let exportedMethods = {
 
         const newID = insertInfo.insertedId;
 
+        await users.addTicketToUser(userId, newID);
+
         return await this.getTicketById(newID);
     },
 
@@ -55,10 +58,19 @@ let exportedMethods = {
 
         id = await this.checkId(id);
 
+        let ticket = null;
+        try {
+            ticket = await this.getTicketById(id);
+        } catch (error) {
+            throw new Error(`No ticket with that ${id}`);
+        }
+
         const deleteInfo = await ticketCollection.removeOne({ _id: id });
         if (deleteInfo.deletedCount === 0) {
             throw `Could not delete ticket with id of ${id}`;
         }
+
+        await users.removeTicketFromUser(ticket.userId, id);
 
         return true;
     },

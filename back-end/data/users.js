@@ -137,12 +137,12 @@ let exportedMethods = {
         userId = await this.checkId(userId);
         commentId = await this.checkId(commentId);
 
-        const updateInfo = await userCollection.updateOne(
+        const updatedInfo = await userCollection.updateOne(
             { _id: userId },
             { $addToSet: { userComments: commentId.toString() } }
         );
 
-        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+        if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
             throw 'Update failed';
         }
 
@@ -173,12 +173,12 @@ let exportedMethods = {
         userId = await this.checkId(userId);
         votedCommentsId = await this.checkId(votedCommentsId);
 
-        const updateInfo = await userCollection.updateOne(
+        const updatedInfo = await userCollection.updateOne(
             { _id: userId },
             { $addToSet: { votedComments: votedCommentsId.toString() } }
         );
 
-        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+        if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
             throw 'Update failed';
         }
 
@@ -191,12 +191,48 @@ let exportedMethods = {
         userId = await this.checkId(userId);
         votedCommentsId = await this.checkId(votedCommentsId);
 
-        const deleteInfo = await userCollection.updateOne(
+        const deletedInfo = await userCollection.updateOne(
             { _id: userId },
             { $pull: { votedComments: votedCommentsId.toString() } }
         );
 
-        if (!deleteInfo.matchedCount && !deleteInfo.modifiedCount) {
+        if (!deletedInfo.matchedCount && !deletedInfo.modifiedCount) {
+            throw 'Update failed';
+        }
+
+        return await this.getUserById(userId);
+    },
+
+    async addTicketToUser(userId, ticketId) {
+        const userCollection = await users();
+
+        userId = await this.checkId(userId);
+        ticketId = await this.checkId(ticketId);
+
+        const updatedInfo = await userCollection.updateOne(
+            { _id: userId },
+            { $addToSet: { userTicketInfo: ticketId.toString() } }
+        );
+
+        if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
+            throw 'Update failed';
+        }
+
+        return await this.getUserById(userId);
+    },
+
+    async removeTicketFromUser(userId, ticketId) {
+        const userCollection = await users();
+
+        userId = await this.checkId(userId);
+        ticketId = await this.checkId(ticketId);
+
+        const deletedInfo = await userCollection.updateOne(
+            { _id: userId },
+            { $pull: { userTicketInfo: ticketId.toString() } }
+        );
+
+        if (!deletedInfo.matchedCount && !deletedInfo.modifiedCount) {
             throw 'Update failed';
         }
 
