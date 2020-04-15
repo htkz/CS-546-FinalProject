@@ -33,7 +33,10 @@ let exportedMethods = {
         description,
         placeAddress,
         placeZipCode,
-        placePrice
+        placePrice,
+        category,
+        displayTime,
+        remainNum
     ) {
         const placeCollection = await places();
 
@@ -43,6 +46,9 @@ let exportedMethods = {
             placeAddress: placeAddress,
             placeZipCode: placeZipCode,
             placePrice: placePrice,
+            category: category,
+            displayTime: displayTime,
+            remainNum: remainNum,
             placeUserComments: [],
         };
 
@@ -95,6 +101,18 @@ let exportedMethods = {
 
         if (updatePlace.placePrice) {
             updatePlaceData.placePrice = updatePlace.placePrice;
+        }
+
+        if (updatePlace.category) {
+            updatePlaceData.category = updatePlace.category;
+        }
+
+        if (updatePlace.displayTime) {
+            updatePlaceData.displayTime = updatePlace.displayTime;
+        }
+
+        if (updatePlace.remainNum) {
+            updatePlaceData.remainNum = updatePlace.remainNum;
         }
 
         const updateInfo = await placeCollection.updateOne(

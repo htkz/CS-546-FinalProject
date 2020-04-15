@@ -134,7 +134,10 @@ The idea of the application is to allow users to book tickets for tourism. The v
     "placeName": "Stevens Institute of Technology",
     "placeAddress": "1 Castle Point Terrace, Hoboken",
     "placeZipCode": "07030",
-    "placePrice": "100",
+    "placePrice": 100,
+    "category": ["quiet", "amazing"],
+    "displayTime": "2020-3-1",
+    "remainNum": 300,
     "placeUserComments": [
         "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
         "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710"
@@ -149,5 +152,8 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | placeName         | string | The name of this place.                |
 | placeAddress      | string | The address of this place.             |
 | placeZipCode      | string | The zip code of this place.            |
-| placePrice        | string | The price for the place                |
+| placePrice        | number | The price for the place                |
+| category          | array  | The category for the place             |
+| displayTime       | string | The display time for the place         |
+| remainNum         | number | The remain tickets number for the place|
 | placeUserComments | array  | Comments user comment on this place.   |
