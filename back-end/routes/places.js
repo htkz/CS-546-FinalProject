@@ -111,7 +111,8 @@ router.patch('/:id', async (req, res) => {
     ) {
         res.status(400).json({
             error:
-                'You must provide place name, description, place address, place zip code or place price',
+                'You must provide place name, description, place address, \
+                place zip code, place price, category, display time, remain number or image name',
         });
         return;
     } else if (requestBody.newPlaceZipCode) {

@@ -138,7 +138,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
     "category": ["quiet", "amazing"],
     "displayTime": "2020-3-1",
     "remainNum": 300,
-    "imageName": "image1.jpg",
+    "imageName": ["image1.jpg", "image2.jpg"],
     "placeUserComments": [
         "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
         "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710"
@@ -157,5 +157,5 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | category          | array  | The category for the place              |
 | displayTime       | string | The display time for the place          |
 | remainNum         | number | The remain tickets number for the place |
-| imageName         | string | The image name of the place             |
+| imageName         | array  | The image name of the place             |
 | placeUserComments | array  | Comments user comment on this place.    |
