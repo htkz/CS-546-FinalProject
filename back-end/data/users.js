@@ -167,6 +167,42 @@ let exportedMethods = {
         return await this.getUserById(userId);
     },
 
+    async addVotedCommentToUser(userId, votedCommentsId) {
+        const userCollection = await users();
+
+        userId = await this.checkId(userId);
+        votedCommentsId = await this.checkId(votedCommentsId);
+
+        const updateInfo = await userCollection.updateOne(
+            { _id: userId },
+            { $addToSet: { votedComments: votedCommentsId.toString() } }
+        );
+
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw 'Update failed';
+        }
+
+        return await this.getUserById(userId);
+    },
+
+    async removeVodedCommentFromUser(userId, votedCommentsId) {
+        const userCollection = await users();
+
+        userId = await this.checkId(userId);
+        votedCommentsId = await this.checkId(votedCommentsId);
+
+        const deleteInfo = await userCollection.updateOne(
+            { _id: userId },
+            { $pull: { votedComments: votedCommentsId.toString() } }
+        );
+
+        if (!deleteInfo.matchedCount && !deleteInfo.modifiedCount) {
+            throw 'Update failed';
+        }
+
+        return await this.getUserById(userId);
+    },
+
     async checkId(id) {
         if (typeof id == 'string') {
             return ObjectId(id);

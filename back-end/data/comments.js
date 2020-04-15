@@ -30,14 +30,15 @@ let exportedMethods = {
         return comment;
     },
 
-    async addComment(userId, placeId, comment, votedCount) {
+    async addComment(userId, placeId, comment) {
         const commentCollection = await comments();
 
         let newComment = {
             userId: userId,
             placeId: placeId,
             comment: comment,
-            votedCount: votedCount,
+            votedCount: 0,
+            votedUsers: [],
         };
 
         const insertInfo = await commentCollection.insertOne(newComment);
@@ -74,13 +75,25 @@ let exportedMethods = {
         await users.removeCommentFromUser(comment.userId, id);
         await places.removeCommentFromPlace(comment.placeId, id);
 
+        // if the comments have votes, delete all user vote from users
+        if (comment.votedUsers !== null) {
+            for (let item in comment.votedUsers) {
+                await users.removeVodedCommentFromUser(
+                    await this.checkId(comment.votedUsers[item]),
+                    id
+                );
+            }
+        }
         return true;
     },
 
-    async updateComment(id, votedCount) {
+    async updateComment(id, votedCount, votedUserId) {
         const commentCollection = await comments();
 
         id = await this.checkId(id);
+        votedUserId = await this.checkId(votedUserId);
+
+        comment = await this.getCommentById(id);
 
         const updateComment = {
             votedCount: votedCount,
@@ -92,6 +105,29 @@ let exportedMethods = {
         );
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
             throw 'could not update comment successfully';
+        }
+
+        // If user cancel the vote, remove it from votedUsers list.
+        if (comment.votedCount > votedCount) {
+            const updateInfo_1 = await commentCollection.updateOne(
+                { _id: id },
+                { $pull: { votedUsers: votedUserId.toString() } }
+            );
+            if (!updateInfo_1.matchedCount && !updateInfo_1.modifiedCount) {
+                throw 'could not update comment successfully';
+            }
+            await users.removeVodedCommentFromUser(votedUserId, id);
+        }
+        // If user vote the vote, add it to votedUsers list.
+        else {
+            const updateInfo_1 = await commentCollection.updateOne(
+                { _id: id },
+                { $addToSet: { votedUsers: votedUserId.toString() } }
+            );
+            if (!updateInfo_1.matchedCount && !updateInfo_1.modifiedCount) {
+                throw 'could not update comment successfully';
+            }
+            await users.addVotedCommentToUser(votedUserId, id);
         }
 
         return await this.getCommentById(id);

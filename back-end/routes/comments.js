@@ -60,11 +60,12 @@ router.put('/:id', async (req, res) => {
     }
 
     try {
-        const updatedTicket = await commentData.updateComment(
+        const updatedComment = await commentData.updateComment(
             req.params.id,
-            requestBody.votedCount
+            requestBody.votedCount,
+            requestBody.votedUserId
         );
-        res.json(updatedTicket);
+        res.json(updatedComment);
     } catch (error) {
         res.status(500).json({ error: error });
         console.log(error);

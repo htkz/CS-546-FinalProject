@@ -106,7 +106,11 @@ The idea of the application is to allow users to book tickets for tourism. The v
     "userId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "placeId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "comment": "You should go with the pixel!",
-    "votedCount": 10
+    "votedCount": 10,
+    "votedUsers": [
+        "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+        "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710"
+    ]
 }
 ```
 
@@ -117,6 +121,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | placeId    | string | The place the ticket takes effect on.            |
 | comment    | string | The comment text.                                |
 | votedCount | number | The upvoted count of the comment.                |
+| votedUsers | array  | The user voted this comment                      |
 
 #### Places Collection
 
