@@ -54,7 +54,7 @@ router.put('/:id', async (req, res) => {
 
     try {
         await commentData.getCommentById(req.params.id);
-    } catch {
+    } catch (error) {
         res.status(404).json({ error: 'Comment not found' });
         return;
     }

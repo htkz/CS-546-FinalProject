@@ -53,7 +53,7 @@ router.put('/:id', async (req, res) => {
 
     try {
         await ticketData.getTicketById(req.params.id);
-    } catch {
+    } catch (error) {
         res.status(404).json({ error: 'User not found' });
         return;
     }
