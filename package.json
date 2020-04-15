@@ -8,7 +8,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "scss": "node-sass -o front-end/css/ front-end/css/",
         "watch:scss": "onchange 'front-end/css/*.scss' -- npm run scss",
-        "watch:all": "parallelshell 'npm run watch:scss' 'node app.js' "
+        "watch:all": "parallelshell 'npm run watch:scss' 'node app.js' ",
+        "seed": "node back-end/tasks/seed.js"
     },
     "repository": {
         "type": "git",
