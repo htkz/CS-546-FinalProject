@@ -70,6 +70,18 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | hashPassword   | string | The password when users log in.                           |
 | userTicketInfo | array  | The ticket that the user bought.                          |
 
+##### Use
+
+-   **get('/:id')**: use userId to get user from users collection
+-   **get('/')**: get all users from users collection
+-   **post('/')**: post user data into users collection.  
+    _Fields_: userName, email, hashedPassword
+-   **patch('/:id')**: use userId to update user infomation.  
+    _Fields_: userId, newUserName, newEmail, newPhoneNumber, newAddress, newZipCode, newHashedPassword
+-   **put('/:id')**: user userId to complete user information.
+    Fields: userId, phoneNumber, address, zipCode
+-   **delete('/:id')**: delete user through userId from users collection.
+
 #### Ticket Collection
 
 **Description**: The ticket collection will store all tickets. A ticket will include the information of user id, ticket number, the data when ticket is booked, the date when ticket will be used and the price of this ticket.
@@ -95,6 +107,16 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | orderedDate | date   | The date the user bought the ticket.                           |
 | effectDate  | date   | The date ticket takes effect.                                  |
 | price       | number | The prices of the ticket.                                      |
+
+##### Use
+
+-   **get('/:id')**: use ticketId to get ticket from tickets collection
+-   **get('/')**: get all tickets from tickets collection
+-   **post('/')**: post tikcet data into tickets collection.  
+    _Fields_: userId, placeId, ticketNo, orderedData, effectDate, price
+-   **put('/:id')**: use placeId to update place infomation.  
+    _Fields_: ticketId, effectDate
+-   **delete('/:id')**: delete ticket through ticketId from tickets collection.
 
 #### Comments Collection
 
@@ -122,6 +144,16 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | comment    | string | The comment text.                                |
 | votedCount | number | The upvoted count of the comment.                |
 | votedUsers | array  | The user voted this comment                      |
+
+##### Use
+
+-   **get('/:id')**: use commentId to get comment from comments collection
+-   **get('/')**: get all comments from comments collection
+-   **post('/')**: post comment data into comments collection.  
+    _Fields_: userId, placeId, comment, votedCount
+-   **put('/:id')**: use commentId to update comment infomation.  
+    _Fields_: commentId, votedCount, votedUserId
+-   **delete('/:id')**: delete comment through commentId from comments collection.
 
 #### Places Collection
 
@@ -159,3 +191,13 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | remainNum         | number | The remain tickets number for the place |
 | imageName         | array  | The image name of the place             |
 | placeUserComments | array  | Comments user comment on this place.    |
+
+##### Use
+
+-   **get('/:id')**: use placeId to get place from places collection
+-   **get('/')**: get all places from places collection
+-   **post('/')**: post place data into places collection.  
+    _Fields_: placeName, description, placeAddress, placeZipCode, placePrice, category, displayTime, remainNum, imageName
+-   **patch('/:id')**: use placeId to update place infomation.  
+    _Fields_: placeId, newPlaceName, newDescription, newPlaceAddress, newPlaceZipCode, newPlacePrice, newCategory, newDisplayTime, newRemainNum, newImageName
+-   **delete('/:id')**: delete place through placeId from places collection.
