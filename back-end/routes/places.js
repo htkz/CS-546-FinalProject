@@ -57,13 +57,33 @@ router.post('/', async (req, res) => {
         error.push('No place price provided');
     }
 
+    if (!placeInfo.category) {
+        error.push('No place price provided');
+    }
+
+    if (!placeInfo.displayTime) {
+        error.push('No place price provided');
+    }
+
+    if (!placeInfo.remainNum) {
+        error.push('No place price provided');
+    }
+
+    if (!placeInfo.imageName) {
+        error.push('No place price provided');
+    }
+
     try {
         const newPlace = await placeData.addPlace(
             placeInfo.placeName,
             placeInfo.description,
             placeInfo.placeAddress,
             placeInfo.placeZipCode,
-            placeInfo.placePrice
+            placeInfo.placePrice,
+            placeInfo.category,
+            placeInfo.displayTime,
+            placeInfo.remainNum,
+            placeInfo.imageName
         );
         res.status(200).json(newPlace);
     } catch (error) {
@@ -83,7 +103,11 @@ router.patch('/:id', async (req, res) => {
         !requestBody.newDescription &&
         !requestBody.newPlaceAddress &&
         !requestBody.newPlaceZipCode &&
-        !requestBody.newPlacePrice
+        !requestBody.newPlacePrice &&
+        !requestBody.newCategory &&
+        !requestBody.newDisplayTime &&
+        !requestBody.newRemainNum &&
+        !requestBody.newImageName
     ) {
         res.status(400).json({
             error:
@@ -135,6 +159,34 @@ router.patch('/:id', async (req, res) => {
             requestBody.newPlacePrice !== oldPlace.placePrice
         ) {
             updatedObject.placePrice = requestBody.newPlacePrice;
+        }
+
+        if (
+            requestBody.newCategory &&
+            requestBody.newCategory !== oldPlace.category
+        ) {
+            updatedObject.category = requestBody.newCategory;
+        }
+
+        if (
+            requestBody.newDisplayTime &&
+            requestBody.newDisplayTime !== oldPlace.displayTime
+        ) {
+            updatedObject.displayTime = requestBody.newDisplayTime;
+        }
+
+        if (
+            requestBody.newRemainNum &&
+            requestBody.newRemainNum !== oldPlace.remainNum
+        ) {
+            updatedObject.remainNum = requestBody.newRemainNum;
+        }
+
+        if (
+            requestBody.newImageName &&
+            requestBody.newImageName !== oldPlace.imageName
+        ) {
+            updatedObject.imageName = requestBody.newImageName;
         }
     } catch (error) {
         res.status(404).json({ error: 'Place not found' });

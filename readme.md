@@ -146,16 +146,16 @@ The idea of the application is to allow users to book tickets for tourism. The v
 }
 ```
 
-| Name              | Type   | Description                            |
-| :---------------- | :----- | :------------------------------------- |
-| \_id              | string | The place id.                          |
-| description       | string | The descriptive content of this place. |
-| placeName         | string | The name of this place.                |
-| placeAddress      | string | The address of this place.             |
-| placeZipCode      | string | The zip code of this place.            |
-| placePrice        | number | The price for the place                |
-| category          | array  | The category for the place             |
-| displayTime       | string | The display time for the place         |
-| remainNum         | number | The remain tickets number for the place|
-| imageName         | string | The image name of the place            |
-| placeUserComments | array  | Comments user comment on this place.   |
+| Name              | Type   | Description                             |
+| :---------------- | :----- | :-------------------------------------- |
+| \_id              | string | The place id.                           |
+| description       | string | The descriptive content of this place.  |
+| placeName         | string | The name of this place.                 |
+| placeAddress      | string | The address of this place.              |
+| placeZipCode      | string | The zip code of this place.             |
+| placePrice        | number | The price for the place                 |
+| category          | array  | The category for the place              |
+| displayTime       | string | The display time for the place          |
+| remainNum         | number | The remain tickets number for the place |
+| imageName         | string | The image name of the place             |
+| placeUserComments | array  | Comments user comment on this place.    |
