@@ -21,7 +21,8 @@ header .username {
     flex-wrap: wrap; }
     .tickets .container .cards .card {
       width: 30%;
-      margin: 10px 4px; }
+      margin: 10px 4px;
+      cursor: pointer; }
       .tickets .container .cards .card img {
         height: 200px; }
       .tickets .container .cards .card .card-bottom {
@@ -30,11 +31,10 @@ header .username {
         padding: 0 20px; }
         .tickets .container .cards .card .card-bottom .card-info {
           color: #6c757d; }
-        .tickets .container .cards .card .card-bottom .buttons {
-          display: flex;
-          padding: 10px 0; }
-          .tickets .container .cards .card .card-bottom .buttons button {
-            margin-right: 8px; }
+          .tickets .container .cards .card .card-bottom .card-info .category button {
+            margin-right: 4px;
+            margin-top: 4px;
+            margin-bottom: 10px; }
 
 .modal .placeDetail img {
   width: 100%; }
@@ -56,6 +56,9 @@ header .username {
   align-items: center; }
   .modal .comment .inputContainer button {
     margin-left: 4px; }
+
+main {
+  min-height: 100vh; }
 
 footer {
   display: flex;

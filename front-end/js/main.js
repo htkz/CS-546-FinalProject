@@ -2,37 +2,44 @@ const deepcopy = (obj) => {
     return JSON.parse(JSON.stringify(obj));
 };
 
+const setDetail = (id) => {
+    console.log(id);
+};
+
 const renderPlace = (places) => {
     $('#cards').empty();
 
     for (place of places) {
         const card = $(`
-        <div class="card">
-            <img src="./pic/${place.imageName}" class="card-img-top" alt="${place.imageName}" />
-            <div class="card-body">
-                <p class="card-text">
-                    ${place.description}
-                </p>
-            </div>
-            <div class="card-bottom">
-                <div class="card-info">
-                    <div class="displayTime">
-                        Display Time: <span>${place.displayTime}</span>
-                    </div>
-                    <div class="remain">
-                        Tickets: <span class="num">${place.remainNum}</span>
-                    </div>
-                    <div class="buttons">
-                        <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#detailModal">
-                            Detail
-                        </button>
-                        <button class="btn btn-sm btn-outline-secondary">
-                            Buy
-                        </button>
+            <div class="card" id="${place._id}">
+                <img src="./pic/${place.imageName}" class="card-img-top" alt="${place.imageName}" />
+                <div class="card-body">
+                    <p class="card-text">
+                        ${place.description}
+                    </p>
+                </div>
+                <div class="card-bottom">
+                    <div class="card-info">
+                        <div class="displayTime">
+                            Display Time: <span>${place.displayTime}</span>
+                        </div>
+                        <div class="remain">
+                            Tickets: <span>${place.remainNum}</span>
+                        </div>
+                        <div class="category"></div>
                     </div>
                 </div>
-            </div>
-        </div>`);
+            </div>`);
+        for (category of place.category) {
+            const cat = $(
+                `<button class='btn btn-sm btn-outline-info active'>${category}</button>`
+            );
+            card.find('.category').append(cat);
+        }
+        card.click((event) => {
+            setDetail(event.currentTarget.id);
+            $('#detailModal').modal('show');
+        });
         $('#cards').append(card);
     }
 };
@@ -70,6 +77,18 @@ const filterByHottest = () => {
     renderPlace(places);
 };
 
+const filterBySearch = (tag) => {
+    if (tag.length === 0) return;
+    const places = [];
+    for (place of store['places']) {
+        console.log(place.category);
+        if (place.category.includes(tag.toLowerCase())) {
+            places.push(place);
+        }
+    }
+    renderPlace(places);
+};
+
 const filterByReset = () => {
     renderPlace(store['places']);
 };
@@ -78,6 +97,10 @@ const bindEvent = () => {
     $('#latestBtn').click(filterByLatest);
     $('#resetBtn').click(filterByReset);
     $('#hottestBtn').click(filterByHottest);
+    $('#search').submit((event) => {
+        event.preventDefault();
+        filterBySearch($('#searchInput').val());
+    });
 };
 
 const store = {};

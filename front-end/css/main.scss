@@ -29,6 +29,7 @@ header {
             .card {
                 width: 30%;
                 margin: 10px 4px;
+                cursor: pointer;
                 img {
                     height: 200px;
                 }
@@ -38,12 +39,12 @@ header {
                     padding: 0 20px;
                     .card-info {
                         color: #6c757d;
-                    }
-                    .buttons {
-                        display: flex;
-                        padding: 10px 0;
-                        button {
-                            margin-right: 8px;
+                        .category {
+                            button {
+                                margin-right: 4px;
+                                margin-top: 4px;
+                                margin-bottom: 10px;
+                            }
                         }
                     }
                 }
@@ -81,6 +82,10 @@ header {
             }
         }
     }
+}
+
+main {
+    min-height: 100vh;
 }
 
 footer {
