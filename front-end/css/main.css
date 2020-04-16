@@ -37,7 +37,11 @@ header .username {
             margin-bottom: 10px; }
 
 .modal .placeDetail img {
-  width: 100%; }
+  width: 100%;
+  height: 200px; }
+
+.modal .placeDetail .attribute {
+  font-weight: bold; }
 
 .modal .comment .commentContainer {
   padding: 5px 0;

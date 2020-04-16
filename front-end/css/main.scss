@@ -57,6 +57,10 @@ header {
     .placeDetail {
         img {
             width: 100%;
+            height: 200px;
+        }
+        .attribute {
+            font-weight: bold;
         }
     }
     .comment {

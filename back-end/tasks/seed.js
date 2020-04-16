@@ -6,11 +6,6 @@ const main = async () => {
     const db = await dbConnection();
     await db.dropDatabase();
 
-    // const allPlaces = await places.getAllPlaces();
-    // if (allPlaces.length !== 0) {
-    //     console.log('Database already exist, stop seeding!');
-    //     return;
-    // }
     await places.addPlace(
         'Stevens',
         'A famous school in New Jersey',

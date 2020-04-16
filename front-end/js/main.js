@@ -1,3 +1,5 @@
+
+
 const deepcopy = (obj) => {
     return JSON.parse(JSON.stringify(obj));
 };
@@ -14,6 +16,7 @@ const renderPlace = (places) => {
             <div class="card" id="${place._id}">
                 <img src="./pic/${place.imageName}" class="card-img-top" alt="${place.imageName}" />
                 <div class="card-body">
+                    <h4>${place.placeName}</h4>
                     <p class="card-text">
                         ${place.description}
                     </p>
@@ -37,11 +40,96 @@ const renderPlace = (places) => {
             card.find('.category').append(cat);
         }
         card.click((event) => {
-            setDetail(event.currentTarget.id);
+            for (place of store['places']) {
+                if (place._id === event.currentTarget.id) {
+                    renderDetail(place);
+                    break;
+                }
+            }
             $('#detailModal').modal('show');
         });
         $('#cards').append(card);
     }
+};
+
+const renderDetail = (place) => {
+    $('#detailModal').empty();
+
+    const $modal = $(`
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="detailModalLabel">
+                        ${place.placeName}
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container row">
+                        <div class="placeDetail col-md-5">
+                            <img src="./pic/${place.imageName}" alt="${place.imageName}" />
+                            <div class="attribute">Description</div>
+                            <p class="card-text">
+                                ${place.description}
+                            </p>
+                            <div>
+                                <div class="attribute">Address</div>
+                                <span>${place.placeAddress}</span>
+                            </div>
+                            <div>
+                                <span class="attribute">Zipcode</span>:
+                                <span>${place.placeZipCode}</span>
+                            </div>
+                            <div>
+                                <span class="attribute">Price</span>:
+                                <span>${place.placePrice}</span>
+                            </div>
+                            <div>
+                                <span class="attribute">Display Time</span>:
+                                <span>${place.displayTime}</span>
+                            </div>
+                            <div>
+                                <span class="attribute">Remain Number</span>:
+                                <span>${place.remainNum}</span>
+                            </div>
+                        </div>
+                        <div class="comment col-md-7">
+                            <h5>Comments</h5>
+                            <div class="commentContainer">
+                                <ul id="commentList"></ul>
+                            </div>
+                            <div class="inputContainer">
+                                <textarea name="commentInput" id="commentInput" cols="70" rows="1" placeholder="Add a comment"></textarea>
+                                <button class="btn btn-outline-primary btn-sm">
+                                    Post
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        Buy Ticket
+                    </button>
+                </div>
+            </div>
+        </div>
+    `);
+    const $commentList = $modal.find('#commentList');
+    for (comment of place.placeUserComments) {
+        $comment = $(`
+            <li>
+                <span class="username">username</span>:
+                <span class="content">${comment}</span>
+            </li>`);
+        $commentList.append($comment);
+    }
+    $('#detailModal').append($modal);
 };
 
 const fetchPlaces = async (store) => {
