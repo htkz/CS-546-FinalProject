@@ -1,6 +1,6 @@
 const dbConnection = require('./mongoConnection');
 
-const getCollectionFn = collection => {
+const getCollectionFn = (collection) => {
     let _col = undefined;
 
     return async () => {
@@ -18,4 +18,5 @@ module.exports = {
     tickets: getCollectionFn('tickets'),
     comments: getCollectionFn('comments'),
     places: getCollectionFn('places'),
+    counts: getCollectionFn('counts'),
 };

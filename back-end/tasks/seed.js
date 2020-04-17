@@ -1,10 +1,12 @@
 const dbConnection = require('../config/mongoConnection');
 const data = require('../data/');
 const places = data.places;
+const counts = data.counts;
 
 const main = async () => {
     const db = await dbConnection();
     await db.dropDatabase();
+    // await counts.addData('ticketNo', 0);
 
     await places.addPlace(
         'Stevens',
