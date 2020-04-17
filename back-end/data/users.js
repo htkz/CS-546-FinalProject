@@ -32,9 +32,6 @@ let exportedMethods = {
         const userCollection = await users();
 
         const user = await userCollection.findOne({ userName: userName });
-        if (!user) {
-            throw `No user with that ${userName}`;
-        }
 
         return user;
     },
@@ -43,9 +40,6 @@ let exportedMethods = {
         const userCollection = await users();
 
         const user = await userCollection.findOne({ email: email });
-        if (!user) {
-            throw `No user with that ${email}`;
-        }
 
         return user;
     },

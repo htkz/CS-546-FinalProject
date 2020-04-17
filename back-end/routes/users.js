@@ -90,7 +90,7 @@ router.post('/account/register', async (req, res) => {
         return;
     }
 
-    if (userData.getUserByUserName(userInfo.userName) !== null) {
+    if ((await userData.getUserByUserName(userInfo.userName)) !== null) {
         error.push(
             'The user name has been existed, please choose another user name.'
         );
@@ -101,10 +101,10 @@ router.post('/account/register', async (req, res) => {
         return;
     }
 
-    if (userData.getUserByUserName(userInfo.email) !== null) {
+    if ((await userData.getUserByEmail(userInfo.email)) !== null) {
         error.push('The email has been existed, please choose another email.');
         res.status(500).json({
-            error: 'TThe email has been existed, please choose another email.',
+            error: 'The email has been existed, please choose another email.',
         });
         return;
     }
@@ -165,6 +165,26 @@ router.patch('/:id', async (req, res) => {
             return;
         }
     }
+    // check new email whether in the database or not
+    if (requestBody.newEmail) {
+        if ((await userData.getUserByEmail(requestBody.newEmail)) !== null) {
+            res.status(500).json({
+                error: `This ${requestBody.newEmail} has been existed`,
+            });
+            return;
+        }
+    }
+    // check new name whether in the database or not
+    if (requestBody.newUserName) {
+        if (
+            (await userData.getUserByUserName(requestBody.newUserName)) !== null
+        ) {
+            res.status(500).json({
+                error: `This ${requestBody.newUserName} has been existed`,
+            });
+            return;
+        }
+    }
 
     try {
         const oldUser = await userData.getUserById(req.params.id);
@@ -213,6 +233,10 @@ router.patch('/:id', async (req, res) => {
     }
 
     try {
+        if (JSON.stringify(updatedObject) === '{}') {
+            res.status(500).json({ error: 'No information need to update' });
+            return;
+        }
         const updatedUser = await userData.updateUser(
             req.params.id,
             updatedObject
