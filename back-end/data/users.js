@@ -28,6 +28,28 @@ let exportedMethods = {
         return user;
     },
 
+    async getUserByUserName(userName) {
+        const userCollection = await users();
+
+        const user = await userCollection.findOne({ userName: userName });
+        if (!user) {
+            throw `No user with that ${userName}`;
+        }
+
+        return user;
+    },
+
+    async getUserByEmail(email) {
+        const userCollection = await users();
+
+        const user = await userCollection.findOne({ email: email });
+        if (!user) {
+            throw `No user with that ${email}`;
+        }
+
+        return user;
+    },
+
     async addUser(userName, email, hashedPassword) {
         const userCollection = await users();
 

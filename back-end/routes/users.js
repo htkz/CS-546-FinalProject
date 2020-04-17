@@ -13,6 +13,36 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.post('/account/login', async (req, res) => {
+    let email = req.body.email;
+    let password = req.body.hashedPassword;
+
+    if (!email) {
+        res.status(500).json({
+            error: 'No user name provided',
+        });
+        return;
+    }
+
+    if (!password) {
+        res.status(500).json({
+            error: 'No password provided',
+        });
+        return;
+    }
+
+    try {
+        const user = await userData.getUserByEmail(email);
+        if (user.hashedPassword !== password) {
+            res.status(500).json({ message: 'Password incorrect.' });
+            return;
+        }
+        res.json(user);
+    } catch (e) {
+        res.status(404).json({ message: 'Not found!' });
+    }
+});
+
 router.get('/', async (req, res) => {
     try {
         const userList = await userData.getAllUsers();
@@ -24,7 +54,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/account/register', async (req, res) => {
     let userInfo = req.body;
     console.log(userInfo);
 
@@ -38,16 +68,44 @@ router.post('/', async (req, res) => {
 
     if (!userInfo.userName) {
         error.push('No user name provided');
+        res.status(500).json({
+            error: 'No user name provided',
+        });
         return;
     }
 
     if (!userInfo.email) {
         error.push('No email address provided');
+        res.status(500).json({
+            error: 'No email address provided',
+        });
         return;
     }
 
     if (!userInfo.hashedPassword) {
         error.push('No password provided');
+        res.status(500).json({
+            error: 'No password provided',
+        });
+        return;
+    }
+
+    if (userData.getUserByUserName(userInfo.userName) !== null) {
+        error.push(
+            'The user name has been existed, please choose another user name.'
+        );
+        res.status(500).json({
+            error:
+                'The user name has been existed, please choose another user name.',
+        });
+        return;
+    }
+
+    if (userData.getUserByUserName(userInfo.email) !== null) {
+        error.push('The email has been existed, please choose another email.');
+        res.status(500).json({
+            error: 'TThe email has been existed, please choose another email.',
+        });
         return;
     }
 
