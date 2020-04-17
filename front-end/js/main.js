@@ -14,7 +14,7 @@ const renderPlace = (places) => {
     for (place of places) {
         const card = $(`
             <div class="card" id="${place._id}">
-                <img src="./pic/${place.imageName}" class="card-img-top" alt="${place.imageName}" />
+                <img src="./pic/${place.images[0]}" class="card-img-top" alt="${place.images[0]}" />
                 <div class="card-body">
                     <h4>${place.placeName}</h4>
                     <p class="card-text">
@@ -69,7 +69,7 @@ const renderDetail = (place) => {
                 <div class="modal-body">
                     <div class="container row">
                         <div class="placeDetail col-md-5">
-                            <img src="./pic/${place.imageName}" alt="${place.imageName}" />
+                            <img src="./pic/${place.images[0]}" alt="${place.images[0]}" />
                             <div class="attribute">Description</div>
                             <p class="card-text">
                                 ${place.description}

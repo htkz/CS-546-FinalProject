@@ -15,7 +15,7 @@ const main = async () => {
         ['school', 'quiet'],
         '2020-03-17',
         300,
-        'ticket1.jpeg'
+        ['ticket1.jpeg', 'ticket2.jpg']
     );
 
     await places.addPlace(
@@ -27,7 +27,7 @@ const main = async () => {
         ['building', 'quiet'],
         '2020-02-18',
         200,
-        'ticket2.jpg'
+        ['ticket2.jpg', 'ticket1.jpeg']
     );
 
     await places.addPlace(
@@ -39,7 +39,7 @@ const main = async () => {
         ['school', 'quiet'],
         '2019-12-13',
         100,
-        'ticket3.jpg'
+        ['ticket3.jpg', 'ticket1.jpeg']
     );
 
     await places.addPlace(
@@ -51,7 +51,7 @@ const main = async () => {
         ['school', 'quiet'],
         '2018-04-17',
         50,
-        'ticket2.jpg'
+        ['ticket2.jpg', 'ticket1.jpeg']
     );
 
     await places.addPlace(
@@ -63,7 +63,7 @@ const main = async () => {
         ['school', 'quiet'],
         '2022-04-27',
         1000,
-        'ticket3.jpg'
+        ['ticket3.jpg', 'ticket2.jpg']
     );
 
     console.log('Done seeding database');

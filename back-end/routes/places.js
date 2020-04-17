@@ -23,7 +23,6 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     let placeInfo = req.body;
-    console.log(placeInfo);
 
     let error = [];
 
@@ -69,7 +68,7 @@ router.post('/', async (req, res) => {
         error.push('No place price provided');
     }
 
-    if (!placeInfo.imageName) {
+    if (!placeInfo.images) {
         error.push('No place price provided');
     }
 
@@ -83,7 +82,7 @@ router.post('/', async (req, res) => {
             placeInfo.category,
             placeInfo.displayTime,
             placeInfo.remainNum,
-            placeInfo.imageName
+            placeInfo.images
         );
         res.status(200).json(newPlace);
     } catch (error) {
@@ -107,7 +106,7 @@ router.patch('/:id', async (req, res) => {
         !requestBody.newCategory &&
         !requestBody.newDisplayTime &&
         !requestBody.newRemainNum &&
-        !requestBody.newImageName
+        !requestBody.newImages
     ) {
         res.status(400).json({
             error:
@@ -184,10 +183,10 @@ router.patch('/:id', async (req, res) => {
         }
 
         if (
-            requestBody.newImageName &&
-            requestBody.newImageName !== oldPlace.imageName
+            requestBody.newImages &&
+            requestBody.newImages !== oldPlace.images
         ) {
-            updatedObject.imageName = requestBody.newImageName;
+            updatedObject.images = requestBody.newImages;
         }
     } catch (error) {
         res.status(404).json({ error: 'Place not found' });

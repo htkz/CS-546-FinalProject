@@ -170,7 +170,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
     "category": ["quiet", "amazing"],
     "displayTime": "2020-3-1",
     "remainNum": 300,
-    "imageName": ["image1.jpg", "image2.jpg"],
+    "images": ["image1.jpg", "image2.jpg"],
     "placeUserComments": [
         "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
         "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710"
@@ -189,7 +189,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | category          | array  | The category for the place              |
 | displayTime       | string | The display time for the place          |
 | remainNum         | number | The remain tickets number for the place |
-| imageName         | array  | The image name of the place             |
+| images            | array  | The image array of the place            |
 | placeUserComments | array  | Comments user comment on this place.    |
 
 ##### Use
@@ -197,7 +197,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 -   **get('/:id')**: use placeId to get place from places collection
 -   **get('/')**: get all places from places collection
 -   **post('/')**: post place data into places collection.  
-    _Fields_: placeName, description, placeAddress, placeZipCode, placePrice, category, displayTime, remainNum, imageName
+    _Fields_: placeName, description, placeAddress, placeZipCode, placePrice, category, displayTime, remainNum, images
 -   **patch('/:id')**: use placeId to update place infomation.  
-    _Fields_: placeId, newPlaceName, newDescription, newPlaceAddress, newPlaceZipCode, newPlacePrice, newCategory, newDisplayTime, newRemainNum, newImageName
+    _Fields_: placeId, newPlaceName, newDescription, newPlaceAddress, newPlaceZipCode, newPlacePrice, newCategory, newDisplayTime, newRemainNum, newImages
 -   **delete('/:id')**: delete place through placeId from places collection.
