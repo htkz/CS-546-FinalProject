@@ -74,8 +74,10 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 -   **get('/:id')**: use userId to get user from users collection
 -   **get('/')**: get all users from users collection
--   **post('/')**: post user data into users collection.  
+-   **post('/account/register')**: add user data into users collection.  
     _Fields_: userName, email, hashedPassword
+-   **post('/account/login')**: get data through email.  
+    _Fields_: email, hashedPassword
 -   **patch('/:id')**: use userId to update user infomation.  
     _Fields_: userId, newUserName, newEmail, newPhoneNumber, newAddress, newZipCode, newHashedPassword
 -   **put('/:id')**: user userId to complete user information.
