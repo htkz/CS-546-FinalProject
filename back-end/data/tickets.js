@@ -29,13 +29,15 @@ let exportedMethods = {
         return ticket;
     },
 
-    async addTicket(userId, placeId, ticketNo, orderedDate, effectDate, price) {
+    async addTicket(userId, placeId, orderedDate, effectDate, price) {
         const ticketCollection = await tickets();
+
+        let ticketNo = 0;
 
         let newTicket = {
             userId: userId,
             placeId: placeId,
-            ticketNo: ticketNo,
+            ticketNo: ++ticketNo,
             orderedDate: orderedDate,
             effectDate: effectDate,
             price: price,

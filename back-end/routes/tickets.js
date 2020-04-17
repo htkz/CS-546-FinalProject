@@ -35,7 +35,6 @@ router.post('/', async (req, res) => {
         const newTicket = await ticketData.addTicket(
             ticketInfo.userId,
             ticketInfo.placeId,
-            ticketInfo.ticketNo,
             ticketInfo.orderedDate,
             ticketInfo.effectDate,
             ticketInfo.price
