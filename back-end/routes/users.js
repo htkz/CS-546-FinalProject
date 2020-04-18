@@ -14,18 +14,19 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/account/login', async (req, res) => {
+    console.log(req.body);
     let email = req.body.email;
     let password = req.body.hashedPassword;
 
     if (!email) {
-        res.status(500).json({
+        res.status(401).json({
             error: 'No user name provided',
         });
         return;
     }
 
     if (!password) {
-        res.status(500).json({
+        res.status(401).json({
             error: 'No password provided',
         });
         return;
@@ -34,7 +35,7 @@ router.post('/account/login', async (req, res) => {
     try {
         const user = await userData.getUserByEmail(email);
         if (user.hashedPassword !== password) {
-            res.status(500).json({ message: 'Password incorrect.' });
+            res.status(401).json({ message: 'Password incorrect.' });
             return;
         }
         res.json(user);
@@ -56,8 +57,6 @@ router.get('/', async (req, res) => {
 
 router.post('/account/register', async (req, res) => {
     let userInfo = req.body;
-    console.log(userInfo);
-
     let error = [];
 
     if (!userInfo) {
