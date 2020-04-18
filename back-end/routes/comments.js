@@ -16,7 +16,6 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const commentList = await commentData.getAllComments();
-        res.sendFile(path.join(__dirname + '/personal_formation.html'));
         res.json(commentList);
     } catch (e) {
         // Something went wrong with the server!
