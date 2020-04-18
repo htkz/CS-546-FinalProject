@@ -2,6 +2,7 @@ const dbConnection = require('../config/mongoConnection');
 const data = require('../data/');
 const places = data.places;
 const counts = data.counts;
+const users = data.users;
 
 const main = async () => {
     const db = await dbConnection();
@@ -67,6 +68,8 @@ const main = async () => {
         1000,
         ['ticket3.jpg', 'ticket2.jpg']
     );
+
+    await users.addUser('htkz', 'htkz@gmail.com', '123');
 
     console.log('Done seeding database');
 
