@@ -209,4 +209,6 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 -   **userName**: 3-16 characters, only contains lower case word, upper case word & number
 -   **email**: basic email format
--   **password**: 1. 8-16 characters  2. Should only contains lower case word, upper case word & number 
+-   **password**: 
+        1. 8-16 characters  
+        2. Should only contains lower case word, upper case word & number 
