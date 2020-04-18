@@ -26,6 +26,7 @@
     "homepage": "https://github.com/htkz/CS-546-FinalProject#readme",
     "dependencies": {
         "express": "^4.17.1",
+        "express-session": "^1.17.1",
         "mongodb": "^3.5.4",
         "nodemon": "^2.0.2",
         "react": "^16.13.0"
