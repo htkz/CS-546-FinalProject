@@ -43,6 +43,7 @@ let exportedMethods = {
 
     checkPhoneNumber(phoneNumber) {
         const re = /^\d{10}$/;
+        if (!re.test(phoneNumber)) {
             return false;
         }
         return true;
