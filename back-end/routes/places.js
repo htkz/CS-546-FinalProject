@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const placeData = data.places;
+const commentData = data.comments;
+const userData = data.users;
 
 router.get('/:id', async (req, res) => {
     try {
@@ -18,6 +20,21 @@ router.get('/', async (req, res) => {
         res.json(placeList);
     } catch (error) {
         res.status(500).send();
+    }
+});
+
+router.get('/placeComments/:id', async (req, res) => {
+    try {
+        const allComments = await commentData.getCommentByPlaceId(
+            req.params.id
+        );
+        for (let i = 0; i < allComments.length; i++) {
+            const thisUser = await userData.getUserById(allComments[i].user);
+            allComments[i].user = thisUser.userName;
+        }
+        res.json(allComments);
+    } catch (e) {
+        res.status(404).json({ message: 'Not found!' });
     }
 });
 

@@ -144,7 +144,7 @@ let exportedMethods = {
         );
 
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'Update failed';
+            throw 'Place update failed';
         }
 
         return await this.getPlaceById(placeId);

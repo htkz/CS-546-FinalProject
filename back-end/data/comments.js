@@ -30,15 +30,13 @@ let exportedMethods = {
         return comment;
     },
 
-    async getCommentByPlaceId(id) {
+    async getCommentByPlaceId(placeId) {
         const commentCollection = await comments();
 
-        if (typeof id !== 'string') {
-            throw new Error('The placeId should be string');
-        }
+        placeId = await this.checkId(placeId);
 
         const allComments = await commentCollection
-            .find({ placeId: id })
+            .find({ placeId: placeId.toString() })
             .toArray();
 
         return allComments;
@@ -48,7 +46,7 @@ let exportedMethods = {
         const commentCollection = await comments();
 
         let newComment = {
-            userId: userId,
+            user: userId,
             placeId: placeId,
             comment: comment,
             votedCount: 0,

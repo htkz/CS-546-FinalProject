@@ -2,20 +2,12 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const commentData = data.comments;
+const userData = data.users;
 var path = require('path');
 
 router.get('/:id', async (req, res) => {
     try {
         const comment = await commentData.getCommentById(req.params.id);
-        res.json(comment);
-    } catch (e) {
-        res.status(404).json({ message: 'Not found!' });
-    }
-});
-
-router.get('/placeId/:id', async (req, res) => {
-    try {
-        const comment = await commentData.getCommentByPlaceId(req.params.id);
         res.json(comment);
     } catch (e) {
         res.status(404).json({ message: 'Not found!' });
@@ -43,7 +35,7 @@ router.post('/', async (req, res) => {
 
     try {
         const newComment = await commentData.addComment(
-            commentInfo.userId,
+            commentInfo.user,
             commentInfo.placeId,
             commentInfo.comment
         );
