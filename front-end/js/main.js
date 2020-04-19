@@ -120,12 +120,14 @@ const renderDetail = async (placeId) => {
         </div>
     `);
     $('#detailModal').append($modal);
-    const comments = await $.ajax({ url: `http://localhost:3000/comments/placeId/${placeId}` });
+    const comments = await $.ajax({
+        url: `http://localhost:3000/places/placeComments/${placeId}`,
+    });
     const $commentList = $modal.find('#commentList');
     for (comment of comments) {
         $comment = $(`
             <li>
-                <span class="username">username</span>:
+                <span class="username">${comment.user}</span>:
                 <span class="content">${comment.comment}</span>
             </li>`);
         $commentList.append($comment);
@@ -193,13 +195,15 @@ const refreshPlaces = async () => {
 };
 
 const refreshComment = async (placeId) => {
-    const comments = await $.ajax({ url: `http://localhost:3000/comments/placeId/${placeId}` });
+    const comments = await $.ajax({
+        url: `http://localhost:3000/places/placeComments/${placeId}`,
+    });
     const $commentList = $('#commentList');
     $commentList.empty();
     for (comment of comments) {
         $comment = $(`
             <li>
-                <span class="username">username</span>:
+                <span class="username">${comment.user}</span>:
                 <span class="content">${comment.comment}</span>
             </li>`);
         $commentList.append($comment);
@@ -214,11 +218,12 @@ const postComment = async () => {
     }
     const placeId = $('#place').attr('data-id');
     const userId = userInfo['_id'];
+    console.log(userId);
     await $.ajax({
         url: 'http://localhost:3000/comments/',
         type: 'POST',
         data: {
-            userId: userId,
+            user: userId,
             placeId: placeId,
             comment: comment,
         },
