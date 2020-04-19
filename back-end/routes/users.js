@@ -37,6 +37,7 @@ router.post('/account/login', async (req, res) => {
             res.status(401).json({ message: 'Password incorrect.' });
             return;
         }
+        // cookie
         res.cookie('user', JSON.stringify(user));
         res.json(user);
     } catch (e) {
