@@ -5,9 +5,10 @@ $('#form-signup').submit(async (event) =>{
     const signupPassword = $('#signupPassword').val();
     const reEnterPassword = $('#reEnterPassword').val();
 
-    if(!signupEmailChecking(signupEmail)) return;
-    if(!userNameChecking(userName)) return;
-    if(!passwordChecking(signupPassword,reEnterPassword)) return;
+    if( !signupEmailChecking(signupEmail) ||
+        !userNameChecking(userName) ||
+        !passwordChecking(signupPassword,reEnterPassword)
+    ) return;
 
     try{
         await $.ajax({
@@ -25,24 +26,28 @@ $('#form-signup').submit(async (event) =>{
 });
 
 function signupEmailChecking(signupEmail){
+    let temp = document.getElementById('emailRule');
+
+    if(temp.className === 'formatRules') temp.className='hidden';
+
     if(!signupEmail) {
-        errorDisplay('No Email Input');
+        temp.className='formatRules';
         return false;
     }
     return true;
 }
 
 function userNameChecking(userName){
-    if(!userName){
-        errorDisplay('No Username Input');
-        return false;
-    }
+    let temp = document.getElementById('usernameRule');
 
-    if( userName.length<3   ||
+    if(temp.className === 'formatRules') temp.className='hidden';
+
+    if( !userName   ||
+        userName.length<3   ||
         userName.length>16  ||
         !formatChecking(userName)
     ){
-        errorDisplay('Illegal username');
+        temp.className='formatRules';
         return false;
     }
 
@@ -50,34 +55,29 @@ function userNameChecking(userName){
 }
 
 function passwordChecking(signupPassword,reEnterPassword){
-    if(!signupPassword){
-        errorDisplay('No Sign-up Password Input');
-        return false;
-    }
+    let password = document.getElementById('passwordRule');
+    let re_password = document.getElementById('re-passwordRule');
 
-    if(!reEnterPassword){
-        errorDisplay('No Re-enter Password Input');
-        return false;
-    }
+    if(password.className === 'formatRules') password.className='hidden';
 
-    if( signupPassword.length<8   ||
+    if(re_password.className === 'formatRules') re_password.className='hidden';
+
+    if( !signupPassword ||
+        !reEnterPassword ||
+        signupPassword.length<8   ||
         signupPassword.length>16  ||
         !formatChecking(signupPassword)
     ){
-        errorDisplay('Illegal sign-up password');
+        password.className='formatRules';
         return false;
     }
 
     if(signupPassword !== reEnterPassword){
-        errorDisplay('Re-enter password not match');
+        re_password.className='formatRules';
         return false;
     }
 
     return true;
-}
-
-function errorDisplay(error){
-    alert(error);
 }
 
 function formatChecking(s){

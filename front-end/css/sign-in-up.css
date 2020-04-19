@@ -11,6 +11,8 @@ html {
       max-width: 330px;
       padding: 15px; 
       margin: auto; }
+      html body .form-signup .hidden{
+        display:none;}
       html body .form-signup .formatRules{
         height: auto;
         color: red;
