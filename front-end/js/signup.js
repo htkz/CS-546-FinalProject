@@ -5,10 +5,11 @@ $('#form-signup').submit(async (event) =>{
     const signupPassword = $('#signupPassword').val();
     const reEnterPassword = $('#reEnterPassword').val();
 
-    if( !signupEmailChecking(signupEmail) ||
-        !userNameChecking(userName) ||
-        !passwordChecking(signupPassword,reEnterPassword)
-    ) return;
+    const eCheck = signupEmailChecking(signupEmail);
+    const nCheck = userNameChecking(userName);
+    const pCheck = passwordChecking(signupPassword,reEnterPassword);
+
+    if( !eCheck || !nCheck || !pCheck ) return;
 
     try{
         await $.ajax({
