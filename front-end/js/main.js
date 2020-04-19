@@ -2,7 +2,16 @@ const deepcopy = (obj) => {
     return JSON.parse(JSON.stringify(obj));
 };
 
-const renderPlace = (places) => {
+const getPlaceById = (id) => {
+    for (place of store['places']) {
+        if (place._id === id) {
+            return place;
+        }
+    }
+    return undefined;
+};
+
+const renderPlaces = (places) => {
     $('#cards').empty();
 
     for (place of places) {
@@ -34,19 +43,15 @@ const renderPlace = (places) => {
             card.find('.category').append(cat);
         }
         card.click((event) => {
-            for (place of store['places']) {
-                if (place._id === event.currentTarget.id) {
-                    renderDetail(place);
-                    break;
-                }
-            }
+            renderDetail(event.currentTarget.id);
             $('#detailModal').modal('show');
         });
         $('#cards').append(card);
     }
 };
 
-const renderDetail = (place) => {
+const renderDetail = async (placeId) => {
+    const place = getPlaceById(event.currentTarget.id);
     $('#detailModal').empty();
 
     const $modal = $(`
@@ -114,16 +119,17 @@ const renderDetail = (place) => {
             </div>
         </div>
     `);
+    $('#detailModal').append($modal);
+    const comments = await $.ajax({ url: `http://localhost:3000/comments/placeId/${placeId}` });
     const $commentList = $modal.find('#commentList');
-    for (comment of place.placeUserComments) {
+    for (comment of comments) {
         $comment = $(`
             <li>
                 <span class="username">username</span>:
-                <span class="content">${comment}</span>
+                <span class="content">${comment.comment}</span>
             </li>`);
         $commentList.append($comment);
     }
-    $('#detailModal').append($modal);
     $('#postBtn').click(postComment);
 };
 
@@ -149,7 +155,7 @@ const filterByLatest = () => {
         return 0;
     });
     places.reverse();
-    renderPlace(places);
+    renderPlaces(places);
 };
 
 const filterByHottest = () => {
@@ -157,7 +163,7 @@ const filterByHottest = () => {
     places.sort((a, b) => {
         return a.remainNum - b.remainNum;
     });
-    renderPlace(places);
+    renderPlaces(places);
 };
 
 const filterBySearch = (tag) => {
@@ -169,17 +175,35 @@ const filterBySearch = (tag) => {
             places.push(place);
         }
     }
-    renderPlace(places);
+    renderPlaces(places);
 };
 
 const filterByReset = () => {
-    renderPlace(store['places']);
+    renderPlaces(store['places']);
 };
 
 const renderUser = () => {
     console.log(userInfo);
     console.log(userInfo['userName']);
     $('#username').text(userInfo['userName']);
+};
+
+const refreshPlaces = async () => {
+    await fetchPlaces(store);
+};
+
+const refreshComment = async (placeId) => {
+    const comments = await $.ajax({ url: `http://localhost:3000/comments/placeId/${placeId}` });
+    const $commentList = $('#commentList');
+    $commentList.empty();
+    for (comment of comments) {
+        $comment = $(`
+            <li>
+                <span class="username">username</span>:
+                <span class="content">${comment.comment}</span>
+            </li>`);
+        $commentList.append($comment);
+    }
 };
 
 const postComment = async () => {
@@ -199,6 +223,8 @@ const postComment = async () => {
             comment: comment,
         },
     });
+    await refreshPlaces();
+    refreshComment(placeId);
 };
 
 const bindEvent = () => {
@@ -216,7 +242,7 @@ const userInfo = JSON.parse(Cookies.get('user'));
 
 const main = async () => {
     await fetchPlaces(store);
-    renderPlace(store['places']);
+    renderPlaces(store['places']);
     renderUser();
     bindEvent();
 };
