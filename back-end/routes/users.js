@@ -14,7 +14,6 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/account/login', async (req, res) => {
-    console.log(req.body);
     let email = req.body.email;
     let password = req.body.hashedPassword;
 
@@ -38,6 +37,7 @@ router.post('/account/login', async (req, res) => {
             res.status(401).json({ message: 'Password incorrect.' });
             return;
         }
+        res.cookie('user', JSON.stringify(user));
         res.json(user);
     } catch (e) {
         res.status(404).json({ message: 'Not found!' });

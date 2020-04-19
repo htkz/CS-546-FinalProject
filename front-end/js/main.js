@@ -1,11 +1,5 @@
-
-
 const deepcopy = (obj) => {
     return JSON.parse(JSON.stringify(obj));
-};
-
-const setDetail = (id) => {
-    console.log(id);
 };
 
 const renderPlace = (places) => {
@@ -57,7 +51,7 @@ const renderDetail = (place) => {
 
     const $modal = $(`
         <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content" id="place" data-id="${place._id}">
                 <div class="modal-header">
                     <h3 class="modal-title" id="detailModalLabel">
                         ${place.placeName}
@@ -102,7 +96,7 @@ const renderDetail = (place) => {
                             </div>
                             <div class="inputContainer">
                                 <textarea name="commentInput" id="commentInput" cols="70" rows="1" placeholder="Add a comment"></textarea>
-                                <button class="btn btn-outline-primary btn-sm">
+                                <button class="btn btn-outline-primary btn-sm" id="postBtn">
                                     Post
                                 </button>
                             </div>
@@ -130,6 +124,7 @@ const renderDetail = (place) => {
         $commentList.append($comment);
     }
     $('#detailModal').append($modal);
+    $('#postBtn').click(postComment);
 };
 
 const fetchPlaces = async (store) => {
@@ -181,6 +176,31 @@ const filterByReset = () => {
     renderPlace(store['places']);
 };
 
+const renderUser = () => {
+    console.log(userInfo);
+    console.log(userInfo['userName']);
+    $('#username').text(userInfo['userName']);
+};
+
+const postComment = async () => {
+    const comment = $('#commentInput').val();
+    if (comment.length === 0) {
+        alert('Please input some text!');
+        return;
+    }
+    const placeId = $('#place').attr('data-id');
+    const userId = userInfo['_id'];
+    await $.ajax({
+        url: 'http://localhost:3000/comments/',
+        type: 'POST',
+        data: {
+            userId: userId,
+            placeId: placeId,
+            comment: comment,
+        },
+    });
+};
+
 const bindEvent = () => {
     $('#latestBtn').click(filterByLatest);
     $('#resetBtn').click(filterByReset);
@@ -192,10 +212,12 @@ const bindEvent = () => {
 };
 
 const store = {};
+const userInfo = JSON.parse(Cookies.get('user'));
 
 const main = async () => {
     await fetchPlaces(store);
     renderPlace(store['places']);
+    renderUser();
     bindEvent();
 };
 

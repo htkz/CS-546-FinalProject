@@ -25,7 +25,6 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     let commentInfo = req.body;
-    console.log(commentInfo);
 
     if (!commentInfo) {
         res.status(400).json({
@@ -38,7 +37,6 @@ router.post('/', async (req, res) => {
             commentInfo.userId,
             commentInfo.placeId,
             commentInfo.comment,
-            commentInfo.votedCount
         );
         res.status(200).json(newComment);
     } catch (error) {

@@ -23,7 +23,7 @@ $('#form-signin').submit(async (event) => {
                 hashedPassword: password,
             },
         });
-        alert('Correct Username and Password!');
+        window.location.replace('http://localhost:3000/main.html');
     } catch (error) {
         alert(error['responseJSON']['message']);
     }
