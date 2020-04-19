@@ -13,6 +13,15 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.get('/placeId/:id', async (req, res) => {
+    try {
+        const comment = await commentData.getCommentByPlaceId(req.params.id);
+        res.json(comment);
+    } catch (e) {
+        res.status(404).json({ message: 'Not found!' });
+    }
+});
+
 router.get('/', async (req, res) => {
     try {
         const commentList = await commentData.getAllComments();
@@ -36,7 +45,7 @@ router.post('/', async (req, res) => {
         const newComment = await commentData.addComment(
             commentInfo.userId,
             commentInfo.placeId,
-            commentInfo.comment,
+            commentInfo.comment
         );
         res.status(200).json(newComment);
     } catch (error) {
