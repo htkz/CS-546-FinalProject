@@ -1,8 +1,13 @@
+const bcrypt = require('bcryptjs');
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const userData = data.users;
+const utility = require('../utility');
+const checkParam = utility.checkInput;
 var path = require('path');
+
+const saltRounds = 16;
 
 router.get('/:id', async (req, res) => {
     try {
@@ -33,7 +38,11 @@ router.post('/account/login', async (req, res) => {
 
     try {
         const user = await userData.getUserByEmail(email);
-        if (user.hashedPassword !== password) {
+        let comparePasswords = await bcrypt.compare(
+            password,
+            user.hashedPassword
+        );
+        if (!comparePasswords) {
             res.status(401).json({ message: 'Password incorrect.' });
             return;
         }
@@ -57,7 +66,9 @@ router.get('/', async (req, res) => {
 
 router.post('/account/register', async (req, res) => {
     let userInfo = req.body;
-    let error = [];
+    let username = req.body.userName;
+    let email = req.body.email;
+    let unhashedPassword = req.body.hashedPassword;
 
     if (!userInfo) {
         res.status(400).json({
@@ -65,34 +76,54 @@ router.post('/account/register', async (req, res) => {
         });
     }
 
-    if (!userInfo.userName) {
-        error.push('No user name provided');
+    if (!username) {
         res.status(500).json({
             error: 'No user name provided',
         });
         return;
     }
 
-    if (!userInfo.email) {
-        error.push('No email address provided');
+    // check user name
+    if (!checkParam.checkUserName(username)) {
+        res.status(500).json({
+            error:
+                '3-16 characters, only contains lower case word, upper case word & number',
+        });
+        return;
+    }
+
+    if (!email) {
         res.status(500).json({
             error: 'No email address provided',
         });
         return;
     }
 
-    if (!userInfo.hashedPassword) {
-        error.push('No password provided');
+    // check email
+    if (!checkParam.checkEmail(email)) {
+        res.status(500).json({ error: 'Not valid e-mail address' });
+        return;
+    }
+
+    if (!unhashedPassword) {
         res.status(500).json({
             error: 'No password provided',
         });
         return;
     }
 
+    // check password
+    if (!checkParam.checkPassword(unhashedPassword)) {
+        res.status(500).json({
+            error:
+                '8-16 characters. Must contain 1 lower case word, 1 upper case word & 1 number',
+        });
+        return;
+    }
+
+    let hashedPassword = await bcrypt.hash(unhashedPassword, saltRounds);
+
     if ((await userData.getUserByUserName(userInfo.userName)) !== null) {
-        error.push(
-            'The user name has been existed, please choose another user name.'
-        );
         res.status(500).json({
             error:
                 'The user name has been existed, please choose another user name.',
@@ -101,23 +132,14 @@ router.post('/account/register', async (req, res) => {
     }
 
     if ((await userData.getUserByEmail(userInfo.email)) !== null) {
-        error.push('The email has been existed, please choose another email.');
         res.status(500).json({
             error: 'The email has been existed, please choose another email.',
         });
         return;
     }
 
-    if (error.length > 0) {
-        console.log(error);
-    }
-
     try {
-        const newUser = await userData.addUser(
-            userInfo.userName,
-            userInfo.email,
-            userInfo.hashedPassword
-        );
+        const newUser = await userData.addUser(username, email, hashedPassword);
         res.status(200).json(newUser);
     } catch (e) {
         res.status(500).json({ error: e });
@@ -146,24 +168,25 @@ router.patch('/:id', async (req, res) => {
         });
         return;
     }
+
     // check newPhoneNumber field
-    else if (requestBody.newPhoneNumber) {
-        if ((typeof requestBody.newPhoneNumber == 'number') == false) {
-            res.status(400).json({
-                error: 'The type of phoneNumber must be number',
-            });
-            return;
-        }
+    if (!checkParam.checkPhoneNumber(requestBody.newPhoneNumber)) {
+        res.status(500).json({ error: 'Not valid phone number' });
+        return;
     }
+
     // check newZipCode field
-    else if (requestBody.newZipCode) {
-        if ((typeof requestBody.newZipCode == 'string') == false) {
-            res.status(400).json({
-                error: 'The type of zipCode must be string',
-            });
-            return;
-        }
+    if (!checkParam.checkZipCode(requestBody.newZipCode)) {
+        res.status(500).json({ error: 'Not valid zip code' });
+        return;
     }
+
+    // check newEmail field
+    if (!checkParam.checkEmail(requestBody.newEmail)) {
+        res.status(500).json({ error: 'Not valid e-mail address' });
+        return;
+    }
+
     // check new email whether in the database or not
     if (requestBody.newEmail) {
         if ((await userData.getUserByEmail(requestBody.newEmail)) !== null) {
@@ -173,6 +196,25 @@ router.patch('/:id', async (req, res) => {
             return;
         }
     }
+
+    // check newUserName field
+    if (!checkParam.checkUserName(requestBody.newUserName)) {
+        res.status(500).json({
+            error:
+                '3-16 characters, only contains lower case word, upper case word & number',
+        });
+        return;
+    }
+
+    // check newHashedPassword field
+    if (!checkParam.checkPassword(requestBody.newHashedPassword)) {
+        res.status(500).json({
+            error:
+                '8-16 characters. Must contain 1 lower case word, 1 upper case word & 1 number',
+        });
+        return;
+    }
+
     // check new name whether in the database or not
     if (requestBody.newUserName) {
         if (
@@ -193,10 +235,18 @@ router.patch('/:id', async (req, res) => {
             requestBody.newUserName !== oldUser.userName
         ) {
             updatedObject.userName = requestBody.newUserName;
+        } else {
+            res.status(500).json({
+                error: 'The new user name is the same as the old user name',
+            });
         }
 
         if (requestBody.newEmail && requestBody.newEmail !== oldUser.email) {
             updatedObject.email = requestBody.newEmail;
+        } else {
+            res.status(500).json({
+                error: 'The new email is the same as the old email',
+            });
         }
 
         if (
@@ -204,6 +254,11 @@ router.patch('/:id', async (req, res) => {
             requestBody.newPhoneNumber !== oldUser.phoneNumber
         ) {
             updatedObject.phoneNumber = requestBody.newPhoneNumber;
+        } else {
+            res.status(500).json({
+                error:
+                    'The new phone number is the same as the old phone number',
+            });
         }
 
         if (
@@ -211,6 +266,10 @@ router.patch('/:id', async (req, res) => {
             requestBody.newAddress !== oldUser.address
         ) {
             updatedObject.address = requestBody.newAddress;
+        } else {
+            res.status(500).json({
+                error: 'The new address is the same as the old address',
+            });
         }
 
         if (
@@ -218,13 +277,26 @@ router.patch('/:id', async (req, res) => {
             requestBody.newZipCode !== oldUser.zipCode
         ) {
             updatedObject.zipCode = requestBody.newZipCode;
+        } else {
+            res.status(500).json({
+                error: 'The new zip code is the same as the old zip code',
+            });
         }
 
         if (
             requestBody.newHashedPassword &&
-            requestBody.newHashedPassword !== oldUser.hashedPassword
+            !(await bcrypt.compare(
+                requestBody.newHashedPassword,
+                oldUser.hashedPassword
+            ))
         ) {
-            updatedObject.hashedPassword = requestBody.newHashedPassword;
+            updatedObject.hashedPassword = await bcrypt.hash(
+                requestBody.newHashedPassword
+            );
+        } else {
+            res.status(500).json({
+                error: 'The new password is the same as the old password',
+            });
         }
     } catch (error) {
         res.status(404).json({ error: 'User not found' });
@@ -261,16 +333,14 @@ router.put('/:id', async (req, res) => {
         });
     }
 
-    // check phone number field
+    // check phoneNumber field
     if (!userInfo.phoneNumber || userInfo.phoneNumber.length === 0) {
         res.status(400).json({ error: 'You must provide a phone number' });
         return;
     }
 
-    if ((typeof userInfo.phoneNumber == 'number') == false) {
-        res.status(400).json({
-            error: 'Phone number name must be number type',
-        });
+    if (!checkParam.checkPhoneNumber(userInfo.phoneNumber)) {
+        res.status(500).json({ error: 'Not valid phone number' });
         return;
     }
 
@@ -285,14 +355,14 @@ router.put('/:id', async (req, res) => {
         return;
     }
 
-    // check zip code fields
+    // check zipCode field
     if (!userInfo.zipCode || userInfo.zipCode.length === 0) {
         res.status(400).json({ error: 'You must provide a zip code' });
         return;
     }
 
-    if ((typeof userInfo.zipCode == 'number') == false) {
-        res.status(400).json({ error: 'Zip code must be number type' });
+    if (!checkParam.checkZipCode(userInfo.zipCode)) {
+        res.status(500).json({ error: 'Not valid zip code' });
         return;
     }
 
