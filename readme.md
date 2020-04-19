@@ -127,7 +127,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 ```json
 {
     "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "userId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "user": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "placeId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "comment": "You should go with the pixel!",
     "votedCount": 10,
@@ -141,7 +141,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | Name       | Type   | Description                                      |
 | :--------- | :----- | :----------------------------------------------- |
 | \_id       | string | The comment ID.                                  |
-| userId     | string | The userId of the person who posted the comment. |
+| user       | string | The userId of the person who posted the comment. |
 | placeId    | string | The place the ticket takes effect on.            |
 | comment    | string | The comment text.                                |
 | votedCount | number | The upvoted count of the comment.                |
@@ -197,6 +197,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 ##### Use
 
 -   **get('/:id')**: use placeId to get place from places collection
+-   **get('/placeComments/:id)**: use placeId to get this place all comments.
 -   **get('/')**: get all places from places collection
 -   **post('/')**: post place data into places collection.  
     _Fields_: placeName, description, placeAddress, placeZipCode, placePrice, category, displayTime, remainNum, images
@@ -204,11 +205,10 @@ The idea of the application is to allow users to book tickets for tourism. The v
     _Fields_: placeId, newPlaceName, newDescription, newPlaceAddress, newPlaceZipCode, newPlacePrice, newCategory, newDisplayTime, newRemainNum, newImages
 -   **delete('/:id')**: delete place through placeId from places collection.
 
-
 #### Password Format
 
 -   **userName**: 3-16 characters, only contains lower case word, upper case word & number
 -   **email**: basic email format
--   **password**: 
-    1. 8-16 characters  
-    2. Should only contains lower case word, upper case word & number 
+-   **password**:
+    1. 8-16 characters
+    2. Should only contains lower case word, upper case word & number
