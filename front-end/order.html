@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Order</title>
-    <link href="css/information.css" rel="stylesheet" type="text/css" media="all" />
+	<title>Order</title>
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link href="css/information.css" rel="stylesheet" type="text/css" media="all" />
+	
   </head>
   <body>
     <div class="top_part">
       <div class="pic1">		
 		<a href="./main.html"><img src="pic/User Center/home-default.svg" class="back_b"> </a>
-		<!-- <img src="pic/User Center/home-default.svg"  alt="" class="back_b"> -->
 	  </div>
 	  <div class="pic2">
 		  <div class="backpart">
@@ -21,26 +23,36 @@
       <div class="bot_right">
         <div class="bot_right_top">
           <div class="information">
-            <h3 class="first_h3">My information</h3>
-            <table class="tb">
-              <tr>
-                <td>Email:</td>
-				<td><p class="user_information">734983740@qq.com</p></td>
-				<td>UserName:</td>
-				<td><p class="user_information">Bestlee@qq.com</p></td>
-              </tr>
-              <tr>
-                <td>Address:</td>
-				<td><p class="user_information">Hoboken</p></td>
-				<td>PhoneNumber:</td>
-                <td><p class="user_information">10086</p></td>
-              </tr>
-              <tr>
-                <td>zipCode:</td>
-				<td><p class="user_information">07307</p></td>
-				
-              </tr>
-            </table>
+            <h3 class="first_h3">My information
+				<div class="edit_bt">
+					<button class="edit_bt_1"><a href="./info_Edit.html">Edit</a></button>
+				</div>
+			</h3>
+            <table class="bordered">
+				<tr>
+					<td>Username:</td>
+					<td id="Username:"> Xunzhi 123</td>
+				  </tr>
+				  <tr>
+					<td>Address:</td>
+					<td id="Address:">Hoboken</td>
+				  </tr>
+				<tr>
+					<td>Zipcode</td>
+					<td id="Zipcode:">07307</td>
+				  </tr>
+
+			  </table>
+			  <table class="bordered">
+				<tr>
+					<td id="Email:">Email</td>
+					<td>734983740@qq.com</td>
+				  </tr>
+				  <tr>
+					<td id="PhoneNumber:">PhoneNumber</td>
+					<td>1008611</td>
+				  </tr>
+			  </table>
           </div>
         </div>
         <div class="bot_right_bot">
