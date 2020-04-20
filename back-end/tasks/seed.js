@@ -68,8 +68,7 @@ const main = async () => {
         ['ticket3.jpg', 'ticket2.jpg']
     );
 
-    await users.addUser('htkz', 'htkz@gmail.com', '123');
-    await users.
+    await users.addUser('htkz', 'admin@gmail.com', 'Qq123456');
 
     console.log('Done seeding database');
 
