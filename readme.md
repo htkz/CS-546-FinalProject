@@ -216,7 +216,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 #### Cookie
 
-The cookie just store user's username.
+The cookie just store user's username and \_id.
 When user logs in the account, the cookie will store user's username.
 When user logs out the account, the cookie will delete.
 **Field**: req.session.user
