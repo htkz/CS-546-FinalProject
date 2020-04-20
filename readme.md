@@ -220,3 +220,13 @@ The cookie just store user's username.
 When user logs in the account, the cookie will store user's username.
 When user logs out the account, the cookie will delete.
 **Field**: req.session.user
+
+#### Http Status Code
+
+| Status Code | Status Code Name      | Description                                                                                                           |
+| :---------- | :-------------------- | :-------------------------------------------------------------------------------------------------------------------- |
+| 200         | OK                    | Standard response for successful HTTP requests. succeeded.                                                            |
+| 400         | Bad Request           | The server cannot or will not process the request due to an apparent client error.                                    |
+| 401         | Unauthorized          | the user does not have valid authentication credentials for the target resource.                                      |
+| 404         | Not Found             | The requested resource could not be found but may be available in the future.                                         |
+| 500         | Internal Server Error | A generic error message, given when an unexpected condition was encountered and no more specific message is suitable. |
