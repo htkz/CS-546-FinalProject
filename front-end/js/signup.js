@@ -21,6 +21,13 @@ $('#form-signup').submit(async (event) => {
                 hashedPassword: signupPassword,
             },
         });
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+            timer: 1500,
+        });
     } catch (error) {
         alert(error['responseJSON']['error']);
     }
