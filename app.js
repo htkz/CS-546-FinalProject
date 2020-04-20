@@ -25,10 +25,29 @@ const express = require('express');
 const app = express();
 const configRoutes = require('./back-end/routes');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.use(async (req, res, next) => {
+    let currentTime = new Date().toUTCString();
+    let requestMethod = req.method;
+    let requestRoute = req.originalUrl;
+    console.log(`[${currentTime}]: ${requestMethod} ${requestRoute}`);
+    next();
+});
+
+app.use(
+    session({
+        name: 'UserCookie',
+        secret: 'I want to tell you!',
+        resave: false,
+        saveUninitialized: true,
+    })
+);
+
 configRoutes(app);
 
 app.listen(3000, () => {

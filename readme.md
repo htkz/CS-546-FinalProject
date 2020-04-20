@@ -72,11 +72,12 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 ##### Use
 
--   **get('/:id')**: use userId to get user from users collection
+-   **get('/account/:id')**: use userId to get user from users collection
 -   **get('/')**: get all users from users collection
+-   **get('/logout')**: logout user and delete cookie
 -   **post('/account/register')**: add user data into users collection.  
     _Fields_: userName, email, hashedPassword
--   **post('/account/login')**: get data through email.  
+-   **post('/account/login')**: get data through email. Save username in the cookie.
     _Fields_: email, hashedPassword
 -   **patch('/:id')**: use userId to update user infomation.  
     _Fields_: userId, newUserName, newEmail, newPhoneNumber, newAddress, newZipCode, newHashedPassword
@@ -212,3 +213,10 @@ The idea of the application is to allow users to book tickets for tourism. The v
 -   **password**:
     1. 8-16 characters
     2. Should only contains lower case word, upper case word & number
+
+#### Cookie
+
+The cookie just store user's username.
+When user logs in the account, the cookie will store user's username.
+When user logs out the account, the cookie will delete.
+**Field**: req.session.user

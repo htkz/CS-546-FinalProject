@@ -26,8 +26,12 @@ let exportedMethods = {
     },
 
     checkPassword(password) {
-        const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/;
+        // const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/;
+        const re = /^[0-9a-zA-Z]*$/;
         if (!re.test(password)) {
+            return false;
+        }
+        if (userName.length > 16 || userName.length < 8) {
             return false;
         }
         return true;
