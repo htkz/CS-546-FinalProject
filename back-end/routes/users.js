@@ -9,7 +9,7 @@ var path = require('path');
 
 const saltRounds = 16;
 
-router.get('/:id', async (req, res) => {
+router.get('/account/:id', async (req, res) => {
     try {
         const user = await userData.getUserById(req.params.id);
         res.json(user);
@@ -47,10 +47,13 @@ router.post('/account/login', async (req, res) => {
             return;
         }
         // cookie
-        res.cookie('user', JSON.stringify(user));
+        res.cookie('name', 'userCookie');
+        let sessionUser = { userName: user.userName };
+        req.session.user = sessionUser;
         res.json(user);
     } catch (e) {
         res.status(404).json({ message: 'Not found!' });
+        console.log(e);
     }
 });
 
@@ -66,8 +69,8 @@ router.get('/', async (req, res) => {
 
 router.post('/account/register', async (req, res) => {
     let userInfo = req.body;
-    let username = req.body.userName;
-    let email = req.body.email;
+    let username = req.body.userName.toLowerCase();
+    let email = req.body.email.toLowerCase();
     let unhashedPassword = req.body.hashedPassword;
 
     if (!userInfo) {
@@ -189,7 +192,11 @@ router.patch('/:id', async (req, res) => {
 
     // check new email whether in the database or not
     if (requestBody.newEmail) {
-        if ((await userData.getUserByEmail(requestBody.newEmail)) !== null) {
+        if (
+            (await userData.getUserByEmail(
+                requestBody.newEmail.toLowerCase()
+            )) !== null
+        ) {
             res.status(500).json({
                 error: `This ${requestBody.newEmail} has been existed`,
             });
@@ -218,7 +225,9 @@ router.patch('/:id', async (req, res) => {
     // check new name whether in the database or not
     if (requestBody.newUserName) {
         if (
-            (await userData.getUserByUserName(requestBody.newUserName)) !== null
+            (await userData.getUserByUserName(
+                requestBody.newUserName.toLowerCase()
+            )) !== null
         ) {
             res.status(500).json({
                 error: `This ${requestBody.newUserName} has been existed`,
@@ -234,7 +243,7 @@ router.patch('/:id', async (req, res) => {
             requestBody.newUserName &&
             requestBody.newUserName !== oldUser.userName
         ) {
-            updatedObject.userName = requestBody.newUserName;
+            updatedObject.userName = requestBody.newUserName.toLowerCase();
         } else {
             res.status(500).json({
                 error: 'The new user name is the same as the old user name',
@@ -242,7 +251,7 @@ router.patch('/:id', async (req, res) => {
         }
 
         if (requestBody.newEmail && requestBody.newEmail !== oldUser.email) {
-            updatedObject.email = requestBody.newEmail;
+            updatedObject.email = requestBody.newEmail.toLowerCase();
         } else {
             res.status(500).json({
                 error: 'The new email is the same as the old email',
@@ -403,6 +412,15 @@ router.delete('/:id', async (req, res) => {
         res.json(deleteUser);
     } catch (error) {
         res.status(500).json({ error: error });
+    }
+});
+
+router.get('/logout', async (req, res) => {
+    try {
+        req.session.user = undefined;
+        res.status(200).json({ message: 'Logout successful!' });
+    } catch (e) {
+        res.status(500).json({ error: e });
     }
 });
 
