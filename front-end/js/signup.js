@@ -9,7 +9,15 @@ $('#form-signup').submit(async (event) => {
     const nCheck = userNameChecking(userName);
     const pCheck = passwordChecking(signupPassword, reEnterPassword);
 
-    if (!eCheck || !nCheck || !pCheck) return;
+    if (!eCheck || !nCheck || !pCheck) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Opps! Something went wrong!',
+            showConfirmButton: false,
+            timer: 1500,
+        });
+        return;
+    }
 
     try {
         await $.ajax({
