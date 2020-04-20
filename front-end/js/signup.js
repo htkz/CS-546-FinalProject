@@ -35,6 +35,8 @@ $('#form-signup').submit(async (event) => {
             showConfirmButton: false,
             timer: 1500,
         });
+        $('.form-signup').hide();
+        $('.form-signin').fadeIn(1000);
     } catch (error) {
         alert(error['responseJSON']['error']);
     }
