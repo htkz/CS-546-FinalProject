@@ -45,9 +45,8 @@ router.post('/account/login', async (req, res) => {
             return;
         }
         // cookie
-        res.cookie('name', 'userCookie');
         let sessionUser = { _id: user._id, userName: user.userName };
-        req.session.user = sessionUser;
+        res.cookie('user', JSON.stringify(sessionUser));
         res.json(user);
     } catch (e) {
         res.status(404).json({ message: 'Not found!' });
