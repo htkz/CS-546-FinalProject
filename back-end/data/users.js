@@ -165,7 +165,7 @@ let exportedMethods = {
         );
 
         if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
-            throw 'Update failed';
+            throw 'AddCommentToUser Update failed';
         }
 
         return await this.getUserById(userId);
@@ -183,7 +183,7 @@ let exportedMethods = {
         );
 
         if (!deletedInfo.matchedCount && !deletedInfo.modifiedCount) {
-            throw 'Update failed';
+            throw 'removeCommentFromUser Update failed';
         }
 
         return await this.getUserById(userId);
@@ -201,7 +201,7 @@ let exportedMethods = {
         );
 
         if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
-            throw 'Update failed';
+            throw 'addVotedCommentToUser Update failed';
         }
 
         return await this.getUserById(userId);
@@ -219,7 +219,7 @@ let exportedMethods = {
         );
 
         if (!deletedInfo.matchedCount && !deletedInfo.modifiedCount) {
-            throw 'Update failed';
+            throw 'removeVodedCommentFromUser Update failed';
         }
 
         return await this.getUserById(userId);
@@ -237,7 +237,7 @@ let exportedMethods = {
         );
 
         if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
-            throw 'Update failed';
+            throw 'addTicketToUser Update failed';
         }
 
         return await this.getUserById(userId);
@@ -255,7 +255,7 @@ let exportedMethods = {
         );
 
         if (!deletedInfo.matchedCount && !deletedInfo.modifiedCount) {
-            throw 'Update failed';
+            throw 'removeTicketFromUser Update failed';
         }
 
         return await this.getUserById(userId);
