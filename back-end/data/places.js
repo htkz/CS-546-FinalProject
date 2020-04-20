@@ -144,7 +144,7 @@ let exportedMethods = {
         );
 
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'Place update failed';
+            throw 'addCommentToPlace update failed';
         }
 
         return await this.getPlaceById(placeId);
@@ -162,7 +162,7 @@ let exportedMethods = {
         );
 
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'Update failed';
+            throw 'removeCommentFromPlace failed';
         }
 
         return await this.getPlaceById(placeId);
