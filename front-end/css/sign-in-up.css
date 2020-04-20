@@ -1,38 +1,39 @@
 html {
-    height: 100%;
-}
-html body {
+  height: 100%; }
+  html body {
     height: 100%;
     display: flex;
     align-items: center;
-    background-color: #f5f5f5;
-}
-html body .form-signup {
-    display: none;
-    width: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: auto;
-}
-html body .form-signup .form-control {
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
-}
-html body .form-signup input {
-    margin-bottom: 10px;
-}
-html body .form-signin {
-    width: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: auto;
-}
-html body .form-signin .form-control {
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
-}
-html body .form-signin input {
-    margin-bottom: 10px;
-}
+    background-color: #f5f5f5; }
+    html body .form-signup {
+      display: none;
+      width: 100%;
+      max-width: 330px;
+      padding: 15px;
+      margin: auto; }
+      html body .form-signup .formatRules {
+        height: auto;
+        color: red;
+        padding: 0px !important;
+        text-align: left;
+        font-size: 12px;
+        font-weight: normal; }
+      html body .form-signup .hidden {
+        display: none; }
+      html body .form-signup .form-control {
+        height: auto;
+        padding: 10px;
+        font-size: 16px; }
+      html body .form-signup input {
+        margin-bottom: 10px; }
+    html body .form-signin {
+      width: 100%;
+      max-width: 330px;
+      padding: 15px;
+      margin: auto; }
+      html body .form-signin .form-control {
+        height: auto;
+        padding: 10px;
+        font-size: 16px; }
+      html body .form-signin input {
+        margin-bottom: 10px; }

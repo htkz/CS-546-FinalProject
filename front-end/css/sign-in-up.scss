@@ -11,6 +11,17 @@ html {
             max-width: 330px;
             padding: 15px;
             margin: auto;
+            .formatRules {
+                height: auto;
+                color: red;
+                padding: 0px !important;
+                text-align: left;
+                font-size: 12px;
+                font-weight: normal;
+            }
+            .hidden {
+                display: none;
+            }
             .form-control {
                 height: auto;
                 padding: 10px;
