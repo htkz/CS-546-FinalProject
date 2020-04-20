@@ -7,7 +7,7 @@ const utility = require('../utility');
 const checkParam = utility.checkInput;
 var path = require('path');
 
-const saltRounds = 16;
+const saltRounds = 5;
 
 router.get('/account/:id', async (req, res) => {
     try {
