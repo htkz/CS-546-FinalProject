@@ -63,26 +63,32 @@ header {
             font-weight: bold;
         }
     }
-    .comment {
-        .commentContainer {
-            padding: 5px 0;
-            border-top: 1px solid #ccc;
-            max-height: 250px;
-            overflow: scroll;
-            li {
-                border-bottom: 1px solid #ccc;
-                padding: 8px 0;
-                .username {
-                    font-weight: bold;
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .comment {
+            .commentContainer {
+                padding: 5px 0;
+                border-top: 1px solid #ccc;
+                max-height: 250px;
+                overflow: scroll;
+                li {
+                    border-bottom: 1px solid #ccc;
+                    padding: 8px 0;
+                    .username {
+                        font-weight: bold;
+                    }
                 }
             }
-        }
-        .inputContainer {
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            button {
-                margin-left: 4px;
+            .inputContainer {
+                margin-top: 20px;
+                display: flex;
+                align-items: center;
+                button {
+                    margin-left: 4px;
+                }
             }
         }
     }

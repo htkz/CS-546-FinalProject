@@ -94,16 +94,22 @@ const renderDetail = async (placeId) => {
                                 <span>${place.remainNum}</span>
                             </div>
                         </div>
-                        <div class="comment col-md-7">
-                            <h5>Comments</h5>
-                            <div class="commentContainer">
-                                <ul id="commentList"></ul>
+                        <div class="wrapper col-md-7">
+                            <div class="comment">
+                                <h5>Comments</h5>
+                                <div class="commentContainer">
+                                    <ul id="commentList"></ul>
+                                </div>
+                                <div class="inputContainer">
+                                    <textarea name="commentInput" id="commentInput" cols="70" rows="1" placeholder="Add a comment"></textarea>
+                                    <button class="btn btn-outline-primary btn-sm" id="postBtn">
+                                        Post
+                                    </button>
+                                </div>
                             </div>
-                            <div class="inputContainer">
-                                <textarea name="commentInput" id="commentInput" cols="70" rows="1" placeholder="Add a comment"></textarea>
-                                <button class="btn btn-outline-primary btn-sm" id="postBtn">
-                                    Post
-                                </button>
+                            <div class="reserveDate">
+                                <h5>Available Time</h5>
+                                <input type="date" name="dateInput" id="dateInput" min="${place.displayTime}">
                             </div>
                         </div>
                     </div>
@@ -112,7 +118,7 @@ const renderDetail = async (placeId) => {
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" id="buyBtn">
                         Buy Ticket
                     </button>
                 </div>
@@ -133,6 +139,7 @@ const renderDetail = async (placeId) => {
         $commentList.append($comment);
     }
     $('#postBtn').click(postComment);
+    $('#buyBtn').click(buyTicket);
 };
 
 const fetchPlaces = async (store) => {
@@ -230,6 +237,35 @@ const postComment = async () => {
     });
     await refreshPlaces();
     refreshComment(placeId);
+};
+
+const buyTicket = async () => {
+    const date = $('#dateInput').val();
+    if (date.length === 0) {
+        await Swal.fire({
+            icon: 'error',
+            title: 'Please select a time first!',
+        });
+        return;
+    }
+    const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: `You will reserve the ticket at Stevens`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, buy it!',
+    });
+    if (result.value) {
+        // logic for buy ticket
+        Swal.fire({
+            icon: 'success',
+            title: 'Your have already got the ticket!',
+            showConfirmButton: false,
+            timer: 1500,
+        });
+    }
 };
 
 const bindEvent = () => {
