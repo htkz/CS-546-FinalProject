@@ -7,8 +7,6 @@ const utility = require('../utility');
 const checkParam = utility.checkInput;
 var path = require('path');
 
-const saltRounds = 5;
-
 router.get('/account/:id', async (req, res) => {
     try {
         const user = await userData.getUserById(req.params.id);
@@ -119,12 +117,10 @@ router.post('/account/register', async (req, res) => {
     if (!checkParam.checkPassword(unhashedPassword)) {
         res.status(500).json({
             error:
-                '8-16 characters. Must contain 1 lower case word, 1 upper case word & 1 number',
+                '8-16 characters. Only should contain lower case word,upper case word or number',
         });
         return;
     }
-
-    let hashedPassword = await bcrypt.hash(unhashedPassword, saltRounds);
 
     if ((await userData.getUserByUserName(userInfo.userName)) !== null) {
         res.status(500).json({
@@ -142,7 +138,11 @@ router.post('/account/register', async (req, res) => {
     }
 
     try {
-        const newUser = await userData.addUser(username, email, hashedPassword);
+        const newUser = await userData.addUser(
+            username,
+            email,
+            unhashedPassword
+        );
         res.status(200).json(newUser);
     } catch (e) {
         res.status(500).json({ error: e });
@@ -217,7 +217,7 @@ router.patch('/:id', async (req, res) => {
     if (!checkParam.checkPassword(requestBody.newHashedPassword)) {
         res.status(500).json({
             error:
-                '8-16 characters. Must contain 1 lower case word, 1 upper case word & 1 number',
+                '8-16 characters. Only should contain lower case word,upper case word or number',
         });
         return;
     }
@@ -299,9 +299,7 @@ router.patch('/:id', async (req, res) => {
                 oldUser.hashedPassword
             ))
         ) {
-            updatedObject.hashedPassword = await bcrypt.hash(
-                requestBody.newHashedPassword
-            );
+            updatedObject.hashedPassword = requestBody.newHashedPassword;
         } else {
             res.status(500).json({
                 error: 'The new password is the same as the old password',

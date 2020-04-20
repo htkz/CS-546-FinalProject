@@ -1,6 +1,9 @@
+const bcrypt = require('bcryptjs');
 const mongoCollections = require('../config/mongoCollection');
 const users = mongoCollections.users;
 const ObjectId = require('mongodb').ObjectId;
+
+const saltRounds = 5;
 
 let exportedMethods = {
     async getAllUsers() {
@@ -46,7 +49,7 @@ let exportedMethods = {
 
     async addUser(userName, email, hashedPassword) {
         const userCollection = await users();
-
+        let hashedPassword = await bcrypt.hash(hashedPassword, saltRounds);
         let newUser = {
             userName: userName,
             email: email,
@@ -110,7 +113,10 @@ let exportedMethods = {
         }
 
         if (updateUser.hashedPassword) {
-            updateUserData.hashedPassword = updateUser.hashedPassword;
+            updateUserData.hashedPassword = await bcrypt.hash(
+                updateUser.hashedPassword,
+                saltRounds
+            );
         }
 
         const updateInfo = await userCollection.updateOne(
