@@ -31,7 +31,7 @@ let exportedMethods = {
         if (!re.test(password)) {
             return false;
         }
-        if (userName.length > 16 || userName.length < 8) {
+        if (password.length > 16 || password.length < 8) {
             return false;
         }
         return true;
