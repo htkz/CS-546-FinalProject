@@ -49,7 +49,7 @@ let exportedMethods = {
 
     async addUser(userName, email, hashedPassword) {
         const userCollection = await users();
-        let hashedPassword = await bcrypt.hash(hashedPassword, saltRounds);
+        hashedPassword = await bcrypt.hash(hashedPassword, saltRounds);
         let newUser = {
             userName: userName,
             email: email,
