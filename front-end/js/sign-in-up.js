@@ -25,6 +25,12 @@ $('#form-signin').submit(async (event) => {
         });
         window.location.replace('http://localhost:3000/main.html');
     } catch (error) {
-        alert(error['responseJSON']['message']);
+        await Swal.fire({
+            icon: 'error',
+            title: error['responseJSON']['message'],
+            showConfirmButton: false,
+            timer: 1000,
+            position: 'top'
+        });
     }
 });

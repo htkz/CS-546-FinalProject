@@ -35,14 +35,20 @@ html {
             width: 100%;
             max-width: 330px;
             padding: 15px;
+            height: 100vh;
             margin: auto;
-            .form-control {
-                height: auto;
-                padding: 10px;
-                font-size: 16px;
-            }
-            input {
-                margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            .wrapper {
+                .form-control {
+                    height: auto;
+                    padding: 10px;
+                    font-size: 16px;
+                }
+                input {
+                    margin-bottom: 10px;
+                }
             }
         }
     }
