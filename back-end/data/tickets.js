@@ -33,7 +33,7 @@ let exportedMethods = {
     async addTicket(userId, placeId, orderedDate, effectDate, price) {
         const ticketCollection = await tickets();
 
-        if ((await counts.getTicketById('ticketNo')) === null) {
+        if ((await counts.findDataById('ticketNo')) === null) {
             await counts.addData('ticketNo', 0);
         }
 
