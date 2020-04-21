@@ -23,14 +23,18 @@ $('#form-signin').submit(async (event) => {
                 hashedPassword: password,
             },
         });
-        window.location.replace('http://localhost:3000/main.html');
+        if (username === 'admin@group13.com') {
+            window.location.replace('http://localhost:3000/admin.html');
+        } else {
+            window.location.replace('http://localhost:3000/main.html');
+        }
     } catch (error) {
         await Swal.fire({
             icon: 'error',
             title: error['responseJSON']['message'],
             showConfirmButton: false,
             timer: 1000,
-            position: 'top'
+            position: 'top',
         });
     }
 });
