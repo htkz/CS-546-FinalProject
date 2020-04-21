@@ -1,6 +1,7 @@
 const mongoCollections = require('../config/mongoCollection');
 const tickets = mongoCollections.tickets;
 const users = require('./users');
+const places = require('./places');
 const counts = require('./counts');
 const ObjectId = require('mongodb').ObjectId;
 
@@ -55,6 +56,8 @@ let exportedMethods = {
         const newID = insertInfo.insertedId;
 
         await users.addTicketToUser(userId, newID);
+        // update ticket remain number for ticket
+        await places.updateRemainNum(placeId);
 
         return await this.getTicketById(newID);
     },
@@ -110,15 +113,6 @@ let exportedMethods = {
             throw new Error('You must provide valid id to search for.');
         }
     },
-
-    // async getNextSequenceValue(sequenceName) {
-    //     var sequenceDocument = mongoCollections.counts.findAndModify({
-    //         query: { _id: sequenceName },
-    //         update: { $inc: { sequence_value: 1 } },
-    //         new: true,
-    //     });
-    //     return sequenceDocument.sequence_value;
-    // },
 };
 
 module.exports = exportedMethods;

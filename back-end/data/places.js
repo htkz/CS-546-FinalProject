@@ -168,6 +168,26 @@ let exportedMethods = {
         return await this.getPlaceById(placeId);
     },
 
+    async updateRemainNum(placeId) {
+        const placeCollection = await places();
+
+        placeId = await this.checkId(placeId);
+
+        place = await this.getPlaceById(placeId);
+        let oldRemainNum = place.remainNum;
+        if (oldRemainNum == 0) {
+            throw `No ticket for this place`;
+        }
+        let newRemainNum = oldRemainNum - 1;
+
+        const updateInfo = await placeCollection.updateOne(
+            { _id: placeId },
+            { $set: { remainNum: newRemainNum } }
+        );
+
+        return await this.getPlaceById(placeId);
+    },
+
     async checkId(id) {
         if (typeof id == 'string') {
             return ObjectId(id);
