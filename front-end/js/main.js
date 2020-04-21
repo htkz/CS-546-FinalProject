@@ -255,13 +255,42 @@ const buyTicket = async () => {
         confirmButtonText: 'Yes, buy it!',
     });
     if (result.value) {
-        // logic for buy ticket
-        Swal.fire({
-            icon: 'success',
-            title: 'Your have already got the ticket!',
-            showConfirmButton: false,
-            timer: 1500,
-        });
+        try {
+            const placeId = $('#place').attr('data-id');
+            const userId = userInfo['_id'];
+            const placeInfo = getPlaceById(placeId);
+            const date = new Date();
+            const orderDate = `${date.getFullYear()}-${
+                date.getMonth() + 1
+            }-${date.getDate()}`;
+            const effectDate = $('#dateInput').val();
+            await $.ajax({
+                url: 'http://localhost:3000/tickets/',
+                type: 'POST',
+                data: {
+                    userId: userId,
+                    placeId: placeId,
+                    comment: comment,
+                    orderedDate: orderDate,
+                    effectDate: effectDate,
+                    price: placeInfo.placePrice,
+                },
+            });
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Your have already got the ticket!',
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Opps! Something went wrong!',
+                showConfirmButton: false,
+                timer: 1000,
+            });
+        }
     }
 };
 
