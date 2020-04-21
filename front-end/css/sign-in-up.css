@@ -30,10 +30,14 @@ html {
       width: 100%;
       max-width: 330px;
       padding: 15px;
-      margin: auto; }
-      html body .form-signin .form-control {
+      height: 100vh;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; }
+      html body .form-signin .wrapper .form-control {
         height: auto;
         padding: 10px;
         font-size: 16px; }
-      html body .form-signin input {
+      html body .form-signin .wrapper input {
         margin-bottom: 10px; }

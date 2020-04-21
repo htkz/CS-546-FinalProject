@@ -179,7 +179,6 @@ const filterBySearch = (tag) => {
     if (tag.length === 0) return;
     const places = [];
     for (place of store['places']) {
-        console.log(place.category);
         if (place.category.includes(tag.toLowerCase())) {
             places.push(place);
         }
@@ -192,8 +191,6 @@ const filterByReset = () => {
 };
 
 const renderUser = () => {
-    console.log(userInfo);
-    console.log(userInfo['userName']);
     $('#username').text(userInfo['userName']);
 };
 
@@ -268,6 +265,14 @@ const buyTicket = async () => {
     }
 };
 
+const logout = async (event) => {
+    event.preventDefault();
+    await $.ajax({
+        url: `http://localhost:3000/users/logout`,
+    });
+    window.location.replace('http://localhost:3000/sign-in-up.html');
+};
+
 const bindEvent = () => {
     $('#latestBtn').click(filterByLatest);
     $('#resetBtn').click(filterByReset);
@@ -276,10 +281,12 @@ const bindEvent = () => {
         event.preventDefault();
         filterBySearch($('#searchInput').val());
     });
+    $('#logoutBtn').click(logout);
 };
 
 const store = {};
 const userInfo = JSON.parse(Cookies.get('user'));
+console.log(userInfo);
 
 const main = async () => {
     await fetchPlaces(store);
