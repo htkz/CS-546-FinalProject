@@ -91,7 +91,7 @@ const renderDetail = async (placeId) => {
                             </div>
                             <div>
                                 <span class="attribute">Remain Number</span>:
-                                <span>${place.remainNum}</span>
+                                <span id="ticketRemainNum">${place.remainNum}</span>
                             </div>
                         </div>
                         <div class="wrapper col-md-7">
@@ -214,6 +214,17 @@ const refreshComment = async (placeId) => {
     }
 };
 
+const refreshTicket = async (placeId) => {
+    const place = await $.ajax({
+        url: `http://localhost:3000/places/${placeId}`,
+    });
+    const curNum = place.remainNum;
+    $('#ticketRemainNum').text(curNum);
+    const curPlace = getPlaceById(placeId);
+    curPlace.remainNum = curNum;
+    renderPlaces(store['places']);
+};
+
 const postComment = async () => {
     const comment = $('#commentInput').val();
     if (comment.length === 0) {
@@ -276,13 +287,13 @@ const buyTicket = async () => {
                     price: placeInfo.placePrice,
                 },
             });
-
             Swal.fire({
                 icon: 'success',
                 title: 'Your have already got the ticket!',
                 showConfirmButton: false,
                 timer: 1500,
             });
+            refreshTicket(placeId);
         } catch (error) {
             Swal.fire({
                 icon: 'error',
