@@ -16,7 +16,7 @@ const main = async () => {
         20000,
         ['school', 'quiet'],
         '2020-03-17',
-        300,
+        0,
         ['ticket1.jpeg', 'ticket2.jpg']
     );
 
