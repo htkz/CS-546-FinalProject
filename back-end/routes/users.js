@@ -9,9 +9,9 @@ const checkParam = utility.checkInput;
 router.get('/account/:id', async (req, res) => {
     try {
         const user = await userData.getUserById(req.params.id);
-        res.json(user);
+        res.status(200).json(user);
     } catch (e) {
-        res.status(404).json({ message: 'Not found!' });
+        res.status(404).json({ error: 'User not found' });
     }
 });
 
@@ -20,14 +20,14 @@ router.post('/account/login', async (req, res) => {
     let password = req.body.hashedPassword;
 
     if (!email) {
-        res.status(401).json({
+        res.status(400).json({
             error: 'No user name provided',
         });
         return;
     }
 
     if (!password) {
-        res.status(401).json({
+        res.status(400).json({
             error: 'No password provided',
         });
         return;
@@ -40,26 +40,24 @@ router.post('/account/login', async (req, res) => {
             user.hashedPassword
         );
         if (!comparePasswords) {
-            res.status(401).json({ message: 'Password incorrect.' });
+            res.status(401).json({ message: 'Password incorrect' });
             return;
         }
         // cookie
         let sessionUser = { _id: user._id, userName: user.userName };
         res.cookie('user', JSON.stringify(sessionUser));
-        res.json(user);
+        res.status(200).json(user);
     } catch (e) {
-        res.status(404).json({ message: 'Not found!' });
-        console.log(e);
+        res.status(404).json({ message: 'User not found' });
     }
 });
 
 router.get('/', async (req, res) => {
     try {
         const userList = await userData.getAllUsers();
-        res.json(userList);
+        res.status(200).json(userList);
     } catch (e) {
-        // Something went wrong with the server!
-        res.status(500).send();
+        res.status(500).json({ error: 'No users in database' });
     }
 });
 
@@ -73,10 +71,11 @@ router.post('/account/register', async (req, res) => {
         res.status(400).json({
             error: 'You must provide data to create a user',
         });
+        return;
     }
 
     if (!username) {
-        res.status(500).json({
+        res.status(400).json({
             error: 'No user name provided',
         });
         return;
@@ -84,15 +83,15 @@ router.post('/account/register', async (req, res) => {
 
     // check user name
     if (!checkParam.checkUserName(username)) {
-        res.status(500).json({
+        res.status(400).json({
             error:
-                '3-16 characters, only contains lower case word, upper case word & number',
+                'Username must 3-16 characters, only contains lower case word, upper case word or number',
         });
         return;
     }
 
     if (!email) {
-        res.status(500).json({
+        res.status(400).json({
             error: 'No email address provided',
         });
         return;
@@ -100,12 +99,12 @@ router.post('/account/register', async (req, res) => {
 
     // check email
     if (!checkParam.checkEmail(email)) {
-        res.status(500).json({ error: 'Not valid e-mail address' });
+        res.status(400).json({ error: 'Not valid e-mail address' });
         return;
     }
 
     if (!unhashedPassword) {
-        res.status(500).json({
+        res.status(400).json({
             error: 'No password provided',
         });
         return;
@@ -113,24 +112,24 @@ router.post('/account/register', async (req, res) => {
 
     // check password
     if (!checkParam.checkPassword(unhashedPassword)) {
-        res.status(500).json({
+        res.status(400).json({
             error:
-                '8-16 characters. Only should contain lower case word,upper case word or number',
+                'Password must 8-16 characters. Only should contain lower case word, upper case word or number',
         });
         return;
     }
 
     if ((await userData.getUserByUserName(userInfo.userName)) !== null) {
-        res.status(500).json({
+        res.status(400).json({
             error:
-                'The user name has been existed, please choose another user name.',
+                'The user name has been existed, please choose another user name',
         });
         return;
     }
 
     if ((await userData.getUserByEmail(userInfo.email)) !== null) {
         res.status(500).json({
-            error: 'The email has been existed, please choose another email.',
+            error: 'The email has been existed, please choose another email',
         });
         return;
     }
@@ -143,7 +142,7 @@ router.post('/account/register', async (req, res) => {
         );
         res.status(200).json(newUser);
     } catch (e) {
-        res.status(500).json({ error: e });
+        res.status(500).json({ error: 'Add user failed' });
         console.log(e);
     }
 });
@@ -172,19 +171,19 @@ router.patch('/:id', async (req, res) => {
 
     // check newPhoneNumber field
     if (!checkParam.checkPhoneNumber(requestBody.newPhoneNumber)) {
-        res.status(500).json({ error: 'Not valid phone number' });
+        res.status(400).json({ error: 'Not valid phone number' });
         return;
     }
 
     // check newZipCode field
     if (!checkParam.checkZipCode(requestBody.newZipCode)) {
-        res.status(500).json({ error: 'Not valid zip code' });
+        res.status(400).json({ error: 'Not valid zip code' });
         return;
     }
 
     // check newEmail field
     if (!checkParam.checkEmail(requestBody.newEmail)) {
-        res.status(500).json({ error: 'Not valid e-mail address' });
+        res.status(400).json({ error: 'Not valid e-mail address' });
         return;
     }
 
@@ -195,27 +194,27 @@ router.patch('/:id', async (req, res) => {
                 requestBody.newEmail.toLowerCase()
             )) !== null
         ) {
-            res.status(500).json({
+            res.status(400).json({
                 error: `This ${requestBody.newEmail} has been existed`,
             });
             return;
         }
     }
 
-    // check newUserName field
-    if (!checkParam.checkUserName(requestBody.newUserName)) {
-        res.status(500).json({
+    // check newHashedPassword field
+    if (!checkParam.checkPassword(requestBody.newHashedPassword)) {
+        res.status(400).json({
             error:
-                '3-16 characters, only contains lower case word, upper case word & number',
+                'Password must 8-16 characters. Only should contain lower case word, upper case word or number',
         });
         return;
     }
 
-    // check newHashedPassword field
-    if (!checkParam.checkPassword(requestBody.newHashedPassword)) {
-        res.status(500).json({
+    // check newUserName field
+    if (!checkParam.checkUserName(requestBody.newUserName)) {
+        res.status(400).json({
             error:
-                '8-16 characters. Only should contain lower case word,upper case word or number',
+                'Username must 3-16 characters, only contains lower case word, upper case word & number',
         });
         return;
     }
@@ -227,7 +226,7 @@ router.patch('/:id', async (req, res) => {
                 requestBody.newUserName.toLowerCase()
             )) !== null
         ) {
-            res.status(500).json({
+            res.status(400).json({
                 error: `This ${requestBody.newUserName} has been existed`,
             });
             return;
@@ -243,7 +242,7 @@ router.patch('/:id', async (req, res) => {
         ) {
             updatedObject.userName = requestBody.newUserName.toLowerCase();
         } else {
-            res.status(500).json({
+            res.status(400).json({
                 error: 'The new user name is the same as the old user name',
             });
         }
@@ -251,7 +250,7 @@ router.patch('/:id', async (req, res) => {
         if (requestBody.newEmail && requestBody.newEmail !== oldUser.email) {
             updatedObject.email = requestBody.newEmail.toLowerCase();
         } else {
-            res.status(500).json({
+            res.status(400).json({
                 error: 'The new email is the same as the old email',
             });
         }
@@ -262,7 +261,7 @@ router.patch('/:id', async (req, res) => {
         ) {
             updatedObject.phoneNumber = requestBody.newPhoneNumber;
         } else {
-            res.status(500).json({
+            res.status(400).json({
                 error:
                     'The new phone number is the same as the old phone number',
             });
@@ -274,7 +273,7 @@ router.patch('/:id', async (req, res) => {
         ) {
             updatedObject.address = requestBody.newAddress;
         } else {
-            res.status(500).json({
+            res.status(400).json({
                 error: 'The new address is the same as the old address',
             });
         }
@@ -285,7 +284,7 @@ router.patch('/:id', async (req, res) => {
         ) {
             updatedObject.zipCode = requestBody.newZipCode;
         } else {
-            res.status(500).json({
+            res.status(400).json({
                 error: 'The new zip code is the same as the old zip code',
             });
         }
@@ -299,27 +298,26 @@ router.patch('/:id', async (req, res) => {
         ) {
             updatedObject.hashedPassword = requestBody.newHashedPassword;
         } else {
-            res.status(500).json({
+            res.status(400).json({
                 error: 'The new password is the same as the old password',
             });
         }
     } catch (error) {
         res.status(404).json({ error: 'User not found' });
-        return;
     }
 
     try {
         if (JSON.stringify(updatedObject) === '{}') {
-            res.status(500).json({ error: 'No information need to update' });
+            res.status(400).json({ error: 'No information need to update' });
             return;
         }
         const updatedUser = await userData.updateUser(
             req.params.id,
             updatedObject
         );
-        res.json(updatedUser);
+        res.status(200).json(updatedUser);
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).json({ error: 'Upadte user information failed' });
         console.log(error);
     }
 });
@@ -345,7 +343,7 @@ router.put('/:id', async (req, res) => {
     }
 
     if (!checkParam.checkPhoneNumber(userInfo.phoneNumber)) {
-        res.status(500).json({ error: 'Not valid phone number' });
+        res.status(400).json({ error: 'Not valid phone number' });
         return;
     }
 
@@ -367,7 +365,7 @@ router.put('/:id', async (req, res) => {
     }
 
     if (!checkParam.checkZipCode(userInfo.zipCode)) {
-        res.status(500).json({ error: 'Not valid zip code' });
+        res.status(400).json({ error: 'Not valid zip code' });
         return;
     }
 
@@ -385,9 +383,9 @@ router.put('/:id', async (req, res) => {
             userInfo.address,
             userInfo.zipCode
         );
-        res.json(updateUser);
+        res.status(200).json(updateUser);
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).json({ error: 'Complete user information failed' });
         console.log(error);
     }
 });
@@ -405,9 +403,9 @@ router.delete('/:id', async (req, res) => {
 
     try {
         const deleteUser = await userData.removeUser(req.params.id);
-        res.json(deleteUser);
+        res.status(200).json(deleteUser);
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).json({ error: 'Delete user failed' });
     }
 });
 
@@ -416,7 +414,7 @@ router.get('/logout', async (req, res) => {
         req.session.user = undefined;
         res.status(200).json({ message: 'Logout successful!' });
     } catch (e) {
-        res.status(500).json({ error: e });
+        res.status(500).json({ error: 'Logout failed' });
     }
 });
 

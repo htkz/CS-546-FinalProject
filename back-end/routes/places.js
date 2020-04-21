@@ -8,18 +8,18 @@ const userData = data.users;
 router.get('/:id', async (req, res) => {
     try {
         const place = await placeData.getPlaceById(req.params.id);
-        res.json(place);
+        res.status(200).json(place);
     } catch (e) {
-        res.status(404).json({ message: 'Not found!' });
+        res.status(404).json({ error: 'Place not found' });
     }
 });
 
 router.get('/', async (req, res) => {
     try {
         const placeList = await placeData.getAllPlaces();
-        res.json(placeList);
+        res.status(200).json(placeList);
     } catch (error) {
-        res.status(500).send();
+        res.status(500).json({ error: 'No place in the database' });
     }
 });
 
@@ -32,9 +32,9 @@ router.get('/placeComments/:id', async (req, res) => {
             const thisUser = await userData.getUserById(allComments[i].user);
             allComments[i].user = thisUser.userName;
         }
-        res.json(allComments);
+        res.status(200).json(allComments);
     } catch (e) {
-        res.status(404).json({ message: 'Not found!' });
+        res.status(404).json({ error: 'Comment not found by placeId' });
     }
 });
 
@@ -47,46 +47,70 @@ router.post('/', async (req, res) => {
         res.status(400).json({
             error: 'You must provide data to create a place',
         });
+        return;
     }
 
     if (!placeInfo.description) {
-        error.push('No description provided');
+        res.status(400).json({
+            error: 'You must provide description to create a place',
+        });
         return;
     }
 
     if (!placeInfo.placeName) {
-        error.push('No place name provided');
+        res.status(400).json({
+            error: 'You must provide placeName to create a place',
+        });
         return;
     }
 
     if (!placeInfo.placeAddress) {
-        error.push('No place address provided');
+        res.status(400).json({
+            error: 'You must provide placeAddress to create a place',
+        });
         return;
     }
 
     if (!placeInfo.placeZipCode) {
-        error.push('No place zip code provided');
+        res.status(400).json({
+            error: 'You must provide placeZipCode to create a place',
+        });
         return;
     }
 
     if (!placeInfo.placePrice) {
-        error.push('No place price provided');
+        res.status(400).json({
+            error: 'You must provide placePrice to create a place',
+        });
+        return;
     }
 
     if (!placeInfo.category) {
-        error.push('No place price provided');
+        res.status(400).json({
+            error: 'You must provide category to create a place',
+        });
+        return;
     }
 
     if (!placeInfo.displayTime) {
-        error.push('No place price provided');
+        res.status(400).json({
+            error: 'You must provide displayTime to create a place',
+        });
+        return;
     }
 
     if (!placeInfo.remainNum) {
-        error.push('No place price provided');
+        res.status(400).json({
+            error: 'You must provide remainNum to create a place',
+        });
+        return;
     }
 
     if (!placeInfo.images) {
-        error.push('No place price provided');
+        res.status(400).json({
+            error: 'You must provide images to create a place',
+        });
+        return;
     }
 
     try {
@@ -103,7 +127,7 @@ router.post('/', async (req, res) => {
         );
         res.status(200).json(newPlace);
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).json({ error: 'Add place failed' });
         console.log(error);
     }
 });
@@ -211,13 +235,17 @@ router.patch('/:id', async (req, res) => {
     }
 
     try {
+        if (JSON.stringify(updatedObject) === '{}') {
+            res.status(400).json({ error: 'No information need to update' });
+            return;
+        }
         const updatedPlace = await placeData.updatedPlace(
             req.params.id,
             updatedObject
         );
-        res.json(updatedPlace);
+        res.status(200).json(updatedPlace);
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).json({ error: 'Update place failed' });
         console.log(error);
     }
 });
@@ -236,9 +264,9 @@ router.delete('/:id', async (req, res) => {
 
     try {
         const deletePlace = await placeData.removePlace(id);
-        res.json(deletePlace);
+        res.status(200).json(deletePlace);
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).json({ error: 'Delete place failed' });
         console.log(error);
     }
 });

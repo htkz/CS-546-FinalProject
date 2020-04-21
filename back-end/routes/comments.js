@@ -2,25 +2,22 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const commentData = data.comments;
-const userData = data.users;
-var path = require('path');
 
 router.get('/:id', async (req, res) => {
     try {
         const comment = await commentData.getCommentById(req.params.id);
-        res.json(comment);
+        res.status(200).json(comment);
     } catch (e) {
-        res.status(404).json({ message: 'Not found!' });
+        res.status(404).json({ error: 'Comment not found!' });
     }
 });
 
 router.get('/', async (req, res) => {
     try {
         const commentList = await commentData.getAllComments();
-        res.json(commentList);
+        res.status(200).json(commentList);
     } catch (e) {
-        // Something went wrong with the server!
-        res.status(500).send();
+        res.status(500).json({ error: 'No comment in the database' });
     }
 });
 
@@ -29,8 +26,30 @@ router.post('/', async (req, res) => {
 
     if (!commentInfo) {
         res.status(400).json({
-            error: 'You must provide data to create a place',
+            error: 'You must provide data to create a comment',
         });
+        return;
+    }
+
+    if (!commentInfo.user) {
+        res.status(400).json({
+            error: 'You must provide userId to create a comment',
+        });
+        return;
+    }
+
+    if (!commentInfo.placeId) {
+        res.status(400).json({
+            error: 'You must provide placeId to create a comment',
+        });
+        return;
+    }
+
+    if (!commentInfo.comment) {
+        res.status(400).json({
+            error: 'You must provide comment to create a comment',
+        });
+        return;
     }
 
     try {
@@ -41,7 +60,7 @@ router.post('/', async (req, res) => {
         );
         res.status(200).json(newComment);
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).json({ error: 'Add comment failed' });
         console.log(error);
     }
 });
@@ -49,6 +68,27 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     const requestBody = req.body;
     console.log(requestBody);
+
+    if (!requestBody) {
+        res.status(400).json({
+            error: 'You must provide data to update a comment',
+        });
+        return;
+    }
+
+    if (!requestBody.votedCount) {
+        res.status(400).json({
+            error: 'You must provide votedCount to update a comment',
+        });
+        return;
+    }
+
+    if (!requestBody.votedUserId) {
+        res.status(400).json({
+            error: 'You must provide votedUserId to update a comment',
+        });
+        return;
+    }
 
     try {
         await commentData.getCommentById(req.params.id);
@@ -63,9 +103,9 @@ router.put('/:id', async (req, res) => {
             requestBody.votedCount,
             requestBody.votedUserId
         );
-        res.json(updatedComment);
+        res.status(200).json(updatedComment);
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).json({ error: 'Update comment failed' });
         console.log(error);
     }
 });
@@ -84,9 +124,9 @@ router.delete('/:id', async (req, res) => {
 
     try {
         const deleteComment = await commentData.removeComment(id);
-        res.json(deleteComment);
+        res.status(200).json(deleteComment);
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).json({ error: 'Delete comment failed' });
         console.log(error);
     }
 });
