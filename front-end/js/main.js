@@ -139,7 +139,19 @@ const renderDetail = async (placeId) => {
         $commentList.append($comment);
     }
     $('#postBtn').click(postComment);
-    $('#buyBtn').click(buyTicket);
+
+    if (place.remainNum === '0' || place.remainNum === 0) {
+        $('#buyBtn').click(() => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Sorry, this ticket is sold out!',
+                showConfirmButton: false,
+                timer: 1000,
+            });
+        });
+    } else {
+        $('#buyBtn').click(buyTicket);
+    }
 };
 
 const fetchPlaces = async (store) => {
@@ -233,7 +245,6 @@ const postComment = async () => {
     }
     const placeId = $('#place').attr('data-id');
     const userId = userInfo['_id'];
-    console.log(userId);
     await $.ajax({
         url: 'http://localhost:3000/comments/',
         type: 'POST',
@@ -281,7 +292,6 @@ const buyTicket = async () => {
                 data: {
                     userId: userId,
                     placeId: placeId,
-                    comment: comment,
                     orderedDate: orderDate,
                     effectDate: effectDate,
                     price: placeInfo.placePrice,
@@ -295,6 +305,7 @@ const buyTicket = async () => {
             });
             refreshTicket(placeId);
         } catch (error) {
+            console.log(error);
             Swal.fire({
                 icon: 'error',
                 title: 'Opps! Something went wrong!',
@@ -310,7 +321,7 @@ const logout = async (event) => {
     await $.ajax({
         url: `http://localhost:3000/users/logout`,
     });
-    window.location.replace('http://localhost:3000/sign-in-up.html');
+    window.location.replace('http://localhost:3000/entry.html');
 };
 
 const bindEvent = () => {
