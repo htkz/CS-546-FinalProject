@@ -4,7 +4,6 @@ const commentRoutes = require('./comments');
 const placeRoutes = require('./places');
 const express = require('express');
 
-
 const constructorMethod = (app) => {
     app.use('/users', userRoutes);
     app.use('/tickets', ticketRoutes);
@@ -12,6 +11,7 @@ const constructorMethod = (app) => {
     app.use('/places', placeRoutes);
 
     app.use(express.static('front-end', { index: 'sign-in-up.html' }));
+    // app.use(express.static('front-end', { index: 'admin.html' }));
 
     app.use('*', (req, res) => {
         res.redirect('/');
