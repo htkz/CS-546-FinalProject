@@ -32,8 +32,6 @@
         "express-session": "^1.17.1",
         "mongodb": "^3.5.4",
         "nodemon": "^2.0.2",
-        "react-bootstrap": "^1.0.0",
-        "react-dom": "^16.13.1",
         "webpack": "^4.42.1"
     },
     "devDependencies": {
