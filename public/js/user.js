@@ -25,6 +25,61 @@ const renderTickets = async () => {
     }
 };
 
+const changePassword = async (event) => {
+    event.preventDefault();
+    // const oldPassword = $('#old-password').text();
+    // const newPassword = $('#new-password').text();
+    // const reEnterPassword = $('#re-enter-new-password').text();
+    $('#changePasswordBtn').attr('disable', true);
+};
+
+let oldPassowordFlag = false;
+let newPasswordFlag = false;
+let reEnterPasswordFlag = false;
+
+const oldPasswordInputEvent = async () => {
+    $('#old-password').bind('input propertychange', function (event) {
+        const oldPassword = $('#old-password').val();
+        if (oldPassword.length !== 0) {
+            oldPassowordFlag = true;
+            buttonDisable();
+            oldPasswordInputEvent();
+        } else {
+            oldPassowordFlag = false;
+            buttonDisable();
+            oldPasswordInputEvent();
+        }
+    });
+};
+const newPasswordInputEvent = async () => {
+    $('#new-password').bind('input propertychange', function (event) {
+        const newPassword = $('#new-password').val();
+        if (newPassword.length !== 0) {
+            newPasswordFlag = true;
+            buttonDisable();
+            newPasswordInputEvent();
+        } else {
+            newPasswordFlag = false;
+            buttonDisable();
+            newPasswordInputEvent();
+        }
+    });
+};
+const rePasswordInputEvent = async () => {
+    $('#re-enter-new-password').bind('input propertychange', function (event) {
+        const reEnterPassword = $('#re-enter-new-password').val();
+        if (reEnterPassword.length !== 0) {
+            reEnterPasswordFlag = true;
+            buttonDisable();
+            rePasswordInputEvent();
+        } else {
+            reEnterPasswordFlag = false;
+            buttonDisable();
+            rePasswordInputEvent();
+        }
+    });
+};
+
 const logout = async (event) => {
     event.preventDefault();
     await $.ajax({
@@ -33,12 +88,30 @@ const logout = async (event) => {
     window.location.replace('http://localhost:3000/entry');
 };
 
+const buttonDisable = async () => {
+    console.log('old ' + oldPassowordFlag);
+    console.log('new ' + newPasswordFlag);
+    console.log('re  ' + reEnterPasswordFlag);
+    if (
+        oldPassowordFlag === true &&
+        newPasswordFlag === true &&
+        reEnterPasswordFlag === true
+    ) {
+        $('#changePasswordBtn').prop('disabled', false);
+    } else {
+        $('#changePasswordBtn').prop('disabled', true);
+    }
+};
+
 const bindEvents = async () => {
     $('#logoutBtn').click(logout);
 };
 
 const init = async () => {
     renderTickets();
+    oldPasswordInputEvent();
+    newPasswordInputEvent();
+    rePasswordInputEvent();
     bindEvents();
 };
 
