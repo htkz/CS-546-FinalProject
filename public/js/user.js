@@ -89,9 +89,9 @@ const logout = async (event) => {
 };
 
 const buttonDisable = async () => {
-    console.log('old ' + oldPassowordFlag);
-    console.log('new ' + newPasswordFlag);
-    console.log('re  ' + reEnterPasswordFlag);
+    // console.log('old ' + oldPassowordFlag);
+    // console.log('new ' + newPasswordFlag);
+    // console.log('re  ' + reEnterPasswordFlag);
     if (
         oldPassowordFlag === true &&
         newPasswordFlag === true &&
