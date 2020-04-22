@@ -98,6 +98,7 @@ const buttonDisable = async () => {
         reEnterPasswordFlag === true
     ) {
         $('#changePasswordBtn').prop('disabled', false);
+        $('#changePasswordBtn').click(changePassword);
     } else {
         $('#changePasswordBtn').prop('disabled', true);
     }
@@ -118,6 +119,9 @@ const changeFocus = (id) => {
 
 const bindEvents = async () => {
     $('#logoutBtn').click(logout);
+    oldPasswordInputEvent();
+    newPasswordInputEvent();
+    rePasswordInputEvent();
     $('.navbar li').each((index, li) => {
         const $li = $(li);
         $li.click(() => {
@@ -128,9 +132,6 @@ const bindEvents = async () => {
 
 const init = async () => {
     renderTickets();
-    oldPasswordInputEvent();
-    newPasswordInputEvent();
-    rePasswordInputEvent();
     bindEvents();
 };
 
