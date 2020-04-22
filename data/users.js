@@ -261,6 +261,34 @@ let exportedMethods = {
         return await this.getUserById(userId);
     },
 
+    async updatePassword(id, oldPassword, newPassword) {
+        const userCollection = await users();
+
+        id = await this.checkId(id);
+
+        password = (await this.getUserById(id)).hashedPassword;
+        console.log(password);
+        if (!(await bcrypt.compare(oldPassword, password))) {
+            throw 'Old password does not match';
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+        const updatePasswordInfo = await userCollection.updateOne(
+            { _id: id },
+            { $set: { hashedPassword: hashedPassword } }
+        );
+
+        if (
+            !updatePasswordInfo.matchedCount &&
+            !updatePasswordInfo.modifiedCount
+        ) {
+            throw 'updatePassword Update failed';
+        }
+
+        return await this.getUserById(id);
+    },
+
     async checkId(id) {
         if (typeof id == 'string') {
             return ObjectId(id);

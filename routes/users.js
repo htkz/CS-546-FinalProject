@@ -404,6 +404,55 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+router.put('/account/password/:id', async (req, res) => {
+    let passwordInfo = req.body;
+
+    if (!passwordInfo) {
+        res.status(400).json({
+            error:
+                'You must provide old password and new password to update password',
+        });
+        return;
+    }
+
+    if (!passwordInfo.oldPassword) {
+        res.status(400).json({ error: 'You must provide a old password' });
+        return;
+    }
+
+    if (!passwordInfo.newPassword) {
+        res.status(400).json({ error: 'You must provide a new password' });
+        return;
+    }
+
+    // check new password field
+    if (!checkParam.checkPassword(passwordInfo.newPassword)) {
+        res.status(400).json({
+            error:
+                'Password must 8-16 characters. Only should contain lower case word, upper case word or number',
+        });
+        return;
+    }
+
+    try {
+        await userData.getUserById(req.params.id);
+    } catch (error) {
+        res.status(404).json('User not found');
+    }
+
+    try {
+        const updatePassword = await userData.updatePassword(
+            req.params.id,
+            passwordInfo.oldPassword,
+            passwordInfo.newPassword
+        );
+        res.status(200).json(updatePassword);
+    } catch (error) {
+        res.status(500).json({ error: 'Update password failed' });
+        console.log(error);
+    }
+});
+
 router.delete('/:id', async (req, res) => {
     if (!req.params.id) {
         throw 'You must specify an ID to delete';
