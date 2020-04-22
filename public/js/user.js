@@ -25,22 +25,21 @@ const renderTickets = async () => {
     }
 };
 
-const renderPassword = async () => {
-    $('#change-password-btn').click(changePassword);
+const logout = async (event) => {
+    event.preventDefault();
+    await $.ajax({
+        url: `http://localhost:3000/users/logout`,
+    });
+    window.location.replace('http://localhost:3000/entry');
 };
 
-const changePassword = async () => {
-    const oldPassword = $('#old-password').text();
-    const newPassword = $('#new-passowrd').text();
-    const reEnterPassword = $('#re-enter-new-password').text();
-    console.log(oldPassword);
-    console.log(newPassword);
-    console.log(reEnterPassword);
+const bindEvents = async () => {
+    $('#logoutBtn').click(logout);
 };
 
 const init = async () => {
     renderTickets();
-    renderPassword();
+    bindEvents();
 };
 
 init();

@@ -47,6 +47,7 @@ router.post('/account/login', async (req, res) => {
         // cookie
         let sessionUser = { _id: user._id, userName: user.userName };
         res.cookie('user', JSON.stringify(sessionUser));
+        req.session.user = { _id: user._id, userName: user.userName };
         res.status(200).json(user);
     } catch (e) {
         res.status(404).json({ message: 'User not found' });

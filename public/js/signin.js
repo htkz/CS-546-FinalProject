@@ -26,7 +26,7 @@ $('#form-signin').submit(async (event) => {
         if (username === 'admin@group13.com') {
             window.location.replace('http://localhost:3000/admin.html');
         } else {
-            window.location.replace('http://localhost:3000/main.html');
+            window.location.replace('http://localhost:3000/main');
         }
     } catch (error) {
         await Swal.fire({

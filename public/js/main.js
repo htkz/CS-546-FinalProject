@@ -321,7 +321,7 @@ const logout = async (event) => {
     await $.ajax({
         url: `http://localhost:3000/users/logout`,
     });
-    window.location.replace('http://localhost:3000/entry.html');
+    window.location.replace('http://localhost:3000/entry');
 };
 
 const bindEvent = () => {
