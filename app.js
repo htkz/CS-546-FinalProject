@@ -26,10 +26,17 @@ const app = express();
 const configRoutes = require('./routes');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const exphbs = require('express-handlebars');
 
+const static = express.static(__dirname + '/public');
+
+const handlebarsInstance = exphbs.create({
+    defaultLayout: 'main',
+});
+
+app.use('/public', static);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 app.use(async (req, res, next) => {
     let currentTime = new Date().toUTCString();
@@ -38,6 +45,9 @@ app.use(async (req, res, next) => {
     console.log(`[${currentTime}]: ${requestMethod} ${requestRoute}`);
     next();
 });
+
+app.engine('handlebars', handlebarsInstance.engine);
+app.set('view engine', 'handlebars');
 
 app.use(
     session({
