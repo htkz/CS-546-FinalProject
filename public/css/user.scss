@@ -51,6 +51,9 @@ main {
     }
     .container {
         #tickets {
+            display: none;
+            max-height: 80vh;
+            overflow: scroll;
             .ticket {
                 border: 1px solid #ccc;
                 padding: 8px 16px;
@@ -73,6 +76,7 @@ main {
             }
         }
         #password {
+            display: none;
             .change-password-username {
                 display: block;
                 width: auto;
