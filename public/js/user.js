@@ -27,10 +27,17 @@ const renderTickets = async () => {
 
 const changePassword = async (event) => {
     event.preventDefault();
-    // const oldPassword = $('#old-password').text();
-    // const newPassword = $('#new-password').text();
-    // const reEnterPassword = $('#re-enter-new-password').text();
-    $('#changePasswordBtn').attr('disable', true);
+    const oldPassword = $('#old-password').text();
+    const newPassword = $('#new-password').text();
+    const reEnterPassword = $('#re-enter-new-password').text();
+
+    await $.ajax({
+        url: `http://localhost:3000/users/${userId}`,
+        type: 'PATCH',
+        data: {
+            newHashedPassword: $.trim(newPassword),
+        },
+    });
 };
 
 let oldPassowordFlag = false;
@@ -51,6 +58,7 @@ const oldPasswordInputEvent = async () => {
         }
     });
 };
+
 const newPasswordInputEvent = async () => {
     $('#new-password').bind('input propertychange', function (event) {
         const newPassword = $('#new-password').val();
@@ -65,6 +73,7 @@ const newPasswordInputEvent = async () => {
         }
     });
 };
+
 const rePasswordInputEvent = async () => {
     $('#re-enter-new-password').bind('input propertychange', function (event) {
         const reEnterPassword = $('#re-enter-new-password').val();
