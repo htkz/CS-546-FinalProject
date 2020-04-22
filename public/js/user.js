@@ -25,8 +25,21 @@ const renderTickets = async () => {
     }
 };
 
+const logout = async (event) => {
+    event.preventDefault();
+    await $.ajax({
+        url: `http://localhost:3000/users/logout`,
+    });
+    window.location.replace('http://localhost:3000/entry');
+};
+
+const bindEvents = async () => {
+    $('#logoutBtn').click(logout);
+};
+
 const init = async () => {
     renderTickets();
+    bindEvents();
 };
 
 init();

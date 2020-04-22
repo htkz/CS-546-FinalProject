@@ -30,10 +30,6 @@ const exphbs = require('express-handlebars');
 
 const static = express.static(__dirname + '/public');
 
-const handlebarsInstance = exphbs.create({
-    defaultLayout: 'main',
-});
-
 app.use('/public', static);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -46,7 +42,7 @@ app.use(async (req, res, next) => {
     next();
 });
 
-app.engine('handlebars', handlebarsInstance.engine);
+app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
 app.use(
