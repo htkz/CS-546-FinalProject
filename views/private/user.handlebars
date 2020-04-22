@@ -24,6 +24,7 @@
         <div class="navbar">
             <ul>
                 <li class="active">Personal Information</li>
+                <li>Change Password</li>
                 <li>Ticket Information</li>
                 <li>Payment Information</li>
                 <li>Friends Information</li>
@@ -53,6 +54,50 @@
                         <p>Price: 500</p>
                     </div>
                 </div>
+            </div>
+            <div id="password">
+                <span class="change-password-username" id="change-password-username">Htkz</span>
+                <form class="passwordChangePage" id="passwordChange">
+                    <div class="row mt-5">
+                        <div class="col-3 ml-3">
+                            <div class="float-right font-weight-bold">
+                                Old Password
+                            </div>
+                        </div>
+                        <div class="input-group col-7">
+                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" id="old-password" value="">
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-3 ml-3">
+                            <div class="float-right font-weight-bold">
+                                New Password
+                            </div>
+                        </div>
+                        <div class="input-group col-7">
+                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" id="new-password" value="">
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-3 ml-3">
+                            <div class="float-right font-weight-bold">
+                                Confirm New Password
+                            </div>
+                        </div>
+                        <div class="input-group col-7">
+                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" id="re-enter-new-password" value="">
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col"></div>
+                        <div class="col">
+                            <button class="btn btn-lg btn-primary btn-block" id="change-password-btn" type="submit">
+                                Change Password
+                            </button>
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                </form>
             </div>
             <form class="personalinfoPage" id="personalInfo">
                 <div class="row mt-5">
