@@ -10,7 +10,7 @@ ol {
 }
 
 body {
-    background-color: #FAFAFA;
+    background-color: #fafafa;
 }
 
 header {
@@ -46,6 +46,29 @@ main {
             li.active {
                 font-weight: 600;
                 border-left: 2px solid black;
+            }
+        }
+    }
+    .container {
+        #tickets {
+            .ticket {
+                border: 1px solid #ccc;
+                padding: 8px 16px;
+                margin: 8px;
+                display: flex;
+                .imgContainer {
+                    margin-right: 40px;
+                    img {
+                        width: 160px;
+                        height: 120px;
+                    }
+                }
+                .ticketInfo {
+                    p, h4 {
+                        padding: 0;
+                        margin: 0;
+                    }
+                }
             }
         }
     }

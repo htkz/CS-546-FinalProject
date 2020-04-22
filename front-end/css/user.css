@@ -8,7 +8,7 @@ ol {
   margin: 0; }
 
 body {
-  background-color: #FAFAFA; }
+  background-color: #fafafa; }
 
 header .username {
   border: thick;
@@ -38,6 +38,19 @@ main {
       main .navbar ul li.active {
         font-weight: 600;
         border-left: 2px solid black; }
+  main .container #tickets .ticket {
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    margin: 8px;
+    display: flex; }
+    main .container #tickets .ticket .imgContainer {
+      margin-right: 40px; }
+      main .container #tickets .ticket .imgContainer img {
+        width: 160px;
+        height: 120px; }
+    main .container #tickets .ticket .ticketInfo p, main .container #tickets .ticket .ticketInfo h4 {
+      padding: 0;
+      margin: 0; }
 
 footer {
   display: flex;

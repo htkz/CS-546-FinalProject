@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const userData = data.users;
+const ticketData = data.tickets;
 const utility = require('../utility');
 const checkParam = utility.checkInput;
 
@@ -58,6 +59,18 @@ router.get('/', async (req, res) => {
         res.status(200).json(userList);
     } catch (e) {
         res.status(500).json({ error: 'No users in database' });
+    }
+});
+
+router.get('/tickets/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const tickets = await ticketData.getTicketsByUserId(userId);
+        res.status(200).json(tickets);
+    } catch (error) {
+        res.status(400).json({
+            error: `Error with tickets of user ${req.params.id}`,
+        });
     }
 });
 
