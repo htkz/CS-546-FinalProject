@@ -2,6 +2,10 @@ const userInfo = JSON.parse(Cookies.get('user'));
 const userId = userInfo['_id'];
 console.log(userInfo);
 
+let oldPassword = null;
+let newPassword = null;
+let reEnterPassword = null;
+
 const renderTickets = async () => {
     const tickets = await $.ajax({
         url: `http://localhost:3000/users/tickets/${userId}`,
@@ -27,24 +31,81 @@ const renderTickets = async () => {
 
 const changePassword = async (event) => {
     event.preventDefault();
-    const oldPassword = $('#old-password').text();
-    const newPassword = $('#new-password').text();
-    const reEnterPassword = $('#re-enter-new-password').text();
 
-    await $.ajax({
-        url: `http://localhost:3000/users/account/password/${userId}`,
-        type: 'PATCH',
-        data: {
-            oldPassword: $.trim(oldPassword),
-            newPassword: $.trim(newPassword),
-        },
+    if (!checkPassword(newPassword)) {
+        await showSwal(
+            'error',
+            'Opps! Password must 8-16 characters. Only should contain lower case word, upper case word or number!'
+        );
+        return;
+    }
+
+    if (compareTwoPassword(oldPassword, newPassword)) {
+        await showSwal(
+            'error',
+            'Opps! New password and old password are the same!'
+        );
+        return;
+    }
+
+    if (!compareTwoPassword(newPassword, reEnterPassword)) {
+        await showSwal('error', 'Opps! Two new password must be the same!');
+        return;
+    }
+    try {
+        await $.ajax({
+            url: `http://localhost:3000/users/account/password/${userId}`,
+            type: 'PUT',
+            data: {
+                oldPassword: $.trim(oldPassword),
+                newPassword: $.trim(newPassword),
+            },
+        });
+        await showSwal('success', 'Change password successfully');
+        $('#old-password').val('');
+        $('#new-password').val('');
+        $('#re-enter-password').val('');
+        checkPasswordEmpty();
+    } catch (error) {
+        await showSwal('error', 'Old password not correct!');
+        console.log(error);
+    }
+};
+
+const compareTwoPassword = (password1, password2) => {
+    if (password1 === password2) {
+        return true;
+    }
+    return false;
+};
+
+const checkPassword = (password) => {
+    const re = /^[0-9a-zA-Z]*$/;
+    if (!re.test(password)) {
+        console.log(1);
+        return false;
+    }
+    console.log(password.length);
+    if (password.length > 16 || password.length < 8) {
+        console.log(2);
+        return false;
+    }
+    return true;
+};
+
+const showSwal = async (icon, title) => {
+    await Swal.fire({
+        icon: icon,
+        title: title,
+        showConfirmButton: false,
+        timer: 1500,
     });
 };
 
 const checkPasswordEmpty = () => {
-    const oldPassword = $('#old-password').val();
-    const newPassword = $('#new-password').val();
-    const reEnterPassword = $('#re-enter-password').val();
+    oldPassword = $('#old-password').val();
+    newPassword = $('#new-password').val();
+    reEnterPassword = $('#re-enter-password').val();
     if (
         oldPassword.length !== 0 &&
         newPassword.length !== 0 &&

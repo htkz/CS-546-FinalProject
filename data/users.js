@@ -267,7 +267,7 @@ let exportedMethods = {
         id = await this.checkId(id);
 
         password = (await this.getUserById(id)).hashedPassword;
-        console.log(password);
+
         if (!(await bcrypt.compare(oldPassword, password))) {
             throw 'Old password does not match';
         }
