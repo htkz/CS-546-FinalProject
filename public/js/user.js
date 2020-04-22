@@ -25,8 +25,22 @@ const renderTickets = async () => {
     }
 };
 
+const renderPassword = async () => {
+    $('#change-password-btn').click(changePassword);
+};
+
+const changePassword = async () => {
+    const oldPassword = $('#old-password').text();
+    const newPassword = $('#new-passowrd').text();
+    const reEnterPassword = $('#re-enter-new-password').text();
+    console.log(oldPassword);
+    console.log(newPassword);
+    console.log(reEnterPassword);
+};
+
 const init = async () => {
     renderTickets();
+    renderPassword();
 };
 
 init();
