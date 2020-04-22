@@ -10,8 +10,8 @@ const constructorMethod = (app) => {
     app.use('/comments', commentRoutes);
     app.use('/places', placeRoutes);
 
-    app.use(express.static('front-end', { index: 'entry.html' }));
-    // app.use(express.static('front-end', { index: 'admin.html' }));
+    app.use(express.static('public', { index: 'entry.html' }));
+    // app.use(express.static('public', { index: 'admin.html' }));
 
     app.use('*', (req, res) => {
         res.redirect('/');

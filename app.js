@@ -23,7 +23,7 @@ Codes are far away from bugs with the Buddha protecting
 
 const express = require('express');
 const app = express();
-const configRoutes = require('./back-end/routes');
+const configRoutes = require('./routes');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
