@@ -103,8 +103,27 @@ const buttonDisable = async () => {
     }
 };
 
+const changeFocus = (id) => {
+    $('.navbar li').each((index, li) => {
+        const $li = $(li);
+        if ($li.attr('id') === id) {
+            $li.attr('class', 'active');
+            $($li.attr('data-id')).fadeIn(1000);
+        } else {
+            $li.attr('class', '');
+            $($li.attr('data-id')).hide();
+        }
+    });
+};
+
 const bindEvents = async () => {
     $('#logoutBtn').click(logout);
+    $('.navbar li').each((index, li) => {
+        const $li = $(li);
+        $li.click(() => {
+            changeFocus($li.attr('id'));
+        });
+    });
 };
 
 const init = async () => {
