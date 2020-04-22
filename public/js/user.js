@@ -32,14 +32,14 @@ const changePassword = async (event) => {
     const reEnterPassword = $('#re-enter-new-password').text();
 
     await $.ajax({
-        url: `http://localhost:3000/users/${userId}`,
+        url: `http://localhost:3000/users/account/password/${userId}`,
         type: 'PATCH',
         data: {
-            newHashedPassword: $.trim(newPassword),
+            oldPassword: $.trim(oldPassword),
+            newPassword: $.trim(newPassword),
         },
     });
 };
-
 
 const checkPasswordEmpty = () => {
     const oldPassword = $('#old-password').val();
