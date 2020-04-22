@@ -112,13 +112,6 @@ let exportedMethods = {
             updateUserData.zipCode = updateUser.zipCode;
         }
 
-        if (updateUser.hashedPassword) {
-            updateUserData.hashedPassword = await bcrypt.hash(
-                updateUser.hashedPassword,
-                saltRounds
-            );
-        }
-
         const updateInfo = await userCollection.updateOne(
             { _id: id },
             { $set: updateUserData }

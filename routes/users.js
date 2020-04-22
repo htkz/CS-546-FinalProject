@@ -173,8 +173,7 @@ router.patch('/:id', async (req, res) => {
         !requestBody.newEmail &&
         !requestBody.newPhoneNumber &&
         !requestBody.newAddress &&
-        !requestBody.newZipCode &&
-        !requestBody.newHashedPassword
+        !requestBody.newZipCode
     ) {
         res.status(400).json({
             error:
@@ -215,15 +214,6 @@ router.patch('/:id', async (req, res) => {
         }
     }
 
-    // check newHashedPassword field
-    if (!checkParam.checkPassword(requestBody.newHashedPassword)) {
-        res.status(400).json({
-            error:
-                'Password must 8-16 characters. Only should contain lower case word, upper case word or number',
-        });
-        return;
-    }
-
     // check newUserName field
     if (!checkParam.checkUserName(requestBody.newUserName)) {
         res.status(400).json({
@@ -259,6 +249,7 @@ router.patch('/:id', async (req, res) => {
             res.status(400).json({
                 error: 'The new user name is the same as the old user name',
             });
+            return;
         }
 
         if (requestBody.newEmail && requestBody.newEmail !== oldUser.email) {
@@ -267,6 +258,7 @@ router.patch('/:id', async (req, res) => {
             res.status(400).json({
                 error: 'The new email is the same as the old email',
             });
+            return;
         }
 
         if (
@@ -279,6 +271,7 @@ router.patch('/:id', async (req, res) => {
                 error:
                     'The new phone number is the same as the old phone number',
             });
+            return;
         }
 
         if (
@@ -290,6 +283,7 @@ router.patch('/:id', async (req, res) => {
             res.status(400).json({
                 error: 'The new address is the same as the old address',
             });
+            return;
         }
 
         if (
@@ -301,20 +295,7 @@ router.patch('/:id', async (req, res) => {
             res.status(400).json({
                 error: 'The new zip code is the same as the old zip code',
             });
-        }
-
-        if (
-            requestBody.newHashedPassword &&
-            !(await bcrypt.compare(
-                requestBody.newHashedPassword,
-                oldUser.hashedPassword
-            ))
-        ) {
-            updatedObject.hashedPassword = requestBody.newHashedPassword;
-        } else {
-            res.status(400).json({
-                error: 'The new password is the same as the old password',
-            });
+            return;
         }
     } catch (error) {
         res.status(404).json({ error: 'User not found' });
@@ -430,6 +411,18 @@ router.put('/account/password/:id', async (req, res) => {
         res.status(400).json({
             error:
                 'Password must 8-16 characters. Only should contain lower case word, upper case word or number',
+        });
+        return;
+    }
+
+    if (
+        await bcrypt.compare(
+            passwordInfo.newPassword,
+            (await userData.getUserById(req.params.id)).hashedPassword
+        )
+    ) {
+        res.status(400).json({
+            error: 'The new password is the same as the old password',
         });
         return;
     }
