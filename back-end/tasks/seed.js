@@ -70,6 +70,8 @@ const main = async () => {
 
     await users.addUser('htkz', 'admin@gmail.com', 'Qq123456');
 
+    await users.addUser('Admin', 'admin@group13.com', 'Qq123456');
+
     console.log('Done seeding database');
 
     await db.serverConfig.close();

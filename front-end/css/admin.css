@@ -1,0 +1,78 @@
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+header .username {
+  border: thick;
+  color: white;
+  margin-right: 10px; }
+
+.admin {
+  padding: 20px; }
+  .admin .container .topBar {
+    display: flex; }
+    .admin .container .topBar .filter {
+      padding: 10px;
+      justify-content: center; }
+  .admin .container .cards {
+    display: flex;
+    flex-wrap: wrap; }
+    .admin .container .cards .card {
+      width: 30%;
+      margin: 10px 4px;
+      cursor: pointer; }
+      .admin .container .cards .card img {
+        height: 200px; }
+      .admin .container .cards .card .card-bottom {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px; }
+        .admin .container .cards .card .card-bottom .card-info {
+          color: #6c757d; }
+          .admin .container .cards .card .card-bottom .card-info .category button {
+            margin-right: 4px;
+            margin-top: 4px;
+            margin-bottom: 10px; }
+
+.modal .placeDetail img {
+  width: 100%;
+  height: 200px; }
+
+.modal .placeDetail .attribute {
+  font-weight: bold; }
+
+.modal .wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+  .modal .wrapper .comment .commentContainer {
+    padding: 5px 0;
+    border-top: 1px solid #ccc;
+    max-height: 250px;
+    overflow: scroll; }
+    .modal .wrapper .comment .commentContainer li {
+      border-bottom: 1px solid #ccc;
+      padding: 8px 0; }
+      .modal .wrapper .comment .commentContainer li .username {
+        font-weight: bold; }
+  .modal .wrapper .comment .inputContainer {
+    margin-top: 20px;
+    display: flex;
+    align-items: center; }
+    .modal .wrapper .comment .inputContainer button {
+      margin-left: 4px; }
+
+main {
+  min-height: 100vh; }
+
+footer {
+  display: flex;
+  justify-content: center;
+  padding: 10px; }
+  footer .content {
+    color: #ccc; }
+    footer .content p {
+      padding: 5px 0;
+      margin: 0; }
