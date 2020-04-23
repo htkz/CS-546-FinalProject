@@ -44,7 +44,7 @@ const infoPreload = async () => {
     if (zipCode) $('#form-zipcode').val(zipCode);
 };
 
-const infoSubmit = async()=>{
+const infoSubmit = async () => {
     const userData = await $.ajax({
         url: `http://localhost:3000/users/account/${userId}`,
     });
@@ -55,10 +55,10 @@ const infoSubmit = async()=>{
     const zipCode = userData.zipCode;
 
     let newInfo = {
-        newUserName:userName,
-        newPhoneNumber:phoneNumber,
-        newAddress:address,
-        newZipCode:zipCode
+        newUserName: userName,
+        newPhoneNumber: phoneNumber,
+        newAddress: address,
+        newZipCode: zipCode,
     };
 
     const inputName = $('#form-username').val();
@@ -67,7 +67,7 @@ const infoSubmit = async()=>{
     const inputZip = $('#form-zipcode').val();
 
     //if(inputName !== userName) checkUsername(userName,inputName);
-    if(inputNumber) console.log(inputNumber);
+    if (inputNumber) console.log(inputNumber);
 };
 
 const checkUsername = async (userName, inputName) => {
