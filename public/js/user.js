@@ -301,7 +301,7 @@ const renderTickets = async () => {
     }
 };
 
-// paymnet
+// payment
 const changePayment = async (event) => {
     event.preventDefault();
     const firstName = $('#firstName').val();
@@ -324,6 +324,13 @@ const changePayment = async (event) => {
     const userId = userInfo['_id'];
 };
 
+//friends
+const friendsPreload = async (event) =>{
+    event.preventDefault();
+    
+};
+
+//main
 const bindEvents = async () => {
     $('#logoutBtn').click(logout);
     $('.navbar li').each((index, li) => {
