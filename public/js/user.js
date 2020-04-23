@@ -88,18 +88,18 @@ const infoSubmit = async (event) => {
     let inputCheck = true;
 
     if (inputName !== userName) {
-        if (!checkUsername(inputName)) {
+        if (!await checkUsername(inputName)) {
             $('#userNameRule').removeClass('hidden').addClass('formatRules');
             inputCheck = false;
         }
-        newInfo.userName = inputName;
+        else newInfo.userName = inputName;
     }
     if (inputEmail !== email) {
-        if (!checkUsername(inputEmail)) {
+        if (!await checkEmail(inputEmail)) {
             $('#emailRule').removeClass('hidden').addClass('formatRules');
             inputCheck = false;
         }
-        newInfo.email = inputEmail;
+        else newInfo.email = inputEmail;
     }
     if (inputNumber !== phoneNumber) {
         if (inputNumber) {
@@ -119,10 +119,13 @@ const infoSubmit = async (event) => {
                 inputCheck = false;
             }
         }
-        newInfo.ZipCode = inputZip;
+        newInfo.zipCode = inputZip;
     }
 
-    if (!inputCheck) showSwal('error', 'Opps! Something went wrong!');
+    if (!inputCheck) {
+        showSwal('error', 'Opps! Something went wrong!');
+        return;
+    }
 
     console.log(newInfo);
 
@@ -156,7 +159,13 @@ const checkEmail = async (inputEmail) => {
     const re = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
     if (!re.test(inputEmail)) return false;
     try {
-        await $.ajax({});
+        await $.ajax({
+            url: 'http://localhost:3000/users/account/email',
+            type: 'POST',
+            data: {
+                userName: inputEmail,
+            },
+        });
     } catch (e) {
         return true;
     }
