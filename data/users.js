@@ -49,7 +49,9 @@ let exportedMethods = {
 
     async addUser(userName, email, hashedPassword) {
         const userCollection = await users();
+
         hashedPassword = await bcrypt.hash(hashedPassword, saltRounds);
+
         let newUser = {
             userName: userName,
             email: email,
@@ -92,7 +94,7 @@ let exportedMethods = {
 
         id = await this.checkId(id);
 
-        const updateUser = {
+        const updatedUser = {
             userName: userName,
             email: email,
             phoneNumber: phoneNumber,
@@ -102,7 +104,7 @@ let exportedMethods = {
 
         const updateInfo = await userCollection.updateOne(
             { _id: id },
-            { $set: updateUser }
+            { $set: updatedUser }
         );
 
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
