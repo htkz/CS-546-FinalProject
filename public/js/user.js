@@ -361,7 +361,17 @@ const renderPayment = async (event) => {
 };
 
 //friends
-const friendsPreload = async (event) => {
+const friendsPreload = async () => {
+    const friendsData = await $.ajax({
+        url: `http://localhost:3000/users/friend/${userId}`,
+    });
+
+    $('#friendName').val(friendsData[0].name);
+    $('#friendEmail').val(friendsData[0].email);
+    $('#friendPhone').val(friendsData[0].phoneNumber);
+};
+
+const friendsSubmit = async (event) => {
     event.preventDefault();
 };
 
