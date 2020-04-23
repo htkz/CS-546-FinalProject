@@ -146,7 +146,7 @@ const checkUsername = async (inputName) => {
             userName: inputName,
         },
     });
-    if(!data) return true;
+    if (!data) return true;
     return false;
 };
 
@@ -160,7 +160,7 @@ const checkEmail = async (inputEmail) => {
             email: inputEmail,
         },
     });
-    if(!data) return true;
+    if (!data) return true;
     return false;
 };
 

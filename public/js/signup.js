@@ -38,7 +38,13 @@ $('#form-signup').submit(async (event) => {
         $('.form-signup').hide();
         $('.form-signin').fadeIn(1000);
     } catch (error) {
-        alert(error['responseJSON']['error']);
+        Swal.fire({
+            icon: 'error',
+            title: 'Opps! Something went wrong!',
+            showConfirmButton: false,
+            timer: 1500,
+        });
+        $('#emailRule').removeClass('hidden').addClass('formatRules');
     }
 });
 
