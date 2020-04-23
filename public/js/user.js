@@ -305,6 +305,30 @@ const renderTickets = async () => {
     }
 };
 
+// paymnet
+const changePayment = async (event) => {
+    event.preventDefault();
+    const firstName = $('#firstName').val();
+    const lastName = $('#lastName').val();
+    const zipcode = $('#billingZipCode').val();
+    const cardNumber = $('#cardNumber').val();
+    const expiration = $('#expiration').val();
+    const cvv = $('#securityCode').val();
+    if (
+        firstName.length === 0 ||
+        lastName.length === 0 ||
+        zipcode.length === 0 ||
+        cardNumber.length === 0 ||
+        expiration.length === 0 ||
+        cvv.length === 0
+    ) {
+        await showSwal('error', 'Please make sure all fields are not empty!');
+        return;
+    }
+    const userId = userInfo['_id'];
+    
+};
+
 const bindEvents = async () => {
     $('#logoutBtn').click(logout);
     $('.navbar li').each((index, li) => {
@@ -318,6 +342,7 @@ const bindEvents = async () => {
     $('#re-enter-password').bind('input propertychange', checkPasswordEmpty);
     $('#personalInfo').submit(infoSubmit);
     $('#changePasswordBtn').click(changePassword);
+    $('#changePaymentBtn').click(changePayment);
 };
 
 const init = async () => {
