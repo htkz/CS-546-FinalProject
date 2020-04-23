@@ -29,8 +29,8 @@
                 <li id="personalInfoBtn" data-id="#infopage" class="active">Personal Information</li>
                 <li id="passwordBtn" data-id="#password">Change Password</li>
                 <li id="ticketInfoBtn" data-id="#tickets">Ticket Information</li>
-                {{!-- <li id="paymentInfoBtn">Payment Information</li>
-                <li id="friendsInfoBtn">Friends Information</li> --}}
+                <li id="paymentInfoBtn" data-id="#payment">Payment Information</li>
+                <li id="friendsInfoBtn" data-id="#friends">Friends Information</li>
             </ul>
         </div>
         <div class="container">
@@ -136,6 +136,128 @@
                         <div class="col-7">
                             <button class="btn btn-primary" type="submit">
                                 Update Now!
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="payment">
+                <form id="form-payment">
+                    <div class="row mt-5">
+                        <div class="col-3 ml-3 aside">
+                            <div>
+                                First Name
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" class="form-control" id="firstName">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3 ml-3 aside">
+                            <div>
+                                Last Name
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" class="form-control" id="lastName">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3 ml-3 aside">
+                            <div>
+                                Billing Zip Code
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" class="form-control" id="billingZipCode">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3 ml-3 aside">
+                            <div>
+                                Card Number
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" class="form-control" id="cardNumber">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3 ml-3 aside">
+                            <div>
+                                Expiration Date (MM/YY)
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" class="form-control" id="expiration">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3 ml-3 aside">
+                            <div>
+                                Security Code (CVV)
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" class="form-control" id="securityCode">
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-3 ml-3"></div>
+                        <div class="col-7">
+                            <button class="btn btn-primary" id="changePaymentBtn" disabled type="submit">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="friends">
+                <form id="form-friends">
+                    <div class="row mt-3">
+                        <div class="col-3 ml-3 aside">
+                            <div>Friends</div>
+                        </div>
+                        <div class="col-7" id="friendsList">
+                            <button class="btn btn-sm btn-outline-primary">Friend1</button>
+                            <button class="btn btn-sm btn-outline-primary">Friend2</button>
+                            <button class="btn btn-sm btn-outline-primary">Friend3</button>
+                            <button class="btn btn-sm btn-outline-primary">Friend4</button>
+                            <button class="btn btn-sm btn-outline-primary">Friend5</button>
+                            <button class="btn btn-sm btn-outline-primary">Friend6</button>
+                            <button class="btn btn-sm btn-outline-primary">Friend7</button>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3 ml-3 aside">
+                            <div>Friend Name</div>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" class="form-control" id="friendName">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3 ml-3 aside">
+                            <div>Email</div>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" class="form-control" id="friendEmail">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3 ml-3 aside">
+                            <div>Phone Number</div>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" class="form-control" id="friend-phone">
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-3 ml-3"></div>
+                        <div class="col-7">
+                            <button class="btn btn-primary" id="addFriendBtn" disabled type="submit">
+                                Add Friend
                             </button>
                         </div>
                     </div>
