@@ -44,7 +44,8 @@ const infoPreload = async () => {
     if (zipCode) $('#form-zipcode').val(zipCode);
 };
 
-const infoSubmit = async () => {
+const infoSubmit = async (event) => {
+    event.preventDefault();
     const userData = await $.ajax({
         url: `http://localhost:3000/users/account/${userId}`,
     });

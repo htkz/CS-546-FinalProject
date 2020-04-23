@@ -15,7 +15,7 @@ const constructorMethod = (app) => {
     app.use('/places', placeRoutes);
     app.use('/banks', bankRoutes);
     app.use('/friends', friendRoutes);
-    app.use('/banks');
+    //app.use('/banks');
 
     app.use(express.static('public'));
 
