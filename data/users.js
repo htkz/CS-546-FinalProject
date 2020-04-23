@@ -224,7 +224,7 @@ let exportedMethods = {
         return await this.getUserById(userId);
     },
 
-    async addBankToUser(userId, BankId) {
+    async addBankToUser(userId, bankId) {
         const userCollection = await users();
 
         userId = await this.checkId(userId);
@@ -232,11 +232,29 @@ let exportedMethods = {
 
         const updatedInfo = await userCollection.updateOne(
             { _id: userId },
-            { $set: { bankCard: BankId } }
+            { $set: { bankCard: bankId } }
         );
 
         if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
             throw 'addBankToUser Update failed';
+        }
+
+        return await this.getUserById(userId);
+    },
+
+    async addFriendToUser(userId, friendId) {
+        const userCollection = await user();
+
+        userId = await this.checkId(userId);
+        friendId = await this.checkId(friendId);
+
+        const updatedInfo = await userCollection.updateOne(
+            { _id: userId },
+            { $set: { friendId: friendId } }
+        );
+
+        if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
+            throw 'addFriendToUser Update failed';
         }
 
         return await this.getUserById(userId);
