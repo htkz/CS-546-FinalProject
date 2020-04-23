@@ -1,6 +1,8 @@
 const mongoCollections = require('../config/mongoCollection');
 const banks = mongoCollections.banks;
 const users = require('./users');
+const ObjectId = require('mongodb').ObjectId;
+
 
 /*
     firstName: String
@@ -14,6 +16,8 @@ const users = require('./users');
 let exportedMethods = {
     async getBankById(id) {
         const bankCollection = await banks();
+
+        id = await this.checkId(id);
 
         const bank = await bankCollection.findOne({ _id: id });
 
@@ -67,6 +71,8 @@ let exportedMethods = {
     ) {
         const bankCollection = await banks();
 
+        id = await this.checkId(id);
+
         let updatedBank = {
             firstName: firstName,
             lastName: lastName,
@@ -86,6 +92,16 @@ let exportedMethods = {
         }
 
         return await this.getBankById(id);
+    },
+
+    async checkId(id) {
+        if (typeof id == 'string') {
+            return ObjectId(id);
+        } else if (typeof id == 'object') {
+            return id;
+        } else {
+            throw new Error('You must provide valid id to search for.');
+        }
     },
 };
 
