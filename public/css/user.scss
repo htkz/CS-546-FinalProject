@@ -88,6 +88,19 @@ main {
         #password {
             display: none;
         }
+        #infopage {
+            .formatRules {
+                height: auto;
+                color: red;
+                padding: 0px !important;
+                text-align: left;
+                font-size: 14px;
+                font-weight: normal;
+            }
+            .hidden {
+                display: none;
+            }
+        }
     }
 }
 

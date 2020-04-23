@@ -68,7 +68,15 @@ const infoSubmit = async (event) => {
     const inputZip = $('#form-zipcode').val();
 
     //if(inputName !== userName) checkUsername(userName,inputName);
-    if (inputNumber) console.log(inputNumber);
+    if (inputNumber !== phoneNumber) {
+        if (inputNumber) {
+            if (!checkPhoneNumber(inputNumber)) {
+                showSwal('error', 'Opps! Something went wrong!');
+                $('#phoneNumberRule').removeClass('hidden').addClass('formatRules');
+            }
+        }
+        newInfo.newPhoneNumber = inputNumber;
+    }
 };
 
 const checkUsername = async (userName, inputName) => {

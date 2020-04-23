@@ -66,6 +66,15 @@ main {
         margin: 0; }
   main .container #password {
     display: none; }
+  main .container #infopage .formatRules {
+    height: auto;
+    color: red;
+    padding: 0px !important;
+    text-align: left;
+    font-size: 14px;
+    font-weight: normal; }
+  main .container #infopage .hidden {
+    display: none; }
 
 footer {
   display: flex;
