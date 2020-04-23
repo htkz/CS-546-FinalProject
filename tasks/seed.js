@@ -34,7 +34,7 @@ const main = async () => {
 
     await places.addPlace(
         'Statue of Liberty',
-        'A famous school in New Jersey',
+        'Iconic National Monument opened in 1886, offering guided tours, a museum & city views.',
         'Liberty Island Manhattan, New York City, New York,',
         '10004',
         59,
