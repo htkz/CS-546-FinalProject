@@ -222,6 +222,24 @@ let exportedMethods = {
         return await this.getUserById(userId);
     },
 
+    async addBankToUser(userId, BankId) {
+        const userCollection = await users();
+
+        userId = await this.checkId(userId);
+        bankId = await this.checkId(bankId);
+
+        const updatedInfo = await userCollection.updateOne(
+            { _id: userId },
+            { $set: { bankCard: BankId } }
+        );
+
+        if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
+            throw 'addBankToUser Update failed';
+        }
+
+        return await this.getUserById(userId);
+    },
+
     async updatePassword(id, oldPassword, newPassword) {
         const userCollection = await users();
 
