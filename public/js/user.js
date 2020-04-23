@@ -34,11 +34,13 @@ const infoPreload = async () => {
     });
 
     const userName = userData.userName;
+    const email = userData.email;
     const phoneNumber = userData.phoneNumber;
     const address = userData.address;
     const zipCode = userData.zipCode;
 
     $('#form-username').val(userName);
+    $('#form-email').val(email);
     if (phoneNumber) $('#form-phonenumber').val(phoneNumber);
     if (address) $('#form-address').val(address);
     if (zipCode) $('#form-zipcode').val(zipCode);
@@ -46,30 +48,59 @@ const infoPreload = async () => {
 
 const infoSubmit = async (event) => {
     event.preventDefault();
+
+    if ($('#userNameRule').attr('class') === 'formatRules') {
+        $('#userNameRule').removeClass('formatRules').addClass('hidden');
+    }
+    if ($('#emailRule').attr('class') === 'formatRules') {
+        $('#emailRule').removeClass('formatRules').addClass('hidden');
+    }
+    if ($('#phoneNumberRule').attr('class') === 'formatRules') {
+        $('#phoneNumberRule').removeClass('formatRules').addClass('hidden');
+    }
+    if ($('#zipCodeRule').attr('class') === 'formatRules') {
+        $('#zipCodeRule').removeClass('formatRules').addClass('hidden');
+    }
+
     const userData = await $.ajax({
         url: `http://localhost:3000/users/account/${userId}`,
     });
 
     const userName = userData.userName;
+    const email = userData.email;
     const phoneNumber = userData.phoneNumber;
-    const address = userData.address;
     const zipCode = userData.zipCode;
 
-    let newInfo = {
-        newUserName: userName,
-        newPhoneNumber: phoneNumber,
-        newAddress: address,
-        newZipCode: zipCode,
-    };
-
     const inputName = $('#form-username').val();
+    const inputEmail = $('#form-email').val();
     const inputNumber = $('#form-phonenumber').val();
     const inputAddress = $('#form-address').val();
     const inputZip = $('#form-zipcode').val();
 
+    let newInfo = {
+        newUserName: userName,
+        newEmail: email,
+        newPhoneNumber: phoneNumber,
+        newAddress: inputAddress,
+        newZipCode: zipCode,
+    };
+
     let inputCheck = true;
 
-    //if(inputName !== userName) checkUsername(userName,inputName);
+    if (inputName !== userName) {
+        if (!checkUsername(inputName)) {
+            $('#userNameRule').removeClass('hidden').addClass('formatRules');
+            inputCheck = false;
+        }
+        newInfo.newUserName = inputName;
+    }
+    if (inputEmail !== email) {
+        if (!checkUsername(inputEmail)) {
+            $('#emailRule').removeClass('hidden').addClass('formatRules');
+            inputCheck = false;
+        }
+        newInfo.newUserName = inputName;
+    }
     if (inputNumber !== phoneNumber) {
         if (inputNumber) {
             if (!checkPhoneNumber(inputNumber)) {
@@ -81,15 +112,45 @@ const infoSubmit = async (event) => {
         }
         newInfo.newPhoneNumber = inputNumber;
     }
+    if (inputZip !== zipCode) {
+        if (inputZip) {
+            if (!checkZipCode(inputZip)) {
+                $('#zipCodeRule').removeClass('hidden').addClass('formatRules');
+                inputCheck = false;
+            }
+        }
+        newInfo.newZipCode = inputZip;
+    }
 
     if (!inputCheck) showSwal('error', 'Opps! Something went wrong!');
+
+    await $.ajax{
+        
+    };
+    showSwal('success', 'Update success!');
 };
 
-const checkUsername = async (userName, inputName) => {
+const checkUsername = async (inputName) => {
     const re = /^[0-9a-zA-Z]*$/;
-    if (!re.test(userName)) return false;
-    if (userName.length > 16 || userName.length < 3) return false;
-    return true;
+    if (!re.test(inputName)) return false;
+    if (inputName.length > 16 || inputName.length < 3) return false;
+    try {
+        await $.ajax({});
+    } catch (e) {
+        return true;
+    }
+    return false;
+};
+
+const checkEmail = async (inputEmail) => {
+    const re = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    if (!re.test(inputEmail)) return false;
+    try {
+        await $.ajax({});
+    } catch (e) {
+        return true;
+    }
+    return false;
 };
 
 const checkZipCode = (inputZip) => {
