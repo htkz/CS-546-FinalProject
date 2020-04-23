@@ -20,6 +20,13 @@ const logout = async (event) => {
     window.location.replace('http://localhost:3000/entry');
 };
 
+const renderUsername = () => {
+    const userName = userInfo['userName'];
+    if (userName !== undefined) {
+        $('#username').text(userName);
+    }
+};
+
 // psersonal info
 const infoPreload = async () => {
     const userData = await $.ajax({
@@ -221,6 +228,7 @@ const bindEvents = async () => {
 const init = async () => {
     infoPreload();
     renderTickets();
+    renderUsername();
     bindEvents();
 };
 
