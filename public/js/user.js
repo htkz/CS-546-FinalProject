@@ -1,36 +1,32 @@
 const userInfo = JSON.parse(Cookies.get('user'));
 const userId = userInfo['_id'];
-console.log(userInfo);
 
-let oldPassword = null;
-let newPassword = null;
-let reEnterPassword = null;
-
-const renderTickets = async () => {
-    const tickets = await $.ajax({
-        url: `http://localhost:3000/users/tickets/${userId}`,
+// util
+const showSwal = async (icon, title) => {
+    await Swal.fire({
+        icon: icon,
+        title: title,
+        showConfirmButton: false,
+        timer: 1500,
     });
-    $('#tickets').empty();
-    for (ticket of tickets) {
-        const $ticket = `
-            <div class="ticket">
-                <div class="imgContainer">
-                    <img src="./pic/${ticket.images[0]}" alt="${ticket.images[0]}">
-                </div>
-                <div class="ticketInfo">
-                    <h4>${ticket.name}</h4>
-                    <p>${ticket.description}</p>
-                    <p>Effect Date: ${ticket.effectDate}</p>
-                    <p>Price: ${ticket.price}</p>
-                </div>
-            </div>
-        `;
-        $('#tickets').append($ticket);
-    }
 };
 
+// navbar
+const logout = async (event) => {
+    event.preventDefault();
+    await $.ajax({
+        url: `http://localhost:3000/users/logout`,
+    });
+    window.location.replace('http://localhost:3000/entry');
+};
+
+// password
 const changePassword = async (event) => {
     event.preventDefault();
+
+    const oldPassword = $('#old-password').val();
+    const newPassword = $('#new-password').val();
+    const reEnterPassword = $('#re-enter-password').val();
 
     if (!checkPassword(newPassword)) {
         await showSwal(
@@ -93,19 +89,10 @@ const checkPassword = (password) => {
     return true;
 };
 
-const showSwal = async (icon, title) => {
-    await Swal.fire({
-        icon: icon,
-        title: title,
-        showConfirmButton: false,
-        timer: 1500,
-    });
-};
-
 const checkPasswordEmpty = () => {
-    oldPassword = $('#old-password').val();
-    newPassword = $('#new-password').val();
-    reEnterPassword = $('#re-enter-password').val();
+    const oldPassword = $('#old-password').val();
+    const newPassword = $('#new-password').val();
+    const reEnterPassword = $('#re-enter-password').val();
     if (
         oldPassword.length !== 0 &&
         newPassword.length !== 0 &&
@@ -117,14 +104,7 @@ const checkPasswordEmpty = () => {
     }
 };
 
-const logout = async (event) => {
-    event.preventDefault();
-    await $.ajax({
-        url: `http://localhost:3000/users/logout`,
-    });
-    window.location.replace('http://localhost:3000/entry');
-};
-
+// ticket info
 const changeFocus = (id) => {
     $('.navbar li').each((index, li) => {
         const $li = $(li);
@@ -136,6 +116,29 @@ const changeFocus = (id) => {
             $($li.attr('data-id')).hide();
         }
     });
+};
+
+const renderTickets = async () => {
+    const tickets = await $.ajax({
+        url: `http://localhost:3000/users/tickets/${userId}`,
+    });
+    $('#tickets').empty();
+    for (ticket of tickets) {
+        const $ticket = `
+            <div class="ticket">
+                <div class="imgContainer">
+                    <img src="./pic/${ticket.images[0]}" alt="${ticket.images[0]}">
+                </div>
+                <div class="ticketInfo">
+                    <h4>${ticket.name}</h4>
+                    <p>${ticket.description}</p>
+                    <p>Effect Date: ${ticket.effectDate}</p>
+                    <p>Price: ${ticket.price}</p>
+                </div>
+            </div>
+        `;
+        $('#tickets').append($ticket);
+    }
 };
 
 const bindEvents = async () => {
