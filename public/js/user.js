@@ -308,26 +308,61 @@ const changePayment = async (event) => {
     const lastName = $('#lastName').val();
     const zipcode = $('#billingZipCode').val();
     const cardNumber = $('#cardNumber').val();
-    const expiration = $('#expiration').val();
+    const expirationDate = $('#expiration').val();
     const cvv = $('#securityCode').val();
     if (
         firstName.length === 0 ||
         lastName.length === 0 ||
         zipcode.length === 0 ||
         cardNumber.length === 0 ||
-        expiration.length === 0 ||
+        expirationDate.length === 0 ||
         cvv.length === 0
     ) {
         await showSwal('error', 'Please make sure all fields are not empty!');
         return;
     }
     const userId = userInfo['_id'];
+    const user = await $.ajax(`http://localhost:3000/users/account/${userId}`);
+    const method = user.bankCard.length > 0 ? 'put' : 'post';
+    const bankId = user.bankCard || '';
+    try {
+        await $.ajax({
+            url: `http://localhost:3000/banks/${bankId}`,
+            type: method,
+            data: {
+                user: userId,
+                firstName: firstName,
+                lastName: lastName,
+                billingZipCode: zipcode,
+                cardNumber: cardNumber,
+                expirationDate: expirationDate,
+                securityCode: cvv,
+            },
+        });
+        await showSwal('success', 'Saved your payment infomation!');
+    } catch (error) {
+        await showSwal('error', error);
+    }
+};
+
+const renderPayment = async (event) => {
+    const userId = userInfo['_id'];
+    const user = await $.ajax(`http://localhost:3000/users/account/${userId}`);
+    if (user.bankCard.length === 0) {
+        return;
+    }
+    const bank = await $.ajax(`http://localhost:3000/banks/${user.bankCard}`);
+    $('#firstName').val(bank.firstName);
+    $('#lastName').val(bank.lastName);
+    $('#billingZipCode').val(bank.billingZipCode);
+    $('#cardNumber').val(bank.cardNumber);
+    $('#expiration').val(bank.expirationDate);
+    $('#securityCode').val(bank.securityCode);
 };
 
 //friends
-const friendsPreload = async (event) =>{
+const friendsPreload = async (event) => {
     event.preventDefault();
-    
 };
 
 //main
@@ -351,6 +386,7 @@ const init = async () => {
     infoPreload();
     renderTickets();
     renderUsername();
+    renderPayment();
     bindEvents();
 };
 
