@@ -16,6 +16,16 @@ router.get('/account/:id', async (req, res) => {
     }
 });
 
+router.post('/account/username', async (req, res) => {
+    let username = req.body.userName;
+    try {
+        const user = await userData.getUserByUserName(username);
+        res.status(200).json(user);
+    } catch (e) {
+        res.status(404).json({ error: 'User not found' });
+    }
+});
+
 router.post('/account/login', async (req, res) => {
     let email = req.body.email;
     let password = req.body.hashedPassword;
@@ -161,207 +171,107 @@ router.post('/account/register', async (req, res) => {
     }
 });
 
-router.patch('/:id', async (req, res) => {
-    const requestBody = req.body;
-    console.log(requestBody);
-
-    let updatedObject = {};
-
-    // check data structure
-    if (
-        !requestBody.newUserName &&
-        !requestBody.newEmail &&
-        !requestBody.newPhoneNumber &&
-        !requestBody.newAddress &&
-        !requestBody.newZipCode
-    ) {
+router.put('/account/update/:id', async (req, res) => {
+    let userInfo = req.body;
+    console.log(userInfo);
+    /*
+     userName
+     phoneNumber
+     email
+     address
+     zipCode
+     */
+    if (!userInfo) {
         res.status(400).json({
-            error:
-                'You must provide userName, email, phoneNumber, address or zipCode',
+            error: 'You must provide data to update a user information',
         });
         return;
     }
 
-    // check newPhoneNumber field
-    if (!checkParam.checkPhoneNumber(requestBody.newPhoneNumber)) {
-        res.status(400).json({ error: 'Not valid phone number' });
-        return;
-    }
-
-    // check newZipCode field
-    if (!checkParam.checkZipCode(requestBody.newZipCode)) {
-        res.status(400).json({ error: 'Not valid zip code' });
-        return;
-    }
-
-    // check newEmail field
-    if (!checkParam.checkEmail(requestBody.newEmail)) {
-        res.status(400).json({ error: 'Not valid e-mail address' });
-        return;
-    }
-
-    // check new email whether in the database or not
-    if (requestBody.newEmail) {
-        if (
-            (await userData.getUserByEmail(
-                requestBody.newEmail.toLowerCase()
-            )) !== null
-        ) {
-            res.status(400).json({
-                error: `This ${requestBody.newEmail} has been existed`,
-            });
-            return;
-        }
-    }
-
-    // check newUserName field
-    if (!checkParam.checkUserName(requestBody.newUserName)) {
+    if (!userInfo.userName || userInfo.userName.length === 0) {
         res.status(400).json({
-            error:
-                'Username must 3-16 characters, only contains lower case word, upper case word & number',
+            error: 'You must provide user name to update a user information',
         });
         return;
     }
 
     // check new name whether in the database or not
-    if (requestBody.newUserName) {
+    if (userInfo.userName) {
         if (
             (await userData.getUserByUserName(
-                requestBody.newUserName.toLowerCase()
+                userInfo.userName.toLowerCase()
             )) !== null
         ) {
-            res.status(400).json({
-                error: `This ${requestBody.newUserName} has been existed`,
-            });
-            return;
+            if (
+                (await userData.getUserById(req.params.id)).userName !==
+                userInfo.userName.toLowerCase()
+            ) {
+                res.status(400).json({
+                    error: `This ${userInfo.userName} has been existed`,
+                });
+                return;
+            }
         }
     }
 
-    try {
-        const oldUser = await userData.getUserById(req.params.id);
-
-        if (
-            requestBody.newUserName &&
-            requestBody.newUserName !== oldUser.userName
-        ) {
-            updatedObject.userName = requestBody.newUserName.toLowerCase();
-        } else {
-            res.status(400).json({
-                error: 'The new user name is the same as the old user name',
-            });
-            return;
-        }
-
-        if (requestBody.newEmail && requestBody.newEmail !== oldUser.email) {
-            updatedObject.email = requestBody.newEmail.toLowerCase();
-        } else {
-            res.status(400).json({
-                error: 'The new email is the same as the old email',
-            });
-            return;
-        }
-
-        if (
-            requestBody.newPhoneNumber &&
-            requestBody.newPhoneNumber !== oldUser.phoneNumber
-        ) {
-            updatedObject.phoneNumber = requestBody.newPhoneNumber;
-        } else {
-            res.status(400).json({
-                error:
-                    'The new phone number is the same as the old phone number',
-            });
-            return;
-        }
-
-        if (
-            requestBody.newAddress &&
-            requestBody.newAddress !== oldUser.address
-        ) {
-            updatedObject.address = requestBody.newAddress;
-        } else {
-            res.status(400).json({
-                error: 'The new address is the same as the old address',
-            });
-            return;
-        }
-
-        if (
-            requestBody.newZipCode &&
-            requestBody.newZipCode !== oldUser.zipCode
-        ) {
-            updatedObject.zipCode = requestBody.newZipCode;
-        } else {
-            res.status(400).json({
-                error: 'The new zip code is the same as the old zip code',
-            });
-            return;
-        }
-    } catch (error) {
-        res.status(404).json({ error: 'User not found' });
-    }
-
-    try {
-        if (JSON.stringify(updatedObject) === '{}') {
-            res.status(400).json({ error: 'No information need to update' });
-            return;
-        }
-        const updatedUser = await userData.updateUser(
-            req.params.id,
-            updatedObject
-        );
-        res.status(200).json(updatedUser);
-    } catch (error) {
-        res.status(500).json({ error: 'Upadte user information failed' });
-        console.log(error);
-    }
-});
-
-router.put('/:id', async (req, res) => {
-    let userInfo = req.body;
-    console.log(userInfo);
-    /*
-     phoneNumber
-     address
-     ZipCode
-     */
-    if (!userInfo) {
-        res.status(400).json({
-            error: 'You must provide data to complete a user information',
-        });
+    if (!checkParam.checkUserName(userInfo.userName)) {
+        res.status(400).json({ error: 'Not valid user name' });
+        return;
     }
 
     // check phoneNumber field
-    if (!userInfo.phoneNumber || userInfo.phoneNumber.length === 0) {
-        res.status(400).json({ error: 'You must provide a phone number' });
+    if (userInfo.phoneNumber.length !== 0) {
+        if (!checkParam.checkPhoneNumber(userInfo.phoneNumber)) {
+            res.status(400).json({ error: 'Not valid phone number' });
+            return;
+        }
+    }
+
+    // check email field
+    if (!checkParam.checkEmail(userInfo.email)) {
+        res.status(400).json({
+            error: 'You must provide email to update a user information',
+        });
         return;
     }
 
-    if (!checkParam.checkPhoneNumber(userInfo.phoneNumber)) {
-        res.status(400).json({ error: 'Not valid phone number' });
+    if (!checkParam.checkEmail(userInfo.email)) {
+        res.status(400).json({ error: 'Not valid email' });
         return;
+    }
+
+    // check new email whether in the database or not
+    if (userInfo.email) {
+        if (
+            (await userData.getUserByEmail(userInfo.email.toLowerCase())) !==
+            null
+        ) {
+            if (
+                (await userData.getUserById(req.params.id)).email !==
+                userInfo.email.toLowerCase()
+            ) {
+                res.status(400).json({
+                    error: `This ${userInfo.email} has been existed`,
+                });
+                return;
+            }
+        }
     }
 
     // check address field
-    if (!userInfo.address || userInfo.address.length === 0) {
-        res.status(400).json({ error: 'You must provide an address' });
-        return;
-    }
-
-    if ((typeof userInfo.address == 'string') == false) {
-        res.status(400).json({ error: 'Address must be string type' });
-        return;
+    if (userInfo.address.length !== 0) {
+        if ((typeof userInfo.address == 'string') == false) {
+            res.status(400).json({ error: 'Address must be string type' });
+            return;
+        }
     }
 
     // check zipCode field
-    if (!userInfo.zipCode || userInfo.zipCode.length === 0) {
-        res.status(400).json({ error: 'You must provide a zip code' });
-        return;
-    }
-
-    if (!checkParam.checkZipCode(userInfo.zipCode)) {
-        res.status(400).json({ error: 'Not valid zip code' });
-        return;
+    if (userInfo.zipCode.length !== 0) {
+        if (!checkParam.checkZipCode(userInfo.zipCode)) {
+            res.status(400).json({ error: 'Not valid zip code' });
+            return;
+        }
     }
 
     try {
@@ -372,8 +282,10 @@ router.put('/:id', async (req, res) => {
     }
 
     try {
-        const updateUser = await userData.completeUserInfo(
+        const updateUser = await userData.updatedUser(
             req.params.id,
+            userInfo.userName.toLowerCase(),
+            userInfo.email.toLowerCase(),
             userInfo.phoneNumber,
             userInfo.address,
             userInfo.zipCode
