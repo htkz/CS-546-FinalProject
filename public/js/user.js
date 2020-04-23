@@ -6,6 +6,22 @@ let oldPassword = null;
 let newPassword = null;
 let reEnterPassword = null;
 
+const infoPage = async() => {
+    const userData = await $.ajax({
+        url: `http://localhost:3000/users/account/${userId}`,
+    });
+    
+    const userName = userData.userName;
+    const phoneNumber = userData.phoneNumber;
+    const address = userData.address;
+    const zipCode = userData.zipCode;
+    
+    $('#form-username').val(userName);
+    if(phoneNumber) $('#form-phonenumber').val(phoneNumber);
+    if(address) $('#form-address').val(address);
+    if(zipCode) $('#form-zipcode').val(zipCode);
+};
+
 const renderTickets = async () => {
     const tickets = await $.ajax({
         url: `http://localhost:3000/users/tickets/${userId}`,
@@ -157,6 +173,7 @@ const bindEvents = async () => {
 };
 
 const init = async () => {
+    infoPage();
     renderTickets();
     bindEvents();
     renderUser();
