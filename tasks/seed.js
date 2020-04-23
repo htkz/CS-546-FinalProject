@@ -13,59 +13,59 @@ const main = async () => {
         'A famous school in New Jersey',
         '1 Castle Point Terrace, Hoboken',
         '07310',
-        20000,
+        100,
         ['school', 'quiet'],
         '2020-03-17',
-        0,
-        ['ticket1.jpeg', 'ticket2.jpg']
+        200,
+        ['Stevens_Institute_Of_Technology.jpg', 'ticket2.jpg']
     );
 
     await places.addPlace(
-        'Gateway South',
-        'A famous building in Stevens Institute of Technology',
-        '1 Castle Point Terrace, Hoboken',
-        '07310',
-        500,
-        ['building', 'quiet'],
+        'Kennedy Space Center',
+        'To discover and expand knowledge for the benefit of humanity.',
+        'Titusville, Florida',
+        '32899',
+        50,
+        ['building', 'science'],
         '2020-02-18',
         200,
-        ['ticket2.jpg', 'ticket1.jpeg']
+        ['NASA.jpg', 'ticket1.jpeg']
     );
 
     await places.addPlace(
-        'Stevens',
+        'Statue of Liberty',
         'A famous school in New Jersey',
-        '1 Castle Point Terrace, Hoboken',
-        '07310',
-        20000,
-        ['school', 'quiet'],
+        'Liberty Island Manhattan, New York City, New York,',
+        '10004',
+        59,
+        ['Historical landmark', 'quiet'],
         '2019-12-13',
         100,
-        ['ticket3.jpg', 'ticket1.jpeg']
+        ['Statue_Of_Liberty.jpg', 'ticket1.jpeg']
     );
 
     await places.addPlace(
-        'Stevens',
-        'A famous school in New Jersey',
-        '1 Castle Point Terrace, Hoboken',
-        '07310',
-        20000,
-        ['school', 'quiet'],
+        'Universal_Studio',
+        'Famous, sprawling amusement park featuring movie-themed rides, attractions & entertainment.',
+        '6000 Universal Blvd, Orlando, FL',
+        '32819',
+        189,
+        ['Theme park', 'Happy'],
         '2018-04-17',
         50,
-        ['ticket2.jpg', 'ticket1.jpeg']
+        ['Universal_Studio.jpg', 'ticket1.jpeg']
     );
 
     await places.addPlace(
-        'Stevens',
-        'A famous school in New Jersey',
-        '1 Castle Point Terrace, Hoboken',
-        '07310',
-        20000,
-        ['school', 'quiet'],
+        'Empire State Building',
+        'Iconic, art deco office tower from 1931 with exhibits & observatories on the 86th & 102nd floors',
+        '20 W 34th St, New York, NY',
+        '10001',
+        20,
+        ['Historical landmark', 'quiet'],
         '2022-04-27',
         1000,
-        ['ticket3.jpg', 'ticket2.jpg']
+        ['Empire_State_Building.jpg', 'ticket2.jpg']
     );
 
     await users.addUser('htkz', 'admin@gmail.com', 'Qq123456');
