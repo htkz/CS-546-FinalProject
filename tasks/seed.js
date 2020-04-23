@@ -45,7 +45,7 @@ const main = async () => {
     );
 
     await places.addPlace(
-        'Universal_Studio',
+        'Universal Studio',
         'Famous, sprawling amusement park featuring movie-themed rides, attractions & entertainment.',
         '6000 Universal Blvd, Orlando, FL',
         '32819',
