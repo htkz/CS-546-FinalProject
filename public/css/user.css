@@ -1,5 +1,6 @@
 html {
-  font-family: Helvetica, sans-serif; }
+  font-family: Helvetica, sans-serif;
+  box-sizing: border-box; }
 
 ul,
 ol {
@@ -38,6 +39,13 @@ main {
       main .navbar ul li.active {
         font-weight: 600;
         border-left: 2px solid black; }
+  main .container .aside {
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    main .container .aside div {
+      text-align: right; }
   main .container #tickets {
     display: none;
     max-height: 80vh;
@@ -58,13 +66,6 @@ main {
         margin: 0; }
   main .container #password {
     display: none; }
-    main .container #password .change-password-username {
-      display: block;
-      width: auto;
-      font-size: 40px;
-      text-align: left;
-      margin-left: 250px;
-      margin-bottom: -30px; }
 
 footer {
   display: flex;

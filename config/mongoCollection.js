@@ -19,4 +19,6 @@ module.exports = {
     comments: getCollectionFn('comments'),
     places: getCollectionFn('places'),
     counts: getCollectionFn('counts'),
+    friends: getCollectionFn('friends'),
+    banks: getCollectionFn('banks'),
 };

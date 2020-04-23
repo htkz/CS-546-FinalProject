@@ -154,10 +154,6 @@ const changeFocus = (id) => {
     });
 };
 
-const renderUser = () => {
-    $('#change-password-username').text(userInfo['userName']);
-};
-
 const bindEvents = async () => {
     $('#logoutBtn').click(logout);
     $('.navbar li').each((index, li) => {
@@ -176,7 +172,6 @@ const init = async () => {
     infoPage();
     renderTickets();
     bindEvents();
-    renderUser();
 };
 
 init();
