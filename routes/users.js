@@ -190,6 +190,7 @@ router.put('/account/update/:id', async (req, res) => {
      email
      address
      zipCode
+     bio
      */
     if (!userInfo) {
         res.status(400).json({
@@ -297,7 +298,8 @@ router.put('/account/update/:id', async (req, res) => {
             userInfo.email.toLowerCase(),
             userInfo.phoneNumber,
             userInfo.address,
-            userInfo.zipCode
+            userInfo.zipCode,
+            userInfo.bio
         );
         res.status(200).json(updatedUser);
     } catch (error) {
