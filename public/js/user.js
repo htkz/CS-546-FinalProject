@@ -20,6 +20,23 @@ const logout = async (event) => {
     window.location.replace('http://localhost:3000/entry');
 };
 
+// psersonal info
+const infoPage = async() => {
+    const userData = await $.ajax({
+        url: `http://localhost:3000/users/account/${userId}`,
+    });
+    
+    const userName = userData.userName;
+    const phoneNumber = userData.phoneNumber;
+    const address = userData.address;
+    const zipCode = userData.zipCode;
+    
+    $('#form-username').val(userName);
+    if(phoneNumber) $('#form-phonenumber').val(phoneNumber);
+    if(address) $('#form-address').val(address);
+    if(zipCode) $('#form-zipcode').val(zipCode);
+};
+
 // password
 const changePassword = async (event) => {
     event.preventDefault();
@@ -156,6 +173,7 @@ const bindEvents = async () => {
 };
 
 const init = async () => {
+    infoPage();
     renderTickets();
     bindEvents();
 };
