@@ -34,11 +34,13 @@ const infoPreload = async () => {
     });
 
     const userName = userData.userName;
+    const email = userData.email;
     const phoneNumber = userData.phoneNumber;
     const address = userData.address;
     const zipCode = userData.zipCode;
 
     $('#form-username').val(userName);
+    $('#form-email').val(email);
     if (phoneNumber) $('#form-phonenumber').val(phoneNumber);
     if (address) $('#form-address').val(address);
     if (zipCode) $('#form-zipcode').val(zipCode);
@@ -46,30 +48,59 @@ const infoPreload = async () => {
 
 const infoSubmit = async (event) => {
     event.preventDefault();
+
+    if ($('#userNameRule').attr('class') === 'formatRules') {
+        $('#userNameRule').removeClass('formatRules').addClass('hidden');
+    }
+    if ($('#emailRule').attr('class') === 'formatRules') {
+        $('#emailRule').removeClass('formatRules').addClass('hidden');
+    }
+    if ($('#phoneNumberRule').attr('class') === 'formatRules') {
+        $('#phoneNumberRule').removeClass('formatRules').addClass('hidden');
+    }
+    if ($('#zipCodeRule').attr('class') === 'formatRules') {
+        $('#zipCodeRule').removeClass('formatRules').addClass('hidden');
+    }
+
     const userData = await $.ajax({
         url: `http://localhost:3000/users/account/${userId}`,
     });
 
     const userName = userData.userName;
+    const email = userData.email;
     const phoneNumber = userData.phoneNumber;
-    const address = userData.address;
     const zipCode = userData.zipCode;
 
-    let newInfo = {
-        newUserName: userName,
-        newPhoneNumber: phoneNumber,
-        newAddress: address,
-        newZipCode: zipCode,
-    };
-
     const inputName = $('#form-username').val();
+    const inputEmail = $('#form-email').val();
     const inputNumber = $('#form-phonenumber').val();
     const inputAddress = $('#form-address').val();
     const inputZip = $('#form-zipcode').val();
 
+    let newInfo = {
+        userName: userName,
+        email: email,
+        phoneNumber: phoneNumber,
+        address: inputAddress,
+        zipCode: zipCode,
+    };
+
     let inputCheck = true;
 
-    //if(inputName !== userName) checkUsername(userName,inputName);
+    if (inputName !== userName) {
+        if (!await checkUsername(inputName)) {
+            $('#userNameRule').removeClass('hidden').addClass('formatRules');
+            inputCheck = false;
+        }
+        else newInfo.userName = inputName;
+    }
+    if (inputEmail !== email) {
+        if (!await checkEmail(inputEmail)) {
+            $('#emailRule').removeClass('hidden').addClass('formatRules');
+            inputCheck = false;
+        }
+        else newInfo.email = inputEmail;
+    }
     if (inputNumber !== phoneNumber) {
         if (inputNumber) {
             if (!checkPhoneNumber(inputNumber)) {
@@ -79,17 +110,66 @@ const infoSubmit = async (event) => {
                 inputCheck = false;
             }
         }
-        newInfo.newPhoneNumber = inputNumber;
+        newInfo.phoneNumber = inputNumber;
+    }
+    if (inputZip !== zipCode) {
+        if (inputZip) {
+            if (!checkZipCode(inputZip)) {
+                $('#zipCodeRule').removeClass('hidden').addClass('formatRules');
+                inputCheck = false;
+            }
+        }
+        newInfo.zipCode = inputZip;
     }
 
-    if (!inputCheck) showSwal('error', 'Opps! Something went wrong!');
+    if (!inputCheck) {
+        showSwal('error', 'Opps! Something went wrong!');
+        return;
+    }
+
+    console.log(newInfo);
+
+    await $.ajax({
+        url: `http://localhost:3000/users/account/update/${userId}`,
+        type: 'PUT',
+        data: newInfo
+    });
+    showSwal('success', 'Update success!');
 };
 
-const checkUsername = async (userName, inputName) => {
+const checkUsername = async (inputName) => {
     const re = /^[0-9a-zA-Z]*$/;
-    if (!re.test(userName)) return false;
-    if (userName.length > 16 || userName.length < 3) return false;
-    return true;
+    if (!re.test(inputName)) return false;
+    if (inputName.length > 16 || inputName.length < 3) return false;
+    try {
+        await $.ajax({
+            url: 'http://localhost:3000/users/account/username',
+            type: 'POST',
+            data: {
+                userName: inputName,
+            },
+        });
+    } catch (e) {
+        return true;
+    }
+    return false;
+};
+
+const checkEmail = async (inputEmail) => {
+    const re = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    if (!re.test(inputEmail)) return false;
+    try {
+        await $.ajax({
+            url: 'http://localhost:3000/users/account/email',
+            type: 'POST',
+            data: {
+                userName: inputEmail,
+            },
+        });
+    } catch (e) {
+        return true;
+    }
+    return false;
 };
 
 const checkZipCode = (inputZip) => {
@@ -225,6 +305,30 @@ const renderTickets = async () => {
     }
 };
 
+// paymnet
+const changePayment = async (event) => {
+    event.preventDefault();
+    const firstName = $('#firstName').val();
+    const lastName = $('#lastName').val();
+    const zipcode = $('#billingZipCode').val();
+    const cardNumber = $('#cardNumber').val();
+    const expiration = $('#expiration').val();
+    const cvv = $('#securityCode').val();
+    if (
+        firstName.length === 0 ||
+        lastName.length === 0 ||
+        zipcode.length === 0 ||
+        cardNumber.length === 0 ||
+        expiration.length === 0 ||
+        cvv.length === 0
+    ) {
+        await showSwal('error', 'Please make sure all fields are not empty!');
+        return;
+    }
+    const userId = userInfo['_id'];
+    
+};
+
 const bindEvents = async () => {
     $('#logoutBtn').click(logout);
     $('.navbar li').each((index, li) => {
@@ -238,6 +342,7 @@ const bindEvents = async () => {
     $('#re-enter-password').bind('input propertychange', checkPasswordEmpty);
     $('#personalInfo').submit(infoSubmit);
     $('#changePasswordBtn').click(changePassword);
+    $('#changePaymentBtn').click(changePayment);
 };
 
 const init = async () => {
