@@ -101,6 +101,17 @@ main {
                 display: none;
             }
         }
+        #payment {
+            display: none;
+        }
+        #friends {
+            display: none;
+            #friendsList {
+                button {
+                    margin: 4px 0;
+                }
+            }
+        }
     }
 }
 

@@ -75,6 +75,12 @@ main {
     font-weight: normal; }
   main .container #infopage .hidden {
     display: none; }
+  main .container #payment {
+    display: none; }
+  main .container #friends {
+    display: none; }
+    main .container #friends #friendsList button {
+      margin: 4px 0; }
 
 footer {
   display: flex;
