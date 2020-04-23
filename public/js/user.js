@@ -20,21 +20,28 @@ const logout = async (event) => {
     window.location.replace('http://localhost:3000/entry');
 };
 
+const renderUsername = () => {
+    const userName = userInfo['userName'];
+    if (userName !== undefined) {
+        $('#username').text(userName);
+    }
+};
+
 // psersonal info
-const infoPage = async() => {
+const infoPage = async () => {
     const userData = await $.ajax({
         url: `http://localhost:3000/users/account/${userId}`,
     });
-    
+
     const userName = userData.userName;
     const phoneNumber = userData.phoneNumber;
     const address = userData.address;
     const zipCode = userData.zipCode;
-    
+
     $('#form-username').val(userName);
-    if(phoneNumber) $('#form-phonenumber').val(phoneNumber);
-    if(address) $('#form-address').val(address);
-    if(zipCode) $('#form-zipcode').val(zipCode);
+    if (phoneNumber) $('#form-phonenumber').val(phoneNumber);
+    if (address) $('#form-address').val(address);
+    if (zipCode) $('#form-zipcode').val(zipCode);
 };
 
 // password
@@ -175,6 +182,7 @@ const bindEvents = async () => {
 const init = async () => {
     infoPage();
     renderTickets();
+    renderUsername();
     bindEvents();
 };
 
