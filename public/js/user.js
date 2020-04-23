@@ -38,12 +38,14 @@ const infoPreload = async () => {
     const phoneNumber = userData.phoneNumber;
     const address = userData.address;
     const zipCode = userData.zipCode;
+    const bio = userData.bio;
 
     $('#form-username').val(userName);
     $('#form-email').val(email);
     if (phoneNumber) $('#form-phonenumber').val(phoneNumber);
     if (address) $('#form-address').val(address);
     if (zipCode) $('#form-zipcode').val(zipCode);
+    if (bio) $('#form-bio').val(bio);
 };
 
 const infoSubmit = async (event) => {
@@ -76,6 +78,7 @@ const infoSubmit = async (event) => {
     const inputNumber = $('#form-phonenumber').val();
     const inputAddress = $('#form-address').val();
     const inputZip = $('#form-zipcode').val();
+    const bio = $('#form-bio').val();
 
     let newInfo = {
         userName: userName,
@@ -83,6 +86,7 @@ const infoSubmit = async (event) => {
         phoneNumber: phoneNumber,
         address: inputAddress,
         zipCode: zipCode,
+        bio: bio,
     };
 
     let inputCheck = true;
