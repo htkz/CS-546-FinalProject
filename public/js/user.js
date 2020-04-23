@@ -67,16 +67,22 @@ const infoSubmit = async (event) => {
     const inputAddress = $('#form-address').val();
     const inputZip = $('#form-zipcode').val();
 
+    let inputCheck = true;
+
     //if(inputName !== userName) checkUsername(userName,inputName);
     if (inputNumber !== phoneNumber) {
         if (inputNumber) {
             if (!checkPhoneNumber(inputNumber)) {
-                showSwal('error', 'Opps! Something went wrong!');
-                $('#phoneNumberRule').removeClass('hidden').addClass('formatRules');
+                $('#phoneNumberRule')
+                    .removeClass('hidden')
+                    .addClass('formatRules');
+                inputCheck = false;
             }
         }
         newInfo.newPhoneNumber = inputNumber;
     }
+
+    if (!inputCheck) showSwal('error', 'Opps! Something went wrong!');
 };
 
 const checkUsername = async (userName, inputName) => {
