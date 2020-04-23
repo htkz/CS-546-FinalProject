@@ -243,14 +243,14 @@ let exportedMethods = {
     },
 
     async addFriendToUser(userId, friendId) {
-        const userCollection = await user();
+        const userCollection = await users();
 
         userId = await this.checkId(userId);
         friendId = await this.checkId(friendId);
 
         const updatedInfo = await userCollection.updateOne(
             { _id: userId },
-            { $set: { friendId: friendId } }
+            { $addToSet: { friends: friendId.toString() } }
         );
 
         if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {

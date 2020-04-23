@@ -4,6 +4,7 @@ const router = express.Router();
 const data = require('../data');
 const userData = data.users;
 const ticketData = data.tickets;
+const friendData = data.friends;
 const utility = require('../utility');
 const checkParam = utility.checkInput;
 
@@ -92,6 +93,30 @@ router.get('/tickets/:id', async (req, res) => {
         res.status(400).json({
             error: `Error with tickets of user ${req.params.id}`,
         });
+    }
+});
+
+router.get('/friend/:id', async (req, res) => {
+    try {
+        const user = await userData.getUserById(req.params.id);
+        if (user.friends.length === 0) {
+            res.status(200).json(user.friends);
+            return;
+        } else {
+            for (let i = 0; i < user.friends.length; i++) {
+                try {
+                    user.friends[i] = await friendData.getFriendById(
+                        user.friends[i]
+                    );
+                } catch (error) {
+                    res.status(404).json({ error: 'Friend not found' });
+                }
+            }
+            res.status(200).json(user.friends);
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'User not found' });
+        console.log(error);
     }
 });
 
