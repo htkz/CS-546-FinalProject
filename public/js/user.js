@@ -88,18 +88,16 @@ const infoSubmit = async (event) => {
     let inputCheck = true;
 
     if (inputName !== userName) {
-        if (!await checkUsername(inputName)) {
+        if (!(await checkUsername(inputName))) {
             $('#userNameRule').removeClass('hidden').addClass('formatRules');
             inputCheck = false;
-        }
-        else newInfo.userName = inputName;
+        } else newInfo.userName = inputName;
     }
     if (inputEmail !== email) {
-        if (!await checkEmail(inputEmail)) {
+        if (!(await checkEmail(inputEmail))) {
             $('#emailRule').removeClass('hidden').addClass('formatRules');
             inputCheck = false;
-        }
-        else newInfo.email = inputEmail;
+        } else newInfo.email = inputEmail;
     }
     if (inputNumber !== phoneNumber) {
         if (inputNumber) {
@@ -132,7 +130,7 @@ const infoSubmit = async (event) => {
     await $.ajax({
         url: `http://localhost:3000/users/account/update/${userId}`,
         type: 'PUT',
-        data: newInfo
+        data: newInfo,
     });
     showSwal('success', 'Update success!');
 };
@@ -141,34 +139,28 @@ const checkUsername = async (inputName) => {
     const re = /^[0-9a-zA-Z]*$/;
     if (!re.test(inputName)) return false;
     if (inputName.length > 16 || inputName.length < 3) return false;
-    try {
-        await $.ajax({
-            url: 'http://localhost:3000/users/account/username',
-            type: 'POST',
-            data: {
-                userName: inputName,
-            },
-        });
-    } catch (e) {
-        return true;
-    }
+    const data = await $.ajax({
+        url: 'http://localhost:3000/users/account/username',
+        type: 'POST',
+        data: {
+            userName: inputName,
+        },
+    });
+    if(!data) return true;
     return false;
 };
 
 const checkEmail = async (inputEmail) => {
     const re = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
     if (!re.test(inputEmail)) return false;
-    try {
-        await $.ajax({
-            url: 'http://localhost:3000/users/account/email',
-            type: 'POST',
-            data: {
-                userName: inputEmail,
-            },
-        });
-    } catch (e) {
-        return true;
-    }
+    const data = await $.ajax({
+        url: 'http://localhost:3000/users/account/email',
+        type: 'POST',
+        data: {
+            email: inputEmail,
+        },
+    });
+    if(!data) return true;
     return false;
 };
 
@@ -326,7 +318,6 @@ const changePayment = async (event) => {
         return;
     }
     const userId = userInfo['_id'];
-    
 };
 
 const bindEvents = async () => {

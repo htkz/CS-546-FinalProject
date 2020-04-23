@@ -288,11 +288,10 @@ router.put('/account/update/:id', async (req, res) => {
         await userData.getUserById(req.params.id);
     } catch (error) {
         res.status(404).json({ error: 'User not found' });
-        return;
     }
 
     try {
-        const updateUser = await userData.updatedUser(
+        const updatedUser = await userData.updatedUser(
             req.params.id,
             userInfo.userName.toLowerCase(),
             userInfo.email.toLowerCase(),
@@ -300,9 +299,9 @@ router.put('/account/update/:id', async (req, res) => {
             userInfo.address,
             userInfo.zipCode
         );
-        res.status(200).json(updateUser);
+        res.status(200).json(updatedUser);
     } catch (error) {
-        res.status(500).json({ error: 'Complete user information failed' });
+        res.status(500).json({ error: 'Update user information failed' });
         console.log(error);
     }
 });
