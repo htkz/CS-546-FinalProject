@@ -16,6 +16,16 @@ router.get('/account/:id', async (req, res) => {
     }
 });
 
+router.post('/account/username', async (req, res) => {
+    let username = req.body.userName;
+    try {
+        const user = await userData.getUserByUserName(username);
+        res.status(200).json(user);
+    } catch (e) {
+        res.status(404).json({ error: 'User not found' });
+    }
+});
+
 router.post('/account/login', async (req, res) => {
     let email = req.body.email;
     let password = req.body.hashedPassword;
