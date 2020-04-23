@@ -78,11 +78,11 @@ const infoSubmit = async (event) => {
     const inputZip = $('#form-zipcode').val();
 
     let newInfo = {
-        newUserName: userName,
-        newEmail: email,
-        newPhoneNumber: phoneNumber,
-        newAddress: inputAddress,
-        newZipCode: zipCode,
+        userName: userName,
+        email: email,
+        phoneNumber: phoneNumber,
+        address: inputAddress,
+        zipCode: zipCode,
     };
 
     let inputCheck = true;
@@ -92,14 +92,14 @@ const infoSubmit = async (event) => {
             $('#userNameRule').removeClass('hidden').addClass('formatRules');
             inputCheck = false;
         }
-        newInfo.newUserName = inputName;
+        newInfo.userName = inputName;
     }
     if (inputEmail !== email) {
         if (!checkUsername(inputEmail)) {
             $('#emailRule').removeClass('hidden').addClass('formatRules');
             inputCheck = false;
         }
-        newInfo.newUserName = inputName;
+        newInfo.email = inputEmail;
     }
     if (inputNumber !== phoneNumber) {
         if (inputNumber) {
@@ -110,7 +110,7 @@ const infoSubmit = async (event) => {
                 inputCheck = false;
             }
         }
-        newInfo.newPhoneNumber = inputNumber;
+        newInfo.phoneNumber = inputNumber;
     }
     if (inputZip !== zipCode) {
         if (inputZip) {
@@ -119,14 +119,18 @@ const infoSubmit = async (event) => {
                 inputCheck = false;
             }
         }
-        newInfo.newZipCode = inputZip;
+        newInfo.ZipCode = inputZip;
     }
 
     if (!inputCheck) showSwal('error', 'Opps! Something went wrong!');
 
-    await $.ajax{
-        
-    };
+    console.log(newInfo);
+
+    await $.ajax({
+        url: `http://localhost:3000/users/account/update/${userId}`,
+        type: 'PUT',
+        data: newInfo
+    });
     showSwal('success', 'Update success!');
 };
 
@@ -135,7 +139,13 @@ const checkUsername = async (inputName) => {
     if (!re.test(inputName)) return false;
     if (inputName.length > 16 || inputName.length < 3) return false;
     try {
-        await $.ajax({});
+        await $.ajax({
+            url: 'http://localhost:3000/users/account/username',
+            type: 'POST',
+            data: {
+                userName: inputName,
+            },
+        });
     } catch (e) {
         return true;
     }
