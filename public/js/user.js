@@ -21,20 +21,65 @@ const logout = async (event) => {
 };
 
 // psersonal info
-const infoPage = async() => {
+const infoPreload = async () => {
     const userData = await $.ajax({
         url: `http://localhost:3000/users/account/${userId}`,
     });
-    
+
     const userName = userData.userName;
     const phoneNumber = userData.phoneNumber;
     const address = userData.address;
     const zipCode = userData.zipCode;
-    
+
     $('#form-username').val(userName);
-    if(phoneNumber) $('#form-phonenumber').val(phoneNumber);
-    if(address) $('#form-address').val(address);
-    if(zipCode) $('#form-zipcode').val(zipCode);
+    if (phoneNumber) $('#form-phonenumber').val(phoneNumber);
+    if (address) $('#form-address').val(address);
+    if (zipCode) $('#form-zipcode').val(zipCode);
+};
+
+const infoSubmit = async()=>{
+    const userData = await $.ajax({
+        url: `http://localhost:3000/users/account/${userId}`,
+    });
+
+    const userName = userData.userName;
+    const phoneNumber = userData.phoneNumber;
+    const address = userData.address;
+    const zipCode = userData.zipCode;
+
+    let newInfo = {
+        newUserName:userName,
+        newPhoneNumber:phoneNumber,
+        newAddress:address,
+        newZipCode:zipCode
+    };
+
+    const inputName = $('#form-username').val();
+    const inputNumber = $('#form-phonenumber').val();
+    const inputAddress = $('#form-address').val();
+    const inputZip = $('#form-zipcode').val();
+
+    //if(inputName !== userName) checkUsername(userName,inputName);
+    if(inputNumber) console.log(inputNumber);
+};
+
+const checkUsername = async (userName, inputName) => {
+    const re = /^[0-9a-zA-Z]*$/;
+    if (!re.test(userName)) return false;
+    if (userName.length > 16 || userName.length < 3) return false;
+    return true;
+};
+
+const checkZipCode = (inputZip) => {
+    const re = /^\d{5}$/;
+    if (!re.test(inputZip)) return false;
+    return true;
+};
+
+const checkPhoneNumber = (inputNumber) => {
+    const re = /^\d{10}$/;
+    if (!re.test(inputNumber)) return false;
+    return true;
 };
 
 // password
@@ -169,11 +214,12 @@ const bindEvents = async () => {
     $('#old-password').bind('input propertychange', checkPasswordEmpty);
     $('#new-password').bind('input propertychange', checkPasswordEmpty);
     $('#re-enter-password').bind('input propertychange', checkPasswordEmpty);
+    $('#personalInfo').submit(infoSubmit);
     $('#changePasswordBtn').click(changePassword);
 };
 
 const init = async () => {
-    infoPage();
+    infoPreload();
     renderTickets();
     bindEvents();
 };
