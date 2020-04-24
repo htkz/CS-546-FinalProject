@@ -27,7 +27,7 @@ header {
             display: flex;
             flex-wrap: wrap;
             .card {
-                width: 30%;
+                width: 100%;
                 margin: 10px 4px;
                 cursor: pointer;
                 img {
@@ -49,6 +49,14 @@ header {
                     }
                 }
             }
+        }
+        .float-button {
+            position: fixed;
+            height: 50px;
+            width: 50px;
+            bottom: 90px;
+            right: 50px;
+            background: #b4d145;
         }
     }
 }

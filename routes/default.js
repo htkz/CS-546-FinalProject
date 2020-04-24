@@ -33,4 +33,9 @@ router.get('/user', async (req, res) => {
     res.redirect('/entry');
 });
 
+router.get('/admin', async (req, res) => {
+    res.render('admin/admin', { layout: false });
+    return;
+});
+
 module.exports = router;

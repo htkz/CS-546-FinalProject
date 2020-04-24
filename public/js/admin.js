@@ -176,6 +176,80 @@ const saveEdit = async () => {
     await refreshPlaces();
 };
 
+$('.float-button').click(editPlace);
+
+const addPlace = async () => {
+    const placeName = null;
+    const description = null;
+    const placeAddress = null;
+    const placePrice = null;
+    const category = null;
+    const displayTime = null;
+    const remainNum = null;
+    const images = null;
+
+    try {
+        await $.ajax({
+            url: 'http://localhost:3000/places',
+            type: 'Post',
+            data: {
+                placeName: placeName,
+                description: description,
+                placeAddress: placeAddress,
+                placePrice: placePrice,
+                category: category,
+                displayTime: displayTime,
+                remainNum: remainNum,
+                images: images,
+            },
+        });
+    } catch (error) {
+        alert(error);
+        console.log(error);
+    }
+};
+
+const deletePlace = async () => {
+    try {
+        let id = event.currentTarget.id;
+        console.log(id);
+        await $.ajax({
+            url: `http://localhost:3000/places/id`,
+            type: 'DELETE',
+        });
+    } catch (error) {
+        alert(error);
+        console.log(error);
+    }
+};
+
+const deleteUser = async () => {
+    try {
+        let id = event.currentTarget.id;
+        console.log(id);
+        await $.ajax({
+            url: `http://localhost:3000/users/id`,
+            type: 'DELETE',
+        });
+    } catch (error) {
+        alert(error);
+        console.log(error);
+    }
+};
+
+const deleteComment = async () => {
+    try {
+        console.log(id);
+        await $.ajax({
+            url: `http://localhost:3000/comments/id`,
+            type: 'DELETE',
+        });
+    } catch (error) {
+        alert(error);
+        console.log(error);
+    }
+};
+
 const refreshPlaces = async () => {
     await fetchPlaces(store);
     renderPlaces(store['places']);

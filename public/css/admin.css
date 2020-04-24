@@ -20,7 +20,7 @@ header .username {
     display: flex;
     flex-wrap: wrap; }
     .admin .container .cards .card {
-      width: 30%;
+      width: 100%;
       margin: 10px 4px;
       cursor: pointer; }
       .admin .container .cards .card img {
@@ -35,6 +35,13 @@ header .username {
             margin-right: 4px;
             margin-top: 4px;
             margin-bottom: 10px; }
+  .admin .container .float-button {
+    position: fixed;
+    height: 50px;
+    width: 50px;
+    bottom: 90px;
+    right: 50px;
+    background: #b4d145; }
 
 .modal .placeDetail img {
   width: 100%;
