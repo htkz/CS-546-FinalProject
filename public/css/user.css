@@ -79,6 +79,8 @@ main {
     display: none; }
   main .container #payment {
     display: none; }
+    main .container #payment .error-message {
+      color: red; }
   main .container #friends {
     display: none; }
     main .container #friends #friendsList button {

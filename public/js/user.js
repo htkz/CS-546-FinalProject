@@ -170,8 +170,7 @@ const checkEmail = async (inputEmail) => {
 
 const checkZipCode = (inputZip) => {
     const re = /^\d{5}$/;
-    if (!re.test(inputZip)) return false;
-    return true;
+    return re.test(inputZip);
 };
 
 const checkPhoneNumber = (inputNumber) => {
@@ -302,25 +301,73 @@ const renderTickets = async () => {
 };
 
 // payment
-const changePayment = async (event) => {
-    event.preventDefault();
+const checkCardNumber = (cardNumber) => {
+    const re = /^\d{13,19}$/;
+    return re.test(cardNumber);
+};
+
+const checkCVV = (securityCode) => {
+    const re = /^\d{3}$/;
+    return re.test(securityCode);
+};
+
+const checkExpiration = (expiration) => {
+    if (expiration.length != 5) return false;
+    if (expiration.charAt(2) !== '/') return false;
+    const arr = expiration.split('/');
+    const month = parseInt(arr[0]);
+    const day = parseInt(arr[1]);
+    return month >= 1 && month <= 12 && day >= 1 && day <= 31;
+};
+
+const checkPayment = () => {
     const firstName = $('#firstName').val();
     const lastName = $('#lastName').val();
     const zipcode = $('#billingZipCode').val();
     const cardNumber = $('#cardNumber').val();
     const expirationDate = $('#expiration').val();
     const cvv = $('#securityCode').val();
-    if (
-        firstName.length === 0 ||
-        lastName.length === 0 ||
-        zipcode.length === 0 ||
-        cardNumber.length === 0 ||
-        expirationDate.length === 0 ||
-        cvv.length === 0
-    ) {
-        await showSwal('error', 'Please make sure all fields are not empty!');
+    $('.error-message').hide();
+    let valid = true;
+    if (firstName.length === 0) {
+        $('#firstNameRule').show();
+        valid = false;
+    }
+    if (lastName.length === 0) {
+        $('#lastNameRule').show();
+        valid = false;
+    }
+    if (!checkZipCode(zipcode)) {
+        $('#zipcodeRule').show();
+        valid = false;
+    }
+    if (!checkCardNumber(cardNumber)) {
+        $('#cardNumberRule').show();
+        valid = false;
+    }
+    if (!checkExpiration(expirationDate)) {
+        $('#expirationRule').show();
+        valid = false;
+    }
+    if (!checkCVV(cvv)) {
+        $('#secureCodeRule').show();
+        valid = false;
+    }
+    return valid;
+};
+const changePayment = async (event) => {
+    event.preventDefault();
+    if (!(await checkPayment())) {
+        await showSwal('error', 'Please make sure all fields are valid!');
         return;
     }
+    const firstName = $('#firstName').val();
+    const lastName = $('#lastName').val();
+    const zipcode = $('#billingZipCode').val();
+    const cardNumber = $('#cardNumber').val();
+    const expirationDate = $('#expiration').val();
+    const cvv = $('#securityCode').val();
+
     const userId = userInfo['_id'];
     const user = await $.ajax(`http://localhost:3000/users/account/${userId}`);
     const method = user.bankCard.length > 0 ? 'put' : 'post';
@@ -346,6 +393,7 @@ const changePayment = async (event) => {
 };
 
 const renderPayment = async (event) => {
+    $('.error-message').hide();
     const userId = userInfo['_id'];
     const user = await $.ajax(`http://localhost:3000/users/account/${userId}`);
     if (user.bankCard.length === 0) {
