@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const bankData = data.bands;
+const utility = require('../utility');
+const checkParam = utility.checkBankNumber;
 
 router.get('/:id', async (req, res) => {
     try {
@@ -56,6 +58,13 @@ router.post('/', async (req, res) => {
             error: 'You must provide cardNumber to create a bank',
         });
         return;
+    }
+
+    // check bank number
+    if (!checkParam.checkBankNumber(bankInfo.cardNumber)) {
+        res.status(400).json({
+            error: 'Bank number is not valid',
+        });
     }
 
     if (!bankInfo.expirationDate) {
