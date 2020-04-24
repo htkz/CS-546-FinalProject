@@ -15,9 +15,9 @@ const showSwal = async (icon, title) => {
 const logout = async (event) => {
     event.preventDefault();
     await $.ajax({
-        url: `http://localhost:3000/users/logout`,
+        url: `/users/logout`,
     });
-    window.location.replace('http://localhost:3000/entry');
+    window.location.replace('/entry');
 };
 
 const renderUsername = () => {
@@ -30,7 +30,7 @@ const renderUsername = () => {
 // psersonal info
 const infoPreload = async () => {
     const userData = await $.ajax({
-        url: `http://localhost:3000/users/account/${userId}`,
+        url: `/users/account/${userId}`,
     });
 
     const userName = userData.userName;
@@ -65,7 +65,7 @@ const infoSubmit = async (event) => {
     }
 
     const userData = await $.ajax({
-        url: `http://localhost:3000/users/account/${userId}`,
+        url: `/users/account/${userId}`,
     });
 
     const userName = userData.userName;
@@ -132,7 +132,7 @@ const infoSubmit = async (event) => {
     console.log(newInfo);
 
     await $.ajax({
-        url: `http://localhost:3000/users/account/update/${userId}`,
+        url: `/users/account/update/${userId}`,
         type: 'PUT',
         data: newInfo,
     });
@@ -144,7 +144,7 @@ const checkUsername = async (inputName) => {
     if (!re.test(inputName)) return false;
     if (inputName.length > 16 || inputName.length < 3) return false;
     const data = await $.ajax({
-        url: 'http://localhost:3000/users/account/username',
+        url: '/users/account/username',
         type: 'POST',
         data: {
             userName: inputName,
@@ -158,7 +158,7 @@ const checkEmail = async (inputEmail) => {
     const re = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
     if (!re.test(inputEmail)) return false;
     const data = await $.ajax({
-        url: 'http://localhost:3000/users/account/email',
+        url: '/users/account/email',
         type: 'POST',
         data: {
             email: inputEmail,
@@ -209,7 +209,7 @@ const changePassword = async (event) => {
     }
     try {
         await $.ajax({
-            url: `http://localhost:3000/users/account/password/${userId}`,
+            url: `/users/account/password/${userId}`,
             type: 'PUT',
             data: {
                 oldPassword: $.trim(oldPassword),
@@ -279,7 +279,7 @@ const changeFocus = (id) => {
 
 const renderTickets = async () => {
     const tickets = await $.ajax({
-        url: `http://localhost:3000/users/tickets/${userId}`,
+        url: `/users/tickets/${userId}`,
     });
     $('#tickets').empty();
     for (ticket of tickets) {
@@ -369,12 +369,12 @@ const changePayment = async (event) => {
     const cvv = $('#securityCode').val();
 
     const userId = userInfo['_id'];
-    const user = await $.ajax(`http://localhost:3000/users/account/${userId}`);
+    const user = await $.ajax(`/users/account/${userId}`);
     const method = user.bankCard.length > 0 ? 'put' : 'post';
     const bankId = user.bankCard || '';
     try {
         await $.ajax({
-            url: `http://localhost:3000/banks/${bankId}`,
+            url: `/banks/${bankId}`,
             type: method,
             data: {
                 user: userId,
@@ -395,11 +395,11 @@ const changePayment = async (event) => {
 const renderPayment = async (event) => {
     $('.error-message').hide();
     const userId = userInfo['_id'];
-    const user = await $.ajax(`http://localhost:3000/users/account/${userId}`);
+    const user = await $.ajax(`/users/account/${userId}`);
     if (user.bankCard.length === 0) {
         return;
     }
-    const bank = await $.ajax(`http://localhost:3000/banks/${user.bankCard}`);
+    const bank = await $.ajax(`/banks/${user.bankCard}`);
     $('#firstName').val(bank.firstName);
     $('#lastName').val(bank.lastName);
     $('#billingZipCode').val(bank.billingZipCode);
@@ -411,7 +411,7 @@ const renderPayment = async (event) => {
 //friends
 const friendsPreload = async () => {
     const friendsData = await $.ajax({
-        url: `http://localhost:3000/users/friend/${userId}`,
+        url: `/users/friend/${userId}`,
     });
 
     $('#friendName').val(friendsData[0].name);

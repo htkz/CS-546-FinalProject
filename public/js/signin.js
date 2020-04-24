@@ -16,7 +16,7 @@ $('#form-signin').submit(async (event) => {
     const password = $('#signinPassword').val();
     try {
         await $.ajax({
-            url: 'http://localhost:3000/users/account/login',
+            url: '/users/account/login',
             type: 'POST',
             data: {
                 email: username,
@@ -24,9 +24,9 @@ $('#form-signin').submit(async (event) => {
             },
         });
         if (username === 'admin@group13.com') {
-            window.location.replace('http://localhost:3000/admin.html');
+            window.location.replace('/admin.html');
         } else {
-            window.location.replace('http://localhost:3000/main');
+            window.location.replace('/main');
         }
     } catch (error) {
         await Swal.fire({

@@ -127,7 +127,7 @@ const renderDetail = async (placeId) => {
     `);
     $('#detailModal').append($modal);
     const comments = await $.ajax({
-        url: `http://localhost:3000/places/placeComments/${placeId}`,
+        url: `/places/placeComments/${placeId}`,
     });
     const $commentList = $modal.find('#commentList');
     for (comment of comments) {
@@ -155,7 +155,7 @@ const renderDetail = async (placeId) => {
 };
 
 const fetchPlaces = async (store) => {
-    store['places'] = await $.ajax({ url: 'http://localhost:3000/places/' });
+    store['places'] = await $.ajax({ url: `/places/` });
 };
 
 const filterByLatest = () => {
@@ -212,7 +212,7 @@ const refreshPlaces = async () => {
 
 const refreshComment = async (placeId) => {
     const comments = await $.ajax({
-        url: `http://localhost:3000/places/placeComments/${placeId}`,
+        url: `/places/placeComments/${placeId}`,
     });
     const $commentList = $('#commentList');
     $commentList.empty();
@@ -228,7 +228,7 @@ const refreshComment = async (placeId) => {
 
 const refreshTicket = async (placeId) => {
     const place = await $.ajax({
-        url: `http://localhost:3000/places/${placeId}`,
+        url: `/places/${placeId}`,
     });
     const curNum = place.remainNum;
     $('#ticketRemainNum').text(curNum);
@@ -246,7 +246,7 @@ const postComment = async () => {
     const placeId = $('#place').attr('data-id');
     const userId = userInfo['_id'];
     await $.ajax({
-        url: 'http://localhost:3000/comments/',
+        url: `/comments/`,
         type: 'POST',
         data: {
             user: userId,
@@ -287,7 +287,7 @@ const buyTicket = async () => {
             }-${date.getDate()}`;
             const effectDate = $('#dateInput').val();
             await $.ajax({
-                url: 'http://localhost:3000/tickets/',
+                url: `/tickets/`,
                 type: 'POST',
                 data: {
                     userId: userId,
@@ -319,9 +319,9 @@ const buyTicket = async () => {
 const logout = async (event) => {
     event.preventDefault();
     await $.ajax({
-        url: `http://localhost:3000/users/logout`,
+        url: `/users/logout`,
     });
-    window.location.replace('http://localhost:3000/entry');
+    window.location.replace(`/entry`);
 };
 
 const bindEvent = () => {

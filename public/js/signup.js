@@ -21,7 +21,7 @@ $('#form-signup').submit(async (event) => {
 
     try {
         await $.ajax({
-            url: 'http://localhost:3000/users/account/register',
+            url: '/users/account/register',
             type: 'POST',
             data: {
                 userName: userName,
