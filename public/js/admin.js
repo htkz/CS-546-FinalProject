@@ -31,7 +31,8 @@ const renderPlaces = (places) => {
                         <div class="category"></div>
                     </div>
                 </div>
-            </div>`);
+            </div>
+        `);
         for (category of place.category) {
             const cat = $(
                 `<button class='btn btn-sm btn-outline-info active'>${category}</button>`
@@ -104,8 +105,11 @@ const renderDetail = async (placeId) => {
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="btn btn-primary" id="editBtn">
+                    <button type="button" class="btn btn-secondary" id="editBtn">
                         Edit
+                    </button>
+                    <button type="button" class="btn btn-primary" id="deleteBtn">
+                        Delete
                     </button>
                 </div>
             </div>
@@ -128,6 +132,7 @@ const renderDetail = async (placeId) => {
         $commentList.append($comment);
     }
     $('#editBtn').click(editPlace);
+    $('#deleteBtn').click(deletePlace);
 };
 
 const editPlace = async () => {
@@ -176,33 +181,105 @@ const saveEdit = async () => {
     await refreshPlaces();
 };
 
-$('.float-button').click(editPlace);
+const addForm = async () => {
+    $('#addDetailModal').empty();
+
+    const $modal = $(`
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <H1>Add Place</p>
+                </div>
+                <div class="modal-body">
+                    <div class="addPalceDetail">
+                        <form id="form-addPlace" class="form-addPlace">
+                            <label for="addPlaceName">
+                                Place Name
+                            </label>
+                            <input type="text" id="addPlaceName" class="form-control" placeholder="Place Name" value="Feng"></input>
+                            
+                            <label for="addDescription">
+                                Description
+                            </label>
+                            <textarea type="text" id="addDescription" class="form-control" placeholder="Description">Feng</textarea>
+                            
+                            <label for="addPlaceAddress">
+                                Place Address
+                            </label>
+                            <input type="text" id="addPlaceAddress" class="form-control" placeholder="Place Address" value="Feng"></input>
+                            
+                            <label for="addPlaceZipCode">
+                                Place Zipcode
+                            </label>
+                            <input type="text" id="addPlaceZipCode" class="form-control" placeholder="Place Address" value="07302"></input>
+
+                            <label for="addPlacePrice">
+                                Place Price
+                            </label>
+                            <input type="text" id="addPlacePrice" class="form-control" placeholder="Place Price" value=200></input>
+                            
+                            <label for="addCategory">
+                                Category
+                            </label>
+                            <input type="text" id="addCategory" class="form-control" placeholder="Category" value="Feng, Love"></input>
+                            
+                            <label for="addDisplayTime">
+                                Display Time
+                            </label>
+                            <input type="date" name="addDisplayTime" id="addDisplayTime" class="form-control" value="2020-03-05"></input>
+                            
+                            <label for="addRemainNum">
+                                Remain Number
+                            </label>
+                            <input type="text" id="addRemainNum" class="form-control" placeholder="Remain Number" value=100></input>
+                            
+                            <label for="addImages">
+                                Images
+                            </label>
+                            <input type="text" id="addImages" class="form-control" placeholder="Images" value="NASA.jpg"></input>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="save">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `);
+
+    $('#addDetailModal').append($modal);
+    $('#save').click(addPlace);
+};
 
 const addPlace = async () => {
-    const placeName = null;
-    const description = null;
-    const placeAddress = null;
-    const placePrice = null;
-    const category = null;
-    const displayTime = null;
-    const remainNum = null;
-    const images = null;
+    const placeName = $('#addPlaceName').val();
+    const description = $('#addDescription').val();
+    const placeAddress = $('#addPlaceAddress').val();
+    const placeZipCode = $('#addPlaceZipCode').val();
+    const placePrice = $('#addPlacePrice').val();
+    const category = $('#addCategory').val();
+    const displayTime = $('#addDisplayTime').val();
+    const remainNum = $('#addRemainNum').val();
+    const images = $('#addImages').val();
 
     try {
         await $.ajax({
-            url: 'http://localhost:3000/places',
-            type: 'Post',
+            url: 'http://localhost:3000/places/',
+            type: 'POST',
             data: {
-                placeName: placeName,
-                description: description,
-                placeAddress: placeAddress,
-                placePrice: placePrice,
-                category: category,
-                displayTime: displayTime,
-                remainNum: remainNum,
-                images: images,
+                placeName: $.trim(placeName),
+                description: $.trim(description),
+                placeAddress: $.trim(placeAddress),
+                placeZipCode: $.trim(placeZipCode),
+                placePrice: $.trim(placePrice),
+                category: $.trim(category),
+                displayTime: $.trim(displayTime),
+                remainNum: $.trim(remainNum),
+                images: $.trim(images),
             },
         });
+        $('#addDetailModal').modal('hide');
+        await refreshPlaces();
     } catch (error) {
         alert(error);
         console.log(error);
@@ -210,13 +287,14 @@ const addPlace = async () => {
 };
 
 const deletePlace = async () => {
+    const placeId = $('#place').attr('data-id');
     try {
-        let id = event.currentTarget.id;
-        console.log(id);
         await $.ajax({
-            url: `http://localhost:3000/places/id`,
+            url: `http://localhost:3000/places/${placeId}`,
             type: 'DELETE',
         });
+        $('#detailModal').modal('hide');
+        await refreshPlaces();
     } catch (error) {
         alert(error);
         console.log(error);
@@ -271,11 +349,19 @@ const logout = async (event) => {
     window.location.replace('http://localhost:3000/sign-in-up.html');
 };
 
+const bindEvents = async () => {
+    $('.float-button').click((event) => {
+        addForm();
+        $('#addDetailModal').modal('show');
+    });
+};
+
 const store = {};
 
 const main = async () => {
     await fetchPlaces(store);
     renderPlaces(store['places']);
+    bindEvents();
 };
 
 main();

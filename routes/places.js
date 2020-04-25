@@ -40,8 +40,7 @@ router.get('/placeComments/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     let placeInfo = req.body;
-
-    let error = [];
+    console.log(placeInfo);
 
     if (!placeInfo) {
         res.status(400).json({
@@ -120,10 +119,10 @@ router.post('/', async (req, res) => {
             placeInfo.placeAddress,
             placeInfo.placeZipCode,
             placeInfo.placePrice,
-            placeInfo.category,
+            placeInfo.category.split(','),
             placeInfo.displayTime,
             placeInfo.remainNum,
-            placeInfo.images
+            placeInfo.images.split(',')
         );
         res.status(200).json(newPlace);
     } catch (error) {
