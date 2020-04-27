@@ -33,6 +33,7 @@ header .username {
         margin-top: 20px; }
       .admin .container .cards .info .detail {
         margin-top: 10px;
+        margin-left: 10px;
         margin-bottom: 10px; }
       .admin .container .cards .info .bottom {
         float: right; }
@@ -41,7 +42,7 @@ header .username {
           margin-right: 10px;
           margin-top: 10px;
           margin-bottom: 10px; }
-      .admin .container .cards .info .deleteBtn {
+      .admin .container .cards .info .commentDeleteBtn {
         float: right;
         margin-right: 10px; }
       .admin .container .cards .info .imageContainer {

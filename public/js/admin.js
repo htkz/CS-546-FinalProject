@@ -32,7 +32,7 @@ const renderPlaces = async (places) => {
                         <div>
                             <b>Description</b>: <span class="description" contenteditable="false">${place.description}</span>
                         </div>
-                        <div class="hidden">
+                        <div>
                             <b>Place Address</b>: <span class="placeAddress" contenteditable="false">${place.placeAddress}</span>
                         </div>
                         <div>
@@ -81,11 +81,11 @@ const renderPlaces = async (places) => {
         let i = 0;
         for (comment of comments) {
             com = $(`
-                <li>
+                <li id=${comment._id}>
                     ${i}:
                     <span class="username"> ${comment.user}</span>:
                     <span class="content">${comment.comment}</span>
-                    <button type="button" class="deleteBtn">
+                    <button type="button" class="commentDeleteBtn">
                     </button>
                 </li>`);
             i++;
@@ -129,6 +129,9 @@ const renderPlaces = async (places) => {
         });
         card.find('.showHideCategory').click((event) => {
             showHideCategory(event);
+        });
+        card.find('.commentDeleteBtn').click((event) => {
+            commentDelete(event);
         });
         $('#cards').append(card);
     }
@@ -326,6 +329,12 @@ const addImage = async (root) => {
     root.find(`.imageList`).append(image);
 };
 
+const commentDelete = async (event) => {
+    commentId = $(event.currentTarget).parent()[0].id;
+    await deleteComment(commentId);
+    $(event.currentTarget).parent().remove();
+};
+
 const addForm = async () => {
     $('#addDetailModal').empty();
 
@@ -431,12 +440,10 @@ const addPlace = async () => {
     }
 };
 
-const deleteUser = async () => {
+const deleteComment = async (id) => {
     try {
-        let id = event.currentTarget.id;
-        console.log(id);
         await $.ajax({
-            url: `http://localhost:3000/users/id`,
+            url: `http://localhost:3000/comments/${id}`,
             type: 'DELETE',
         });
     } catch (error) {
@@ -445,11 +452,10 @@ const deleteUser = async () => {
     }
 };
 
-const deleteComment = async () => {
+const deleteUser = async (id) => {
     try {
-        console.log(id);
         await $.ajax({
-            url: `http://localhost:3000/comments/id`,
+            url: `http://localhost:3000/users/${id}`,
             type: 'DELETE',
         });
     } catch (error) {
@@ -465,6 +471,74 @@ const refreshPlaces = async () => {
 
 const fetchPlaces = async (store) => {
     store['places'] = await $.ajax({ url: 'http://localhost:3000/places/' });
+};
+
+const renderUsers = async (users) => {
+    $('#cards').empty();
+    console.log(users);
+
+    for (user of users) {
+        const card = $(`
+            <div class="info" id=${user._id}>
+                <div class="detail">
+                    <div>
+                        <b>User Name</b>: <span class=userName>${user.userName}</span>
+                    </div>
+                    <div>
+                        <b>Email</b>: <span class=email>${user.email}</span>
+                    </div>
+                    <div>
+                        <b>Phone Number</b>: <span class="phoneNumber" contenteditable="false">${user.phoneNumber}</span>
+                    </div>
+                    <div>
+                        <b>Address</b>: <span class="address" contenteditable="false">${user.address}</span>
+                    </div>
+                    <div>
+                        <b>Zipcode</b>: <span class="zipCode" contenteditable="false">${user.zipCode}</span>
+                    </div>
+                    <div>
+                        <b>Password</b>: <span class="password" contenteditable="false">${user.hashedPassword}</span>
+                    </div>
+                    <div>
+                        <b>Bio</b>: <span class="bio" contenteditable="false">${user.bio}</span>
+                    </div>
+                    <div>
+                        <button class="showHideTicket"/>
+                        <b>Ticket Infomation</b>: <span class="userTicketInfo">Array</span>
+                        <div class="userTicketInfoContainer">
+                            <ul class="userTicketInfoList" style="display: none;"></ul>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="showHideUserComments"/>
+                        <b>Comments</b>: <span class="userComments">Array</span>
+                        <div class="userCommentContainer">
+                            <ul class="userCommentsList" style="display: none;"></ul>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="showHideFriends"/>
+                        <b>Comments</b>: <span class="userComments">Array</span>
+                        <div class="friendContainer">
+                            <ul class="userCommentsList" style="display: none;"></ul>
+                        </div>
+                    </div>
+                    <div>
+                        <b>Bank Card</b>: <span class="bankCard" contenteditable="false">${user.bankCard}</span>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <button type="button" class="btn editBtn btn-secondary" id=${user._id}>
+                        Edit
+                    </button>
+                    <button type="button" class="btn deleteBtn btn-primary" id=${user._id}>
+                        Delete
+                    </button>
+                </div>
+            </div>
+        `);
+        $('#cards').append(card);
+    }
 };
 
 const fetchUsers = async (store) => {
@@ -484,6 +558,12 @@ const bindEvents = async () => {
         addForm();
         $('#addDetailModal').modal('show');
     });
+    $('#userBtn').click((event) => {
+        renderUsers(store['users']);
+    });
+    $('#placeBtn').click((event) => {
+        renderPlaces(store['places']);
+    });
     $('#logoutBtn').click(logout);
 };
 
@@ -491,6 +571,7 @@ const store = {};
 
 const main = async () => {
     await fetchPlaces(store);
+    await fetchUsers(store);
     renderPlaces(store['places']);
     bindEvents();
 };

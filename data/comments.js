@@ -84,7 +84,7 @@ let exportedMethods = {
             throw `Could not delete comment with id of ${id}`;
         }
 
-        await users.removeCommentFromUser(comment.userId, id);
+        await users.removeCommentFromUser(comment.user, id);
         await places.removeCommentFromPlace(comment.placeId, id);
 
         // if the comments have votes, delete all user vote from users
