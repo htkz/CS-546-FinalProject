@@ -115,6 +115,7 @@ const renderPlaces = async (places) => {
             y++;
             card.find(`.categoryList`).append(cat);
         }
+
         card.find('.editBtn').click((event) => {
             editPlace(event);
         });
@@ -133,6 +134,7 @@ const renderPlaces = async (places) => {
         card.find('.commentDeleteBtn').click((event) => {
             commentDelete(event);
         });
+
         $('#cards').append(card);
     }
 };
@@ -452,18 +454,6 @@ const deleteComment = async (id) => {
     }
 };
 
-const deleteUser = async (id) => {
-    try {
-        await $.ajax({
-            url: `http://localhost:3000/users/${id}`,
-            type: 'DELETE',
-        });
-    } catch (error) {
-        alert(error);
-        console.log(error);
-    }
-};
-
 const refreshPlaces = async () => {
     await fetchPlaces(store);
     renderPlaces(store['places']);
@@ -518,9 +508,9 @@ const renderUsers = async (users) => {
                     </div>
                     <div>
                         <button class="showHideFriends"/>
-                        <b>Comments</b>: <span class="userComments">Array</span>
+                        <b>Friends</b>: <span class="friends">Array</span>
                         <div class="friendContainer">
-                            <ul class="userCommentsList" style="display: none;"></ul>
+                            <ul class="friendsList" style="display: none;"></ul>
                         </div>
                     </div>
                     <div>
@@ -537,12 +527,172 @@ const renderUsers = async (users) => {
                 </div>
             </div>
         `);
+
+        let i = 0;
+        for (ticketId of user.userTicketInfo) {
+            const ticket = await $.ajax({
+                url: `http://localhost:3000/tickets/${ticketId}`,
+            });
+            t = $(`
+                <li id=${ticket._id}>
+                    ${i}:
+                    <span> ${ticket.ticketNo}</span>
+                </li>
+            `);
+            i++;
+        }
+
+        let x = 0;
+        for (commentId of user.userComments) {
+            const comment = await $.ajax({
+                url: `http://localhost:3000/comments/${commentId}`,
+            });
+            c = $(`
+                <li id=${comment._id}>
+                    ${x}:
+                    <span> ${comment}</span>
+                </li>
+            `);
+            x++;
+        }
+
+        let y = 0;
+        for (friendId of user.friends) {
+            const friend = await $.ajax({
+                url: `http://localhost:3000/friends/${friendId}`,
+            });
+            f = $(`
+                <li id=${friend._id}>
+                    ${y}:
+                    <span> ${friend}</span>
+                </li>
+            `);
+            y++;
+        }
+
+        card.find('.deleteBtn').click((event) => {
+            deleteUser(event);
+        });
+        card.find('.showHideTicket').click((event) => {
+            showHideTicket(event);
+        });
+        card.find('.showHideUserComments').click((event) => {
+            showHideUserComment(event);
+        });
+        card.find('.showHideFriends').click((event) => {
+            showHideFriend(event);
+        });
+
         $('#cards').append(card);
+    }
+};
+
+let friendFlag = false;
+let ticketFlag = false;
+let userCommentFlag = false;
+
+const showHideTicket = async () => {
+    const $ticketList = $(event.currentTarget)
+        .parent()
+        .find('.userTicketInfoList');
+
+    if ($ticketList.css('display') === 'none' && ticketFlag === true) {
+        ticketFlag = false;
+    }
+
+    if ($categoryList.css('display') === 'block' && ticketFlag === false) {
+        ticketFlag = true;
+    }
+
+    if (!ticketFlag) {
+        $ticketList.css('display', '');
+        ticketFlag = true;
+    } else {
+        $ticketList.css('display', 'none');
+        ticketFlag = false;
+    }
+};
+
+const showHideFriend = async () => {
+    const $friendList = $(event.currentTarget).parent().find('.friendsList');
+
+    if ($friendList.css('display') === 'none' && friendFlag === true) {
+        friendFlag = false;
+    }
+
+    if ($friendList.css('display') === 'block' && friendFlag === false) {
+        friendFlag = true;
+    }
+
+    if (!friendFlag) {
+        $friendList.css('display', '');
+        friendFlag = true;
+    } else {
+        $friendList.css('display', 'none');
+        friendFlag = false;
+    }
+};
+
+const showHideUserComment = async () => {
+    const $userCommentList = $(event.currentTarget)
+        .parent()
+        .find('.userCommentsList');
+
+    if (
+        $userCommentList.css('display') === 'none' &&
+        userCommentFlag === true
+    ) {
+        userCommentFlag = false;
+    }
+
+    if (
+        $userCommentList.css('display') === 'block' &&
+        userCommentFlag === false
+    ) {
+        userCommentFlag = true;
+    }
+
+    if (!userCommentFlag) {
+        $userCommentList.css('display', '');
+        userCommentFlag = true;
+    } else {
+        $userCommentList.css('display', 'none');
+        userCommentFlag = false;
+    }
+};
+
+const deleteUser = async (event) => {
+    const id = event.currentTarget.id;
+    try {
+        await $.ajax({
+            url: `http://localhost:3000/users/${id}`,
+            type: 'DELETE',
+        });
+    } catch (error) {
+        alert(error);
+        console.log(error);
     }
 };
 
 const fetchUsers = async (store) => {
     store['users'] = await $.ajax({ url: 'http://localhost:3000/users/' });
+};
+
+const filterBySearch = (tag) => {
+    if (tag.length === 0) {
+        renderPlaces(store['places']);
+        return;
+    }
+    const places = [];
+    for (place of store['places']) {
+        for (cat of place.category) {
+            if (cat.toLowerCase() === tag.toLowerCase()) {
+                places.push(place);
+                break;
+            }
+        }
+    }
+    renderPlaces(places);
 };
 
 const logout = async (event) => {
@@ -563,6 +713,10 @@ const bindEvents = async () => {
     });
     $('#placeBtn').click((event) => {
         renderPlaces(store['places']);
+    });
+    $('#search').submit((event) => {
+        event.preventDefault();
+        filterBySearch($('#searchInput').val());
     });
     $('#logoutBtn').click(logout);
 };

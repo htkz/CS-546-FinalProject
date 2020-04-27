@@ -63,7 +63,7 @@ let exportedMethods = {
             userTicketInfo: [],
             userComments: [],
             votedComments: [],
-            firends: [],
+            friends: [],
             bankCard: '',
         };
 
