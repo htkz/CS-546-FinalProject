@@ -188,11 +188,17 @@ const filterByHottest = () => {
 };
 
 const filterBySearch = (tag) => {
-    if (tag.length === 0) return;
+    if (tag.length === 0) {
+        renderPlaces(store['places']);
+        return;
+    }
     const places = [];
     for (place of store['places']) {
-        if (place.category.includes(tag.toLowerCase())) {
-            places.push(place);
+        for (cat of place.category) {
+            if (cat.toLowerCase() === tag.toLowerCase()) {
+                places.push(place);
+                break;
+            }
         }
     }
     renderPlaces(places);
