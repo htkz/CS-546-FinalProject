@@ -205,7 +205,7 @@ router.patch('/:id', async (req, res) => {
             requestBody.newCategory &&
             requestBody.newCategory !== oldPlace.category
         ) {
-            updatedObject.category = requestBody.newCategory;
+            updatedObject.category = requestBody.newCategory.split(',');
         }
 
         if (
@@ -226,7 +226,7 @@ router.patch('/:id', async (req, res) => {
             requestBody.newImages &&
             requestBody.newImages !== oldPlace.images
         ) {
-            updatedObject.images = requestBody.newImages;
+            updatedObject.images = requestBody.newImages.split(',');
         }
     } catch (error) {
         res.status(404).json({ error: 'Place not found' });

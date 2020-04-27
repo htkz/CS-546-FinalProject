@@ -7,178 +7,323 @@ const getPlaceById = (id) => {
     return undefined;
 };
 
-const renderPlaces = (places) => {
+const renderPlaces = async (places) => {
     $('#cards').empty();
 
     for (place of places) {
         const card = $(`
-            <div class="card" id="${place._id}">
-                <img src="./pic/${place.images[0]}" class="card-img-top" alt="${place.images[0]}" />
-                <div class="card-body">
-                    <h4>${place.placeName}</h4>
-                    <p class="card-text">
-                        ${place.description}
-                    </p>
-                </div>
-                <div class="card-bottom">
-                    <div class="card-info">
-                        <div class="displayTime">
-                            Display Time: <span>${place.displayTime}</span>
-                        </div>
-                        <div class="remain">
-                            Tickets: <span>${place.remainNum}</span>
-                        </div>
-                        <div class="category"></div>
+            <div class="info" id=${place._id}>
+                <div class="row">
+                    <div class="col">
+                        <img src="./pic/${place.images[0]}" class="img rounded mx-auto d-block" alt="${place.images[0]}" />
                     </div>
+                    <div class="col-8 detail">
+                        <div>
+                            <b>Place Name</b>: <span class=placeName>${place.placeName}</span>
+                        </div>
+                        <div>
+                            <button class="showHideImage"/>
+                            <b>Images</b>: <span class="images">Array</span>
+                            <div class="imageContainer">
+                                <ul class="imageList" style="display: none;"></ul>
+                                <button class="addImage" style="display: none;"/>
+                            </div>
+                        </div>
+                        <div>
+                            <b>Description</b>: <span class="description" contenteditable="false">${place.description}</span>
+                        </div>
+                        <div class="hidden">
+                            <b>Place Address</b>: <span class="placeAddress" contenteditable="false">${place.placeAddress}</span>
+                        </div>
+                        <div>
+                            <b>Place Zipcode</b>: <span class="placeZipCode" contenteditable="false">${place.placeZipCode}</span>
+                        </div>
+                        <div>
+                            <b>Place Price</b>: <span class="placePrice" contenteditable="false">${place.placePrice}</span>
+                        </div>
+                        <div>
+                            <b>Display Time</b>: <span class="displayTime" contenteditable="false">${place.displayTime}</span>
+                        </div>
+                        <div>
+                            <b>Tickets</b>: <span class="remainNum" contenteditable="false">${place.remainNum}</span>
+                        </div>
+                        <div>
+                            <button class="showHideCategory"/>
+                            <b>Category</b>: <span class="categories">Array</span>
+                            <div class="categoryContainer">
+                                <ul class="categoryList" style="display: none;"></ul>
+                                <button class="addCategory" style="display: none;"/>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="showHideComment"/>
+                            <b>Comments</b>: <span class="comments">Array</span>
+                            <div class="commentContainer">
+                                <ul class="commentList" style="display: none;"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <button type="button" class="btn editBtn btn-secondary" id=${place._id}>
+                        Edit
+                    </button>
+                    <button type="button" class="btn deleteBtn btn-primary" id=${place._id}>
+                        Delete
+                    </button>
                 </div>
             </div>
         `);
-        for (category of place.category) {
-            const cat = $(
-                `<button class='btn btn-sm btn-outline-info active'>${category}</button>`
-            );
-            card.find('.category').append(cat);
+        const comments = await $.ajax({
+            url: `http://localhost:3000/places/placeComments/${place._id}`,
+        });
+
+        let i = 0;
+        for (comment of comments) {
+            com = $(`
+                <li>
+                    ${i}:
+                    <span class="username"> ${comment.user}</span>:
+                    <span class="content">${comment.comment}</span>
+                    <button type="button" class="deleteBtn">
+                    </button>
+                </li>`);
+            i++;
+            card.find('.commentList').append(com);
         }
-        card.click((event) => {
-            renderDetail(event.currentTarget.id);
-            $('#detailModal').modal('show');
+
+        let x = 0;
+        for (image of place.images) {
+            im = $(`
+                <li>
+                    ${x}:
+                    <span class="image"> ${image}</span>
+                </li>
+            `);
+            x++;
+            card.find(`.imageList`).append(im);
+        }
+
+        let y = 0;
+        for (category of place.category) {
+            cat = $(`
+                <li>
+                    ${y}:
+                    <span class="category"> ${category}</span>
+                </li>
+            `);
+            y++;
+            card.find(`.categoryList`).append(cat);
+        }
+        card.find('.editBtn').click((event) => {
+            editPlace(event);
+        });
+        card.find('.deleteBtn').click((event) => {
+            deletePlace(event);
+        });
+        card.find('.showHideComment').click((event) => {
+            showHideComment(event);
+        });
+        card.find('.showHideImage').click((event) => {
+            showHideImage(event);
+        });
+        card.find('.showHideCategory').click((event) => {
+            showHideCategory(event);
         });
         $('#cards').append(card);
     }
 };
 
-const renderDetail = async (placeId) => {
-    const place = getPlaceById(event.currentTarget.id);
-    $('#detailModal').empty();
-
-    const $modal = $(`
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content" id="place" data-id="${place._id}">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="detailModalLabel">
-                        ${place.placeName}
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container row">
-                        <div class="placeDetail col-md-5">
-                            <img src="./pic/${place.images[0]}" alt="${place.images[0]}" />
-                            <div class="attribute">Description</div>
-                            <p class="description" contenteditable="false" >
-                                ${place.description}
-                            </p>
-                            <div>
-                                <div class="attribute">Address</div>
-                                <span class="placeAddress" contenteditable="false">${place.placeAddress}</span>
-                            </div>
-                            <div>
-                                <span class="attribute">Zipcode</span>:
-                                <span class="placeZipCode" contenteditable="false">${place.placeZipCode}</span>
-                            </div>
-                            <div>
-                                <span class="attribute">Price</span>:
-                                <span class="placePrice" contenteditable="false">${place.placePrice}</span>
-                            </div>
-                            <div>
-                                <span class="attribute">Display Time</span>:
-                                <span class="_displayTime" contenteditable="false">${place.displayTime}</span>
-                            </div>
-                            <div>
-                                <span class="attribute">Remain Number</span>:
-                                <span class="remainNum" contenteditable="false">${place.remainNum}</span>
-                            </div>
-                        </div>
-                        <div class="wrapper col-md-7">
-                            <div class="comment">
-                                <h5>Comments</h5>
-                                <div class="commentContainer">
-                                    <ul id="commentList"></ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="button" class="btn btn-secondary" id="editBtn">
-                        Edit
-                    </button>
-                    <button type="button" class="btn btn-primary" id="deleteBtn">
-                        Delete
-                    </button>
-                </div>
-            </div>
-        </div>
-    `);
-    $('#detailModal').append($modal);
-    const comments = await $.ajax({
-        url: `http://localhost:3000/places/placeComments/${placeId}`,
-    });
-    const $commentList = $modal.find('#commentList');
-    for (comment of comments) {
-        $comment = $(`
-            <li>
-                <span class="username">${comment.user}</span>:
-                <span class="content">${comment.comment}</span>
-                <button type="button" class="btn btn-primary" id="deleteBtn">
-                    Delete
-                </button>
-            </li>`);
-        $commentList.append($comment);
+const deletePlace = async (event) => {
+    const placeId = event.currentTarget.id;
+    try {
+        await $.ajax({
+            url: `http://localhost:3000/places/${placeId}`,
+            type: 'DELETE',
+        });
+        $('#detailModal').modal('hide');
+        await refreshPlaces();
+    } catch (error) {
+        alert(error);
+        console.log(error);
     }
-    $('#editBtn').click(editPlace);
-    $('#deleteBtn').click(deletePlace);
 };
 
-const editPlace = async () => {
-    $('.description').attr('contenteditable', 'true');
-    $('.placeAddress').attr('contenteditable', 'true');
-    $('.placeZipCode').attr('contenteditable', 'true');
-    $('.placePrice').attr('contenteditable', 'true');
-    $('._displayTime').attr('contenteditable', 'true');
-    $('.remainNum').attr('contenteditable', 'true');
-    $('#editBtn').text('Save').click(saveEdit);
+let commentFlag = false;
+let imageFlag = false;
+let categoryFlag = false;
+
+const showHideComment = async (event) => {
+    const $commentList = $(event.currentTarget).parent().find('.commentList');
+
+    if ($commentList.css('display') === 'none' && commentFlag === true) {
+        commentFlag = false;
+    }
+
+    if ($commentList.css('display') === 'block' && commentFlag === false) {
+        commentFlag = true;
+    }
+
+    if (!commentFlag) {
+        $commentList.css('display', '');
+        commentFlag = true;
+    } else {
+        $commentList.css('display', 'none');
+        commentFlag = false;
+    }
 };
 
-const saveEdit = async () => {
-    $('#editBtn').text('Edit');
-    const description = $('.description')
-        .attr('contenteditable', 'false')
-        .text();
-    const placeAddress = $('.placeAddress')
-        .attr('contenteditable', 'false')
-        .text();
-    const placeZipCode = $('.placeZipCode')
-        .attr('contenteditable', 'false')
-        .text();
-    const placePrice = $('.placePrice')
-        .attr({ contenteditable: 'false' })
-        .text();
-    const _displayTime = $('._displayTime')
-        .attr({ contenteditable: 'false' })
-        .text();
-    const remainNum = $('.remainNum').attr('contenteditable', 'false').text();
+const showHideImage = async () => {
+    const $imageList = $(event.currentTarget).parent().find('.imageList');
 
-    const placeId = $('#place').attr('data-id');
+    if ($imageList.css('display') === 'none' && imageFlag === true) {
+        imageFlag = false;
+    }
+
+    if ($imageList.css('display') === 'block' && imageFlag === false) {
+        imageFlag = true;
+    }
+
+    if (!imageFlag) {
+        $imageList.css('display', '');
+        imageFlag = true;
+    } else {
+        $imageList.css('display', 'none');
+        imageFlag = false;
+    }
+};
+
+const showHideCategory = async () => {
+    const $categoryList = $(event.currentTarget).parent().find('.categoryList');
+
+    if ($categoryList.css('display') === 'none' && categoryFlag === true) {
+        categoryFlag = false;
+    }
+
+    if ($categoryList.css('display') === 'block' && categoryFlag === false) {
+        categoryFlag = true;
+    }
+
+    if (!categoryFlag) {
+        $categoryList.css('display', '');
+        categoryFlag = true;
+    } else {
+        $categoryList.css('display', 'none');
+        categoryFlag = false;
+    }
+};
+
+const editPlace = async (event) => {
+    const root = $(event.currentTarget).parent().parent();
+    root.find('.placeName').attr('contenteditable', 'true');
+    root.find('.description').attr('contenteditable', 'true');
+    root.find('.placeAddress').attr('contenteditable', 'true');
+    root.find('.placeZipCode').attr('contenteditable', 'true');
+    root.find('.placePrice').attr('contenteditable', 'true');
+    root.find('.displayTime').attr('contenteditable', 'true');
+    root.find('.remainNum').attr('contenteditable', 'true');
+    root.find('.category').attr('contenteditable', 'true');
+    root.find('.image').attr('contenteditable', 'true');
+    root.find('.addImage').css('display', '');
+    root.find('.addCategory').css('display', '');
+
+    root.find('.addImage').click((event) => {
+        addImage(root);
+    });
+
+    root.find('.addCategory').click((event) => {
+        addCategory(root);
+    });
+
+    $(event.currentTarget)
+        .parent()
+        .find('.editBtn')
+        .text('Save')
+        .click((event) => {
+            saveEdit(event);
+        });
+};
+
+const saveEdit = async (event) => {
+    $(event.currentTarget).parent().find('.editBtn').text('Edit');
+
+    const root = $(event.currentTarget).parent().parent();
+    const placeId = event.currentTarget.id;
+
+    const placeName = root
+        .find('placeName')
+        .attr('contenteditable', 'false')
+        .text();
+    const description = root
+        .find('.description')
+        .attr('contenteditable', 'false')
+        .text();
+    const placeAddress = root
+        .find('.placeAddress')
+        .attr('contenteditable', 'false')
+        .text();
+    const placeZipCode = root
+        .find('.placeZipCode')
+        .attr('contenteditable', 'false')
+        .text();
+    const placePrice = root
+        .find('.placePrice')
+        .attr({ contenteditable: 'false' })
+        .text();
+    const displayTime = root
+        .find('.displayTime')
+        .attr({ contenteditable: 'false' })
+        .text();
+    const remainNum = root
+        .find('.remainNum')
+        .attr('contenteditable', 'false')
+        .text();
+    let categories = root
+        .find('.category')
+        .attr('contenteditable', 'false')
+        .text();
+    categories = $.trim(categories).replace(/\s/g, ',');
+    let images = root.find('.image').attr('contenteditable', 'false').text();
+    images = $.trim(images).replace(/\s/g, ',');
+
+    console.log(images);
 
     await $.ajax({
         url: `http://localhost:3000/places/${placeId}`,
         type: 'PATCH',
         data: {
+            newPlaceName: $.trim(placeName),
             newDescription: $.trim(description),
             newPlaceAddress: $.trim(placeAddress),
             newPlaceZipCode: $.trim(placeZipCode),
             newPlacePrice: $.trim(placePrice),
-            newDisplayTime: $.trim(_displayTime),
+            newCategory: $.trim(categories),
+            newDisplayTime: $.trim(displayTime),
             newRemainNum: $.trim(remainNum),
+            newImages: $.trim(images),
         },
     });
-    await refreshPlaces();
+    await refreshPlaces(event);
+};
+
+const addCategory = async (root) => {
+    cat = $(`
+        <li>
+            +:
+            <span class="category" contenteditable="true"> Default</span>
+        </li>
+    `);
+    root.find(`.categoryList`).append(cat);
+};
+
+const addImage = async (root) => {
+    image = $(`
+        <li>
+            +:
+            <span class="image" contenteditable="true"> Default.jpg</span>
+        </li>
+    `);
+    root.find(`.imageList`).append(image);
 };
 
 const addForm = async () => {
@@ -286,21 +431,6 @@ const addPlace = async () => {
     }
 };
 
-const deletePlace = async () => {
-    const placeId = $('#place').attr('data-id');
-    try {
-        await $.ajax({
-            url: `http://localhost:3000/places/${placeId}`,
-            type: 'DELETE',
-        });
-        $('#detailModal').modal('hide');
-        await refreshPlaces();
-    } catch (error) {
-        alert(error);
-        console.log(error);
-    }
-};
-
 const deleteUser = async () => {
     try {
         let id = event.currentTarget.id;
@@ -346,7 +476,7 @@ const logout = async (event) => {
     await $.ajax({
         url: `http://localhost:3000/users/logout`,
     });
-    window.location.replace('http://localhost:3000/sign-in-up.html');
+    window.location.replace('http://localhost:3000/entry');
 };
 
 const bindEvents = async () => {
@@ -354,6 +484,7 @@ const bindEvents = async () => {
         addForm();
         $('#addDetailModal').modal('show');
     });
+    $('#logoutBtn').click(logout);
 };
 
 const store = {};

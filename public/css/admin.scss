@@ -26,27 +26,44 @@ header {
         .cards {
             display: flex;
             flex-wrap: wrap;
-            .card {
+            .info {
+                position: relative;
                 width: 100%;
+                margin-top: 10px;
                 margin: 10px 4px;
                 cursor: pointer;
+                border: 1px solid rgba(0, 0, 0, 0.125);
+                border-radius: 0.25rem;
                 img {
-                    height: 200px;
+                    width: 300px;
+                    margin-bottom: 20px;
+                    margin-top: 20px;
                 }
-                .card-bottom {
-                    display: flex;
-                    justify-content: space-between;
-                    padding: 0 20px;
-                    .card-info {
-                        color: #6c757d;
-                        .category {
-                            button {
-                                margin-right: 4px;
-                                margin-top: 4px;
-                                margin-bottom: 10px;
-                            }
-                        }
+                .detail {
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                }
+                .bottom {
+                    float: right;
+                    .btn {
+                        width: 80px;
+                        margin-right: 10px;
+                        margin-top: 10px;
+                        margin-bottom: 10px;
                     }
+                }
+                .deleteBtn {
+                    float: right;
+                    margin-right: 10px;
+                }
+                .imageContainer {
+                    margin-left: 15px;
+                }
+                .categoryContainer {
+                    margin-left: 15px;
+                }
+                .commentContainer {
+                    margin-left: 15px;
                 }
             }
         }

@@ -19,22 +19,37 @@ header .username {
   .admin .container .cards {
     display: flex;
     flex-wrap: wrap; }
-    .admin .container .cards .card {
+    .admin .container .cards .info {
+      position: relative;
       width: 100%;
+      margin-top: 10px;
       margin: 10px 4px;
-      cursor: pointer; }
-      .admin .container .cards .card img {
-        height: 200px; }
-      .admin .container .cards .card .card-bottom {
-        display: flex;
-        justify-content: space-between;
-        padding: 0 20px; }
-        .admin .container .cards .card .card-bottom .card-info {
-          color: #6c757d; }
-          .admin .container .cards .card .card-bottom .card-info .category button {
-            margin-right: 4px;
-            margin-top: 4px;
-            margin-bottom: 10px; }
+      cursor: pointer;
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      border-radius: 0.25rem; }
+      .admin .container .cards .info img {
+        width: 300px;
+        margin-bottom: 20px;
+        margin-top: 20px; }
+      .admin .container .cards .info .detail {
+        margin-top: 10px;
+        margin-bottom: 10px; }
+      .admin .container .cards .info .bottom {
+        float: right; }
+        .admin .container .cards .info .bottom .btn {
+          width: 80px;
+          margin-right: 10px;
+          margin-top: 10px;
+          margin-bottom: 10px; }
+      .admin .container .cards .info .deleteBtn {
+        float: right;
+        margin-right: 10px; }
+      .admin .container .cards .info .imageContainer {
+        margin-left: 15px; }
+      .admin .container .cards .info .categoryContainer {
+        margin-left: 15px; }
+      .admin .container .cards .info .commentContainer {
+        margin-left: 15px; }
   .admin .container .float-button {
     position: fixed;
     height: 50px;

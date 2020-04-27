@@ -34,8 +34,11 @@ router.get('/user', async (req, res) => {
 });
 
 router.get('/admin', async (req, res) => {
-    res.render('admin/admin', { layout: false });
-    return;
+    if (req.session.user) {
+        res.render('admin/admin', { layout: false });
+        return;
+    }
+    res.redirect('/entry');
 });
 
 module.exports = router;
