@@ -96,7 +96,7 @@ router.get('/tickets/:id', async (req, res) => {
     }
 });
 
-router.get('/friend/:id', async (req, res) => {
+router.get('/friends/:id', async (req, res) => {
     try {
         const user = await userData.getUserById(req.params.id);
         if (user.friends.length === 0) {

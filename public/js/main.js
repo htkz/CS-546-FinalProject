@@ -96,8 +96,8 @@ const renderDetail = async (placeId) => {
                         </div>
                         <div class="wrapper col-md-7">
                             <div class="comment">
-                                <h5>Comments</h5>
                                 <div class="commentContainer">
+                                    <h5>Comments</h5>
                                     <ul id="commentList"></ul>
                                 </div>
                                 <div class="inputContainer">
@@ -106,10 +106,6 @@ const renderDetail = async (placeId) => {
                                         Post
                                     </button>
                                 </div>
-                            </div>
-                            <div class="reserveDate">
-                                <h5>Available Time</h5>
-                                <input type="date" name="dateInput" id="dateInput" min="${place.displayTime}">
                             </div>
                         </div>
                     </div>
@@ -150,8 +146,13 @@ const renderDetail = async (placeId) => {
             });
         });
     } else {
-        $('#buyBtn').click(buyTicket);
+        $('#buyBtn').click(() => {
+            $('#buyTicketModal').modal('show');
+        });
+        $('#finalConfirmBuyButton').click(buyTicket);
     }
+
+    $('#dateInput').attr('min', place.displayTime);
 };
 
 const fetchPlaces = async (store) => {
@@ -208,8 +209,19 @@ const filterByReset = () => {
     renderPlaces(store['places']);
 };
 
-const renderUser = () => {
+const renderUser = async () => {
     $('#username').text(userInfo['userName']);
+    const friends = await $.ajax(`/users/friends/${userInfo['_id']}`);
+    friends.forEach((friend) => {
+        $friend = $(
+            `<label class="btn btn-outline-secondary">
+                <input type="checkbox" autocomplete="off" data-id="${friend['_id']}">
+                <span>${friend.name}</span>
+            </label>
+            `
+        );
+        $('.friendsContainer').append($friend);
+    });
 };
 
 const refreshPlaces = async () => {
@@ -273,10 +285,16 @@ const buyTicket = async () => {
         });
         return;
     }
+    const labels = $('.friendsContainer').find('label.active');
+    friends = [];
+    labels.each((index, label) => {
+        friends.push($(label).find('span').text());
+    });
+    const text = `You will reserve the ticket at Stevens`;
+    
     const result = await Swal.fire({
         title: 'Are you sure?',
         text: `You will reserve the ticket at Stevens`,
-        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -322,6 +340,20 @@ const buyTicket = async () => {
     }
 };
 
+const initModalLayout = () => {
+    $('.modal').on('show.bs.modal', function (event) {
+        var idx = $('.modal:visible').length;
+        $(this).css('z-index', 1040 + 10 * idx);
+    });
+    $('.modal').on('shown.bs.modal', function (event) {
+        var idx = $('.modal:visible').length - 1; // raise backdrop after animation.
+        $('.modal-backdrop')
+            .not('.stacked')
+            .css('z-index', 1039 + 10 * idx);
+        $('.modal-backdrop').not('.stacked').addClass('stacked');
+    });
+};
+
 const logout = async (event) => {
     event.preventDefault();
     await $.ajax({
@@ -350,6 +382,7 @@ const main = async () => {
     renderPlaces(store['places']);
     renderUser();
     bindEvent();
+    initModalLayout();
 };
 
 main();

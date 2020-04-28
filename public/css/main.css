@@ -36,32 +36,41 @@ header .username {
             margin-top: 4px;
             margin-bottom: 10px; }
 
-.modal .placeDetail img {
+#buyTicketModal .myFriends h5 {
+  padding-top: 10px; }
+
+#buyTicketModal .myFriends .friendsContainer label {
+  margin-right: 4px; }
+
+#detailModal .placeDetail img {
   width: 100%;
   height: 200px; }
 
-.modal .placeDetail .attribute {
+#detailModal .placeDetail .attribute {
   font-weight: bold; }
 
-.modal .wrapper {
+#detailModal .wrapper .comment {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; }
-  .modal .wrapper .comment .commentContainer {
-    padding: 5px 0;
-    border-top: 1px solid #ccc;
-    max-height: 250px;
+  justify-content: space-between;
+  height: 100%; }
+  #detailModal .wrapper .comment .commentContainer h5 {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 0;
+    padding-bottom: 10px; }
+  #detailModal .wrapper .comment .commentContainer ul {
+    max-height: 300px;
     overflow: scroll; }
-    .modal .wrapper .comment .commentContainer li {
+    #detailModal .wrapper .comment .commentContainer ul li {
       border-bottom: 1px solid #ccc;
       padding: 8px 0; }
-      .modal .wrapper .comment .commentContainer li .username {
+      #detailModal .wrapper .comment .commentContainer ul li .username {
         font-weight: bold; }
-  .modal .wrapper .comment .inputContainer {
+  #detailModal .wrapper .comment .inputContainer {
     margin-top: 20px;
     display: flex;
     align-items: center; }
-    .modal .wrapper .comment .inputContainer button {
+    #detailModal .wrapper .comment .inputContainer button {
       margin-left: 4px; }
 
 main {

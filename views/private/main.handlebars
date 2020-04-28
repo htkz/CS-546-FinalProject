@@ -27,6 +27,34 @@
         <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
             <!-- to be rendered with data -->
         </div>
+        <div class="modal fade" tabindex="-1" id="buyTicketModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ticket</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="reserveDate">
+                            <h5>Available Time</h5>
+                            <input type="date" name="dateInput" id="dateInput" min="${place.displayTime}">
+                        </div>
+                        <div class="myFriends">
+                            <h5>Friends</h5>
+                            <div class="btn-group-toggle friendsContainer" data-toggle="buttons">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="finalConfirmBuyButton">Buy</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>  
+        </div>
         <div class="tickets">
             <div class="container">
                 <div class="topBar">

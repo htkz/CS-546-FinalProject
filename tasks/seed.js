@@ -2,6 +2,7 @@ const dbConnection = require('../config/mongoConnection');
 const data = require('../data/');
 const places = data.places;
 const users = data.users;
+const friends = data.friends;
 
 const main = async () => {
     const db = await dbConnection();
@@ -68,9 +69,13 @@ const main = async () => {
         ['Empire_State_Building.jpg', 'ticket2.jpg']
     );
 
-    await users.addUser('htkz', 'admin@gmail.com', 'Qq123456');
+    const user1 = await users.addUser('htkz', 'admin@gmail.com', 'Qq123456');
 
     await users.addUser('Admin', 'admin@group13.com', 'Qq123456');
+    
+    await friends.addFriend(user1['_id'], 'Patric Hill', '123456@qq.com');
+    await friends.addFriend(user1['_id'], 'Joe Stalin', '654321@qq.com');
+    await friends.addFriend(user1['_id'], 'John Smith', '654321@qq.com');
 
     console.log('Done seeding database');
 
