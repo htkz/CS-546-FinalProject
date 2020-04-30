@@ -59,23 +59,23 @@ The idea of the application is to allow users to book tickets for tourism. The v
         "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
         "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710"
     ],
-    "bankCard": "4024007193132510"
+    "bankCard": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310"
 }
 ```
 
 | Name           | Type   | Description                                               |
 | :------------- | :----- | :-------------------------------------------------------- |
 | \_id           | string | A globally unique identifier to represent the user.       |
-| userName       | string | User name                                                 |
-| phoneNumber    | string | User phone number                                         |
-| address        | string | User address                                              |
-| zipCode        | string | User address zip code                                     |
+| userName       | string | User name.                                                |
+| phoneNumber    | string | User phone number.                                        |
+| address        | string | User address.                                             |
+| zipCode        | string | User address zip code.                                    |
 | hashedPassword | string | The password when users log in.                           |
 | userTicketInfo | array  | The ticket that the user bought.                          |
 | userComments   | array  | An array that stores the comment_id that users created.   |
 | votedComments  | array  | An array that stores the comment_id which users voted on. |
-| friends        | array  | The friends that the user added                           |
-| bankCard       | String | The bank card number                                      |
+| friends        | array  | The friends that the user added.                          |
+| bankCard       | String | The bankId.                                               |
 
 #### API
 
@@ -179,13 +179,13 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | placeId    | string | The place the ticket takes effect on.            |
 | comment    | string | The comment text.                                |
 | votedCount | number | The upvoted count of the comment.                |
-| votedUsers | array  | The user voted this comment                      |
+| votedUsers | array  | The user voted this comment.                     |
 
 ##### Use
 
--   **get("/:id")**: use commentId to get comment from comments collection
+-   **get("/:id")**: use commentId to get comment from comments collection.
 
--   **get("/")**: get all comments from comments collection
+-   **get("/")**: get all comments from comments collection.
 
 -   **post("/")**: post comment data into comments collection.  
     _Fields_: userId, placeId, comment, votedCount
@@ -218,23 +218,23 @@ The idea of the application is to allow users to book tickets for tourism. The v
 }
 ```
 
-| Name              | Type   | Description                             |
-| :---------------- | :----- | :-------------------------------------- |
-| \_id              | string | The place id.                           |
-| description       | string | The descriptive content of this place.  |
-| placeName         | string | The name of this place.                 |
-| placeAddress      | string | The address of this place.              |
-| placeZipCode      | string | The zip code of this place.             |
-| placePrice        | number | The price for the place                 |
-| category          | array  | The category for the place              |
-| displayTime       | string | The display time for the place          |
-| remainNum         | number | The remain tickets number for the place |
-| images            | array  | The image array of the place            |
-| placeUserComments | array  | Comments user comment on this place.    |
+| Name              | Type   | Description                              |
+| :---------------- | :----- | :--------------------------------------- |
+| \_id              | string | The place id.                            |
+| description       | string | The descriptive content of this place.   |
+| placeName         | string | The name of this place.                  |
+| placeAddress      | string | The address of this place.               |
+| placeZipCode      | string | The zip code of this place.              |
+| placePrice        | number | The price for the place.                 |
+| category          | array  | The category for the place.              |
+| displayTime       | string | The display time for the place.          |
+| remainNum         | number | The remain tickets number for the place. |
+| images            | array  | The image array of the place.            |
+| placeUserComments | array  | Comments user comment on this place.     |
 
 ##### API
 
--   **get("/:id")**: use placeId to get place from places collection
+-   **get("/:id")**: use placeId to get place from places collection.
 
 -   **get("/placeComments/:id")**: use placeId to get this place all comments.
 
@@ -250,7 +250,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 #### friends collection
 
-**Description**: The friend collection will store all friends. Each friend have an userId which is the user has account in our website. The friend has name, email and address to get ticket from the website. A array tickets to store all tickets
+**Description**: The friends collection will store all friends. Each friend have an userId which is the user has account in our website. The friend has name, email and address to get ticket from the website. A array tickets to store all tickets
 
 ```json
 {
@@ -269,6 +269,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | Name        | Type   | Description                     |
 | :---------- | :----- | :------------------------------ |
 | \_id        | string | The friend id.                  |
+| userId      | string | The userId                      |
 | name        | string | The friend user name.           |
 | email       | string | The friend email.               |
 | phoneNumber | string | The friend phone number         |
@@ -281,8 +282,46 @@ The idea of the application is to allow users to book tickets for tourism. The v
 -   **post("/")**: add a friend into friends collection.  
     _Fields_: userId, name, email, phoneNumber
 
--   **put("/:id")**: user friendId to update friend infomation.
+-   **put("/:id")**: user friendId to update friend infomation.  
     _Fields_: name, email, phoneNumber
+
+#### banks collection
+
+**Description**: The banks collection will store all banks card information. Each bank card have an userId which is the user has this bank. The friend has first name, last name, billing zipcode, card number, expiration date, securityCode
+
+```json
+{
+    "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "userId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "firstName": "group13",
+    "lastName": "group13",
+    "cardNumber": "4024007193132510",
+    "billingZipCode": "07302",
+    "expirationDate": "05/23",
+    "securityCode": "123"
+}
+```
+
+| Name           | Type   | Description          |
+| :------------- | :----- | :------------------- |
+| \_id           | string | The friend id.       |
+| userId         | string | The userId.          |
+| firstName      | string | The first name.      |
+| lastName       | string | The last name.       |
+| cardNumber     | string | The card number.     |
+| billingZipCode | string | The billing zip code |
+| expirationDate | string | The expiation date   |
+| securityCode   | string | security code        |
+
+##### API
+
+-   **get("/:id")**: use bankId to get bank from banks collection.
+
+-   **post("/")**: add a bank card into banks collection.  
+    _Fields_: user, fristName, lastName, billingZipCode, expirationDate, securityCode
+
+-   **put("/:id")**: user friendId to update friend infomation.  
+    _Fields_: fristName, lastName, billingZipCode, expirationDate, securityCode
 
 #### Password Format
 
