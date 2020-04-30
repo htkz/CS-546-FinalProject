@@ -25,6 +25,24 @@ header {
     }
 }
 
+#newFriendModal {
+    .row {
+        margin-bottom: 10px;
+        input {
+            width: 90%;
+        }
+        .aside {
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            h5 {
+                text-align: right;
+            }
+        }
+    }
+}
+
 main {
     min-height: 100vh;
     border: 1px solid #ccc;
@@ -113,8 +131,21 @@ main {
         #friends {
             display: none;
             #friendsList {
-                button {
-                    margin: 4px 0;
+                display: flex;
+                flex-wrap: wrap;
+                .friendBtn {
+                    border: 1px solid #6c757d;
+                    border-radius: 3px;
+                    margin-right: 4px;
+                    margin-top:4px;
+                    color: #6c757d;
+                    cursor: pointer;
+                    padding: 0.2rem 0.75rem;
+                    user-select: none;
+                }
+                .friendBtn.active {
+                    color: white;
+                    background-color: #6c757d;
                 }
             }
         }
