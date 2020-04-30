@@ -287,16 +287,31 @@ const buyTicket = async () => {
         });
         return;
     }
-    const labels = $('.friendsContainer').find('label.active');
-    friends = [];
-    labels.each((index, label) => {
-        friends.push($(label).find('span').text());
-    });
-    const text = `You will reserve the ticket at Stevens`;
+    const friends = [];
+    $('.myFriends')
+        .find('span.active')
+        .each((index, friend) => {
+            friends.push($(friend).attr('data-id'));
+        });
+    const myself = !!($('.yourself').find('span.active').length !== 0);
+    if (friends.length === 0 && !myself) {
+        await Swal.fire({
+            icon: 'error',
+            title: 'Please select at least one person!',
+        });
+        return;
+    }
+    let text = `You will reserve the ticket for: `;
+    $('#buyTicketModal')
+        .find('span.active')
+        .each((index, buyer) => {
+            text += $(buyer).text().trim() + ', ';
+        });
+    text = text.substr(0, text.length - 2) + '.';
 
     const result = await Swal.fire({
         title: 'Are you sure?',
-        text: `You will reserve the ticket at Stevens`,
+        text: text,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -313,17 +328,22 @@ const buyTicket = async () => {
                 date.getMonth() + 1
             }-${date.getDate()}`;
             const effectDate = $('#dateInput').val();
-            await $.ajax({
-                url: 'http://localhost:3000/tickets/',
-                type: 'POST',
-                data: {
-                    userId: userId,
-                    placeId: placeId,
-                    orderedDate: orderDate,
-                    effectDate: effectDate,
-                    price: placeInfo.placePrice,
-                },
-            });
+            if (myself) {
+                await $.ajax({
+                    url: 'http://localhost:3000/tickets/',
+                    type: 'POST',
+                    data: {
+                        userId: userId,
+                        placeId: placeId,
+                        orderedDate: orderDate,
+                        effectDate: effectDate,
+                        price: placeInfo.placePrice,
+                    },
+                });
+            }
+            if (friends.length !== 0) {
+                console.log(friends);
+            }
             Swal.fire({
                 icon: 'success',
                 title: 'Your have already got the ticket!',
