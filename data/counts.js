@@ -7,7 +7,7 @@ let exportedMethods = {
 
         await count.updateOne(
             { _id: sequenceName },
-            { $inc: { sequence_value: 1 } }
+            { $inc: { sequenceValue: 1 } }
         );
 
         const sequenceDocument = await count.findOne({ _id: sequenceName });
@@ -20,7 +20,7 @@ let exportedMethods = {
 
         let newCount = {
             _id: id,
-            sequence_value: sequence_value,
+            sequenceValue: sequenceValue,
         };
 
         await count.insertOne(newCount);
