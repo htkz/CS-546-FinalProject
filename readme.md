@@ -79,37 +79,37 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 #### API
 
--   **get('/account/:id')**: use userId to get user from users collection
+-   **get("/account/:id")**: use userId to get user from users collection.
 
--   **get('/')**: get all users from users collection
+-   **get("/")**: get all users from users collection.
 
--   **get('/logout')**: logout user and delete cookie
+-   **get("/logout")**: logout user and delete cookie.
 
--   **get('/tickets/:id')**: use userId to get user's tickets from tickets collection
+-   **get("/tickets/:id")**: use userId to get user's tickets from tickets collection.
 
--   **get('/tickets/friends/:id')**: user userId to get user's friends' tickets from tickets collection
+-   **get("/tickets/friends/:id")**: user userId to get user's friends' tickets from tickets collection.
 
--   **get('/friends/:id)**: use userId to get user's friends from friends collection
+-   **get("/friends/:id")**: use userId to get user's friends from friends collection.
 
--   **post('/account/username')**: use username to get user from users collection  
+-   **post("/account/username")**: use username to get user from users collection.  
     _Fields_: userName
 
--   **post('/account/email')**: use email to get user from users collection  
+-   **post("/account/email")**: use email to get user from users collection.  
     _Fields_: email
 
--   **post('/account/register')**: add user data into users collection.  
+-   **post("/account/register")**: add user data into users collection.  
     _Fields_: userName, email, hashedPassword
 
--   **post('/account/login')**: get data through email. Save username in the cookie.
-    _Fields_: email, hashedPassword
+-   **post("/account/login")**: get data through email. Save username in the cookie.
+    _Fields_: email, hashedPasswor"
 
--   **put('/account/update/:id')**: use userId to update user infomation.  
+-   **put("/account/update/:id")**: use userId to update user infomation.  
     _Fields_: userName, phoneNumber, email, address, zipCode, bio
 
--   **put('/account/password/:id')**: use userId to update user password  
+-   **put("/account/password/:id")**: use userId to update user password.  
     _Field_: oldPassword, newPassword
 
--   **delete('/:id')**: delete user through userId from users collection.
+-   **delete("/:id")**: delete user through userId from users collection.
 
 #### Ticket Collection
 
@@ -139,20 +139,20 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 ##### API
 
--   **get('/:id')**: use ticketId to get ticket from tickets collection
+-   **get("/:id")**: use ticketId to get ticket from tickets collection
 
--   **get('/')**: get all tickets from tickets collection
+-   **get("/")**: get all tickets from tickets collection
 
--   **post('/user')**: post tikcet data into tickets collection.  
+-   **post("/user")**: post tikcet data into tickets collection.  
     _Fields_: userId, placeId, orderedData, effectDate, price
 
--   **post('/friends')**: post friend tikcet data into tickets collection.  
+-   **post("/friends")**: post friend tikcet data into tickets collection.  
     _Fields_: friends, placeId, orderedData, effectDate, price
 
--   **put('/:id')**: use placeId to update place infomation.  
+-   **put("/:id")**: use placeId to update place infomation.  
     _Fields_: ticketId, effectDate
 
--   **delete('/:id')**: delete ticket through ticketId from tickets collection.
+-   **delete("/:id")**: delete ticket through ticketId from tickets collection.
 
 #### Comments Collection
 
@@ -183,13 +183,17 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 ##### Use
 
--   **get('/:id')**: use commentId to get comment from comments collection
--   **get('/')**: get all comments from comments collection
--   **post('/')**: post comment data into comments collection.  
+-   **get("/:id")**: use commentId to get comment from comments collection
+
+-   **get("/")**: get all comments from comments collection
+
+-   **post("/")**: post comment data into comments collection.  
     _Fields_: userId, placeId, comment, votedCount
--   **put('/:id')**: use commentId to update comment infomation.  
+
+-   **put("/:id")**: use commentId to update comment infomation.  
     _Fields_: commentId, votedCount, votedUserId
--   **delete('/:id')**: delete comment through commentId from comments collection.
+
+-   **delete("/:id")**: delete comment through commentId from comments collection.
 
 #### Places Collection
 
@@ -228,16 +232,57 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | images            | array  | The image array of the place            |
 | placeUserComments | array  | Comments user comment on this place.    |
 
-##### Use
+##### API
 
--   **get('/:id')**: use placeId to get place from places collection
--   **get('/placeComments/:id)**: use placeId to get this place all comments.
--   **get('/')**: get all places from places collection
--   **post('/')**: post place data into places collection.  
+-   **get("/:id")**: use placeId to get place from places collection
+
+-   **get("/placeComments/:id")**: use placeId to get this place all comments.
+
+-   **get("/")**: get all places from places collection.
+
+-   **post("/")**: post place data into places collection.  
     _Fields_: placeName, description, placeAddress, placeZipCode, placePrice, category, displayTime, remainNum, images
--   **patch('/:id')**: use placeId to update place infomation.  
+
+-   **patch("/:id")**: use placeId to update place infomation.  
     _Fields_: placeId, newPlaceName, newDescription, newPlaceAddress, newPlaceZipCode, newPlacePrice, newCategory, newDisplayTime, newRemainNum, newImages
--   **delete('/:id')**: delete place through placeId from places collection.
+
+-   **delete("/:id")**: delete place through placeId from places collection.
+
+#### friends collection
+
+**Description**: The friend collection will store all friends. Each friend have an userId which is the user has account in our website. The friend has name, email and address to get ticket from the website. A array tickets to store all tickets
+
+```json
+{
+    "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "userId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "name": "group13",
+    "email": "group13@gmail.com",
+    "phoneNumber": "5512612933",
+    "tickets": [
+        "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+        "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310"
+    ]
+}
+```
+
+| Name        | Type   | Description                     |
+| :---------- | :----- | :------------------------------ |
+| \_id        | string | The friend id.                  |
+| name        | string | The friend user name.           |
+| email       | string | The friend email.               |
+| phoneNumber | string | The friend phone number         |
+| tickets     | array  | The ticket that the friend had. |
+
+##### API
+
+-   **get("/:id")**: use friendId to get friend from friends collection.
+
+-   **post("/")**: add a friend into friends collection.  
+    _Fields_: userId, name, email, phoneNumber
+
+-   **put("/:id")**: user friendId to update friend infomation.
+    _Fields_: name, email, phoneNumber
 
 #### Password Format
 
