@@ -320,7 +320,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 -   **post("/")**: add a bank card into banks collection.  
     _Fields_: user, fristName, lastName, billingZipCode, expirationDate, securityCode
 
--   **put("/:id")**: user friendId to update friend infomation.  
+-   **put("/:id")**: user bandId to update friend infomation.  
     _Fields_: fristName, lastName, billingZipCode, expirationDate, securityCode
 
 #### Password Format
