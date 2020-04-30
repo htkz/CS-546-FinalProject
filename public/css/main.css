@@ -36,7 +36,20 @@ header .username {
             margin-top: 4px;
             margin-bottom: 10px; }
 
-#buyTicketModal .myFriends h5 {
+#buyTicketModal .friendBtn {
+  border: 1px solid #6c757d;
+  border-radius: 3px;
+  margin-right: 4px;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 0.375rem 0.75rem;
+  user-select: none; }
+
+#buyTicketModal .friendBtn.active {
+  color: white;
+  background-color: #6c757d; }
+
+#buyTicketModal h5 {
   padding-top: 10px; }
 
 #buyTicketModal .myFriends .friendsContainer label {

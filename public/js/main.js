@@ -214,13 +214,15 @@ const renderUser = async () => {
     const friends = await $.ajax(`/users/friends/${userInfo['_id']}`);
     friends.forEach((friend) => {
         $friend = $(
-            `<label class="btn btn-outline-secondary">
-                <input type="checkbox" autocomplete="off" data-id="${friend['_id']}">
-                <span>${friend.name}</span>
-            </label>
-            `
+            `<span class="friendBtn" data-id="${friend['_id']}">${friend.name}</span>`
         );
         $('.friendsContainer').append($friend);
+        $friend.click((event) => {
+            $(event.currentTarget).toggleClass('active');
+        });
+    });
+    $('#yourselfBtn').click(() => {
+        $(event.currentTarget).toggleClass('active');
     });
 };
 
@@ -291,10 +293,11 @@ const buyTicket = async () => {
         friends.push($(label).find('span').text());
     });
     const text = `You will reserve the ticket at Stevens`;
-    
+
     const result = await Swal.fire({
         title: 'Are you sure?',
         text: `You will reserve the ticket at Stevens`,
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -353,6 +356,8 @@ const initModalLayout = () => {
         $('.modal-backdrop').not('.stacked').addClass('stacked');
     });
 };
+
+const removeFocus = () => {};
 
 const logout = async (event) => {
     event.preventDefault();

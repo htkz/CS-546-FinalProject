@@ -54,10 +54,23 @@ header {
 }
 
 #buyTicketModal {
+    .friendBtn {
+        border: 1px solid #6c757d;
+        border-radius: 3px;
+        margin-right: 4px;
+        color: #6c757d;
+        cursor: pointer;
+        padding: 0.375rem 0.75rem;
+        user-select: none;
+    }
+    .friendBtn.active {
+        color: white;
+        background-color: #6c757d;
+    }
+    h5 {
+        padding-top: 10px;
+    }
     .myFriends {
-        h5 {
-            padding-top: 10px;
-        }
         .friendsContainer {
             label {
                 margin-right: 4px;
