@@ -181,7 +181,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | votedCount | number | The upvoted count of the comment.                |
 | votedUsers | array  | The user voted this comment.                     |
 
-##### Use
+##### API
 
 -   **get("/:id")**: use commentId to get comment from comments collection.
 
@@ -248,7 +248,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 
 -   **delete("/:id")**: delete place through placeId from places collection.
 
-#### friends collection
+#### Friends collection
 
 **Description**: The friends collection will store all friends. Each friend have an userId which is the user has account in our website. The friend has name, email and address to get ticket from the website. A array tickets to store all tickets
 
@@ -285,7 +285,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 -   **put("/:id")**: user friendId to update friend infomation.  
     _Fields_: name, email, phoneNumber
 
-#### banks collection
+#### Banks collection
 
 **Description**: The banks collection will store all banks card information. Each bank card have an userId which is the user has this bank. The friend has first name, last name, billing zipcode, card number, expiration date, securityCode
 
@@ -331,7 +331,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
     1. 8-16 characters
     2. Should only contains lower case word, upper case word & number
 
-#### counts collection
+#### Counts collection
 
 **Description**: The banks collection is used to implement auto increased.
 
