@@ -330,7 +330,7 @@ const buyTicket = async () => {
             const effectDate = $('#dateInput').val();
             if (myself) {
                 await $.ajax({
-                    url: 'http://localhost:3000/tickets/user/',
+                    url: '/tickets/user/',
                     type: 'POST',
                     data: {
                         userId: userId,
@@ -343,6 +343,17 @@ const buyTicket = async () => {
             }
             if (friends.length !== 0) {
                 console.log(friends);
+                await $.ajax({
+                    url: '/tickets/friends/',
+                    type: 'post',
+                    data: {
+                        friends: friends,
+                        placeId: placeId,
+                        orderedDate: orderDate,
+                        effectDate: effectDate,
+                        price: placeInfo.placePrice,
+                    },
+                });
             }
             Swal.fire({
                 icon: 'success',
