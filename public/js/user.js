@@ -409,15 +409,40 @@ const renderPayment = async (event) => {
 };
 
 //friends
-const renderFriends = async () => {
-    const friendsData = await $.ajax({
+let friendsData = {};
+
+const fetchFriends = async () => {
+    friendsData = await $.ajax({
         url: `http://localhost:3000/users/friends/${userId}`,
     });
+    console.log(friendsData);
+};
+
+const getFriendById = (friendId) => {
+    for (friend of friendsData) {
+        if (friend['_id'] === friendId) {
+            return friend;
+        }
+    }
+};
+
+const renderFriends = async () => {
+    await fetchFriends();
     $('#friendsList').empty();
     friendsData.forEach((friend) => {
-        $('#friendsList').append(
-            $(`<span class="friendBtn">${friend.name}</span>`)
+        const $friend = $(
+            `<span class="friendBtn" data-id="${friend['_id']}">${friend.name}</span>`
         );
+        $('#friendsList').append($friend);
+        $friend.click((event) => {
+            const $cur = $(event.currentTarget);
+            $('#friendsList').find('span').removeClass('active');
+            $cur.addClass('active');
+            const friend = getFriendById($cur.attr('data-id'));
+            $('#friendName').val(friend.name);
+            $('#friendEmail').val(friend.email);
+            $('#friendPhone').val(friend.phoneNumber);
+        });
     });
 };
 
