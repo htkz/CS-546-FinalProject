@@ -330,7 +330,7 @@ const buyTicket = async () => {
             const effectDate = $('#dateInput').val();
             if (myself) {
                 await $.ajax({
-                    url: 'http://localhost:3000/tickets/',
+                    url: 'http://localhost:3000/tickets/user/',
                     type: 'POST',
                     data: {
                         userId: userId,

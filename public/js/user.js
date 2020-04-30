@@ -411,6 +411,46 @@ const renderPayment = async (event) => {
 //friends
 let friendsData = {};
 
+const checkNewFriendInput = async () => {
+    const name = $('#friendNameInput').val();
+    const email = $('#friendEmailInput').val();
+    const phone = $('#friendPhoneInput').val();
+    const reEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    if (!reEmail.test(email)) {
+        await showSwal('error', 'The email format is not valid!');
+        return false;
+    }
+    if (name.length === 0) {
+        await showSwal('error', 'The name should not be empty!');
+        return false;
+    }
+    if (!checkPhoneNumber(phone)) {
+        await showSwal('error', 'The phone number format is not valid!');
+        return false;
+    }
+    return true;
+};
+
+const checkFriendInput = async () => {
+    const name = $('#friendName').val();
+    const email = $('#friendEmail').val();
+    const phone = $('#friendPhone').val();
+    const reEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    if (!reEmail.test(email)) {
+        await showSwal('error', 'The email format is not valid!');
+        return false;
+    }
+    if (name.length === 0) {
+        await showSwal('error', 'The name should not be empty!');
+        return false;
+    }
+    if (!checkPhoneNumber(phone)) {
+        await showSwal('error', 'The phone number format is not valid!');
+        return false;
+    }
+    return true;
+};
+
 const fetchFriends = async () => {
     friendsData = await $.ajax({
         url: `http://localhost:3000/users/friends/${userId}`,
@@ -447,22 +487,10 @@ const renderFriends = async () => {
 };
 
 const addFriend = async () => {
+    if (!(await checkNewFriendInput())) return;
     const name = $('#friendNameInput').val();
     const email = $('#friendEmailInput').val();
     const phone = $('#friendPhoneInput').val();
-    const reEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-    if (!reEmail.test(email)) {
-        showSwal('error', 'The email format is not valid!');
-        return;
-    }
-    if (name.length === 0) {
-        showSwal('error', 'The name should not be empty!');
-        return;
-    }
-    if (!checkPhoneNumber(phone)) {
-        showSwal('error', 'The phone number format is not valid!');
-        return;
-    }
     try {
         await $.ajax({
             url: '/friends',
@@ -477,6 +505,36 @@ const addFriend = async () => {
         await renderFriends();
         $('#newFriendModal').modal('hide');
         await showSwal('success', 'Already add your friend');
+    } catch (error) {
+        showSwal('error', error);
+    }
+};
+
+const saveFriend = async (event) => {
+    event.preventDefault();
+    const curFriend = $('#friendsList').find('span.active');
+    if (curFriend.length === 0) {
+        await showSwal('error', 'Please select a friend first!');
+        return;
+    }
+    if (!(await checkFriendInput())) return;
+    const friendId = $(curFriend[0]).attr('data-id');
+    const name = $('#friendName').val();
+    const email = $('#friendEmail').val();
+    const phoneNumber = $('#friendPhone').val();
+    try {
+        await $.ajax({
+            url: `/friends/${friendId}`,
+            type: 'put',
+            data: {
+                name: name,
+                email: email,
+                phoneNumber: phoneNumber,
+            },
+        });
+        await renderFriends();
+        $('#newFriendModal').modal('hide');
+        await showSwal('success', 'Already saved!');
     } catch (error) {
         showSwal('error', error);
     }
@@ -504,6 +562,7 @@ const bindEvents = async () => {
         $('#newFriendModal').modal('show');
     });
     $('#newFriendConfirmBtn').click(addFriend);
+    $('#saveFriendBtn').click(saveFriend);
 };
 
 const init = async () => {
