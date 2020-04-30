@@ -39,7 +39,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
     "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "userName": "JJ Doeny",
     "email": "JDoe@gmail.com",
-    "phoneNumber": 5513008708,
+    "phoneNumber": "5513008708",
     "address": "1 Castle Point Terrace, Hoboken",
     "zipCode": "07030",
     "hashedPassword": "$2a$08$XdvNkfdNIL8F8xsuIUeSbNOFgK0M0iV5HOskfVn7.PWncShU.O",
@@ -54,7 +54,12 @@ The idea of the application is to allow users to book tickets for tourism. The v
     "votedComments": [
         "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
         "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710"
-    ]
+    ],
+    "friends": [
+        "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+        "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710"
+    ],
+    "bankCard": "4024007193132510"
 }
 ```
 
@@ -62,27 +67,48 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | :------------- | :----- | :-------------------------------------------------------- |
 | \_id           | string | A globally unique identifier to represent the user.       |
 | userName       | string | User name                                                 |
-| phoneNumber    | number | User phone number                                         |
+| phoneNumber    | string | User phone number                                         |
 | address        | string | User address                                              |
 | zipCode        | string | User address zip code                                     |
+| hashedPassword | string | The password when users log in.                           |
+| userTicketInfo | array  | The ticket that the user bought.                          |
 | userComments   | array  | An array that stores the comment_id that users created.   |
 | votedComments  | array  | An array that stores the comment_id which users voted on. |
-| hashPassword   | string | The password when users log in.                           |
-| userTicketInfo | array  | The ticket that the user bought.                          |
+| friends        | array  | The friends that the user added                           |
+| bankCard       | String | The bank card number                                      |
 
-##### Use
+#### API
 
 -   **get('/account/:id')**: use userId to get user from users collection
+
 -   **get('/')**: get all users from users collection
+
 -   **get('/logout')**: logout user and delete cookie
+
+-   **get('/tickets/:id')**: use userId to get user's tickets from tickets collection
+
+-   **get('/tickets/friends/:id')**: user userId to get user's friends' tickets from tickets collection
+
+-   **get('/friends/:id)**: use userId to get user's friends from friends collection
+
+-   **post('/account/username')**: use username to get user from users collection  
+    _Fields_: userName
+
+-   **post('/account/email')**: use email to get user from users collection  
+    _Fields_: email
+
 -   **post('/account/register')**: add user data into users collection.  
     _Fields_: userName, email, hashedPassword
+
 -   **post('/account/login')**: get data through email. Save username in the cookie.
     _Fields_: email, hashedPassword
--   **patch('/:id')**: use userId to update user infomation.  
-    _Fields_: userId, newUserName, newEmail, newPhoneNumber, newAddress, newZipCode, newHashedPassword
--   **put('/:id')**: user userId to complete user information.
-    Fields: userId, phoneNumber, address, zipCode
+
+-   **put('/account/update/:id')**: use userId to update user infomation.  
+    _Fields_: userName, phoneNumber, email, address, zipCode, bio
+
+-   **put('/account/password/:id')**: use userId to update user password  
+    _Field_: oldPassword, newPassword
+
 -   **delete('/:id')**: delete user through userId from users collection.
 
 #### Ticket Collection
@@ -94,7 +120,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
     "_id": "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710",
     "userId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "placeId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "ticketNo": "000058",
+    "ticketNo": 1,
     "orderedDate": "2020-03-04 15:02:00",
     "effectDate": "2020-05-18",
     "price": "25.00"
@@ -109,16 +135,23 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | ticketNo    | number | A number printed on the ticket.                                |
 | orderedDate | date   | The date the user bought the ticket.                           |
 | effectDate  | date   | The date ticket takes effect.                                  |
-| price       | number | The prices of the ticket.                                      |
+| price       | string | The prices of the ticket.                                      |
 
-##### Use
+##### API
 
 -   **get('/:id')**: use ticketId to get ticket from tickets collection
+
 -   **get('/')**: get all tickets from tickets collection
--   **post('/')**: post tikcet data into tickets collection.  
-    _Fields_: userId, placeId, ticketNo, orderedData, effectDate, price
+
+-   **post('/user')**: post tikcet data into tickets collection.  
+    _Fields_: userId, placeId, orderedData, effectDate, price
+
+-   **post('/friends')**: post friend tikcet data into tickets collection.  
+    _Fields_: friends, placeId, orderedData, effectDate, price
+
 -   **put('/:id')**: use placeId to update place infomation.  
     _Fields_: ticketId, effectDate
+
 -   **delete('/:id')**: delete ticket through ticketId from tickets collection.
 
 #### Comments Collection
