@@ -27,7 +27,6 @@ let exportedMethods = {
         if (!user) {
             throw `No user with that ${id}`;
         }
-
         return user;
     },
 

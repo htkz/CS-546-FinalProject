@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const ticketData = data.tickets;
+const friendData = data.friends;
 
 router.get('/:id', async (req, res) => {
     try {
@@ -21,9 +22,11 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/user', async (req, res) => {
     let ticketInfo = req.body;
     console.log(ticketInfo);
+
+    const url = req.url;
 
     if (!ticketInfo) {
         res.status(400).json({
@@ -73,9 +76,90 @@ router.post('/', async (req, res) => {
             ticketInfo.placeId,
             ticketInfo.orderedDate,
             ticketInfo.effectDate,
-            ticketInfo.price
+            ticketInfo.price,
+            url
         );
         res.status(200).json(newTicket);
+    } catch (error) {
+        res.status(500).json({ error: 'Add ticket failed' });
+        console.log(error);
+    }
+});
+
+router.post('/friends', async (req, res) => {
+    const requestBody = req.body;
+    console.log(requestBody);
+
+    const url = req.url;
+    const friends = requestBody.friends;
+    const placeId = requestBody.placeId;
+    const orderedDate = requestBody.orderedDate;
+    const effectDate = requestBody.effectDate;
+    const price = requestBody.price;
+
+    if (!requestBody) {
+        res.status(400).json({
+            error: 'You must provide data to create a ticket',
+        });
+        return;
+    }
+
+    if (!friends) {
+        res.status(400).json({
+            error: "You must provide friends' id to create a ticket",
+        });
+        return;
+    }
+
+    if (!placeId) {
+        res.status(400).json({
+            error: 'You must provide placeId to create a ticket',
+        });
+        return;
+    }
+
+    if (!orderedDate) {
+        res.status(400).json({
+            error: 'You must provide orderedDate to create a ticket',
+        });
+        return;
+    }
+
+    if (!effectDate) {
+        res.status(400).json({
+            error: 'You must provide effectDate to create a ticket',
+        });
+        return;
+    }
+
+    if (!price) {
+        res.status(400).json({
+            error: 'You must provide price to create a ticket',
+        });
+        return;
+    }
+
+    for (friend of friends) {
+        try {
+            await friendData.getFriendById(friend);
+        } catch {
+            res.status(404).json({ error: `Friend ${friend} not found` });
+        }
+    }
+
+    try {
+        for (let i = 0; i < friends.length; i++) {
+            const newTicket = await ticketData.addTicket(
+                friends[i],
+                placeId,
+                orderedDate,
+                effectDate,
+                price,
+                url
+            );
+            friends[i] = newTicket;
+        }
+        res.status(200).json(friends);
     } catch (error) {
         res.status(500).json({ error: 'Add ticket failed' });
         console.log(error);

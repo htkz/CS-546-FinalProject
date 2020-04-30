@@ -96,6 +96,44 @@ router.get('/tickets/:id', async (req, res) => {
     }
 });
 
+router.get('/tickets/friends/:id', async (req, res) => {
+    const userId = req.params.id;
+    let user = null;
+
+    try {
+        user = await userData.getUserById(userId);
+    } catch (e) {
+        res.status(404).json({ error: `Not found user ${userId}` });
+        console.log(e);
+        return;
+    }
+
+    friends = user.friends;
+    for (friend of friends) {
+        try {
+            await friendData.getFriendById(friend);
+        } catch {
+            res.status(404).json({ error: `Not found friend ${friend}` });
+        }
+    }
+
+    try {
+        for (let i = 0; i < friends.length; i++) {
+            friends[i] = await friendData.getFriendById(friends[i]);
+            for (let m = 0; m < friends[i].tickets.length; m++) {
+                friends[i].tickets[m] = await ticketData.getTicketById(
+                    friends[i].tickets[m]
+                );
+            }
+        }
+        console.log(friends);
+        res.status(200).json(friends);
+    } catch (e) {
+        res.status(500).json('Get friends tickets from userId failed');
+        console.log(e);
+    }
+});
+
 router.get('/friends/:id', async (req, res) => {
     try {
         const user = await userData.getUserById(req.params.id);

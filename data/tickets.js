@@ -3,6 +3,7 @@ const tickets = mongoCollections.tickets;
 const users = require('./users');
 const places = require('./places');
 const counts = require('./counts');
+const friends = require('./friends');
 const ObjectId = require('mongodb').ObjectId;
 
 let exportedMethods = {
@@ -49,7 +50,7 @@ let exportedMethods = {
         return ticket;
     },
 
-    async addTicket(userId, placeId, orderedDate, effectDate, price) {
+    async addTicket(userId, placeId, orderedDate, effectDate, price, url) {
         const ticketCollection = await tickets();
 
         if ((await counts.findDataById('ticketNo')) === null) {
@@ -73,7 +74,11 @@ let exportedMethods = {
 
         const newID = insertInfo.insertedId;
 
-        await users.addTicketToUser(userId, newID);
+        if (url === '/user') {
+            await users.addTicketToUser(userId, newID);
+        } else if (url === '/friends') {
+            await friends.addTicketToFriend(userId, newID);
+        }
         // update ticket remain number for ticket
         await places.updateRemainNum(placeId);
 

@@ -32,6 +32,7 @@ let exportedMethods = {
             name: name,
             email: email,
             phoneNumber: phoneNumber,
+            tickets: [],
         };
 
         const insertInfo = await friendCollection.insertOne(newFriend);
@@ -66,6 +67,24 @@ let exportedMethods = {
         }
 
         return await this.getFriendById(id);
+    },
+
+    async addTicketToFriend(friendId, ticketId) {
+        const friendCollection = await friends();
+
+        friendId = await this.checkId(friendId);
+        ticketId = await this.checkId(ticketId);
+
+        const updatedInfo = await friendCollection.updateOne(
+            { _id: friendId },
+            { $addToSet: { tickets: ticketId.toString() } }
+        );
+
+        if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
+            throw 'addTicketToFriend Update failed';
+        }
+
+        return await this.getFriendById(friendId);
     },
 
     async checkId(id) {
