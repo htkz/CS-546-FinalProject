@@ -331,6 +331,22 @@ The idea of the application is to allow users to book tickets for tourism. The v
     1. 8-16 characters
     2. Should only contains lower case word, upper case word & number
 
+#### counts collection
+
+**Description**: The banks collection is used to implement auto increased.
+
+```json
+{
+    "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "sequenceValue": 1
+}
+```
+
+| Name          | Type   | Description         |
+| :------------ | :----- | :------------------ |
+| \_id          | string | The auto name.      |
+| sequenceValue | number | The sequence value. |
+
 #### Cookie
 
 The cookie just store user's username and \_id.
