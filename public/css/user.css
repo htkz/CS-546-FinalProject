@@ -18,6 +18,18 @@ header .username {
   color: white;
   margin-right: 10px; }
 
+#newFriendModal .row {
+  margin-bottom: 10px; }
+  #newFriendModal .row input {
+    width: 90%; }
+  #newFriendModal .row .aside {
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    #newFriendModal .row .aside h5 {
+      text-align: right; }
+
 main {
   min-height: 100vh;
   border: 1px solid #ccc;
@@ -83,8 +95,21 @@ main {
       color: red; }
   main .container #friends {
     display: none; }
-    main .container #friends #friendsList button {
-      margin: 4px 0; }
+    main .container #friends #friendsList {
+      display: flex;
+      flex-wrap: wrap; }
+      main .container #friends #friendsList .friendBtn {
+        border: 1px solid #6c757d;
+        border-radius: 3px;
+        margin-right: 4px;
+        margin-top: 4px;
+        color: #6c757d;
+        cursor: pointer;
+        padding: 0.2rem 0.75rem;
+        user-select: none; }
+      main .container #friends #friendsList .friendBtn.active {
+        color: white;
+        background-color: #6c757d; }
 
 footer {
   display: flex;

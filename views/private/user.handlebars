@@ -24,6 +24,48 @@
         </div>
     </header>
     <main>
+        <div class="modal fade" tabindex="-1" id="newFriendModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New Friend</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="friendNameInput row">
+                            <div class="col-5 aside">
+                                <h5>Friend Name</h5>
+                            </div>
+                            <div class="col-7">
+                                <input type="text" id="friendNameInput">
+                            </div>
+                        </div>
+                        <div class="friendNameInput row">
+                            <div class="col-5 aside">
+                                <h5>Email</h5>
+                            </div>
+                            <div class="col-7">
+                                <input type="email" id="friendEmailInput">
+                            </div>                            
+                        </div>
+                        <div class="friendNameInput row">
+                            <div class="col-5 aside">
+                                <h5>Phone Number</h5>
+                            </div>
+                            <div class="col-7">
+                                <input type="text" id="friendPhoneInput">
+                            </div>    
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="newFriendConfirmBtn">Confirm</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>  
+        </div>
         <div class="navbar">
             <ul>
                 <li id="personalInfoBtn" data-id="#infopage" class="active">Personal Information</li>
@@ -312,9 +354,7 @@
                             <div>Friends</div>
                         </div>
                         <div class="col-7" id="friendsList">
-                            <button class="btn btn-outline-primary">Friend1</button>
-                            <button class="btn btn-outline-primary">Friend2</button>
-                            <button class="btn btn-outline-primary">Friend3</button>
+                            {{!-- to be rendered by js --}}
                         </div>
                     </div>
                     <div class="row mt-4">
@@ -344,7 +384,10 @@
                     <div class="row mt-5">
                         <div class="col-3 ml-3"></div>
                         <div class="col-7">
-                            <button class="btn btn-primary" id="addFriendBtn" disabled type="submit">
+                            <button class="btn btn-primary" id="newFriendBtn" type="submit">
+                                Add Friend
+                            </button>
+                            <button class="btn btn-primary" id="saveFriendBtn" disabled type="submit">
                                 Save!
                             </button>
                         </div>

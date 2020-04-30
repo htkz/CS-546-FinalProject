@@ -409,18 +409,52 @@ const renderPayment = async (event) => {
 };
 
 //friends
-const friendsPreload = async () => {
+const renderFriends = async () => {
     const friendsData = await $.ajax({
-        url: `http://localhost:3000/users/friend/${userId}`,
+        url: `http://localhost:3000/users/friends/${userId}`,
     });
-
-    $('#friendName').val(friendsData[0].name);
-    $('#friendEmail').val(friendsData[0].email);
-    $('#friendPhone').val(friendsData[0].phoneNumber);
+    $('#friendsList').empty();
+    friendsData.forEach((friend) => {
+        $('#friendsList').append(
+            $(`<span class="friendBtn">${friend.name}</span>`)
+        );
+    });
 };
 
-const friendsSubmit = async (event) => {
-    event.preventDefault();
+const addFriend = async () => {
+    const name = $('#friendNameInput').val();
+    const email = $('#friendEmailInput').val();
+    const phone = $('#friendPhoneInput').val();
+    const reEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    if (!reEmail.test(email)) {
+        showSwal('error', 'The email format is not valid!');
+        return;
+    }
+    if (name.length === 0) {
+        showSwal('error', 'The name should not be empty!');
+        return;
+    }
+    if (!checkPhoneNumber(phone)) {
+        showSwal('error', 'The phone number format is not valid!');
+        return;
+    }
+    try {
+        await $.ajax({
+            url: '/friends',
+            type: 'post',
+            data: {
+                userId: userId,
+                name: name,
+                email: email,
+                phoneNumber: phone,
+            },
+        });
+        await renderFriends();
+        $('#newFriendModal').modal('hide');
+        await showSwal('success', 'Already add your friend');
+    } catch (error) {
+        showSwal('error', error);
+    }
 };
 
 //main
@@ -438,6 +472,13 @@ const bindEvents = async () => {
     $('#personalInfo').submit(infoSubmit);
     $('#changePasswordBtn').click(changePassword);
     $('#changePaymentBtn').click(changePayment);
+    // friend
+    $('#newFriendBtn').click((event) => {
+        event.preventDefault();
+        console.log('11');
+        $('#newFriendModal').modal('show');
+    });
+    $('#newFriendConfirmBtn').click(addFriend);
 };
 
 const init = async () => {
@@ -445,6 +486,7 @@ const init = async () => {
     renderTickets();
     renderUsername();
     renderPayment();
+    renderFriends();
     bindEvents();
 };
 
