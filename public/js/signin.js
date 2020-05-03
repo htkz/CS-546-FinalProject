@@ -33,7 +33,7 @@ $('#form-signin').submit(async (event) => {
     } catch (error) {
         await Swal.fire({
             icon: 'error',
-            title: error['responseJSON']['message'],
+            title: 'Either password or username is not correct!',
             showConfirmButton: false,
             timer: 1000,
             position: 'top',
