@@ -4,9 +4,86 @@
 
 **Mo Sun, Yuqi Wang, Zechen Feng, Xunzhi Li**
 
+-   [Ticket for Tourism](#ticket-for-tourism)
+    -   [Description](#description)
+    -   [Deployment](#deployment)
+        -   [Install](#install)
+        -   [Launch](#launch)
+        -   [Dependencies](#dependencies)
+        -   [DevDependencies](#devdependencies)
+    -   [Core features](#core-features)
+    -   [Extra features:](#extra-features-)
+    -   [Database](#database)
+        -   [Users Collection](#users-collection)
+            -   [Users API](#api)
+        -   [Ticket Collection](#ticket-collection)
+            -   [Tickets API](#api-1)
+        -   [Comments Collection](#comments-collection)
+            -   [Comments API](#api-2)
+        -   [Places Collection](#places-collection)
+            -   [Places API](#api-3)
+        -   [Friends collection](#friends-collection)
+            -   [API](#api-4)
+        -   [Banks collection](#banks-collection)
+            -   [Bank API](#api-5)
+        -   [Password Format](#password-format)
+        -   [Counts collection](#counts-collection)
+        -   [Cookie](#cookie)
+        -   [Http Status Code](#http-status-code)
+
 ### Description
 
 The idea of the application is to allow users to book tickets for tourism. The value of the application is apparent, many organizations like museum will need their own websites to sell tickets.
+
+### Deployment
+
+#### Install
+
+Execute the following commands to download the source code
+
+```
+$ git clone https://github.com/htkz/CS-546-FinalProject.git
+$ cd RSSHub
+```
+
+Execute the following commands to install dependencies
+
+Using **npm**
+
+```
+$ npm install
+```
+
+#### Launch
+
+Under RSSHub's root directory, execute the following commands to launch
+
+```
+$ npm start
+```
+
+Visit http://127.0.0.1:3000/, and enjoy it!
+
+#### Dependencies
+
+| name               | version |
+| :----------------- | :------ |
+| bcryptjs           | 2.4.3   |
+| cookie-parser      | 1.4.5   |
+| express            | 4.17.1  |
+| express-handlebars | 4.0.3   |
+| express-session    | 1.17.1  |
+| mongodb            | 3.5.4   |
+| nodemon            | 2.0.2   |
+| xss                | 1.0.6   |
+
+#### DevDependencies
+
+| name          | version |
+| :------------ | :------ |
+| node-sass     | 4.13.1  |
+| onchange      | 6.1.0   |
+| parallelshell | 3.0.1   |
 
 ### Core features
 
@@ -77,7 +154,7 @@ The idea of the application is to allow users to book tickets for tourism. The v
 | friends        | array  | The friends that the user added.                          |
 | bankCard       | String | The bankId.                                               |
 
-#### API
+##### API
 
 -   **get("/account/:id")**: use userId to get user from users collection.
 
