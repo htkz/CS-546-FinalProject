@@ -3,7 +3,8 @@ const router = express.Router();
 const data = require('../data');
 const bankData = data.bands;
 const utility = require('../utility');
-const checkParam = utility.checkBankNumber;
+const checkParam1 = utility.checkBankNumber;
+const checkParam2 = utility.checkInput;
 const xss = require('xss');
 
 router.get('/:id', async (req, res) => {
@@ -54,6 +55,12 @@ router.post('/', async (req, res) => {
         return;
     }
 
+    if (!checkParam2.checkZipCode(bankInfo.billingZipCode)) {
+        res.status(400).json({
+            error: 'Zipcode is not valid',
+        });
+    }
+
     if (!bankInfo.cardNumber) {
         res.status(400).json({
             error: 'You must provide cardNumber to create a bank',
@@ -62,7 +69,7 @@ router.post('/', async (req, res) => {
     }
 
     // check bank number
-    if (!checkParam.cardNumber(bankInfo.cardNumber)) {
+    if (!checkParam1.cardNumber(bankInfo.cardNumber)) {
         res.status(400).json({
             error: 'Bank number is not valid',
         });
@@ -140,11 +147,25 @@ router.put('/:id', async (req, res) => {
         return;
     }
 
+    // check zipcode
+    if (!checkParam2.checkZipCode(requestBody.billingZipCode)) {
+        res.status(400).json({
+            error: 'Zipcode is not valid',
+        });
+    }
+
     if (!requestBody.cardNumber) {
         res.status(400).json({
             error: 'You must provide cardNumber to update a bank information',
         });
         return;
+    }
+
+    // check cardNumber
+    if (!checkParam1.cardNumber(requestBody.cardNumber)) {
+        res.status(400).json({
+            error: 'Bank number is not valid',
+        });
     }
 
     if (!requestBody.expirationDate) {
