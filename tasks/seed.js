@@ -74,32 +74,28 @@ const main = async () => {
 
     // add user
     const user1 = await users.addUser(
-        'Group 13',
+        'Patric Hill',
         'group13@gmail.com',
         'Qq123456'
     );
 
     const user2 = await users.addUser(
-        'Group 1',
-        'group1@gmail.com',
+        'Zechen Feng',
+        'fengzechen@gmail.com',
         'Ww123456'
     );
 
-    const user3 = await users.addUser(
-        'Group 2',
-        'group2@gmail.com',
-        'Ee123456'
-    );
+    const user3 = await users.addUser('Mo Sun', 'sunmo@gmail.com', 'Ee123456');
 
     const user4 = await users.addUser(
-        'Group 3',
-        'group3@gmail.com',
+        'Yuqi Wang',
+        'wangyuqi@gmail.com',
         'Rr123456'
     );
 
     const user5 = await users.addUser(
-        'Group 4',
-        'group4@gmail.com',
+        'Xunzhi Li',
+        'lixunzhi@gmail.com',
         'Tt123456'
     );
 
@@ -108,20 +104,20 @@ const main = async () => {
     // add friend
     const friend1 = await friends.addFriend(
         user1['_id'].toString(),
-        'Patric Hill',
-        'patrichill@gmail.com',
+        'Yui Hatano',
+        'yuihatano@gmail.com',
         '5066086790'
     );
     const friend2 = await friends.addFriend(
         user1['_id'].toString(),
-        'Joe Stalin',
-        'joestalin@gmail.com',
+        'Angelina Jolie',
+        'angelinajolie@gmail.com',
         '5126532367'
     );
     const firend3 = await friends.addFriend(
         user1['_id'].toString(),
-        'John Smith',
-        'johnsmith@gmail.com',
+        'Anne Hathaway',
+        'annehathaway@gmail.com',
         '7276351197'
     );
 
