@@ -23,7 +23,7 @@
         -   [Places Collection](#places-collection)
             -   [Places API](#api-3)
         -   [Friends collection](#friends-collection)
-            -   [API](#api-4)
+            -   [Friends API](#api-4)
         -   [Banks collection](#banks-collection)
             -   [Bank API](#api-5)
         -   [Password Format](#password-format)
@@ -43,7 +43,7 @@ Execute the following commands to download the source code
 
 ```
 $ git clone https://github.com/htkz/CS-546-FinalProject.git
-$ cd RSSHub
+$ cd CS-546-FinalProject
 ```
 
 Execute the following commands to install dependencies
@@ -56,7 +56,7 @@ $ npm install
 
 #### Launch
 
-Under RSSHub's root directory, execute the following commands to launch
+Under CS-546-FinalProject's root directory, execute the following commands to launch
 
 ```
 $ npm start
