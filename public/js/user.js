@@ -484,6 +484,14 @@ const renderFriends = async () => {
             $('#friendPhone').val(friend.phoneNumber);
         });
     });
+    const addFriendBtn = $(
+        '<img class="addFriendIcon" id="addFriendIcon" src="pic/add.svg" alt="add-icon" width="32" height="32"/>'
+    );
+    addFriendBtn.click((event) => {
+        event.preventDefault();
+        $('#newFriendModal').modal('show');
+    });
+    $('#friendsList').append(addFriendBtn);
 };
 
 const addFriend = async () => {
@@ -556,11 +564,6 @@ const bindEvents = async () => {
     $('#changePasswordBtn').click(changePassword);
     $('#changePaymentBtn').click(changePayment);
     // friend
-    $('#newFriendBtn').click((event) => {
-        event.preventDefault();
-        console.log('11');
-        $('#newFriendModal').modal('show');
-    });
     $('#newFriendConfirmBtn').click(addFriend);
     $('#saveFriendBtn').click(saveFriend);
 };

@@ -110,6 +110,11 @@ main {
       main .container #friends #friendsList .friendBtn.active {
         color: white;
         background-color: #6c757d; }
+      main .container #friends #friendsList .addFriendIcon {
+        margin-top: 4px;
+        cursor: pointer; }
+        main .container #friends #friendsList .addFriendIcon:hover {
+          filter: invert(1); }
 
 footer {
   display: flex;

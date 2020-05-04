@@ -137,7 +137,7 @@ main {
                     border: 1px solid #6c757d;
                     border-radius: 3px;
                     margin-right: 4px;
-                    margin-top:4px;
+                    margin-top: 4px;
                     color: #6c757d;
                     cursor: pointer;
                     padding: 0.2rem 0.75rem;
@@ -146,6 +146,13 @@ main {
                 .friendBtn.active {
                     color: white;
                     background-color: #6c757d;
+                }
+                .addFriendIcon {
+                    margin-top: 4px;
+                    cursor: pointer;
+                    &:hover {
+                        filter: invert(1);
+                    }
                 }
             }
         }
