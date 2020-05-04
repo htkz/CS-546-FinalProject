@@ -51,6 +51,7 @@ let exportedMethods = {
     },
 
     async addTicket(userId, placeId, orderedDate, effectDate, price, url) {
+        console.log(url);
         const ticketCollection = await tickets();
 
         if ((await counts.findDataById('ticketNo')) === null) {
@@ -61,7 +62,7 @@ let exportedMethods = {
             userId: userId,
             placeId: placeId,
             ticketNo: (await counts.getNextSequenceValue('ticketNo'))
-                .sequence_value,
+                .sequenceValue,
             orderedDate: orderedDate,
             effectDate: effectDate,
             price: price,
@@ -74,10 +75,12 @@ let exportedMethods = {
 
         const newID = insertInfo.insertedId;
 
-        if (url === '/user') {
+        if (url === '/user/') {
             await users.addTicketToUser(userId, newID);
-        } else if (url === '/friends') {
+        } else if (url === '/friends/') {
             await friends.addTicketToFriend(userId, newID);
+        } else {
+            throw new Error('wrong url');
         }
         // update ticket remain number for ticket
         await places.updateRemainNum(placeId);

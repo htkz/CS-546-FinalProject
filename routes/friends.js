@@ -4,10 +4,11 @@ const data = require('../data');
 const friendData = data.friends;
 const utility = require('../utility');
 const checkParam = utility.checkInput;
+const xss = require('xss');
 
 router.get('/:id', async (req, res) => {
     try {
-        const friend = await friendData.getFriendById(req.params.id);
+        const friend = await friendData.getFriendById(xss(req.params.id));
         res.status(200).json(friend);
     } catch (e) {
         res.status(404).json({ error: 'Friend not found' });
@@ -55,10 +56,10 @@ router.post('/', async (req, res) => {
 
     try {
         const newFriend = await friendData.addFriend(
-            friendInfo.userId,
-            friendInfo.name,
-            friendInfo.email,
-            friendInfo.phoneNumber
+            xss(friendInfo.userId),
+            xss(friendInfo.name),
+            xss(friendInfo.email),
+            xss(friendInfo.phoneNumber)
         );
         res.status(200).json(newFriend);
     } catch (error) {
@@ -115,10 +116,10 @@ router.put('/:id', async (req, res) => {
 
     try {
         const updatedFriend = await friendData.updatedFriend(
-            req.params.id,
-            requestBody.name,
-            requestBody.email,
-            requestBody.phoneNumber
+            xss(req.params.id),
+            xss(requestBody.name),
+            xss(requestBody.email),
+            xss(requestBody.phoneNumber)
         );
         res.status(200).json(updatedFriend);
     } catch (error) {

@@ -15,7 +15,7 @@ let exportedMethods = {
         return sequenceDocument;
     },
 
-    async addData(id, sequence_value) {
+    async addData(id, sequenceValue) {
         const count = await counts();
 
         let newCount = {

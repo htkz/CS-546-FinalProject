@@ -4,10 +4,11 @@ const data = require('../data');
 const bankData = data.bands;
 const utility = require('../utility');
 const checkParam = utility.checkBankNumber;
+const xss = require('xss');
 
 router.get('/:id', async (req, res) => {
     try {
-        const bank = await bankData.getBankById(req.params.id);
+        const bank = await bankData.getBankById(xss(req.params.id));
         res.status(200).json(bank);
     } catch (e) {
         res.status(404).json({ error: 'bank not found' });
@@ -83,13 +84,13 @@ router.post('/', async (req, res) => {
 
     try {
         const newBank = await bankData.addBank(
-            bankInfo.user,
-            bankInfo.firstName,
-            bankInfo.lastName,
-            bankInfo.billingZipCode,
-            bankInfo.cardNumber,
-            bankInfo.expirationDate,
-            bankInfo.securityCode
+            xss(bankInfo.user),
+            xss(bankInfo.firstName),
+            xss(bankInfo.lastName),
+            xss(bankInfo.billingZipCode),
+            xss(bankInfo.cardNumber),
+            xss(bankInfo.expirationDate),
+            xss(bankInfo.securityCode)
         );
         res.status(200).json(newBank);
     } catch (error) {
@@ -169,13 +170,13 @@ router.put('/:id', async (req, res) => {
 
     try {
         const updatedBank = await bankData.updatedBank(
-            req.params.id,
-            requestBody.firstName,
-            requestBody.lastName,
-            requestBody.billingZipCode,
-            requestBody.cardNumber,
-            requestBody.expirationDate,
-            requestBody.securityCode
+            xss(req.params.id),
+            xss(requestBody.firstName),
+            xss(requestBody.lastName),
+            xss(requestBody.billingZipCode),
+            xss(requestBody.cardNumber),
+            xss(requestBody.expirationDate),
+            xss(requestBody.securityCode)
         );
         res.status(200).json(updatedBank);
     } catch (error) {

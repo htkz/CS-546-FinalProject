@@ -4,10 +4,11 @@ const data = require('../data');
 const placeData = data.places;
 const commentData = data.comments;
 const userData = data.users;
+const xss = require('xss');
 
 router.get('/:id', async (req, res) => {
     try {
-        const place = await placeData.getPlaceById(req.params.id);
+        const place = await placeData.getPlaceById(xss(req.params.id));
         res.status(200).json(place);
     } catch (e) {
         res.status(404).json({ error: 'Place not found' });
@@ -26,7 +27,7 @@ router.get('/', async (req, res) => {
 router.get('/placeComments/:id', async (req, res) => {
     try {
         const allComments = await commentData.getCommentByPlaceId(
-            req.params.id
+            xss(req.params.id)
         );
         for (let i = 0; i < allComments.length; i++) {
             const thisUser = await userData.getUserById(allComments[i].user);
@@ -114,15 +115,15 @@ router.post('/', async (req, res) => {
 
     try {
         const newPlace = await placeData.addPlace(
-            placeInfo.placeName,
-            placeInfo.description,
-            placeInfo.placeAddress,
-            placeInfo.placeZipCode,
-            placeInfo.placePrice,
-            placeInfo.category.split(','),
-            placeInfo.displayTime,
-            placeInfo.remainNum,
-            placeInfo.images.split(',')
+            xss(placeInfo.placeName),
+            xss(placeInfo.description),
+            xss(placeInfo.placeAddress),
+            xss(placeInfo.placeZipCode),
+            xss(placeInfo.placePrice),
+            xss(placeInfo.category.split(',')),
+            xss(placeInfo.displayTime),
+            xss(placeInfo.remainNum),
+            xss(placeInfo.images.split(','))
         );
         res.status(200).json(newPlace);
     } catch (error) {
@@ -170,63 +171,63 @@ router.patch('/:id', async (req, res) => {
             requestBody.newPlaceName &&
             requestBody.newPlaceName !== oldPlace.placeName
         ) {
-            updatedObject.placeName = requestBody.newPlaceName;
+            updatedObject.placeName = xss(requestBody.newPlaceName);
         }
 
         if (
             requestBody.newDescription &&
             requestBody.newDescription !== oldPlace.description
         ) {
-            updatedObject.description = requestBody.newDescription;
+            updatedObject.description = xss(requestBody.newDescription);
         }
 
         if (
             requestBody.newPlaceAddress &&
             requestBody.newPlaceAddress !== oldPlace.placeAddress
         ) {
-            updatedObject.placeAddress = requestBody.newPlaceAddress;
+            updatedObject.placeAddress = xss(requestBody.newPlaceAddress);
         }
 
         if (
             requestBody.newPlaceZipCode &&
             requestBody.newPlaceZipCode !== oldPlace.placeZipCode
         ) {
-            updatedObject.placeZipCode = requestBody.newPlaceZipCode;
+            updatedObject.placeZipCode = xss(requestBody.newPlaceZipCode);
         }
 
         if (
             requestBody.newPlacePrice &&
             requestBody.newPlacePrice !== oldPlace.placePrice
         ) {
-            updatedObject.placePrice = requestBody.newPlacePrice;
+            updatedObject.placePrice = xss(requestBody.newPlacePrice);
         }
 
         if (
             requestBody.newCategory &&
             requestBody.newCategory !== oldPlace.category
         ) {
-            updatedObject.category = requestBody.newCategory.split(',');
+            updatedObject.category = xss(requestBody.newCategory.split(','));
         }
 
         if (
             requestBody.newDisplayTime &&
             requestBody.newDisplayTime !== oldPlace.displayTime
         ) {
-            updatedObject.displayTime = requestBody.newDisplayTime;
+            updatedObject.displayTime = xss(requestBody.newDisplayTime);
         }
 
         if (
             requestBody.newRemainNum &&
             requestBody.newRemainNum !== oldPlace.remainNum
         ) {
-            updatedObject.remainNum = requestBody.newRemainNum;
+            updatedObject.remainNum = xss(requestBody.newRemainNum);
         }
 
         if (
             requestBody.newImages &&
             requestBody.newImages !== oldPlace.images
         ) {
-            updatedObject.images = requestBody.newImages.split(',');
+            updatedObject.images = xss(requestBody.newImages.split(','));
         }
     } catch (error) {
         res.status(404).json({ error: 'Place not found' });
@@ -239,7 +240,7 @@ router.patch('/:id', async (req, res) => {
             return;
         }
         const updatedPlace = await placeData.updatedPlace(
-            req.params.id,
+            xss(req.params.id),
             updatedObject
         );
         res.status(200).json(updatedPlace);
@@ -250,7 +251,7 @@ router.patch('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-    let id = req.params.id;
+    let id = xss(req.params.id);
     if (!id) {
         throw 'You must specify an ID to delete';
     }

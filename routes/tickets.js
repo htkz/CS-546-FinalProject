@@ -3,10 +3,11 @@ const router = express.Router();
 const data = require('../data');
 const ticketData = data.tickets;
 const friendData = data.friends;
+const xss = require('xss');
 
 router.get('/:id', async (req, res) => {
     try {
-        const ticket = await ticketData.getTicketById(req.params.id);
+        const ticket = await ticketData.getTicketById(xss(req.params.id));
         res.status(200).json(ticket);
     } catch (e) {
         res.status(404).json({ error: 'Ticket not found' });
@@ -72,12 +73,12 @@ router.post('/user', async (req, res) => {
 
     try {
         const newTicket = await ticketData.addTicket(
-            ticketInfo.userId,
-            ticketInfo.placeId,
-            ticketInfo.orderedDate,
-            ticketInfo.effectDate,
-            ticketInfo.price,
-            url
+            xss(ticketInfo.userId),
+            xss(ticketInfo.placeId),
+            xss(ticketInfo.orderedDate),
+            xss(ticketInfo.effectDate),
+            xss(ticketInfo.price),
+            xss(url)
         );
         res.status(200).json(newTicket);
     } catch (error) {
@@ -150,12 +151,12 @@ router.post('/friends', async (req, res) => {
     try {
         for (let i = 0; i < friends.length; i++) {
             const newTicket = await ticketData.addTicket(
-                friends[i],
-                placeId,
-                orderedDate,
-                effectDate,
-                price,
-                url
+                xss(friends[i]),
+                xss(placeId),
+                xss(orderedDate),
+                xss(effectDate),
+                xss(price),
+                xss(url)
             );
             friends[i] = newTicket;
         }
@@ -179,7 +180,7 @@ router.put('/:id', async (req, res) => {
     try {
         const updatedTicket = await ticketData.updateTicket(
             req.params.id,
-            requestBody.effectDate
+            xss(requestBody.effectDate)
         );
         res.status(200).json(updatedTicket);
     } catch (error) {
@@ -189,7 +190,7 @@ router.put('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-    let id = req.params.id;
+    let id = xss(req.params.id);
     if (!id) {
         throw 'You must specify an ID to delete';
     }

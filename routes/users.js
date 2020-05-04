@@ -7,10 +7,11 @@ const ticketData = data.tickets;
 const friendData = data.friends;
 const utility = require('../utility');
 const checkParam = utility.checkInput;
+const xss = require('xss');
 
 router.get('/account/:id', async (req, res) => {
     try {
-        const user = await userData.getUserById(req.params.id);
+        const user = await userData.getUserById(xss(req.params.id));
         res.status(200).json(user);
     } catch (e) {
         res.status(404).json({ error: 'User not found' });
@@ -20,7 +21,7 @@ router.get('/account/:id', async (req, res) => {
 router.post('/account/username', async (req, res) => {
     let username = req.body.userName;
     try {
-        const user = await userData.getUserByUserName(username);
+        const user = await userData.getUserByUserName(xss(username));
         res.status(200).json(user);
     } catch (e) {
         res.status(404).json({ error: 'User not found' });
@@ -30,7 +31,7 @@ router.post('/account/username', async (req, res) => {
 router.post('/account/email', async (req, res) => {
     let email = req.body.email;
     try {
-        const user = await userData.getUserByUserName(email);
+        const user = await userData.getUserByUserName(xss(email));
         res.status(200).json(user);
     } catch (e) {
         res.status(404).json({ error: 'User not found' });
@@ -58,17 +59,17 @@ router.post('/account/login', async (req, res) => {
     try {
         const user = await userData.getUserByEmail(email);
         let comparePasswords = await bcrypt.compare(
-            password,
-            user.hashedPassword
+            xss(password),
+            xss(user.hashedPassword)
         );
         if (!comparePasswords) {
             res.status(401).json({ message: 'Password incorrect' });
             return;
         }
         // cookie
-        let sessionUser = { _id: user._id, userName: user.userName };
+        let sessionUser = { _id: user._id, userName: xss(user.userName) };
         res.cookie('user', JSON.stringify(sessionUser));
-        req.session.user = { _id: user._id, userName: user.userName };
+        req.session.user = { _id: user._id, userName: xss(user.userName) };
         res.status(200).json(user);
     } catch (e) {
         res.status(404).json({ message: 'User not found' });
@@ -86,7 +87,7 @@ router.get('/', async (req, res) => {
 
 router.get('/tickets/:id', async (req, res) => {
     try {
-        const userId = req.params.id;
+        const userId = xss(req.params.id);
         const tickets = await ticketData.getTicketsByUserId(userId);
         res.status(200).json(tickets);
     } catch (error) {
@@ -97,7 +98,7 @@ router.get('/tickets/:id', async (req, res) => {
 });
 
 router.get('/tickets/friends/:id', async (req, res) => {
-    const userId = req.params.id;
+    const userId = xss(req.params.id);
     let user = null;
 
     try {
@@ -136,7 +137,7 @@ router.get('/tickets/friends/:id', async (req, res) => {
 
 router.get('/friends/:id', async (req, res) => {
     try {
-        const user = await userData.getUserById(req.params.id);
+        const user = await userData.getUserById(xss(req.params.id));
         if (user.friends.length === 0) {
             res.status(200).json(user.friends);
             return;
@@ -233,9 +234,9 @@ router.post('/account/register', async (req, res) => {
 
     try {
         const newUser = await userData.addUser(
-            username,
-            email,
-            unhashedPassword
+            xss(username),
+            xss(email),
+            xss(unhashedPassword)
         );
         res.status(200).json(newUser);
     } catch (e) {
@@ -356,13 +357,13 @@ router.put('/account/update/:id', async (req, res) => {
 
     try {
         const updatedUser = await userData.updatedUser(
-            req.params.id,
-            userInfo.userName.toLowerCase(),
-            userInfo.email.toLowerCase(),
-            userInfo.phoneNumber,
-            userInfo.address,
-            userInfo.zipCode,
-            userInfo.bio
+            xss(req.params.id),
+            xss(userInfo.userName.toLowerCase()),
+            xss(userInfo.email.toLowerCase()),
+            xss(userInfo.phoneNumber),
+            xss(userInfo.address),
+            xss(userInfo.zipCode),
+            xss(userInfo.bio)
         );
         res.status(200).json(updatedUser);
     } catch (error) {
@@ -421,9 +422,9 @@ router.put('/account/password/:id', async (req, res) => {
 
     try {
         const updatePassword = await userData.updatePassword(
-            req.params.id,
-            passwordInfo.oldPassword,
-            passwordInfo.newPassword
+            xss(req.params.id),
+            xss(passwordInfo.oldPassword),
+            xss(passwordInfo.newPassword)
         );
         res.status(200).json(updatePassword);
     } catch (error) {
@@ -444,7 +445,7 @@ router.delete('/:id', async (req, res) => {
     }
 
     try {
-        const deleteUser = await userData.removeUser(req.params.id);
+        const deleteUser = await userData.removeUser(xss(req.params.id));
         res.status(200).json(deleteUser);
     } catch (error) {
         res.status(500).json({ error: 'Delete user failed' });

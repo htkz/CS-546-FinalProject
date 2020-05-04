@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const commentData = data.comments;
+const xss = require('xss');
 
 router.get('/:id', async (req, res) => {
     try {
@@ -54,9 +55,9 @@ router.post('/', async (req, res) => {
 
     try {
         const newComment = await commentData.addComment(
-            commentInfo.user,
-            commentInfo.placeId,
-            commentInfo.comment
+            xss(commentInfo.user),
+            xss(commentInfo.placeId),
+            xss(commentInfo.comment)
         );
         res.status(200).json(newComment);
     } catch (error) {
@@ -99,9 +100,9 @@ router.put('/:id', async (req, res) => {
 
     try {
         const updatedComment = await commentData.updateComment(
-            req.params.id,
-            requestBody.votedCount,
-            requestBody.votedUserId
+            xss(req.params.id),
+            xss(requestBody.votedCount),
+            xss(requestBody.votedUserId)
         );
         res.status(200).json(updatedComment);
     } catch (error) {
@@ -111,7 +112,7 @@ router.put('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-    let id = req.params.id;
+    let id = xss(req.params.id);
     if (!id) {
         throw 'You must specify an ID to delete';
     }
