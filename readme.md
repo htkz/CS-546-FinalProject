@@ -198,7 +198,7 @@ Visit http://127.0.0.1:3000/, and enjoy it!
     "_id": "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710",
     "userId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "placeId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "ticketNo": 1,
+    "ticketNo": "994920342",
     "orderedDate": "2020-03-04 15:02:00",
     "effectDate": "2020-05-18",
     "price": "25.00"
@@ -210,10 +210,15 @@ Visit http://127.0.0.1:3000/, and enjoy it!
 | \_id        | string | A globally unique identifier to represent the ticket.          |
 | userId      | string | A globally unique identifier to represent who owns the ticket. |
 | placeId     | string | The place the ticket takes effect on.                          |
-| ticketNo    | number | A number printed on the ticket.                                |
+| ticketNo    | string | A number printed on the ticket.                                |
 | orderedDate | date   | The date the user bought the ticket.                           |
 | effectDate  | date   | The date ticket takes effect.                                  |
 | price       | string | The prices of the ticket.                                      |
+
+**ticketNo**: "9949 2034 2"  
+_First part(9949)_ is the place identifier which is last two number place id's ascii.  
+_Second part(2034)_ is date.  
+_Last part(2)_ is auto increment number.
 
 ##### API
 

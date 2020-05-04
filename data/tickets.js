@@ -5,6 +5,8 @@ const places = require('./places');
 const counts = require('./counts');
 const friends = require('./friends');
 const ObjectId = require('mongodb').ObjectId;
+const utility = require('../utility');
+const generateTicketNo = utility.generateTicketNum;
 
 let exportedMethods = {
     async getAllTictets() {
@@ -57,11 +59,15 @@ let exportedMethods = {
             await counts.addData('ticketNo', 0);
         }
 
+        const index = (await counts.getNextSequenceValue('ticketNo'))
+            .sequenceValue;
+
+        ticketNo = generateTicketNo.ticketNo(index, placeId, orderedDate);
+
         let newTicket = {
             userId: userId,
             placeId: placeId,
-            ticketNo: (await counts.getNextSequenceValue('ticketNo'))
-                .sequenceValue,
+            ticketNo: ticketNo,
             orderedDate: orderedDate,
             effectDate: effectDate,
             price: price,
