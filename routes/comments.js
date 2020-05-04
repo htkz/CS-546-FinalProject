@@ -6,7 +6,7 @@ const xss = require('xss');
 
 router.get('/:id', async (req, res) => {
     try {
-        const comment = await commentData.getCommentById(req.params.id);
+        const comment = await commentData.getCommentById(xss(req.params.id));
         res.status(200).json(comment);
     } catch (e) {
         res.status(404).json({ error: 'Comment not found!' });
