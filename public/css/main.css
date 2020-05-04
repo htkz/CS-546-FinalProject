@@ -87,6 +87,9 @@ header .username {
     align-items: center; }
     #detailModal .wrapper .comment .inputContainer button {
       margin-left: 4px; }
+    #detailModal .wrapper .comment .inputContainer input {
+      width: 100%;
+      box-shadow: none !important; }
 
 main {
   min-height: 100vh; }

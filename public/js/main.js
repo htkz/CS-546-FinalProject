@@ -95,18 +95,18 @@ const renderDetail = async (placeId) => {
                             </div>
                         </div>
                         <div class="wrapper col-md-7">
-                            <div class="comment">
+                            <form class="comment" id="commentForm">
                                 <div class="commentContainer">
                                     <h5>Comments</h5>
                                     <ul id="commentList"></ul>
                                 </div>
                                 <div class="inputContainer">
-                                    <textarea name="commentInput" id="commentInput" cols="70" rows="1" placeholder="Add a comment"></textarea>
-                                    <button class="btn btn-outline-primary btn-sm" id="postBtn">
+                                    <input class="form-control" type="text" name="commentInput" id="commentInput" placeholder="Add a comment"></input>
+                                    <button class="btn btn-outline-primary" id="postBtn" type="submit">
                                         Post
                                     </button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -134,7 +134,8 @@ const renderDetail = async (placeId) => {
             </li>`);
         $commentList.append($comment);
     }
-    $('#postBtn').click(postComment);
+    // $('#postBtn').click(postComment);
+    $('#commentForm').submit(postComment);
 
     if (place.remainNum === '0' || place.remainNum === 0) {
         $('#buyBtn').click(() => {
@@ -257,10 +258,10 @@ const refreshTicket = async (placeId) => {
     renderPlaces(store['places']);
 };
 
-const postComment = async () => {
+const postComment = async (event) => {
+    event.preventDefault();
     const comment = $('#commentInput').val();
     if (comment.length === 0) {
-        alert('Please input some text!');
         return;
     }
     const placeId = $('#place').attr('data-id');
@@ -274,6 +275,7 @@ const postComment = async () => {
             comment: comment,
         },
     });
+    $('#commentInput').val('');
     await refreshPlaces();
     refreshComment(placeId);
 };
