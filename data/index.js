@@ -3,7 +3,7 @@ const ticketData = require('./tickets');
 const commentData = require('./comments');
 const placeData = require('./places');
 const countData = require('./counts');
-const bandData = require('./banks');
+const bankData = require('./banks');
 const friendData = require('./friends');
 
 module.exports = {
@@ -12,6 +12,6 @@ module.exports = {
     comments: commentData,
     places: placeData,
     counts: countData,
-    bands: bandData,
+    banks: bankData,
     friends: friendData,
 };
