@@ -469,7 +469,7 @@ const getFriendById = (friendId) => {
 const renderFriends = async () => {
     await fetchFriends();
     $('#friendsList').empty();
-    friendsData.forEach((friend) => {
+    friendsData.forEach((friend, index) => {
         const $friend = $(
             `<span class="friendBtn" data-id="${friend['_id']}">${friend.name}</span>`
         );
@@ -483,6 +483,10 @@ const renderFriends = async () => {
             $('#friendEmail').val(friend.email);
             $('#friendPhone').val(friend.phoneNumber);
         });
+        if (index === 0) {
+            $friend.addClass('active');
+            $friend.click();
+        }
     });
     const addFriendBtn = $(
         '<img class="addFriendIcon" id="addFriendIcon" src="pic/add.svg" alt="add-icon" width="32" height="32"/>'
