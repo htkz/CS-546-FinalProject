@@ -143,7 +143,7 @@ router.post('/friends', async (req, res) => {
     for (friend of friends) {
         try {
             await friendData.getFriendById(friend);
-        } catch {
+        } catch (error) {
             res.status(404).json({ error: `Friend ${friend} not found` });
         }
     }
