@@ -3,6 +3,7 @@ const data = require('../data/');
 const places = data.places;
 const users = data.users;
 const friends = data.friends;
+const banks = data.banks;
 
 const main = async () => {
     const db = await dbConnection();
