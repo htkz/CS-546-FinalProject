@@ -59,6 +59,7 @@ $ npm install
 Under CS-546-FinalProject's root directory, execute the following commands to launch
 
 ```
+$ npm run seed
 $ npm start
 ```
 
