@@ -31,7 +31,8 @@
         "express-handlebars": "^4.0.3",
         "express-session": "^1.17.1",
         "mongodb": "^3.5.4",
-        "nodemon": "^2.0.2"
+        "nodemon": "^2.0.2",
+        "xss": "^1.0.6"
     },
     "devDependencies": {
         "node-sass": "^4.13.1",
