@@ -51,7 +51,6 @@ let exportedMethods = {
     },
 
     async addTicket(userId, placeId, orderedDate, effectDate, price, url) {
-        console.log(url);
         const ticketCollection = await tickets();
 
         if ((await counts.findDataById('ticketNo')) === null) {
