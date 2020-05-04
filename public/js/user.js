@@ -388,7 +388,7 @@ const changePayment = async (event) => {
         });
         await showSwal('success', 'Saved your payment infomation!');
     } catch (error) {
-        await showSwal('error', error);
+        await showSwal('error', error.error);
     }
 };
 

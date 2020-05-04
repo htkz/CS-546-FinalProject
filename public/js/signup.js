@@ -12,7 +12,7 @@ $('#form-signup').submit(async (event) => {
     if (!eCheck || !nCheck || !pCheck) {
         Swal.fire({
             icon: 'error',
-            title: 'Opps! Something went wrong!',
+            title: 'The format is not correct!',
             showConfirmButton: false,
             timer: 1500,
         });
@@ -40,7 +40,7 @@ $('#form-signup').submit(async (event) => {
     } catch (error) {
         Swal.fire({
             icon: 'error',
-            title: 'Opps! Something went wrong!',
+            title: 'The format is not correct!',
             showConfirmButton: false,
             timer: 1500,
         });

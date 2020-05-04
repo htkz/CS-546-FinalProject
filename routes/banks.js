@@ -62,7 +62,7 @@ router.post('/', async (req, res) => {
     }
 
     // check bank number
-    if (!checkParam.checkBankNumber(bankInfo.cardNumber)) {
+    if (!checkParam.cardNumber(bankInfo.cardNumber)) {
         res.status(400).json({
             error: 'Bank number is not valid',
         });
