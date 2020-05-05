@@ -91,6 +91,9 @@ main {
                 margin: 8px;
                 display: flex;
                 .imgContainer {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
                     margin-right: 40px;
                     img {
                         width: 160px;
@@ -102,6 +105,9 @@ main {
                     h4 {
                         padding: 0;
                         margin: 0;
+                    }
+                    button {
+                        margin-right: 4px;
                     }
                 }
             }

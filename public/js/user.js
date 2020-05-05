@@ -283,7 +283,7 @@ const renderTickets = async () => {
     });
     $('#tickets').empty();
     for (ticket of tickets) {
-        const $ticket = `
+        const $ticket = $(`
             <div class="ticket">
                 <div class="imgContainer">
                     <img src="./pic/${ticket.images[0]}" alt="${ticket.images[0]}">
@@ -295,9 +295,54 @@ const renderTickets = async () => {
                     <p>Price: ${ticket.price}</p>
                 </div>
             </div>
-        `;
+        `);
+        const cancelBtn = $(
+            `<button class="btn btn-sm btn-outline-info" class="cancelBtn" data-id="${ticket['_id']}">Cancel</button>`
+        );
+        const rescheduleBtn = $(
+            `<button class="btn btn-sm btn-outline-info" class="rescheduleBtn" data-id="${ticket['_id']}">Reschedule</button>`
+        );
+        cancelBtn.click(async (event) => {
+            event.preventDefault();
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: 'Are you sure to cancel the ticket?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, cancel it!',
+                cancelButtonText: 'No',
+            });
+            if (result.value) {
+                const id = $(event.currentTarget).data('id');
+                try {
+                    await $.ajax({
+                        url: `/tickets/${id}`,
+                        type: 'delete',
+                    });
+                    await renderTickets();
+                    await showSwal('success', 'Already canceled the ticket!');
+                } catch (error) {
+                    await showSwal(
+                        'error',
+                        'Sorry, can not cancel the ticket, please try again.'
+                    );
+                }
+            }
+        });
+        $($ticket.find('.ticketInfo')[0])
+            .append(cancelBtn)
+            .append(rescheduleBtn);
         $('#tickets').append($ticket);
     }
+};
+
+const cancelTicket = async (event) => {
+    event.preventDefault();
+    console.log(1);
+    const id = $(event.currentTarget).data('id');
+    console.log(id);
 };
 
 // payment
