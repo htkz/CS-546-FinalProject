@@ -24,7 +24,9 @@ router.post('/account/username', async (req, res) => {
         const user = await userData.getUserByUserName(xss(username));
         res.status(200).json(user);
     } catch (error) {
-        res.status(404).json({ error: error });
+        res.status(404).json({
+            error: `No user with username: ${xss(username)}`,
+        });
     }
 });
 
@@ -34,7 +36,7 @@ router.post('/account/email', async (req, res) => {
         const user = await userData.getUserByUserName(xss(email));
         res.status(200).json(user);
     } catch (error) {
-        res.status(404).json({ error: error });
+        res.status(404).json({ error: `No user with email: ${xss(email)}` });
     }
 });
 
