@@ -27,7 +27,7 @@ header .username {
     display: flex;
     flex-direction: column;
     justify-content: center; }
-    #newFriendModal .row .aside h5 {
+    #newFriendModal .row .aside label {
       text-align: right; }
 
 main {
@@ -58,8 +58,9 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center; }
-    main .container .aside div {
-      text-align: right; }
+    main .container .aside label {
+      text-align: right;
+      margin-bottom: 0; }
   main .container #tickets {
     display: none;
     max-height: 80vh;
