@@ -168,22 +168,33 @@ let exportedMethods = {
         return await this.getPlaceById(placeId);
     },
 
-    async updateRemainNum(placeId) {
+    async updateRemainNum(placeId, operate) {
         const placeCollection = await places();
 
         placeId = await this.checkId(placeId);
 
         place = await this.getPlaceById(placeId);
         let oldRemainNum = place.remainNum;
-        if (oldRemainNum == 0) {
-            throw `No ticket for this place`;
+        let newRemainNum = '';
+        if (operate == 'buy') {
+            if (oldRemainNum == 0) {
+                throw `No ticket for this place`;
+            }
+            newRemainNum = oldRemainNum - 1;
+        } else if (operate == 'delete') {
+            newRemainNum = oldRemainNum + 1;
+        } else {
+            throw new Error('No this operator');
         }
-        let newRemainNum = oldRemainNum - 1;
 
         const updateInfo = await placeCollection.updateOne(
             { _id: placeId },
             { $set: { remainNum: newRemainNum } }
         );
+
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw 'updateRemainNum failed';
+        }
 
         return await this.getPlaceById(placeId);
     },

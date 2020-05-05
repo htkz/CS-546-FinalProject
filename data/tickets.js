@@ -88,7 +88,7 @@ let exportedMethods = {
             throw new Error('wrong url');
         }
         // update ticket remain number for ticket
-        await places.updateRemainNum(placeId);
+        await places.updateRemainNum(placeId, 'buy');
 
         return await this.getTicketById(newID);
     },
@@ -111,6 +111,8 @@ let exportedMethods = {
         }
 
         await users.removeTicketFromUser(ticket.userId, id);
+
+        await places.updateRemainNum(ticket.placeId, 'delete');
 
         return true;
     },
