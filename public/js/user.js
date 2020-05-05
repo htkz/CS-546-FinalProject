@@ -302,35 +302,15 @@ const renderTickets = async () => {
         const rescheduleBtn = $(
             `<button class="btn btn-sm btn-outline-info" class="rescheduleBtn" data-id="${ticket['_id']}">Reschedule</button>`
         );
-        cancelBtn.click(async (event) => {
-            event.preventDefault();
-            const result = await Swal.fire({
-                title: 'Are you sure?',
-                text: 'Are you sure to cancel the ticket?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, cancel it!',
-                cancelButtonText: 'No',
-            });
-            if (result.value) {
-                const id = $(event.currentTarget).data('id');
-                try {
-                    await $.ajax({
-                        url: `/tickets/${id}`,
-                        type: 'delete',
-                    });
-                    await renderTickets();
-                    await showSwal('success', 'Already canceled the ticket!');
-                } catch (error) {
-                    await showSwal(
-                        'error',
-                        'Sorry, can not cancel the ticket, please try again.'
-                    );
-                }
-            }
+        cancelBtn.click(cancelTicket);
+        rescheduleBtn.click((event) => {
+            $('#rescheduleModal').data(
+                'id',
+                $(event.currentTarget).attr('data-id')
+            );
+            $('#rescheduleModal').modal('show');
         });
+        $('#rescheduleConfirmButton').click(rescheduleTicket);
         $($ticket.find('.ticketInfo')[0])
             .append(cancelBtn)
             .append(rescheduleBtn);
@@ -340,9 +320,64 @@ const renderTickets = async () => {
 
 const cancelTicket = async (event) => {
     event.preventDefault();
-    console.log(1);
-    const id = $(event.currentTarget).data('id');
-    console.log(id);
+    const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: 'Are you sure to cancel the ticket?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, cancel it!',
+        cancelButtonText: 'No',
+    });
+    if (result.value) {
+        const id = $(event.currentTarget).data('id');
+        try {
+            await $.ajax({
+                url: `/tickets/${id}`,
+                type: 'delete',
+            });
+            await renderTickets();
+            await showSwal('success', 'Already canceled the ticket!');
+        } catch (error) {
+            await showSwal(
+                'error',
+                'Sorry, can not cancel the ticket, please try again.'
+            );
+        }
+    }
+};
+
+const rescheduleTicket = async (event) => {
+    event.preventDefault();
+
+    const date = $('#rescheduleInput').val();
+    if (date.length === 0) {
+        await Swal.fire({
+            icon: 'error',
+            title: 'Please select a time first!',
+        });
+        return;
+    }
+    const id = $('#rescheduleModal').data('id');
+
+    try {
+        await $.ajax({
+            url: `/tickets/${id}`,
+            type: 'put',
+            data: {
+                effectDate: date,
+            },
+        });
+        await renderTickets();
+        $('#rescheduleModal').modal('hide');
+        await showSwal('success', 'Already updated date!');
+    } catch (error) {
+        await showSwal(
+            'error',
+            'Sorry, can not reschedule the ticket, please try again.'
+        );
+    }
 };
 
 // payment
