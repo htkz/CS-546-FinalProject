@@ -189,7 +189,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
     let id = xss(req.params.id);
     if (!id) {
         throw 'You must specify an ID to delete';
@@ -198,7 +198,7 @@ router.delete('/:id', async (req, res) => {
     try {
         await ticketData.getTicketById(id);
     } catch (error) {
-        res.status(404).json({ error: 'Ticket not found' });
+        res.status(404).json({ error: error });
     }
 
     try {

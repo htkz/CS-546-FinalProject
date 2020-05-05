@@ -13,8 +13,8 @@ router.get('/account/:id', async (req, res) => {
     try {
         const user = await userData.getUserById(xss(req.params.id));
         res.status(200).json(user);
-    } catch (e) {
-        res.status(404).json({ error: 'User not found' });
+    } catch (error) {
+        res.status(404).json({ error: error });
     }
 });
 
@@ -23,8 +23,8 @@ router.post('/account/username', async (req, res) => {
     try {
         const user = await userData.getUserByUserName(xss(username));
         res.status(200).json(user);
-    } catch (e) {
-        res.status(404).json({ error: 'User not found' });
+    } catch (error) {
+        res.status(404).json({ error: error });
     }
 });
 
@@ -33,8 +33,8 @@ router.post('/account/email', async (req, res) => {
     try {
         const user = await userData.getUserByUserName(xss(email));
         res.status(200).json(user);
-    } catch (e) {
-        res.status(404).json({ error: 'User not found' });
+    } catch (error) {
+        res.status(404).json({ error: error });
     }
 });
 
@@ -44,7 +44,7 @@ router.post('/account/login', async (req, res) => {
 
     if (!email) {
         res.status(400).json({
-            error: 'No user name provided',
+            error: 'No email provided',
         });
         return;
     }
@@ -71,8 +71,8 @@ router.post('/account/login', async (req, res) => {
         res.cookie('user', JSON.stringify(sessionUser));
         req.session.user = { _id: user._id, userName: xss(user.userName) };
         res.status(200).json(user);
-    } catch (e) {
-        res.status(404).json({ message: 'User not found' });
+    } catch (error) {
+        res.status(404).json({ error: error });
     }
 });
 
@@ -80,8 +80,8 @@ router.get('/', async (req, res) => {
     try {
         const userList = await userData.getAllUsers();
         res.status(200).json(userList);
-    } catch (e) {
-        res.status(500).json({ error: 'No users in database' });
+    } catch (error) {
+        res.status(500).json({ error: error });
     }
 });
 
@@ -91,9 +91,7 @@ router.get('/tickets/:id', async (req, res) => {
         const tickets = await ticketData.getTicketsByUserId(userId);
         res.status(200).json(tickets);
     } catch (error) {
-        res.status(400).json({
-            error: `Error with tickets of user ${req.params.id}`,
-        });
+        res.status(404).json({ error: error });
     }
 });
 
@@ -103,10 +101,8 @@ router.get('/tickets/friends/:id', async (req, res) => {
 
     try {
         user = await userData.getUserById(userId);
-    } catch (e) {
-        res.status(404).json({ error: `Not found user ${userId}` });
-        console.log(e);
-        return;
+    } catch (error) {
+        res.status(404).json({ error: error });
     }
 
     friends = user.friends;
@@ -114,7 +110,7 @@ router.get('/tickets/friends/:id', async (req, res) => {
         try {
             await friendData.getFriendById(friend);
         } catch (error) {
-            res.status(404).json({ error: `Not found friend ${friend}` });
+            res.status(404).json({ error: error });
         }
     }
 
@@ -129,9 +125,8 @@ router.get('/tickets/friends/:id', async (req, res) => {
         }
         console.log(friends);
         res.status(200).json(friends);
-    } catch (e) {
-        res.status(500).json('Get friends tickets from userId failed');
-        console.log(e);
+    } catch (error) {
+        res.status(500).json({ error: error });
     }
 });
 
@@ -148,14 +143,13 @@ router.get('/friends/:id', async (req, res) => {
                         user.friends[i]
                     );
                 } catch (error) {
-                    res.status(404).json({ error: 'Friend not found' });
+                    res.status(404).json({ error: error });
                 }
             }
             res.status(200).json(user.friends);
         }
     } catch (error) {
-        res.status(500).json({ error: 'User not found' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 
@@ -239,9 +233,8 @@ router.post('/account/register', async (req, res) => {
             xss(unhashedPassword)
         );
         res.status(200).json(newUser);
-    } catch (e) {
-        res.status(500).json({ error: 'Add user failed' });
-        console.log(e);
+    } catch (error) {
+        res.status(500).json({ error: error });
     }
 });
 
@@ -367,8 +360,7 @@ router.put('/account/update/:id', async (req, res) => {
         );
         res.status(200).json(updatedUser);
     } catch (error) {
-        res.status(500).json({ error: 'Update user information failed' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 
@@ -417,7 +409,7 @@ router.put('/account/password/:id', async (req, res) => {
     try {
         await userData.getUserById(req.params.id);
     } catch (error) {
-        res.status(404).json('User not found');
+        res.status(404).json({ error: error });
     }
 
     try {
@@ -428,7 +420,7 @@ router.put('/account/password/:id', async (req, res) => {
         );
         res.status(200).json(updatePassword);
     } catch (error) {
-        res.status(500).json({ error: 'Update password failed' });
+        res.status(500).json({ error: error });
         console.log(error);
     }
 });
@@ -441,14 +433,16 @@ router.delete('/:id', async (req, res) => {
     try {
         await userData.getUserById(req.params.id);
     } catch (error) {
-        res.status(404).json({ error: 'User not found' });
+        console.log(error);
+        res.status(404).json({ error: error });
+        return;
     }
 
     try {
         const deleteUser = await userData.removeUser(xss(req.params.id));
         res.status(200).json(deleteUser);
     } catch (error) {
-        res.status(500).json({ error: 'Delete user failed' });
+        res.status(500).json({ error: error });
     }
 });
 
@@ -456,7 +450,7 @@ router.get('/logout', async (req, res) => {
     try {
         req.session.user = undefined;
         res.status(200).json({ message: 'Logout successful!' });
-    } catch (e) {
+    } catch (error) {
         res.status(500).json({ error: 'Logout failed' });
     }
 });

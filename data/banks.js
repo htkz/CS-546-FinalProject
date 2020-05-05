@@ -3,7 +3,6 @@ const banks = mongoCollections.banks;
 const users = require('./users');
 const ObjectId = require('mongodb').ObjectId;
 
-
 /*
     firstName: String
     lastName: String
@@ -95,12 +94,14 @@ let exportedMethods = {
     },
 
     async checkId(id) {
-        if (typeof id == 'string') {
-            return ObjectId(id);
-        } else if (typeof id == 'object') {
-            return id;
-        } else {
-            throw new Error('You must provide valid id to search for.');
+        try {
+            if (typeof id == 'string') {
+                return ObjectId(id);
+            } else if (typeof id == 'object') {
+                return id;
+            }
+        } catch (error) {
+            throw error.message;
         }
     },
 };

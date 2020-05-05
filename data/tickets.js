@@ -28,6 +28,10 @@ let exportedMethods = {
             .find({ userId: id.toString() })
             .toArray();
 
+        if (!allTickets) {
+            throw `No tickets by user: ${id}!`;
+        }
+
         for (let i = 0; i < allTickets.length; i++) {
             const ticket = allTickets[i];
             const placeId = ticket.placeId;
@@ -138,12 +142,14 @@ let exportedMethods = {
     },
 
     async checkId(id) {
-        if (typeof id == 'string') {
-            return ObjectId(id);
-        } else if (typeof id == 'object') {
-            return id;
-        } else {
-            throw new Error('You must provide valid id to search for.');
+        try {
+            if (typeof id == 'string') {
+                return ObjectId(id);
+            } else if (typeof id == 'object') {
+                return id;
+            }
+        } catch (error) {
+            throw error.message;
         }
     },
 };

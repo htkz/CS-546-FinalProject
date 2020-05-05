@@ -25,7 +25,7 @@ let exportedMethods = {
 
         const user = await userCollection.findOne({ _id: id });
         if (!user) {
-            throw `No user with that ${id}`;
+            throw `No user with that id: ${id}`;
         }
         return user;
     },
@@ -34,6 +34,9 @@ let exportedMethods = {
         const userCollection = await users();
 
         const user = await userCollection.findOne({ userName: userName });
+        if (!user) {
+            throw `No user with that username: ${userName}`;
+        }
 
         return user;
     },
@@ -42,6 +45,9 @@ let exportedMethods = {
         const userCollection = await users();
 
         const user = await userCollection.findOne({ email: email });
+        if (!user) {
+            throw `No user with that email: ${userName}`;
+        }
 
         return user;
     },
@@ -68,7 +74,7 @@ let exportedMethods = {
 
         const insertInfo = await userCollection.insertOne(newUser);
         if (insertInfo.insertedCount === 0) {
-            throw 'Insert failed!';
+            throw 'Insert user failed!';
         }
 
         const newID = insertInfo.insertedId;
@@ -83,7 +89,7 @@ let exportedMethods = {
 
         const deleteInfo = await userCollection.removeOne({ _id: id });
         if (deleteInfo.deletedCount === 0) {
-            throw `Could not delete user with id of ${id}`;
+            throw `Could not delete user with id: ${id}`;
         }
 
         return true;
@@ -109,7 +115,7 @@ let exportedMethods = {
         );
 
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'could not update user successfully';
+            throw `Could not update user successfully by id: ${id}`;
         }
 
         return await this.getUserById(id);
@@ -127,7 +133,7 @@ let exportedMethods = {
         );
 
         if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
-            throw 'AddCommentToUser Update failed';
+            throw `addCommentToUser Update failed by id: ${userId}`;
         }
 
         return await this.getUserById(userId);
@@ -145,7 +151,7 @@ let exportedMethods = {
         );
 
         if (!deletedInfo.matchedCount && !deletedInfo.modifiedCount) {
-            throw 'removeCommentFromUser Update failed';
+            throw `removeCommentFromUser Update failed by id: ${userId}`;
         }
 
         return await this.getUserById(userId);
@@ -163,7 +169,7 @@ let exportedMethods = {
         );
 
         if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
-            throw 'addVotedCommentToUser Update failed';
+            throw `addVotedCommentToUser Update failed by id: ${userId}`;
         }
 
         return await this.getUserById(userId);
@@ -181,7 +187,7 @@ let exportedMethods = {
         );
 
         if (!deletedInfo.matchedCount && !deletedInfo.modifiedCount) {
-            throw 'removeVodedCommentFromUser Update failed';
+            throw `removeVodedCommentFromUser Update failed by id: ${userId}`;
         }
 
         return await this.getUserById(userId);
@@ -199,7 +205,7 @@ let exportedMethods = {
         );
 
         if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
-            throw 'addTicketToUser Update failed';
+            throw `addTicketToUser Update failed by id: ${userId}`;
         }
 
         return await this.getUserById(userId);
@@ -217,7 +223,7 @@ let exportedMethods = {
         );
 
         if (!deletedInfo.matchedCount && !deletedInfo.modifiedCount) {
-            throw 'removeTicketFromUser Update failed';
+            throw `removeTicketFromUser Update failed by id: ${userId}`;
         }
 
         return await this.getUserById(userId);
@@ -235,7 +241,7 @@ let exportedMethods = {
         );
 
         if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
-            throw 'addBankToUser Update failed';
+            throw `addBankToUser Update failed by id: ${userId}`;
         }
 
         return await this.getUserById(userId);
@@ -253,7 +259,7 @@ let exportedMethods = {
         );
 
         if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
-            throw 'addFriendToUser Update failed';
+            throw `addFriendToUser Update failed by id: ${userId}`;
         }
 
         return await this.getUserById(userId);
@@ -281,19 +287,21 @@ let exportedMethods = {
             !updatePasswordInfo.matchedCount &&
             !updatePasswordInfo.modifiedCount
         ) {
-            throw 'updatePassword Update failed';
+            throw `updatePassword Update failed by id: ${id}`;
         }
 
         return await this.getUserById(id);
     },
 
     async checkId(id) {
-        if (typeof id == 'string') {
-            return ObjectId(id);
-        } else if (typeof id == 'object') {
-            return id;
-        } else {
-            throw new Error('You must provide valid id to search for.');
+        try {
+            if (typeof id == 'string') {
+                return ObjectId(id);
+            } else if (typeof id == 'object') {
+                return id;
+            }
+        } catch (error) {
+            throw error.message;
         }
     },
 };
