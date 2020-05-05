@@ -75,7 +75,7 @@ const renderPlaces = async (places) => {
             </div>
         `);
         const comments = await $.ajax({
-            url: `http://localhost:3000/places/placeComments/${place._id}`,
+            url: `/places/placeComments/${place._id}`,
         });
 
         let i = 0;
@@ -143,7 +143,7 @@ const deletePlace = async (event) => {
     const placeId = event.currentTarget.id;
     try {
         await $.ajax({
-            url: `http://localhost:3000/places/${placeId}`,
+            url: `/places/${placeId}`,
             type: 'DELETE',
         });
         $('#detailModal').modal('hide');
@@ -294,7 +294,7 @@ const saveEdit = async (event) => {
     console.log(images);
 
     await $.ajax({
-        url: `http://localhost:3000/places/${placeId}`,
+        url: `/places/${placeId}`,
         type: 'PATCH',
         data: {
             newPlaceName: $.trim(placeName),
@@ -420,7 +420,7 @@ const addPlace = async () => {
 
     try {
         await $.ajax({
-            url: 'http://localhost:3000/places/',
+            url: '/places/',
             type: 'POST',
             data: {
                 placeName: $.trim(placeName),
@@ -445,7 +445,7 @@ const addPlace = async () => {
 const deleteComment = async (id) => {
     try {
         await $.ajax({
-            url: `http://localhost:3000/comments/${id}`,
+            url: `/comments/${id}`,
             type: 'DELETE',
         });
     } catch (error) {
@@ -460,7 +460,7 @@ const refreshPlaces = async () => {
 };
 
 const fetchPlaces = async (store) => {
-    store['places'] = await $.ajax({ url: 'http://localhost:3000/places/' });
+    store['places'] = await $.ajax({ url: '/places/' });
 };
 
 const renderUsers = async (users) => {
@@ -531,7 +531,7 @@ const renderUsers = async (users) => {
         let i = 0;
         for (ticketId of user.userTicketInfo) {
             const ticket = await $.ajax({
-                url: `http://localhost:3000/tickets/${ticketId}`,
+                url: `/tickets/${ticketId}`,
             });
             t = $(`
                 <li id=${ticket._id}>
@@ -545,7 +545,7 @@ const renderUsers = async (users) => {
         let x = 0;
         for (commentId of user.userComments) {
             const comment = await $.ajax({
-                url: `http://localhost:3000/comments/${commentId}`,
+                url: `/comments/${commentId}`,
             });
             c = $(`
                 <li id=${comment._id}>
@@ -559,7 +559,7 @@ const renderUsers = async (users) => {
         let y = 0;
         for (friendId of user.friends) {
             const friend = await $.ajax({
-                url: `http://localhost:3000/friends/${friendId}`,
+                url: `/friends/${friendId}`,
             });
             f = $(`
                 <li id=${friend._id}>
@@ -665,7 +665,7 @@ const deleteUser = async (event) => {
     const id = event.currentTarget.id;
     try {
         await $.ajax({
-            url: `http://localhost:3000/users/${id}`,
+            url: `/users/${id}`,
             type: 'DELETE',
         });
     } catch (error) {
@@ -675,7 +675,7 @@ const deleteUser = async (event) => {
 };
 
 const fetchUsers = async (store) => {
-    store['users'] = await $.ajax({ url: 'http://localhost:3000/users/' });
+    store['users'] = await $.ajax({ url: '/users/' });
 };
 
 const filterBySearch = (tag) => {
@@ -698,9 +698,9 @@ const filterBySearch = (tag) => {
 const logout = async (event) => {
     event.preventDefault();
     await $.ajax({
-        url: `http://localhost:3000/users/logout`,
+        url: `/users/logout`,
     });
-    window.location.replace('http://localhost:3000/entry');
+    window.location.replace('/entry');
 };
 
 const bindEvents = async () => {
