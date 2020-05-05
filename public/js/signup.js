@@ -44,7 +44,10 @@ $('#form-signup').submit(async (event) => {
             showConfirmButton: false,
             timer: 1500,
         });
-        $('#emailRule').removeClass('hidden').addClass('formatRules');
+        //console.log(error);
+        console.log(error.responseJSON.error);
+        if(error.responseJSON.error === 'The email has been existed, please choose another email') $('#emailRule').removeClass('hidden').addClass('formatRules');
+        else $('#usernameRule').removeClass('hidden').addClass('formatRules');
     }
 });
 
