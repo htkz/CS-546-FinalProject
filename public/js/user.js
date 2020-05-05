@@ -310,7 +310,6 @@ const renderTickets = async () => {
             );
             $('#rescheduleModal').modal('show');
         });
-        $('#rescheduleConfirmButton').click(rescheduleTicket);
         $($ticket.find('.ticketInfo')[0])
             .append(cancelBtn)
             .append(rescheduleBtn);
@@ -650,6 +649,9 @@ const bindEvents = async () => {
     // friend
     $('#newFriendConfirmBtn').click(addFriend);
     $('#saveFriendBtn').click(saveFriend);
+    // ticket info
+    $('#rescheduleConfirmButton').click(rescheduleTicket);
+
 };
 
 const init = async () => {
