@@ -73,33 +73,17 @@ const main = async () => {
     );
 
     // add user
-    const user1 = await users.addUser(
-        'Patric Hill',
-        'group13@gmail.com',
-        'Qq123456'
-    );
+    const user1 = await users.addUser('John', 'group13@gmail.com', 'Qq123456');
 
-    const user2 = await users.addUser(
-        'Zechen Feng',
-        'fengzechen@gmail.com',
-        'Ww123456'
-    );
+    const user2 = await users.addUser('Zechen', 'feng@gmail.com', 'Ww123456');
 
-    const user3 = await users.addUser('Mo Sun', 'sunmo@gmail.com', 'Ee123456');
+    const user3 = await users.addUser('MoSun', 'sunmo@gmail.com', 'Ee123456');
 
-    const user4 = await users.addUser(
-        'Yuqi Wang',
-        'wangyuqi@gmail.com',
-        'Rr123456'
-    );
+    const user4 = await users.addUser('Yuqi', 'wangyuqi@gmail.com', 'Rr123456');
 
-    const user5 = await users.addUser(
-        'Xunzhi Li',
-        'lixunzhi@gmail.com',
-        'Tt123456'
-    );
+    const user5 = await users.addUser('Xunzhi', 'lixun@gmail.com', 'Tt123456');
 
-    const admin = await users.addUser('Admin', 'admin@group13.com', 'Qq123456');
+    // const admin = await users.addUser('Admin', 'admin@group13.com', 'Qq123456');
 
     // add friend
     const friend1 = await friends.addFriend(
