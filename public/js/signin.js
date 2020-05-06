@@ -23,13 +23,14 @@ $('#form-signin').submit(async (event) => {
                 hashedPassword: password,
             },
         });
-        if (username === 'admin@group13.com') {
-            console.log(username);
-            window.location.replace('/admin');
-        } else {
-            console.log(username);
-            window.location.replace('/main');
-        }
+        window.location.replace('/main');
+        // if (username === 'admin@group13.com') {
+        //     console.log(username);
+        //     window.location.replace('/admin');
+        // } else {
+        //     console.log(username);
+        //     window.location.replace('/main');
+        // }
     } catch (error) {
         await Swal.fire({
             icon: 'error',
