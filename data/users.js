@@ -34,7 +34,9 @@ let exportedMethods = {
     async getUserByUserName(userName) {
         const userCollection = await users();
 
-        const user = await userCollection.findOne({ userName: userName });
+        const user = await userCollection.findOne({
+            userName: new RegExp(`^${userName}$`, 'i'),
+        });
 
         return user;
     },
@@ -42,7 +44,9 @@ let exportedMethods = {
     async getUserByEmail(email) {
         const userCollection = await users();
 
-        const user = await userCollection.findOne({ email: email });
+        const user = await userCollection.findOne({
+            email: new RegExp(`^${email}$`, 'i'),
+        });
 
         return user;
     },
