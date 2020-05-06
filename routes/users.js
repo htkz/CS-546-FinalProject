@@ -267,14 +267,11 @@ router.put('/account/update/:id', async (req, res) => {
 
     // check new name whether in the database or not
     if (userInfo.userName) {
-        if (
-            (await userData.getUserByUserName(
-                userInfo.userName
-            )) !== null
-        ) {
+        if ((await userData.getUserByUserName(userInfo.userName)) !== null) {
             if (
-                (await userData.getUserById(req.params.id)).userName !==
-                userInfo.userName
+                (
+                    await userData.getUserById(req.params.id)
+                ).userName.toLowerCase() !== userInfo.userName.toLowerCase()
             ) {
                 res.status(400).json({
                     error: `This ${userInfo.userName} has been existed`,
@@ -312,13 +309,11 @@ router.put('/account/update/:id', async (req, res) => {
 
     // check new email whether in the database or not
     if (userInfo.email) {
-        if (
-            (await userData.getUserByEmail(userInfo.email)) !==
-            null
-        ) {
+        if ((await userData.getUserByEmail(userInfo.email)) !== null) {
             if (
-                (await userData.getUserById(req.params.id)).email !==
-                userInfo.email
+                (
+                    await userData.getUserById(req.params.id)
+                ).email.toLowerCase() !== userInfo.email.toLowerCase()
             ) {
                 res.status(400).json({
                     error: `This ${userInfo.email} has been existed`,
