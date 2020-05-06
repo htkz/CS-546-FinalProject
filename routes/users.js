@@ -71,7 +71,7 @@ router.post('/account/login', async (req, res) => {
         // cookie
         let sessionUser = { _id: user._id, userName: xss(user.userName) };
         res.cookie('user', JSON.stringify(sessionUser));
-        req.session.user = { _id: user._id, userName: xss(user.userName) };
+        req.session.user = user._id;
         res.status(200).json(user);
     } catch (error) {
         res.status(404).json({ error: error });
@@ -157,8 +157,8 @@ router.get('/friends/:id', async (req, res) => {
 
 router.post('/account/register', async (req, res) => {
     let userInfo = req.body;
-    let username = req.body.userName.toLowerCase();
-    let email = req.body.email.toLowerCase();
+    let username = req.body.userName;
+    let email = req.body.email;
     let unhashedPassword = req.body.hashedPassword;
 
     if (!userInfo) {
@@ -269,12 +269,12 @@ router.put('/account/update/:id', async (req, res) => {
     if (userInfo.userName) {
         if (
             (await userData.getUserByUserName(
-                userInfo.userName.toLowerCase()
+                userInfo.userName
             )) !== null
         ) {
             if (
                 (await userData.getUserById(req.params.id)).userName !==
-                userInfo.userName.toLowerCase()
+                userInfo.userName
             ) {
                 res.status(400).json({
                     error: `This ${userInfo.userName} has been existed`,
@@ -313,12 +313,12 @@ router.put('/account/update/:id', async (req, res) => {
     // check new email whether in the database or not
     if (userInfo.email) {
         if (
-            (await userData.getUserByEmail(userInfo.email.toLowerCase())) !==
+            (await userData.getUserByEmail(userInfo.email)) !==
             null
         ) {
             if (
                 (await userData.getUserById(req.params.id)).email !==
-                userInfo.email.toLowerCase()
+                userInfo.email
             ) {
                 res.status(400).json({
                     error: `This ${userInfo.email} has been existed`,
@@ -353,13 +353,18 @@ router.put('/account/update/:id', async (req, res) => {
     try {
         const updatedUser = await userData.updatedUser(
             xss(req.params.id),
-            xss(userInfo.userName.toLowerCase()),
-            xss(userInfo.email.toLowerCase()),
+            xss(userInfo.userName),
+            xss(userInfo.email),
             xss(userInfo.phoneNumber),
             xss(userInfo.address),
             xss(userInfo.zipCode),
             xss(userInfo.bio)
         );
+        const sessionUser = {
+            _id: updatedUser._id,
+            userName: xss(updatedUser.userName),
+        };
+        res.cookie('user', JSON.stringify(sessionUser));
         res.status(200).json(updatedUser);
     } catch (error) {
         res.status(500).json({ error: error });

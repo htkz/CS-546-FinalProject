@@ -1,5 +1,5 @@
-const userInfo = JSON.parse(Cookies.get('user'));
-const userId = userInfo['_id'];
+let userInfo = JSON.parse(Cookies.get('user'));
+let userId = userInfo['_id'];
 
 // util
 const showSwal = async (icon, title) => {
@@ -21,10 +21,9 @@ const logout = async (event) => {
 };
 
 const renderUsername = () => {
-    const userName = userInfo['userName'];
-    if (userName !== undefined) {
-        $('#username').text(userName);
-    }
+    userInfo = JSON.parse(Cookies.get('user'));
+    userId = userInfo['_id'];
+    $('#username').text(userInfo['userName']);
 };
 
 // psersonal info
@@ -136,6 +135,8 @@ const infoSubmit = async (event) => {
         type: 'PUT',
         data: newInfo,
     });
+
+    renderUsername();
     showSwal('success', 'Update success!');
 };
 
