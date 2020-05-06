@@ -90,17 +90,21 @@ const infoSubmit = async (event) => {
 
     let inputCheck = true;
 
-    if (inputName !== userName) {
+    if (inputName.toLowerCase() !== userName.toLowerCase()) {
         if (!(await checkUsername(inputName))) {
             $('#userNameRule').removeClass('hidden').addClass('formatRules');
             inputCheck = false;
         } else newInfo.userName = inputName;
+    } else {
+        newInfo.userName = inputName;
     }
-    if (inputEmail !== email) {
+    if (inputEmail.toLowerCase() !== email.toLowerCase()) {
         if (!(await checkEmail(inputEmail))) {
             $('#emailRule').removeClass('hidden').addClass('formatRules');
             inputCheck = false;
         } else newInfo.email = inputEmail;
+    } else {
+        newInfo.email = inputEmail;
     }
     if (inputNumber !== phoneNumber) {
         if (inputNumber) {
