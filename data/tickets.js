@@ -29,7 +29,7 @@ let exportedMethods = {
             .toArray();
 
         if (!allTickets) {
-            throw `No tickets by user: ${id}!`;
+            throw `No tickets by user id: ${id}!`;
         }
 
         for (let i = 0; i < allTickets.length; i++) {
@@ -50,7 +50,7 @@ let exportedMethods = {
 
         const ticket = await ticketCollection.findOne({ _id: id });
         if (!ticket) {
-            throw `No ticket with that ${id}`;
+            throw `No ticket with id: ${id}`;
         }
 
         return ticket;
@@ -79,7 +79,7 @@ let exportedMethods = {
 
         const insertInfo = await ticketCollection.insertOne(newTicket);
         if (insertInfo.insertedCount === 0) {
-            throw 'Insert failed!';
+            throw 'Insert ticket failed!';
         }
 
         const newID = insertInfo.insertedId;
@@ -89,7 +89,7 @@ let exportedMethods = {
         } else if (url === '/friends/') {
             await friends.addTicketToFriend(userId, newID);
         } else {
-            throw new Error('wrong url');
+            throw 'wrong url';
         }
         // update ticket remain number for ticket
         await places.updateRemainNum(placeId, 'buy');
@@ -106,12 +106,12 @@ let exportedMethods = {
         try {
             ticket = await this.getTicketById(id);
         } catch (error) {
-            throw new Error(`No ticket with that ${id}`);
+            throw `No ticket with id: ${id}`;
         }
 
         const deleteInfo = await ticketCollection.removeOne({ _id: id });
         if (deleteInfo.deletedCount === 0) {
-            throw `Could not delete ticket with id of ${id}`;
+            throw `Could not delete ticket with id: ${id}`;
         }
 
         await users.removeTicketFromUser(ticket.userId, id);
@@ -135,7 +135,7 @@ let exportedMethods = {
             { $set: updateTicket }
         );
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'could not update ticket successfully';
+            throw `Could not update ticket successfully by id: ${id}`;
         }
 
         return await this.getTicketById(id);

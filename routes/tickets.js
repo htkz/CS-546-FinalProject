@@ -10,7 +10,7 @@ router.get('/:id', async (req, res) => {
         const ticket = await ticketData.getTicketById(xss(req.params.id));
         res.status(200).json(ticket);
     } catch (e) {
-        res.status(404).json({ error: 'Ticket not found' });
+        res.status(404).json({ error: error });
     }
 });
 
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
         const ticketList = await ticketData.getAllTictets();
         res.status(200).json(ticketList);
     } catch (error) {
-        res.status(500).json({ error: 'No tickets in database' });
+        res.status(500).json({ error: error });
     }
 });
 
@@ -82,8 +82,7 @@ router.post('/user', async (req, res) => {
         );
         res.status(200).json(newTicket);
     } catch (error) {
-        res.status(500).json({ error: 'Add ticket failed' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 
@@ -162,8 +161,7 @@ router.post('/friends', async (req, res) => {
         }
         res.status(200).json(friends);
     } catch (error) {
-        res.status(500).json({ error: 'Add ticket failed' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 
@@ -184,15 +182,15 @@ router.put('/:id', async (req, res) => {
         );
         res.status(200).json(updatedTicket);
     } catch (error) {
-        res.status(500).json({ error: 'Update ticket failed' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', async (req, res) => {
     let id = xss(req.params.id);
     if (!id) {
-        throw 'You must specify an ID to delete';
+        res.status(400).json({ error: 'You must specify an ID to delete' });
+        return;
     }
 
     try {
@@ -205,8 +203,7 @@ router.delete('/:id', async (req, res, next) => {
         const deleteTicket = await ticketData.removeTicket(id);
         res.status(200).json(deleteTicket);
     } catch (error) {
-        res.status(500).json({ error: 'Delete ticket failed' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 
