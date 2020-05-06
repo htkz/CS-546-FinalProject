@@ -24,7 +24,7 @@ let exportedMethods = {
 
         const comment = await commentCollection.findOne({ _id: id });
         if (!comment) {
-            throw `No comment with that ${id}`;
+            throw `No comment with id: ${id}`;
         }
 
         return comment;
@@ -56,7 +56,7 @@ let exportedMethods = {
         const insertInfo = await commentCollection.insertOne(newComment);
 
         if (insertInfo.insertedCount === 0) {
-            throw 'Insert failed!';
+            throw 'Insert comment failed!';
         }
 
         const newID = insertInfo.insertedId;
@@ -81,7 +81,7 @@ let exportedMethods = {
 
         const deleteInfo = await commentCollection.removeOne({ _id: id });
         if (deleteInfo.deletedCount === 0) {
-            throw `Could not delete comment with id of ${id}`;
+            throw `Could not delete comment with id: ${id}`;
         }
 
         await users.removeCommentFromUser(comment.user, id);
@@ -116,7 +116,7 @@ let exportedMethods = {
             { $set: updateComment }
         );
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'could not update comment successfully';
+            throw `Could not update comment successfully with id: ${id}`;
         }
 
         // If user cancel the vote, remove it from votedUsers list.
@@ -126,7 +126,7 @@ let exportedMethods = {
                 { $pull: { votedUsers: votedUserId.toString() } }
             );
             if (!updateInfo_1.matchedCount && !updateInfo_1.modifiedCount) {
-                throw 'could not update comment successfully';
+                throw `Could not update comment successfully with id: ${id}`;
             }
             await users.removeVodedCommentFromUser(votedUserId, id);
         }
@@ -137,7 +137,7 @@ let exportedMethods = {
                 { $addToSet: { votedUsers: votedUserId.toString() } }
             );
             if (!updateInfo_1.matchedCount && !updateInfo_1.modifiedCount) {
-                throw 'could not update comment successfully';
+                throw `could not update comment successfully with id: ${id}`;
             }
             await users.addVotedCommentToUser(votedUserId, id);
         }

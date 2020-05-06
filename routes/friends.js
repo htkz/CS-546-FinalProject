@@ -11,7 +11,7 @@ router.get('/:id', async (req, res) => {
         const friend = await friendData.getFriendById(xss(req.params.id));
         res.status(200).json(friend);
     } catch (e) {
-        res.status(404).json({ error: 'Friend not found' });
+        res.status(404).json({ error: error });
     }
 });
 
@@ -63,8 +63,7 @@ router.post('/', async (req, res) => {
         );
         res.status(200).json(newFriend);
     } catch (error) {
-        res.status(500).json({ error: 'Add friend failed' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 
@@ -123,7 +122,7 @@ router.put('/:id', async (req, res) => {
         );
         res.status(200).json(updatedFriend);
     } catch (error) {
-        res.status(500).json({ error: 'Update friend information failed' });
+        res.status(500).json({ error: error });
     }
 });
 

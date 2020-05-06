@@ -12,7 +12,7 @@ router.get('/:id', async (req, res) => {
         const bank = await bankData.getBankById(xss(req.params.id));
         res.status(200).json(bank);
     } catch (e) {
-        res.status(404).json({ error: 'bank not found' });
+        res.status(404).json({ error: error });
     }
 });
 
@@ -101,8 +101,7 @@ router.post('/', async (req, res) => {
         );
         res.status(200).json(newBank);
     } catch (error) {
-        res.status(500).json({ error: 'Add bank failed' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 
@@ -186,7 +185,7 @@ router.put('/:id', async (req, res) => {
     try {
         await bankData.getBankById(req.params.id);
     } catch (error) {
-        res.status(404).json({ error: 'Bank not found' });
+        res.status(404).json({ error: error });
     }
 
     try {
@@ -201,7 +200,7 @@ router.put('/:id', async (req, res) => {
         );
         res.status(200).json(updatedBank);
     } catch (error) {
-        res.status(500).json({ error: 'Update bank information failed' });
+        res.status(500).json({ error: error });
     }
 });
 

@@ -8,8 +8,8 @@ router.get('/:id', async (req, res) => {
     try {
         const comment = await commentData.getCommentById(xss(req.params.id));
         res.status(200).json(comment);
-    } catch (e) {
-        res.status(404).json({ error: 'Comment not found!' });
+    } catch (error) {
+        res.status(404).json({ error: error });
     }
 });
 
@@ -17,8 +17,8 @@ router.get('/', async (req, res) => {
     try {
         const commentList = await commentData.getAllComments();
         res.status(200).json(commentList);
-    } catch (e) {
-        res.status(500).json({ error: 'No comment in the database' });
+    } catch (error) {
+        res.status(500).json({ error: error });
     }
 });
 
@@ -61,8 +61,7 @@ router.post('/', async (req, res) => {
         );
         res.status(200).json(newComment);
     } catch (error) {
-        res.status(500).json({ error: 'Add comment failed' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 
@@ -94,7 +93,7 @@ router.put('/:id', async (req, res) => {
     try {
         await commentData.getCommentById(req.params.id);
     } catch (error) {
-        res.status(404).json({ error: 'Comment not found' });
+        res.status(404).json({ error: error });
         return;
     }
 
@@ -106,8 +105,7 @@ router.put('/:id', async (req, res) => {
         );
         res.status(200).json(updatedComment);
     } catch (error) {
-        res.status(500).json({ error: 'Update comment failed' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 
@@ -120,15 +118,14 @@ router.delete('/:id', async (req, res) => {
     try {
         await commentData.getCommentById(id);
     } catch (error) {
-        res.status(404).json({ error: 'Comment not found' });
+        res.status(404).json({ error: error });
     }
 
     try {
         const deleteComment = await commentData.removeComment(id);
         res.status(200).json(deleteComment);
     } catch (error) {
-        res.status(500).json({ error: 'Delete comment failed' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 

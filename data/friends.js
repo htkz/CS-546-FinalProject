@@ -18,7 +18,7 @@ let exportedMethods = {
         const friend = await friendCollection.findOne({ _id: id });
 
         if (!friend) {
-            throw `No friend with that ${id}!`;
+            throw `No friend with id: ${id}!`;
         }
 
         return friend;
@@ -37,7 +37,7 @@ let exportedMethods = {
 
         const insertInfo = await friendCollection.insertOne(newFriend);
         if (insertInfo.insertedCount === 0) {
-            throw 'Insert failed!';
+            throw 'Insert friend failed!';
         }
 
         const newID = insertInfo.insertedId;
@@ -63,7 +63,7 @@ let exportedMethods = {
         );
 
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'could not update user successfully';
+            throw `Could not update user successfully with id: ${id}`;
         }
 
         return await this.getFriendById(id);
@@ -81,7 +81,7 @@ let exportedMethods = {
         );
 
         if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
-            throw 'addTicketToFriend Update failed';
+            throw `addTicketToFriend Update failed by id: ${friendId}`;
         }
 
         return await this.getFriendById(friendId);

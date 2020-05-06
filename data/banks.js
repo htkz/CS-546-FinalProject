@@ -21,7 +21,7 @@ let exportedMethods = {
         const bank = await bankCollection.findOne({ _id: id });
 
         if (!bank) {
-            throw `No bank card with that ${id}!`;
+            throw `No bank card with id: ${id}!`;
         }
 
         return bank;
@@ -50,7 +50,7 @@ let exportedMethods = {
 
         const insertInfo = await bankCollection.insertOne(newBank);
         if (insertInfo.insertedCount === 0) {
-            throw 'Insert failed!';
+            throw 'Insert bank failed!';
         }
 
         const newID = insertInfo.insertedId;
@@ -87,7 +87,7 @@ let exportedMethods = {
         );
 
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'could not update user successfully';
+            throw `Could not update user successfully with id: ${id}`;
         }
 
         return await this.getBankById(id);
