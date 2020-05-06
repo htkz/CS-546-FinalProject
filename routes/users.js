@@ -429,7 +429,8 @@ router.put('/account/password/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     if (!req.params.id) {
-        throw 'You must specify an ID to delete';
+        res.status(400).json({ error: 'You must specify an ID to delete' });
+        return;
     }
 
     try {

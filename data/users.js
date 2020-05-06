@@ -25,7 +25,7 @@ let exportedMethods = {
 
         const user = await userCollection.findOne({ _id: id });
         if (!user) {
-            throw `No user with that id: ${id}`;
+            throw `No user with id: ${id}`;
         }
 
         return user;

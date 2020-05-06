@@ -10,8 +10,8 @@ router.get('/:id', async (req, res) => {
     try {
         const place = await placeData.getPlaceById(xss(req.params.id));
         res.status(200).json(place);
-    } catch (e) {
-        res.status(404).json({ error: 'Place not found' });
+    } catch (error) {
+        res.status(404).json({ error: error });
     }
 });
 
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
         const placeList = await placeData.getAllPlaces();
         res.status(200).json(placeList);
     } catch (error) {
-        res.status(500).json({ error: 'No place in the database' });
+        res.status(500).json({ error: error });
     }
 });
 
@@ -34,8 +34,8 @@ router.get('/placeComments/:id', async (req, res) => {
             allComments[i].user = thisUser.userName;
         }
         res.status(200).json(allComments);
-    } catch (e) {
-        res.status(404).json({ error: 'Comment not found by placeId' });
+    } catch (error) {
+        res.status(404).json({ error: error });
     }
 });
 
@@ -127,8 +127,7 @@ router.post('/', async (req, res) => {
         );
         res.status(200).json(newPlace);
     } catch (error) {
-        res.status(500).json({ error: 'Add place failed' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 
@@ -216,10 +215,7 @@ router.patch('/:id', async (req, res) => {
             updatedObject.displayTime = xss(requestBody.newDisplayTime);
         }
 
-        if (
-            requestBody.newRemainNum &&
-            requestBody.newRemainNum !== oldPlace.remainNum
-        ) {
+        if (requestBody.newRemainNum !== oldPlace.remainNum) {
             updatedObject.remainNum = xss(requestBody.newRemainNum);
         }
 
@@ -230,8 +226,7 @@ router.patch('/:id', async (req, res) => {
             updatedObject.images = xss(requestBody.newImages.split(','));
         }
     } catch (error) {
-        res.status(404).json({ error: 'Place not found' });
-        return;
+        res.status(404).json({ error: error });
     }
 
     try {
@@ -245,15 +240,15 @@ router.patch('/:id', async (req, res) => {
         );
         res.status(200).json(updatedPlace);
     } catch (error) {
-        res.status(500).json({ error: 'Update place failed' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 
 router.delete('/:id', async (req, res) => {
     let id = xss(req.params.id);
     if (!id) {
-        throw 'You must specify an ID to delete';
+        res.status(400).json({ error: 'You must specify an ID to delete' });
+        return;
     }
 
     try {
@@ -266,8 +261,7 @@ router.delete('/:id', async (req, res) => {
         const deletePlace = await placeData.removePlace(id);
         res.status(200).json(deletePlace);
     } catch (error) {
-        res.status(500).json({ error: 'Delete place failed' });
-        console.log(error);
+        res.status(500).json({ error: error });
     }
 });
 

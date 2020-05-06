@@ -22,7 +22,7 @@ let exportedMethods = {
 
         const place = await placeCollection.findOne({ _id: id });
         if (!place) {
-            throw `No place with that ${id}`;
+            throw `No place with id: ${id}`;
         }
 
         return place;
@@ -57,7 +57,7 @@ let exportedMethods = {
         const insertInfo = await placeCollection.insertOne(newPlace);
 
         if (insertInfo.insertedCount === 0) {
-            throw 'Insert failed!';
+            throw 'Insert place failed!';
         }
 
         const newID = insertInfo.insertedId;
@@ -72,7 +72,7 @@ let exportedMethods = {
 
         const deleteInfo = await placeCollection.removeOne({ _id: id });
         if (deleteInfo.deletedCount === 0) {
-            throw `Could not delete place with id of ${id}`;
+            throw `Could not delete place with id: ${id}`;
         }
 
         return true;
@@ -126,7 +126,7 @@ let exportedMethods = {
             { $set: updatePlaceData }
         );
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'could not update place successfully';
+            throw `Could not update place successfully by id: ${id}`;
         }
 
         return await this.getPlaceById(id);
@@ -144,7 +144,7 @@ let exportedMethods = {
         );
 
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'addCommentToPlace update failed';
+            throw `addCommentToPlace update failed by id: ${placeId}`;
         }
 
         return await this.getPlaceById(placeId);
@@ -162,7 +162,7 @@ let exportedMethods = {
         );
 
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'removeCommentFromPlace failed';
+            throw `removeCommentFromPlace failed by id: ${placeId}`;
         }
 
         return await this.getPlaceById(placeId);
@@ -193,7 +193,7 @@ let exportedMethods = {
         );
 
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw 'updateRemainNum failed';
+            throw `updateRemainNum failed by id: ${placeId}`;
         }
 
         return await this.getPlaceById(placeId);
