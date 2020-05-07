@@ -99,6 +99,11 @@ main {
     main .container #password .btn-primary {
       color: white;
       background-color: #007eb2; }
+    main .container #password #changePasswordBtn:disabled,
+    main .container #password #changePasswordBtn[disabled] {
+      background-color: #0026b2;
+      color: white;
+      border: 1px solid #0026b2; }
   main .container #infopage .formatRules {
     height: auto;
     color: #ee0000;

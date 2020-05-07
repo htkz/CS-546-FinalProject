@@ -129,6 +129,12 @@ main {
                 color: rgb(255, 255, 255);
                 background-color: rgb(0, 126, 178);
             }
+            #changePasswordBtn:disabled,
+            #changePasswordBtn[disabled] {
+                background-color: rgb(0, 38, 178);
+                color: rgb(255, 255, 255);
+                border: 1px solid rgb(0, 38, 178);
+            }
         }
         #infopage {
             .formatRules {
