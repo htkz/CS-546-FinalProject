@@ -294,7 +294,7 @@ const renderTickets = async () => {
                     <img src="./pic/${ticket.images[0]}" alt="${ticket.images[0]}">
                 </div>
                 <div class="ticketInfo">
-                    <h4>${ticket.name}</h4>
+                    <h2 class="h4">${ticket.name}</h2>
                     <p>${ticket.description}</p>
                     <p>Effect Date: ${ticket.effectDate}</p>
                     <p>Price: ${ticket.price}</p>

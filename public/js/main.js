@@ -19,7 +19,7 @@ const renderPlaces = (places) => {
             <div class="card" id="${place._id}">
                 <img src="./pic/${place.images[0]}" class="card-img-top" alt="${place.images[0]}" />
                 <div class="card-body">
-                    <h4>${place.placeName}</h4>
+                    <h3 class="h4">${place.placeName}</h3>
                     <p class="card-text">
                         ${place.description}
                     </p>
@@ -58,9 +58,9 @@ const renderDetail = async (placeId) => {
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" id="place" data-id="${place._id}">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="detailModalLabel">
+                    <h1 class="h3 modal-title" id="detailModalLabel">
                         ${place.placeName}
-                    </h3>
+                    </h1>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -97,7 +97,7 @@ const renderDetail = async (placeId) => {
                         <div class="wrapper col-md-7">
                             <form class="comment" id="commentForm">
                                 <div class="commentContainer">
-                                    <h5>Comments</h5>
+                                    <h2 class="h5">Comments</h2>
                                     <ul id="commentList"></ul>
                                 </div>
                                 <div class="inputContainer">
