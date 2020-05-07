@@ -38,7 +38,7 @@ const renderPlaces = (places) => {
             </div>`);
         for (category of place.category) {
             const cat = $(
-                `<button class='btn btn-sm btn-outline-info active'>${category}</button>`
+                `<button class='btn btn-sm btn-outline-info active category-color'>${category}</button>`
             );
             card.find('.category').append(cat);
         }
