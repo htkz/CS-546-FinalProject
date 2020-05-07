@@ -29,6 +29,12 @@ html {
         font-size: 16px; }
       html body .form-signup input {
         margin-bottom: 10px; }
+      html body .form-signup .btn {
+        color: white;
+        background-color: #0072ee; }
+      html body .form-signup #signinAnchor {
+        color: #006ce2;
+        background-color: whitesmoke; }
     html body .form-signin {
       width: 100%;
       max-width: 330px;
