@@ -33,6 +33,14 @@ html {
             input {
                 margin-bottom: 10px;
             }
+            .btn {
+                color: rgb(255, 255, 255);
+                background-color: rgb(0, 114, 238);
+            }
+            #signinAnchor {
+                color: rgb(0, 108, 226);
+                background-color: rgb(245, 245, 245);
+            }
         }
         .form-signin {
             width: 100%;

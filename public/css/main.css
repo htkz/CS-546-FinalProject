@@ -9,6 +9,10 @@ header .username {
   color: white;
   margin-right: 10px; }
 
+header .top-btn {
+  color: #9da3a8;
+  background-color: #343a40; }
+
 .tickets {
   padding: 20px; }
   .tickets .container .topBar {
@@ -16,6 +20,9 @@ header .username {
     .tickets .container .topBar .filter {
       padding: 10px;
       justify-content: center; }
+    .tickets .container .topBar .search {
+      color: #008a00;
+      background-color: white; }
   .tickets .container .cards {
     display: flex;
     flex-wrap: wrap; }
@@ -35,6 +42,9 @@ header .username {
             margin-right: 4px;
             margin-top: 4px;
             margin-bottom: 10px; }
+          .tickets .container .cards .card .card-bottom .card-info .category .category-color {
+            color: white;
+            background-color: #008295; }
 
 #buyTicketModal .friendBtn {
   border: 1px solid #6c757d;
