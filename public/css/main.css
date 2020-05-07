@@ -60,7 +60,7 @@ header .top-btn {
   color: white;
   background-color: #6c757d; }
 
-#buyTicketModal h5 {
+#buyTicketModal h2 {
   padding-top: 10px; }
 
 #buyTicketModal .myFriends .friendsContainer {
@@ -83,7 +83,7 @@ header .top-btn {
   flex-direction: column;
   justify-content: space-between;
   height: 100%; }
-  #detailModal .wrapper .comment .commentContainer h5 {
+  #detailModal .wrapper .comment .commentContainer h2 {
     border-bottom: 1px solid #ccc;
     margin-bottom: 0;
     padding-bottom: 10px; }
