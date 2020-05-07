@@ -70,18 +70,17 @@ header {
         border: 1px solid #6c757d;
         border-radius: 3px;
         margin-right: 4px;
-        margin-top:4px;
+        margin-top: 4px;
         color: #6c757d;
         cursor: pointer;
         padding: 0.2rem 0.75rem;
         user-select: none;
-
     }
     .friendBtn.active {
         color: white;
         background-color: #6c757d;
     }
-    h5 {
+    h2 {
         padding-top: 10px;
     }
     .myFriends {
@@ -110,7 +109,7 @@ header {
             justify-content: space-between;
             height: 100%;
             .commentContainer {
-                h5 {
+                h2 {
                     border-bottom: 1px solid #ccc;
                     margin-bottom: 0;
                     padding-bottom: 10px;

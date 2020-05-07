@@ -79,7 +79,7 @@ main {
           width: 200px;
           height: 150px; }
       main .container #tickets .ticket .ticketInfo p,
-      main .container #tickets .ticket .ticketInfo h4 {
+      main .container #tickets .ticket .ticketInfo h2 {
         padding: 0;
         margin: 0; }
       main .container #tickets .ticket .ticketInfo button {
