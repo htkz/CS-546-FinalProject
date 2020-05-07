@@ -16,7 +16,8 @@ html {
       justify-content: center; }
       html body .form-signup .formatRules {
         height: auto;
-        color: red;
+        color: #e30000;
+        background-color: whitesmoke;
         padding: 0px !important;
         text-align: left;
         font-size: 12px;
