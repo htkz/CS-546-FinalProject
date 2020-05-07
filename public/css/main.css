@@ -67,6 +67,10 @@ header .top-btn {
   display: flex;
   flex-wrap: wrap; }
 
+#buyTicketModal .btn-primary {
+  color: white;
+  background-color: #0072ee; }
+
 #detailModal .placeDetail img {
   width: 100%;
   height: 200px; }

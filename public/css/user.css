@@ -18,6 +18,10 @@ header .username {
   color: white;
   margin-right: 10px; }
 
+header .top-btn {
+  color: #9da3a8;
+  background-color: #343a40; }
+
 #newFriendModal .row {
   margin-bottom: 10px; }
   #newFriendModal .row input {
@@ -29,6 +33,10 @@ header .username {
     justify-content: center; }
     #newFriendModal .row .aside label {
       text-align: right; }
+
+#newFriendModal .btn-primary {
+  color: white;
+  background-color: #0072ee; }
 
 main {
   min-height: 100vh;
@@ -83,22 +91,35 @@ main {
         padding: 0;
         margin: 0; }
       main .container #tickets .ticket .ticketInfo button {
-        margin-right: 4px; }
+        margin-right: 4px;
+        color: #008295;
+        background-color: white; }
   main .container #password {
     display: none; }
+    main .container #password .btn-primary {
+      color: white;
+      background-color: #007eb2; }
   main .container #infopage .formatRules {
     height: auto;
-    color: red;
+    color: #ee0000;
+    background-color: white;
     padding: 0px !important;
     text-align: left;
     font-size: 14px;
     font-weight: normal; }
   main .container #infopage .hidden {
     display: none; }
+  main .container #infopage .btn-primary {
+    color: white;
+    background-color: #0072ee; }
   main .container #payment {
     display: none; }
     main .container #payment .error-message {
-      color: red; }
+      color: #ee0000;
+      background-color: white; }
+    main .container #payment .btn-primary {
+      color: white;
+      background-color: #0072ee; }
   main .container #friends {
     display: none; }
     main .container #friends #friendsList {
@@ -121,6 +142,13 @@ main {
         cursor: pointer; }
         main .container #friends #friendsList .addFriendIcon:hover {
           filter: invert(1); }
+    main .container #friends .btn-primary {
+      color: white;
+      background-color: #0072ee; }
+
+#rescheduleModal .btn-primary {
+  color: white;
+  background-color: #0072ee; }
 
 footer {
   display: flex;
