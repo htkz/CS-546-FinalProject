@@ -44,3 +44,12 @@ html {
         font-size: 16px; }
       html body .form-signin .wrapper input {
         margin-bottom: 10px; }
+      html body .form-signin .btn {
+        color: white;
+        background-color: #0072ee; }
+      html body .form-signin #signupAnchor {
+        color: #006ce2;
+        background-color: whitesmoke; }
+      html body .form-signin .copyright {
+        color: #68727a;
+        background-color: whitesmoke; }
