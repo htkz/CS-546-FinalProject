@@ -133,6 +133,8 @@ header {
                 align-items: center;
                 button {
                     margin-left: 4px;
+                    color: rgb(0, 114, 238);
+                    background-color: rgb(255, 255, 255);
                 }
                 input {
                     width: 100%;
@@ -140,6 +142,10 @@ header {
                 }
             }
         }
+    }
+    .btn-primary {
+        color: rgb(255, 255, 255);
+        background-color: rgb(0, 114, 238);
     }
 }
 

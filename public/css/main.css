@@ -96,10 +96,16 @@ header .top-btn {
     display: flex;
     align-items: center; }
     #detailModal .wrapper .comment .inputContainer button {
-      margin-left: 4px; }
+      margin-left: 4px;
+      color: #0072ee;
+      background-color: white; }
     #detailModal .wrapper .comment .inputContainer input {
       width: 100%;
       box-shadow: none !important; }
+
+#detailModal .btn-primary {
+  color: white;
+  background-color: #0072ee; }
 
 main {
   min-height: 100vh; }
