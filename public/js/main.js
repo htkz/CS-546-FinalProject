@@ -357,13 +357,14 @@ const buyTicket = async () => {
                     },
                 });
             }
-            Swal.fire({
+            await Swal.fire({
                 icon: 'success',
                 title: 'Your have already got the ticket!',
                 showConfirmButton: false,
                 timer: 1500,
             });
             refreshTicket(placeId);
+            $('#buyTicketModal').modal('hide');
         } catch (error) {
             console.log(error);
             Swal.fire({
