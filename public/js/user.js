@@ -298,6 +298,7 @@ const renderTickets = async () => {
                     <p>${ticket.description}</p>
                     <p>Effect Date: ${ticket.effectDate}</p>
                     <p>Price: ${ticket.price}</p>
+                    <p>Ticket Number: ${ticket.ticketNo}</p>
                 </div>
             </div>
         `);
