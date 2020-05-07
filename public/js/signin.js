@@ -1,13 +1,13 @@
 $('#signupAnchor').click((event) => {
     event.preventDefault();
     $('.form-signin').hide();
-    $('.form-signup').fadeIn(1000);
+    $('.form-signup').css('display', 'flex');
 });
 
 $('#signinAnchor').click((event) => {
     event.preventDefault();
     $('.form-signup').hide();
-    $('.form-signin').fadeIn(1000);
+    $('.form-signin').show();
 });
 
 $('#form-signin').submit(async (event) => {

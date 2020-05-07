@@ -29,9 +29,9 @@ $('#form-signup').submit(async (event) => {
                 hashedPassword: signupPassword,
             },
         });
-        Swal.fire({
+        await Swal.fire({
             icon: 'success',
-            title: 'Sign up successfully',
+            title: 'Sign up successfully, Now redirect to sign in page!',
             showConfirmButton: false,
             timer: 1500,
         });
