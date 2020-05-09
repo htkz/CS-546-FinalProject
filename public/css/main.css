@@ -114,6 +114,10 @@ header .top-btn {
 main {
   min-height: 100vh; }
 
+.swal2-icon-content {
+  color: #cf8400;
+  background-color: white; }
+
 footer {
   display: flex;
   justify-content: center;
