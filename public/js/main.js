@@ -174,7 +174,6 @@ const renderDetail = async (placeId) => {
             </li>`);
         $commentList.append($comment);
     }
-    // $('#postBtn').click(postComment);
     $('#commentForm').submit(postComment);
 
     if (place.remainNum === '0' || place.remainNum === 0) {
@@ -194,6 +193,7 @@ const renderDetail = async (placeId) => {
     }
 
     $('#dateInput').attr('min', place.displayTime);
+    $('#dateInput').val(place.displayTime);
 };
 
 const fetchPlaces = async (store) => {
