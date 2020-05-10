@@ -67,6 +67,10 @@ header .top-btn {
   display: flex;
   flex-wrap: wrap; }
 
+#buyTicketModal .yourself .yourselfContainer {
+  display: flex;
+  flex-wrap: wrap; }
+
 #buyTicketModal .btn-primary {
   color: white;
   background-color: #0072ee; }
