@@ -19,9 +19,13 @@ const main = async () => {
         '07310',
         100,
         ['School', 'Quiet'],
-        '2020-03-17',
+        '2020-05-15',
         200,
-        ['Stevens_Institute_Of_Technology.jpg', 'ticket2.jpg']
+        [
+            'Stevens_Institute_Of_Technology_1.jpg',
+            'Stevens_Institute_Of_Technology_2.jpg',
+            'Stevens_Institute_Of_Technology_3.png',
+        ]
     );
 
     const place2 = await places.addPlace(
@@ -31,9 +35,9 @@ const main = async () => {
         '32899',
         50,
         ['Building', 'Science'],
-        '2020-02-18',
+        '2021-02-18',
         200,
-        ['NASA.jpg', 'ticket1.jpeg']
+        ['NASA_1.jpg', 'NASA_2.jpg']
     );
 
     const place3 = await places.addPlace(
@@ -43,9 +47,9 @@ const main = async () => {
         '10004',
         59,
         ['Historical landmark', 'Quiet'],
-        '2019-12-13',
+        '2020-06-15',
         100,
-        ['Statue_Of_Liberty.jpg', 'ticket1.jpeg']
+        ['Statue_Of_Liberty_1.jpg', 'Statue_Of_Liberty_2.jpg']
     );
 
     const place4 = await places.addPlace(
@@ -55,9 +59,13 @@ const main = async () => {
         '32819',
         189,
         ['Theme park', 'Happy'],
-        '2018-04-17',
+        '2020-09-17',
         50,
-        ['Universal_Studio.jpg', 'ticket1.jpeg']
+        [
+            'Universal_Studio_1.jpg',
+            'Universal_Studio_2.jpg',
+            'Universal_Studio_3.jpg',
+        ]
     );
 
     const place5 = await places.addPlace(
@@ -69,7 +77,7 @@ const main = async () => {
         ['Historical landmark', 'Quiet'],
         '2022-04-27',
         1000,
-        ['Empire_State_Building.jpg', 'ticket2.jpg']
+        ['Empire_State_Building_1.jpg', 'Empire_State_Building_2.jpg']
     );
 
     // add user
