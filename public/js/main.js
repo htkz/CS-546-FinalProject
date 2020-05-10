@@ -217,7 +217,6 @@ const filterByLatest = () => {
         }
         return 0;
     });
-    places.reverse();
     renderPlaces(places);
 };
 
