@@ -161,6 +161,13 @@ main {
     background-color: rgb(255, 255, 255);
 }
 
+#carousel {
+    span.sr-only {
+        color: rgb(118, 118, 118);
+        background-color: rgb(255, 255, 255);
+    }
+}
+
 footer {
     display: flex;
     justify-content: center;

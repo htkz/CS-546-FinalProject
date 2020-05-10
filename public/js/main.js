@@ -356,7 +356,7 @@ const buyTicket = async () => {
         text: text,
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
+        confirmButtonColor: '#0d7eb1',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, buy it!',
     });

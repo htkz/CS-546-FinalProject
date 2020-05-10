@@ -117,6 +117,10 @@ main {
   color: #cf8400;
   background-color: white; }
 
+#carousel span.sr-only {
+  color: #767676;
+  background-color: white; }
+
 footer {
   display: flex;
   justify-content: center;
