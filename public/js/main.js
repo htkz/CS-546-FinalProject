@@ -68,7 +68,19 @@ const renderDetail = async (placeId) => {
                 <div class="modal-body">
                     <div class="container row">
                         <div class="placeDetail col-md-5">
-                            <img src="./pic/${place.images[0]}" alt="${place.images[0]}" />
+                            <div id="carousel" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner" id="carousel-inner">
+
+                                </div>
+                                <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
                             <div class="attribute">Description</div>
                             <p class="card-text">
                                 ${place.description}
@@ -122,6 +134,21 @@ const renderDetail = async (placeId) => {
         </div>
     `);
     $('#detailModal').append($modal);
+    for (let i = 0; i < place.images.length; i++) {
+        if (i === 0) {
+            $modal.find('#carousel-inner').append(`
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="./pic/${place.images[0]}" alt="${place.images[0]}">
+                </div>
+            `);
+        } else {
+            $modal.find('#carousel-inner').append(`
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="./pic/${place.images[i]}" alt="${place.images[i]}">
+                </div>
+            `);
+        }
+    }
     const comments = await $.ajax({
         url: `/places/placeComments/${placeId}`,
     });
