@@ -98,7 +98,7 @@ const renderDetail = async (placeId) => {
                             </div>
                             <div>
                                 <span class="attribute">Price</span>:
-                                <span>${place.placePrice}</span>
+                                <span>$${place.placePrice}</span>
                             </div>
                             <div>
                                 <span class="attribute">Display Time</span>:
