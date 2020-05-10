@@ -18,7 +18,7 @@ const main = async () => {
         '1 Castle Point Terrace, Hoboken',
         '07310',
         100,
-        ['School', 'Quiet'],
+        ['University', 'Quiet'],
         '2020-05-15',
         200,
         [
@@ -34,7 +34,7 @@ const main = async () => {
         'Titusville, Florida',
         '32899',
         50,
-        ['Building', 'Science'],
+        ['Building', 'Science', 'Museum'],
         '2021-02-18',
         200,
         ['NASA_1.jpg', 'NASA_2.jpg']
@@ -46,7 +46,7 @@ const main = async () => {
         'Liberty Island Manhattan, New York City, New York,',
         '10004',
         59,
-        ['Historical landmark', 'Quiet'],
+        ['Historical landmark', 'Quiet', 'Shopping'],
         '2020-06-15',
         100,
         ['Statue_Of_Liberty_1.jpg', 'Statue_Of_Liberty_2.jpg']
@@ -58,7 +58,7 @@ const main = async () => {
         '6000 Universal Blvd, Orlando, FL',
         '32819',
         189,
-        ['Theme park', 'Happy'],
+        ['Theme park', 'Happy', 'Adventure'],
         '2020-09-17',
         50,
         [
@@ -74,7 +74,7 @@ const main = async () => {
         '20 W 34th St, New York, NY',
         '10001',
         20,
-        ['Historical landmark', 'Quiet'],
+        ['Historical landmark', 'Quiet', 'Building'],
         '2022-04-27',
         1000,
         ['Empire_State_Building_1.jpg', 'Empire_State_Building_2.jpg']
