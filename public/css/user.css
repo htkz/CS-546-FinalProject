@@ -155,6 +155,10 @@ main {
   color: white;
   background-color: #0072ee; }
 
+.swal2-icon-content {
+  color: #cf8400;
+  background-color: white; }
+
 footer {
   display: flex;
   justify-content: center;

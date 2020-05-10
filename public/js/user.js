@@ -330,7 +330,7 @@ const cancelTicket = async (event) => {
         text: 'Are you sure to cancel the ticket?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
+        confirmButtonColor: '#0d7eb1',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, cancel it!',
         cancelButtonText: 'No',
