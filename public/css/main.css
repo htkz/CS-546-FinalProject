@@ -72,8 +72,7 @@ header .top-btn {
   background-color: #0072ee; }
 
 #detailModal .placeDetail img {
-  width: 100%;
-  height: 200px; }
+  height: 300px; }
 
 #detailModal .placeDetail .attribute {
   font-weight: bold; }
@@ -88,7 +87,7 @@ header .top-btn {
     margin-bottom: 0;
     padding-bottom: 10px; }
   #detailModal .wrapper .comment .commentContainer ul {
-    max-height: 300px;
+    max-height: 400px;
     overflow: scroll; }
     #detailModal .wrapper .comment .commentContainer ul li {
       border-bottom: 1px solid #ccc;

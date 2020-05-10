@@ -55,7 +55,7 @@ const renderDetail = async (placeId) => {
     $('#detailModal').empty();
 
     const $modal = $(`
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content" id="place" data-id="${place._id}">
                 <div class="modal-header">
                     <h1 class="h3 modal-title" id="detailModalLabel">
@@ -69,6 +69,9 @@ const renderDetail = async (placeId) => {
                     <div class="container row">
                         <div class="placeDetail col-md-5">
                             <div id="carousel" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators" id="carousel-indicators">
+
+                                </ol>
                                 <div class="carousel-inner" id="carousel-inner">
 
                                 </div>
@@ -141,12 +144,22 @@ const renderDetail = async (placeId) => {
                     <img class="d-block w-100" src="./pic/${place.images[0]}" alt="${place.images[0]}">
                 </div>
             `);
+            $modal
+                .find('#carousel-indicators')
+                .append(
+                    `<li data-target="#carousel" data-slide-to="0" class="active"></li>`
+                );
         } else {
             $modal.find('#carousel-inner').append(`
                 <div class="carousel-item">
                     <img class="d-block w-100" src="./pic/${place.images[i]}" alt="${place.images[i]}">
                 </div>
             `);
+            $modal
+                .find('#carousel-indicators')
+                .append(
+                    `<li data-target="#carousel" data-slide-to="${i}"></li>`
+                );
         }
     }
     const comments = await $.ajax({
