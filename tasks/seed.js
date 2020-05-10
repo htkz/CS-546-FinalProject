@@ -181,48 +181,6 @@ const main = async () => {
         '624'
     );
 
-    // add ticket
-    const ticket1 = await tickets.addTicket(
-        user1['_id'].toString(),
-        place1['_id'].toString(),
-        '2020-05-04',
-        '2020-12-03',
-        100,
-        '/user/'
-    );
-    const ticket2 = await tickets.addTicket(
-        user1['_id'].toString(),
-        place2['_id'].toString(),
-        '2020-3-4',
-        '2020-10-03',
-        100,
-        '/user/'
-    );
-    const ticket3 = await tickets.addTicket(
-        user1['_id'].toString(),
-        place3['_id'].toString(),
-        '2020-06-15',
-        '2020-10-30',
-        100,
-        '/user/'
-    );
-    const ticket4 = await tickets.addTicket(
-        friend2['_id'].toString(),
-        place4['_id'].toString(),
-        '2020-05-15',
-        '2020-05-16',
-        100,
-        '/friends/'
-    );
-    const ticket5 = await tickets.addTicket(
-        firend3['_id'].toString(),
-        place5['_id'].toString(),
-        '2020-08-03',
-        '2020-09-01',
-        100,
-        '/friends/'
-    );
-
     console.log('Done seeding database');
 
     await db.serverConfig.close();
