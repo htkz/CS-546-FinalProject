@@ -23,75 +23,11 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/user', async (req, res) => {
-    let ticketInfo = req.body;
-    console.log(ticketInfo);
-
-    const url = req.url;
-
-    if (!ticketInfo) {
-        res.status(400).json({
-            error: 'You must provide data to create a ticket',
-        });
-        return;
-    }
-
-    if (!ticketInfo.userId) {
-        res.status(400).json({
-            error: 'You must provide userId to create a ticket',
-        });
-        return;
-    }
-
-    if (!ticketInfo.placeId) {
-        res.status(400).json({
-            error: 'You must provide placeId to create a ticket',
-        });
-        return;
-    }
-
-    if (!ticketInfo.orderedDate) {
-        res.status(400).json({
-            error: 'You must provide orderedDate to create a ticket',
-        });
-        return;
-    }
-
-    if (!ticketInfo.effectDate) {
-        res.status(400).json({
-            error: 'You must provide effectDate to create a ticket',
-        });
-        return;
-    }
-
-    if (!ticketInfo.price) {
-        res.status(400).json({
-            error: 'You must provide price to create a ticket',
-        });
-        return;
-    }
-
-    try {
-        const newTicket = await ticketData.addTicket(
-            xss(ticketInfo.userId),
-            xss(ticketInfo.placeId),
-            xss(ticketInfo.orderedDate),
-            xss(ticketInfo.effectDate),
-            xss(ticketInfo.price),
-            xss(url)
-        );
-        res.status(200).json(newTicket);
-    } catch (error) {
-        res.status(500).json({ error: error });
-    }
-});
-
-router.post('/friends', async (req, res) => {
+router.post('/', async (req, res) => {
     const requestBody = req.body;
     console.log(requestBody);
 
-    const url = req.url;
-    const friends = requestBody.friends;
+    const persons = requestBody.persons;
     const placeId = requestBody.placeId;
     const orderedDate = requestBody.orderedDate;
     const effectDate = requestBody.effectDate;
@@ -104,7 +40,7 @@ router.post('/friends', async (req, res) => {
         return;
     }
 
-    if (!friends) {
+    if (!persons) {
         res.status(400).json({
             error: "You must provide friends' id to create a ticket",
         });
@@ -139,29 +75,18 @@ router.post('/friends', async (req, res) => {
         return;
     }
 
-    for (friend of friends) {
-        try {
-            await friendData.getFriendById(friend);
-        } catch (error) {
-            res.status(404).json({ error: `Friend ${friend} not found` });
-        }
-    }
-
     try {
-        for (let i = 0; i < friends.length; i++) {
-            const newTicket = await ticketData.addTicket(
-                xss(friends[i]),
-                xss(placeId),
-                xss(orderedDate),
-                xss(effectDate),
-                xss(price),
-                xss(url)
-            );
-            friends[i] = newTicket;
-        }
-        res.status(200).json(friends);
+        const newTickets = await ticketData.addTicket(
+            persons,
+            xss(placeId),
+            xss(orderedDate),
+            xss(effectDate),
+            xss(price)
+        );
+        res.status(200).json(newTickets);
     } catch (error) {
         res.status(500).json({ error: error });
+        console.log(error);
     }
 });
 

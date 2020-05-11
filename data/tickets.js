@@ -7,6 +7,7 @@ const friends = require('./friends');
 const ObjectId = require('mongodb').ObjectId;
 const utility = require('../utility');
 const generateTicketNo = utility.generateTicketNum;
+const xss = require('xss');
 
 let exportedMethods = {
     async getAllTictets() {
@@ -56,45 +57,84 @@ let exportedMethods = {
         return ticket;
     },
 
-    async addTicket(userId, placeId, orderedDate, effectDate, price, url) {
+    async addTicket(persons, placeId, orderedDate, effectDate, price) {
         const ticketCollection = await tickets();
 
         if ((await counts.findDataById('ticketNo')) === null) {
             await counts.addData('ticketNo', 0);
         }
 
-        const index = (await counts.getNextSequenceValue('ticketNo'))
-            .sequenceValue;
+        // update remain number
+        let number = 0;
+        if (persons.user !== undefined) {
+            number += 1;
+        }
+        number = number + persons.friends.length;
+        await places.updateRemainNum(placeId, number, 'buy');
 
-        ticketNo = generateTicketNo.ticketNo(index, placeId, orderedDate);
+        result = [];
+        if (persons.user !== undefined) {
+            const index = (await counts.getNextSequenceValue('ticketNo'))
+                .sequenceValue;
 
-        let newTicket = {
-            userId: userId,
-            placeId: placeId,
-            ticketNo: ticketNo,
-            orderedDate: orderedDate,
-            effectDate: effectDate,
-            price: price,
-        };
+            ticketNo = generateTicketNo.ticketNo(index, placeId, orderedDate);
 
-        const insertInfo = await ticketCollection.insertOne(newTicket);
-        if (insertInfo.insertedCount === 0) {
-            throw 'Insert ticket failed!';
+            let newTicket = {
+                userId: xss(persons.user),
+                placeId: placeId,
+                ticketNo: ticketNo,
+                orderedDate: orderedDate,
+                effectDate: effectDate,
+                price: price,
+            };
+
+            const insertInfo = await ticketCollection.insertOne(newTicket);
+            if (insertInfo.insertedCount === 0) {
+                throw 'Insert ticket failed!';
+            }
+
+            const newID = insertInfo.insertedId;
+
+            // add ticket to user field
+            await users.addTicketToUser(persons.user, newID);
+
+            result.push(await this.getTicketById(newID));
         }
 
-        const newID = insertInfo.insertedId;
+        if (persons.friends !== undefined) {
+            for (friendId of persons.friends) {
+                const index = (await counts.getNextSequenceValue('ticketNo'))
+                    .sequenceValue;
 
-        if (url === '/user/') {
-            await users.addTicketToUser(userId, newID);
-        } else if (url === '/friends/') {
-            await friends.addTicketToFriend(userId, newID);
-        } else {
-            throw 'wrong url';
+                ticketNo = generateTicketNo.ticketNo(
+                    index,
+                    placeId,
+                    orderedDate
+                );
+
+                let newTicket = {
+                    userId: xss(friendId),
+                    placeId: placeId,
+                    ticketNo: ticketNo,
+                    orderedDate: orderedDate,
+                    effectDate: effectDate,
+                    price: price,
+                };
+
+                const insertInfo = await ticketCollection.insertOne(newTicket);
+                if (insertInfo.insertedCount === 0) {
+                    throw 'Insert ticket failed!';
+                }
+
+                const newID = insertInfo.insertedId;
+
+                await friends.addTicketToFriend(friendId, newID);
+
+                result.push(await this.getTicketById(newID));
+            }
         }
-        // update ticket remain number for ticket
-        await places.updateRemainNum(placeId, 'buy');
 
-        return await this.getTicketById(newID);
+        return result;
     },
 
     async removeTicket(id) {
@@ -116,7 +156,7 @@ let exportedMethods = {
 
         await users.removeTicketFromUser(ticket.userId, id);
 
-        await places.updateRemainNum(ticket.placeId, 'delete');
+        await places.updateRemainNum(ticket.placeId, 1, 'delete');
 
         return true;
     },

@@ -168,7 +168,7 @@ let exportedMethods = {
         return await this.getPlaceById(placeId);
     },
 
-    async updateRemainNum(placeId, operate) {
+    async updateRemainNum(placeId, number, operate) {
         const placeCollection = await places();
 
         placeId = await this.checkId(placeId);
@@ -176,11 +176,12 @@ let exportedMethods = {
         place = await this.getPlaceById(placeId);
         let oldRemainNum = place.remainNum;
         let newRemainNum = '';
+
         if (operate == 'buy') {
-            if (oldRemainNum == 0) {
-                throw `No ticket for this place`;
+            if (oldRemainNum == 0 || oldRemainNum < number) {
+                throw `No enough ticket for this place`;
             }
-            newRemainNum = oldRemainNum - 1;
+            newRemainNum = oldRemainNum - number;
         } else if (operate == 'delete') {
             newRemainNum = oldRemainNum + 1;
         } else {
