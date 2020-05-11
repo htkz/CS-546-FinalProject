@@ -66,16 +66,16 @@ let exportedMethods = {
 
         // update remain number
         let number = 0;
-        if (persons.user !== undefined) {
+        if (persons.user !== '') {
             number += 1;
         }
-        if (persons.friends != undefined) {
+        if (persons.friends !== undefined) {
             number = number + persons.friends.length;
         }
         await places.updateRemainNum(placeId, number, 'buy');
 
         result = [];
-        if (persons.user !== undefined) {
+        if (persons.user !== '') {
             const index = (await counts.getNextSequenceValue('ticketNo'))
                 .sequenceValue;
 
