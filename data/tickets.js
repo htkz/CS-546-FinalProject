@@ -69,7 +69,9 @@ let exportedMethods = {
         if (persons.user !== undefined) {
             number += 1;
         }
-        number = number + persons.friends.length;
+        if (persons.friends != undefined) {
+            number = number + persons.friends.length;
+        }
         await places.updateRemainNum(placeId, number, 'buy');
 
         result = [];
