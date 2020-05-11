@@ -456,6 +456,7 @@ const checkPayment = () => {
     }
     return valid;
 };
+
 const changePayment = async (event) => {
     event.preventDefault();
     if (!(await checkPayment())) {
@@ -665,8 +666,11 @@ const bindEvents = async () => {
     $('#old-password').bind('input propertychange', checkPasswordEmpty);
     $('#new-password').bind('input propertychange', checkPasswordEmpty);
     $('#re-enter-password').bind('input propertychange', checkPasswordEmpty);
+    // personalinfo submit
     $('#personalInfo').submit(infoSubmit);
+    // password submit
     $('#changePasswordBtn').click(changePassword);
+    // payment submit
     $('#changePaymentBtn').click(changePayment);
     // friend
     $('#newFriendConfirmBtn').click(addFriend);
