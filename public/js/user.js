@@ -413,8 +413,14 @@ const checkCVV = (securityCode) => {
 };
 
 const checkExpiration = (expiration) => {
-    if (expiration.length != 5) return false;
-    if (expiration.charAt(2) !== '/') return false;
+    if (expiration.length < 3 || expiration.length > 5) return false;
+    let cnt = 0;
+    for (ch of expiration) {
+        if (ch === '/') {
+            cnt += 1;
+        }
+    }
+    if (cnt !== 1) return false;
     const arr = expiration.split('/');
     const month = parseInt(arr[0]);
     const day = parseInt(arr[1]);
