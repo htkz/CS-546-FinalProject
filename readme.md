@@ -226,11 +226,19 @@ _Last part(2)_ is auto increment number.
 
 -   **get("/")**: get all tickets from tickets collection
 
--   **post("/user")**: post tikcet data into tickets collection.  
-    _Fields_: userId, placeId, orderedData, effectDate, price
+-   **post("/)**: post tikcet data into tickets collection.  
+    _Fields_: persons, placeId, orderedData, effectDate, price
 
--   **post("/friends")**: post friend tikcet data into tickets collection.  
-    _Fields_: friends, placeId, orderedData, effectDate, price
+    ```json
+    persons
+    {
+        "user": "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710",
+        "friends": [
+            "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710",
+            "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710"
+        ]
+    }
+    ```
 
 -   **put("/:id")**: use placeId to update place infomation.  
     _Fields_: ticketId, effectDate
