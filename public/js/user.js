@@ -520,7 +520,7 @@ const renderPayment = async (event) => {
 let friendsData = {};
 
 const checkNewFriendInput = async () => {
-    const name = $('#friendNameInput').val();
+    const name = $('#friendNameInput').val().trim();
     const email = $('#friendEmailInput').val();
     const phone = $('#friendPhoneInput').val();
     const reEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
@@ -540,7 +540,7 @@ const checkNewFriendInput = async () => {
 };
 
 const checkFriendInput = async () => {
-    const name = $('#friendName').val();
+    const name = $('#friendName').val().trim();
     const email = $('#friendEmail').val();
     const phone = $('#friendPhone').val();
     const reEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
