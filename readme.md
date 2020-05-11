@@ -232,8 +232,8 @@ _Last part(2)_ is auto increment number.
     ```json
     persons
     {
-        user: "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710"
-        friends: [
+        "user": "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710",
+        "friends": [
             "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710",
             "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710"
         ]
