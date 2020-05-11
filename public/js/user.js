@@ -306,7 +306,7 @@ const renderTickets = async () => {
             `<button class="btn btn-sm btn-outline-info" class="cancelBtn" data-id="${ticket['_id']}">Cancel</button>`
         );
         const rescheduleBtn = $(
-            `<button class="btn btn-sm btn-outline-info" class="rescheduleBtn" data-id="${ticket['_id']}">Reschedule</button>`
+            `<button class="btn btn-sm btn-outline-info" class="rescheduleBtn" data-id="${ticket['_id']}" effectDate="${ticket.effectDate}">Reschedule</button>`
         );
         cancelBtn.click(cancelTicket);
         rescheduleBtn.click((event) => {
@@ -314,6 +314,18 @@ const renderTickets = async () => {
                 'id',
                 $(event.currentTarget).attr('data-id')
             );
+            $('#rescheduleInput').val(
+                $(event.currentTarget).attr('effectDate')
+            );
+            $('#rescheduleInput').attr(
+                'min',
+                $(event.currentTarget).attr('effectDate')
+            );
+            const date = $(event.currentTarget).attr('effectDate').split('-');
+            const year = parseInt(date[0]);
+            const month = date[1];
+            const day = date[2];
+            $('#rescheduleInput').attr('max', `${year + 1}-${month}-${day}`);
             $('#rescheduleModal').modal('show');
         });
         $($ticket.find('.ticketInfo')[0])

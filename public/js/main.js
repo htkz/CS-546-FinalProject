@@ -369,33 +369,23 @@ const buyTicket = async () => {
                 date.getMonth() + 1
             }-${date.getDate()}`;
             const effectDate = $('#dateInput').val();
-            if (myself) {
-                await $.ajax({
-                    url: '/tickets/user/',
-                    type: 'POST',
-                    data: {
-                        userId: userId,
-                        placeId: placeId,
-                        orderedDate: orderDate,
-                        effectDate: effectDate,
-                        price: placeInfo.placePrice,
-                    },
-                });
-            }
-            if (friends.length !== 0) {
-                console.log(friends);
-                await $.ajax({
-                    url: '/tickets/friends/',
-                    type: 'post',
-                    data: {
-                        friends: friends,
-                        placeId: placeId,
-                        orderedDate: orderDate,
-                        effectDate: effectDate,
-                        price: placeInfo.placePrice,
-                    },
-                });
-            }
+            const persons = {
+                user: myself ? userId : '',
+                friends: friends,
+            };
+            console.log(persons);
+            await $.ajax({
+                url: '/tickets/',
+                type: 'POST',
+                data: {
+                    persons: persons,
+                    placeId: placeId,
+                    orderedDate: orderDate,
+                    effectDate: effectDate,
+                    price: placeInfo.placePrice,
+                },
+            });
+
             await Swal.fire({
                 icon: 'success',
                 title: 'Your have already got the ticket!',
@@ -408,7 +398,7 @@ const buyTicket = async () => {
             console.log(error);
             Swal.fire({
                 icon: 'error',
-                title: 'Opps! Something went wrong!',
+                title: 'No remain tickets',
                 showConfirmButton: false,
                 timer: 1000,
             });

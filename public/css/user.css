@@ -125,6 +125,8 @@ main {
     main .container #payment .btn-primary {
       color: white;
       background-color: #0072ee; }
+    main .container #payment .monthContainer {
+      padding-right: 0px; }
   main .container #friends {
     display: none; }
     main .container #friends #friendsList {

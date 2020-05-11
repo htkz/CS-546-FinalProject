@@ -70,21 +70,23 @@
         <div class="modal fade" tabindex="-1" id="rescheduleModal" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title h4">Reschedule Time</h1>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="rescheduleDate">
-                            <h2 class="h5">New Time</h2>
-                            <input type="date" id="rescheduleInput">
+                    <div class="form" id="rescheduleForm">
+                        <div class="modal-header">
+                            <h1 class="modal-title h4">Reschedule Time</h1>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="rescheduleConfirmButton">Confirm</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <div class="modal-body">
+                            <div class="rescheduleDate">
+                                <h2 class="h5">New Time</h2>
+                                <input type="date" id="rescheduleInput">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="rescheduleConfirmButton">Confirm</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>  
@@ -301,7 +303,7 @@
                         <div class="col-4 ml-3 aside">
                             <label for="expiration">Expiration Date (MM/YY)</label>
                         </div>
-                        <div class="col-2">
+                        <div class="col-2 monthContainer">
                             <select class="custom-select" id="month">
                                 <option selected>--</option>
                                 <option>01</option>
