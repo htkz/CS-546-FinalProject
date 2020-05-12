@@ -29,7 +29,7 @@
         -   [Banks collection](#banks-collection)
             -   [Bank API](#api-5)
         -   [Counts collection](#counts-collection)
-        -   [Password Format](#password-format)
+        -   [Format](#password-format)
         -   [Cookie](#cookie)
         -   [Http Status Code](#http-status-code)
 
@@ -432,7 +432,7 @@ _Last part(2)_ is auto increment number.
 | \_id          | string | The auto name.      |
 | sequenceValue | number | The sequence value. |
 
-#### Password Format
+#### Format
 
 -   **userName**: 3-16 characters, only contains lower case word, upper case word & number
 -   **email**: basic email format
