@@ -236,7 +236,7 @@ let exportedMethods = {
 
         const updatedInfo = await userCollection.updateOne(
             { _id: userId },
-            { $set: { bankCard: bankId } }
+            { $set: { bankCard: bankId.toString() } }
         );
 
         if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
