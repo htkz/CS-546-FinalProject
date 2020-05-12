@@ -28,9 +28,9 @@
             -   [Friends API](#api-4)
         -   [Banks collection](#banks-collection)
             -   [Bank API](#api-5)
+        -   [Counts collection](#counts-collection)
 
     -   [Other](#other)
-        -   [Counts collection](#counts-collection)
         -   [Format](#format)
         -   [Cookie](#cookie)
         -   [Http Status Code](#http-status-code)
