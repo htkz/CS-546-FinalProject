@@ -5,6 +5,7 @@
 **Mo Sun, Yuqi Wang, Zechen Feng, Xunzhi Li**
 
 -   [Ticket for Tourism](#ticket-for-tourism)
+
     -   [Description](#description)
     -   [Deployment](#deployment)
         -   [Install](#install)
@@ -14,6 +15,7 @@
     -   [Core features](#core-features)
     -   [Extra features:](#extra-features-)
     -   [Database](#database)
+
         -   [Users Collection](#users-collection)
             -   [Users API](#api)
         -   [Ticket Collection](#ticket-collection)
@@ -26,8 +28,8 @@
             -   [Friends API](#api-4)
         -   [Banks collection](#banks-collection)
             -   [Bank API](#api-5)
-        -   [Password Format](#password-format)
         -   [Counts collection](#counts-collection)
+        -   [Password Format](#password-format)
         -   [Cookie](#cookie)
         -   [Http Status Code](#http-status-code)
 
@@ -414,14 +416,6 @@ _Last part(2)_ is auto increment number.
 -   **put("/:id")**: user bandId to update friend infomation.  
     _Fields_: fristName, lastName, billingZipCode, expirationDate, securityCode
 
-#### Password Format
-
--   **userName**: 3-16 characters, only contains lower case word, upper case word & number
--   **email**: basic email format
--   **password**:
-    1. 8-16 characters
-    2. Should only contains lower case word, upper case word & number
-
 #### Counts collection
 
 **Description**: The banks collection is used to implement auto increased.
@@ -437,6 +431,14 @@ _Last part(2)_ is auto increment number.
 | :------------ | :----- | :------------------ |
 | \_id          | string | The auto name.      |
 | sequenceValue | number | The sequence value. |
+
+#### Password Format
+
+-   **userName**: 3-16 characters, only contains lower case word, upper case word & number
+-   **email**: basic email format
+-   **password**:
+    1. 8-16 characters
+    2. Should only contains lower case word, upper case word & number
 
 #### Cookie
 
