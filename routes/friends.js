@@ -17,7 +17,6 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     let friendInfo = req.body;
-    console.log(friendInfo);
 
     if (!friendInfo) {
         res.status(400).json({
@@ -69,7 +68,6 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const requestBody = req.body;
-    console.log(requestBody);
 
     if (!requestBody) {
         res.status(400).json({

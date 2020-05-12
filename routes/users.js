@@ -115,7 +115,7 @@ router.get('/tickets/friends/:id', async (req, res) => {
             res.status(404).json({ error: error });
         }
     }
-
+    ticketList = [];
     try {
         for (let i = 0; i < friends.length; i++) {
             friends[i] = await friendData.getFriendById(friends[i]);
@@ -123,10 +123,11 @@ router.get('/tickets/friends/:id', async (req, res) => {
                 friends[i].tickets[m] = await ticketData.getTicketById(
                     friends[i].tickets[m]
                 );
+                friends[i].tickets[m].userId = friends[i].name;
+                ticketList.push(friends[i].tickets[m]);
             }
         }
-        console.log(friends);
-        res.status(200).json(friends);
+        res.status(200).json(ticketList);
     } catch (error) {
         res.status(500).json({ error: error });
     }
@@ -242,7 +243,6 @@ router.post('/account/register', async (req, res) => {
 
 router.put('/account/update/:id', async (req, res) => {
     let userInfo = req.body;
-    console.log(userInfo);
     /*
      userName
      phoneNumber
@@ -423,7 +423,6 @@ router.put('/account/password/:id', async (req, res) => {
         res.status(200).json(updatePassword);
     } catch (error) {
         res.status(500).json({ error: error });
-        console.log(error);
     }
 });
 
@@ -436,9 +435,7 @@ router.delete('/:id', async (req, res) => {
     try {
         await userData.getUserById(req.params.id);
     } catch (error) {
-        console.log(error);
         res.status(404).json({ error: error });
-        return;
     }
 
     try {

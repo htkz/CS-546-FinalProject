@@ -67,7 +67,6 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const requestBody = req.body;
-    console.log(requestBody);
 
     if (!requestBody) {
         res.status(400).json({

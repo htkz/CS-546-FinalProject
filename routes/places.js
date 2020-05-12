@@ -41,7 +41,6 @@ router.get('/placeComments/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     let placeInfo = req.body;
-    console.log(placeInfo);
 
     if (!placeInfo) {
         res.status(400).json({
@@ -133,7 +132,6 @@ router.post('/', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
     const requestBody = req.body;
-    console.log(requestBody);
 
     let updatedObject = {};
 
