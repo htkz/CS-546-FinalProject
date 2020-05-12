@@ -18,7 +18,6 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     let bankInfo = req.body;
-    console.log(bankInfo);
 
     if (!bankInfo) {
         res.status(400).json({
@@ -115,7 +114,6 @@ router.put('/:id', async (req, res) => {
     securityCode: String
     */
     const requestBody = req.body;
-    console.log(requestBody);
 
     if (!requestBody) {
         res.status(400).json({

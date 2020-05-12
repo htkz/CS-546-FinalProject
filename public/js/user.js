@@ -282,11 +282,17 @@ const changeFocus = (id) => {
     });
 };
 
-const renderTickets = async () => {
+const renderUserTickets = async () => {
     const tickets = await $.ajax({
         url: `/users/tickets/${userId}`,
     });
-    $('#tickets').empty();
+
+    $('#self-tickets').empty();
+
+    if (tickets.length !== 0) {
+        title = '<h3>User Tickets</h3>';
+        $('#self-tickets').append(title);
+    }
     for (ticket of tickets) {
         const $ticket = $(`
             <div class="ticket">
@@ -308,7 +314,9 @@ const renderTickets = async () => {
         const rescheduleBtn = $(
             `<button class="btn btn-sm btn-outline-info" class="rescheduleBtn" data-id="${ticket['_id']}" effectDate="${ticket.effectDate}">Reschedule</button>`
         );
-        cancelBtn.click(cancelTicket);
+        cancelBtn.click((event) => {
+            cancelTicket(event, 'user');
+        });
         rescheduleBtn.click((event) => {
             $('#rescheduleModal').data(
                 'id',
@@ -331,11 +339,76 @@ const renderTickets = async () => {
         $($ticket.find('.ticketInfo')[0])
             .append(cancelBtn)
             .append(rescheduleBtn);
-        $('#tickets').append($ticket);
+        $('#self-tickets').append($ticket);
     }
 };
 
-const cancelTicket = async (event) => {
+const renderFriendTickets = async () => {
+    const tickets = await $.ajax({
+        url: `/users/tickets/friends/${userId}`,
+    });
+
+    console.log(123);
+    console.log(tickets);
+
+    $('#friends-tickets').empty();
+
+    if (tickets.length !== 0) {
+        title = '<h3>Friend Tickets</h3>';
+        $('#friends-tickets').append(title);
+    }
+
+    for (ticket of tickets) {
+        const $ticket = $(`
+            <div class="ticket">
+                <div class="imgContainer">
+                    <img src="./pic/${ticket.images[0]}" alt="${ticket.images[0]}">
+                </div>
+                <div class="ticketInfo">
+                    <h2 class="h4">${ticket.name}</h2>
+                    <p>Friend: ${ticket.userId}</p>
+                    <p>Effect Date: ${ticket.effectDate}</p>
+                    <p>Price: $${ticket.price}</p>
+                    <p>Ticket Number: ${ticket.ticketNo}</p>
+                </div>
+            </div>
+        `);
+        const cancelBtn = $(
+            `<button class="btn btn-sm btn-outline-info" class="cancelBtn" data-id="${ticket['_id']}">Cancel</button>`
+        );
+        const rescheduleBtn = $(
+            `<button class="btn btn-sm btn-outline-info" class="rescheduleBtn" data-id="${ticket['_id']}" effectDate="${ticket.effectDate}">Reschedule</button>`
+        );
+        cancelBtn.click((event) => {
+            cancelTicket(event, 'friend');
+        });
+        rescheduleBtn.click((event) => {
+            $('#rescheduleModal').data(
+                'id',
+                $(event.currentTarget).attr('data-id')
+            );
+            $('#rescheduleInput').val(
+                $(event.currentTarget).attr('effectDate')
+            );
+            $('#rescheduleInput').attr(
+                'min',
+                $(event.currentTarget).attr('effectDate')
+            );
+            const date = $(event.currentTarget).attr('effectDate').split('-');
+            const year = parseInt(date[0]);
+            const month = date[1];
+            const day = date[2];
+            $('#rescheduleInput').attr('max', `${year + 1}-${month}-${day}`);
+            $('#rescheduleModal').modal('show');
+        });
+        $($ticket.find('.ticketInfo')[0])
+            .append(cancelBtn)
+            .append(rescheduleBtn);
+        $('#friends-tickets').append($ticket);
+    }
+};
+
+const cancelTicket = async (event, operator) => {
     event.preventDefault();
     const result = await Swal.fire({
         title: 'Are you sure?',
@@ -350,11 +423,19 @@ const cancelTicket = async (event) => {
     if (result.value) {
         const id = $(event.currentTarget).data('id');
         try {
-            await $.ajax({
-                url: `/tickets/${id}`,
-                type: 'delete',
-            });
-            await renderTickets();
+            if (operator === 'user') {
+                await $.ajax({
+                    url: `/tickets/user/${id}`,
+                    type: 'delete',
+                });
+                await renderUserTickets();
+            } else if (operator === 'friend') {
+                await $.ajax({
+                    url: `/tickets/friend/${id}`,
+                    type: 'delete',
+                });
+                await renderFriendTickets();
+            }
             await showSwal('success', 'Already canceled the ticket!');
         } catch (error) {
             await showSwal(
@@ -386,7 +467,8 @@ const rescheduleTicket = async (event) => {
                 effectDate: date,
             },
         });
-        await renderTickets();
+        await renderUserTickets();
+        await renderFriendTickets();
         $('#rescheduleModal').modal('hide');
         await showSwal('success', 'Already updated date!');
     } catch (error) {
@@ -669,6 +751,7 @@ const saveFriend = async (event) => {
             },
         });
         await renderFriends();
+        await renderFriendTickets();
         $('#newFriendModal').modal('hide');
         await showSwal('success', 'Already saved!');
     } catch (error) {
@@ -703,7 +786,8 @@ const bindEvents = async () => {
 
 const init = async () => {
     infoPreload();
-    renderTickets();
+    renderUserTickets();
+    renderFriendTickets();
     renderUsername();
     renderPayment();
     renderFriends();
