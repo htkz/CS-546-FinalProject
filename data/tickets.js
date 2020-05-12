@@ -54,6 +54,12 @@ let exportedMethods = {
             throw `No ticket with id: ${id}`;
         }
 
+        const placeId = ticket.placeId;
+        const place = await places.getPlaceById(placeId);
+        ticket['images'] = place.images;
+        ticket['name'] = place.placeName;
+        ticket['description'] = place.description;
+
         return ticket;
     },
 
@@ -139,7 +145,7 @@ let exportedMethods = {
         return result;
     },
 
-    async removeTicket(id) {
+    async removeTicket(id, operator) {
         const ticketCollection = await tickets();
 
         id = await this.checkId(id);
@@ -156,7 +162,11 @@ let exportedMethods = {
             throw `Could not delete ticket with id: ${id}`;
         }
 
-        await users.removeTicketFromUser(ticket.userId, id);
+        if (operator === 'user') {
+            await users.removeTicketFromUser(ticket.userId, id);
+        } else if (operator === 'friend') {
+            await friends.removeTicketFromFriend(ticket.userId, id);
+        }
 
         await places.updateRemainNum(ticket.placeId, 1, 'delete');
 

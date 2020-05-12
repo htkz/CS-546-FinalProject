@@ -87,6 +87,24 @@ let exportedMethods = {
         return await this.getFriendById(friendId);
     },
 
+    async removeTicketFromFriend(friendId, ticketId) {
+        const friendCollection = await friends();
+
+        friendId = await this.checkId(friendId);
+        ticketId = await this.checkId(ticketId);
+
+        const updatedInfo = await friendCollection.updateOne(
+            { _id: friendId },
+            { $pull: { tickets: ticketId.toString() } }
+        );
+
+        if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
+            throw `removeTicketFromFriend Update failed by id: ${friendId}`;
+        }
+
+        return await this.getFriendById(friendId);
+    },
+
     async checkId(id) {
         try {
             if (typeof id == 'string') {

@@ -25,7 +25,6 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const requestBody = req.body;
-    console.log(requestBody);
 
     const persons = requestBody.persons;
     const placeId = requestBody.placeId;
@@ -86,13 +85,11 @@ router.post('/', async (req, res) => {
         res.status(200).json(newTickets);
     } catch (error) {
         res.status(500).json({ error: error });
-        console.log(error);
     }
 });
 
 router.put('/:id', async (req, res) => {
     const requestBody = req.body;
-    console.log(requestBody);
 
     try {
         await ticketData.getTicketById(req.params.id);
@@ -111,7 +108,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/user/:id', async (req, res) => {
     let id = xss(req.params.id);
     if (!id) {
         res.status(400).json({ error: 'You must specify an ID to delete' });
@@ -125,11 +122,34 @@ router.delete('/:id', async (req, res) => {
     }
 
     try {
-        const deleteTicket = await ticketData.removeTicket(id);
+        const deleteTicket = await ticketData.removeTicket(id, 'user');
         res.status(200).json(deleteTicket);
     } catch (error) {
         res.status(500).json({ error: error });
     }
 });
+
+router.delete('/friend/:id', async (req, res) => {
+    let id = xss(req.params.id);
+    if (!id) {
+        res.status(400).json({ error: 'You must specify an ID to delete' });
+        return;
+    }
+
+    try {
+        await ticketData.getTicketById(id);
+    } catch (error) {
+        res.status(404).json({ error: error });
+    }
+
+    try {
+        const deleteTicket = await ticketData.removeTicket(id, 'friend');
+        res.status(200).json(deleteTicket);
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+});
+
+router.delete('f/');
 
 module.exports = router;
