@@ -440,8 +440,8 @@ const checkExpiration = (expiration) => {
 };
 
 const checkPayment = () => {
-    const firstName = $('#firstName').val();
-    const lastName = $('#lastName').val();
+    const firstName = $('#firstName').val().trim();
+    const lastName = $('#lastName').val().trim();
     const zipcode = $('#billingZipCode').val();
     const cardNumber = $('#cardNumber').val();
     const expirationDate = $('#month').val() + '/' + $('#year').val();
