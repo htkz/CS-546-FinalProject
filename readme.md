@@ -29,7 +29,7 @@
         -   [Banks collection](#banks-collection)
             -   [Bank API](#api-5)
         -   [Counts collection](#counts-collection)
-        -   [Format](#password-format)
+        -   [Format](#format)
         -   [Cookie](#cookie)
         -   [Http Status Code](#http-status-code)
 
