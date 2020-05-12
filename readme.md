@@ -245,7 +245,9 @@ _Last part(2)_ is auto increment number.
 -   **put("/:id")**: use placeId to update place infomation.  
     _Fields_: ticketId, effectDate
 
--   **delete("/:id")**: delete ticket through ticketId from tickets collection.
+-   **delete("/user/:id")**: delete ticket through ticketId from tickets collection.
+
+-   **delete("/user/:id")**: delete ticket through ticketId from tickets collection.
 
 #### Comments Collection
 
