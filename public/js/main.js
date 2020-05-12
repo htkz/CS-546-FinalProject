@@ -189,9 +189,14 @@ const renderDetail = async (placeId) => {
         $('#buyBtn').click(() => {
             $('#buyTicketModal').modal('show');
         });
-        $('#finalConfirmBuyButton').click(buyTicket);
+        $('#buyTicketForm').submit(buyTicket);
+        // $('#finalConfirmBuyButton').click(buyTicket);
     }
-
+    const date = place.displayTime.split('-');
+    const year = parseInt(date[0]);
+    const month = date[1];
+    const day = date[2];
+    $('#dateInput').attr('max', `${year + 1}-${month}-${day}`);
     $('#dateInput').attr('min', place.displayTime);
     $('#dateInput').val(place.displayTime);
 };
@@ -319,7 +324,8 @@ const postComment = async (event) => {
     refreshComment(placeId);
 };
 
-const buyTicket = async () => {
+const buyTicket = async (event) => {
+    event.preventDefault();
     const date = $('#dateInput').val();
     if (date.length === 0) {
         await Swal.fire({

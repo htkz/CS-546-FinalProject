@@ -698,7 +698,7 @@ const bindEvents = async () => {
     $('#newFriendConfirmBtn').click(addFriend);
     $('#saveFriendBtn').click(saveFriend);
     // ticket info
-    $('#rescheduleConfirmButton').click(rescheduleTicket);
+    $('#rescheduleForm').submit(rescheduleTicket);
 };
 
 const init = async () => {
