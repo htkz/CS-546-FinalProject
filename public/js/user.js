@@ -435,8 +435,8 @@ const checkExpiration = (expiration) => {
     if (cnt !== 1) return false;
     const arr = expiration.split('/');
     const month = parseInt(arr[0]);
-    const day = parseInt(arr[1]);
-    return month >= 1 && month <= 12 && day >= 1 && day <= 31;
+    const year = parseInt(arr[1]);
+    return month >= 1 && month <= 12 && year >= 0 && year <= 99;
 };
 
 const checkPayment = () => {
@@ -444,7 +444,7 @@ const checkPayment = () => {
     const lastName = $('#lastName').val();
     const zipcode = $('#billingZipCode').val();
     const cardNumber = $('#cardNumber').val();
-    const expirationDate = $('#expiration').val();
+    const expirationDate = $('#month').val() + '/' + $('#year').val();
     const cvv = $('#securityCode').val();
     $('.error-message').hide();
     let valid = true;
@@ -485,7 +485,7 @@ const changePayment = async (event) => {
     const lastName = $('#lastName').val();
     const zipcode = $('#billingZipCode').val();
     const cardNumber = $('#cardNumber').val();
-    const expirationDate = $('#expiration').val();
+    const expirationDate = $('#month').val() + '/' + $('#year').val();
     const cvv = $('#securityCode').val();
 
     const userId = userInfo['_id'];
@@ -524,7 +524,11 @@ const renderPayment = async (event) => {
     $('#lastName').val(bank.lastName);
     $('#billingZipCode').val(bank.billingZipCode);
     $('#cardNumber').val(bank.cardNumber);
-    $('#expiration').val(bank.expirationDate);
+    const expidate = bank.expirationDate.split('/');
+    const month = expidate[0];
+    const year = expidate[1];
+    $('#month').val(month);
+    $('#year').val(year);
     $('#securityCode').val(bank.securityCode);
 };
 
