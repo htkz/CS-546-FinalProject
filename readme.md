@@ -28,6 +28,8 @@
             -   [Friends API](#api-4)
         -   [Banks collection](#banks-collection)
             -   [Bank API](#api-5)
+
+    -   [Other](#other)
         -   [Counts collection](#counts-collection)
         -   [Format](#format)
         -   [Cookie](#cookie)
@@ -433,6 +435,8 @@ _Last part(2)_ is auto increment number.
 | :------------ | :----- | :------------------ |
 | \_id          | string | The auto name.      |
 | sequenceValue | number | The sequence value. |
+
+### Other
 
 #### Format
 
