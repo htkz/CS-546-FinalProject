@@ -78,14 +78,14 @@ router.post('/account/login', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
-    try {
-        const userList = await userData.getAllUsers();
-        res.status(200).json(userList);
-    } catch (error) {
-        res.status(500).json({ error: error });
-    }
-});
+// router.get('/', async (req, res) => {
+//     try {
+//         const userList = await userData.getAllUsers();
+//         res.status(200).json(userList);
+//     } catch (error) {
+//         res.status(500).json({ error: error });
+//     }
+// });
 
 router.get('/tickets/:id', async (req, res) => {
     try {
