@@ -26,6 +26,8 @@ router.get('/', async (req, res) => {
 
 router.get('/placeComments/:id', async (req, res) => {
     try {
+        await placeData.getPlaceById(xss(req.params.id));
+
         const allComments = await commentData.getCommentByPlaceId(
             xss(req.params.id)
         );

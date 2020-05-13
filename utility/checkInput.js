@@ -52,6 +52,16 @@ let exportedMethods = {
         }
         return true;
     },
+
+    checkDate(date) {
+        const re = /\d{4}-\d{2}-\d{2}/;
+        return re.test(date);
+    },
+
+    checkPrice(price) {
+        const re = /^\d+$/;
+        return re.test(price);
+    },
 };
 
 module.exports = exportedMethods;

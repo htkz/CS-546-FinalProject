@@ -3,6 +3,9 @@ const router = express.Router();
 const data = require('../data');
 const ticketData = data.tickets;
 const friendData = data.friends;
+const userData = data.users;
+const utility = require('../utility');
+const checkParam = utility.checkInput;
 const xss = require('xss');
 
 // router.get('/:id', async (req, res) => {
@@ -60,6 +63,14 @@ router.post('/', async (req, res) => {
         return;
     }
 
+    // check date
+    if (!checkParam.checkDate(orderedDate)) {
+        res.status(400).json({
+            error: 'Not valid ordered date',
+        });
+        return;
+    }
+
     if (!effectDate) {
         res.status(400).json({
             error: 'You must provide effectDate to create a ticket',
@@ -67,9 +78,25 @@ router.post('/', async (req, res) => {
         return;
     }
 
+    // check date
+    if (!checkParam.checkDate(effectDate)) {
+        res.status(400).json({
+            error: 'Not valid effect date',
+        });
+        return;
+    }
+
     if (!price) {
         res.status(400).json({
             error: 'You must provide price to create a ticket',
+        });
+        return;
+    }
+
+    // check price
+    if (!checkParam.checkPrice(price)) {
+        res.status(400).json({
+            error: 'Not valid price',
         });
         return;
     }
@@ -90,6 +117,28 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const requestBody = req.body;
+
+    if (!requestBody) {
+        res.status(400).json({
+            error: 'You must provide date to update a ticket',
+        });
+        return;
+    }
+
+    if (!requestBody.effectDate) {
+        res.status(400).json({
+            error: 'You must provide effectDate to update a ticket',
+        });
+        return;
+    }
+
+    // check date
+    if (!checkParam.checkDate(requestBody.effectDate)) {
+        res.status(400).json({
+            error: 'Not valid effect date',
+        });
+        return;
+    }
 
     try {
         await ticketData.getTicketById(req.params.id);
@@ -116,9 +165,11 @@ router.delete('/user/:id', async (req, res) => {
     }
 
     try {
-        await ticketData.getTicketById(id);
+        const ticket = await ticketData.getTicketById(id);
+        await userData.getUserById(ticket.userId);
     } catch (error) {
         res.status(404).json({ error: error });
+        return;
     }
 
     try {
@@ -126,6 +177,7 @@ router.delete('/user/:id', async (req, res) => {
         res.status(200).json(deleteTicket);
     } catch (error) {
         res.status(500).json({ error: error });
+        return;
     }
 });
 
@@ -137,9 +189,11 @@ router.delete('/friend/:id', async (req, res) => {
     }
 
     try {
-        await ticketData.getTicketById(id);
+        const ticket = await ticketData.getTicketById(id);
+        await friendData.getFriendById(ticket.userId);
     } catch (error) {
         res.status(404).json({ error: error });
+        return;
     }
 
     try {
@@ -149,7 +203,5 @@ router.delete('/friend/:id', async (req, res) => {
         res.status(500).json({ error: error });
     }
 });
-
-router.delete('f/');
 
 module.exports = router;
