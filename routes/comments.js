@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const commentData = data.comments;
+const placeData = data.places;
+const userData = data.users;
 const xss = require('xss');
 
 // router.get('/:id', async (req, res) => {
@@ -50,6 +52,14 @@ router.post('/', async (req, res) => {
         res.status(400).json({
             error: 'You must provide comment to create a comment',
         });
+        return;
+    }
+
+    try {
+        await placeData.getPlaceById(commentInfo.placeId);
+        await userData.getUserById(commentInfo.user);
+    } catch (error) {
+        res.status(404).json({ error: error });
         return;
     }
 
