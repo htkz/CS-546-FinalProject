@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const friendData = data.friends;
+const userData = data.users;
 const utility = require('../utility');
 const checkParam = utility.checkInput;
 const xss = require('xss');
@@ -50,6 +51,13 @@ router.post('/', async (req, res) => {
         res.status(400).json({
             error: 'You must provide phoneNumber to create a friend',
         });
+        return;
+    }
+
+    try {
+        await userData.getUserById(xss(friendInfo.userId));
+    } catch (error) {
+        res.status(404).json({ error: error });
         return;
     }
 

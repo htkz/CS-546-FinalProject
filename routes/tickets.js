@@ -102,6 +102,16 @@ router.post('/', async (req, res) => {
     }
 
     try {
+        await userData.getUserById(xss(persons.user));
+        for (friend of persons.friends) {
+            await friendData.getFriendById(friend);
+        }
+    } catch (error) {
+        res.status(404).json({ error: error });
+        return;
+    }
+
+    try {
         const newTickets = await ticketData.addTicket(
             persons,
             xss(placeId),

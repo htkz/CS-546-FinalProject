@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const bankData = data.banks;
+const userData = data.users;
 const utility = require('../utility');
 const checkParam1 = utility.checkBankNumber;
 const checkParam2 = utility.checkInput;
@@ -85,6 +86,13 @@ router.post('/', async (req, res) => {
         res.status(400).json({
             error: 'You must provide securityCode to create a bank',
         });
+        return;
+    }
+
+    try {
+        await userData.getUserById(bankInfo.user);
+    } catch (error) {
+        res.status(404).json({ error: error });
         return;
     }
 
@@ -178,12 +186,6 @@ router.put('/:id', async (req, res) => {
             error: 'You must provide securityCode to update a bank information',
         });
         return;
-    }
-
-    try {
-        await bankData.getBankById(req.params.id);
-    } catch (error) {
-        res.status(404).json({ error: error });
     }
 
     try {
