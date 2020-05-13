@@ -65,7 +65,7 @@ router.post('/account/login', async (req, res) => {
             xss(user.hashedPassword)
         );
         if (!comparePasswords) {
-            res.status(401).json({ message: 'Password incorrect' });
+            res.status(401).json({ error: 'Password incorrect' });
             return;
         }
         // cookie
@@ -74,7 +74,7 @@ router.post('/account/login', async (req, res) => {
         req.session.user = user._id;
         res.status(200).json(user);
     } catch (error) {
-        res.status(404).json({ error: error });
+        res.status(404).json({ error: 'Wrong password or username' });
     }
 });
 
@@ -295,7 +295,7 @@ router.put('/account/update/:id', async (req, res) => {
     }
 
     // check email field
-    if (!checkParam.checkEmail(userInfo.email)) {
+    if (!userInfo.email) {
         res.status(400).json({
             error: 'You must provide email to update a user information',
         });
@@ -396,6 +396,12 @@ router.put('/account/password/:id', async (req, res) => {
         return;
     }
 
+    try {
+        await userData.getUserById(req.params.id);
+    } catch (error) {
+        res.status(404).json({ error: error });
+    }
+
     if (
         await bcrypt.compare(
             passwordInfo.newPassword,
@@ -406,12 +412,6 @@ router.put('/account/password/:id', async (req, res) => {
             error: 'The new password is the same as the old password',
         });
         return;
-    }
-
-    try {
-        await userData.getUserById(req.params.id);
-    } catch (error) {
-        res.status(404).json({ error: error });
     }
 
     try {
@@ -426,25 +426,25 @@ router.put('/account/password/:id', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
-    if (!req.params.id) {
-        res.status(400).json({ error: 'You must specify an ID to delete' });
-        return;
-    }
+// router.delete('/:id', async (req, res) => {
+//     if (!req.params.id) {
+//         res.status(400).json({ error: 'You must specify an ID to delete' });
+//         return;
+//     }
 
-    try {
-        await userData.getUserById(req.params.id);
-    } catch (error) {
-        res.status(404).json({ error: error });
-    }
+//     try {
+//         await userData.getUserById(req.params.id);
+//     } catch (error) {
+//         res.status(404).json({ error: error });
+//     }
 
-    try {
-        const deleteUser = await userData.removeUser(xss(req.params.id));
-        res.status(200).json(deleteUser);
-    } catch (error) {
-        res.status(500).json({ error: error });
-    }
-});
+//     try {
+//         const deleteUser = await userData.removeUser(xss(req.params.id));
+//         res.status(200).json(deleteUser);
+//     } catch (error) {
+//         res.status(500).json({ error: error });
+//     }
+// });
 
 router.get('/logout', async (req, res) => {
     try {

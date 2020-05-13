@@ -19,7 +19,7 @@ const constructorMethod = (app) => {
     app.use(express.static('public'));
 
     app.use('*', (req, res) => {
-        res.redirect('/');
+        res.status(404).json({ error: 'page not found' });
     });
 };
 
