@@ -240,6 +240,13 @@ const filterBySearch = (tag) => {
     }
     const places = [];
     for (place of store['places']) {
+        if (
+            place.placeName.toLowerCase().includes(tag.toLowerCase()) ||
+            place.description.toLowerCase().includes(tag.toLowerCase())
+        ) {
+            places.push(place);
+            continue;
+        }
         for (cat of place.category) {
             if (cat.toLowerCase() === tag.toLowerCase()) {
                 places.push(place);
