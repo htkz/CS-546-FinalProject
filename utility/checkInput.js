@@ -54,7 +54,7 @@ let exportedMethods = {
     },
 
     checkDate(date) {
-        const re = /\d{4}-\d{2}-\d{2}/;
+        const re = /\d{4}-\d{1,2}-\d{1,2}/;
         return re.test(date);
     },
 

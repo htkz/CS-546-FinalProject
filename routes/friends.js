@@ -11,7 +11,7 @@ router.get('/:id', async (req, res) => {
     try {
         const friend = await friendData.getFriendById(xss(req.params.id));
         res.status(200).json(friend);
-    } catch (e) {
+    } catch (error) {
         res.status(404).json({ error: error });
     }
 });
@@ -50,6 +50,20 @@ router.post('/', async (req, res) => {
     if (!friendInfo.phoneNumber) {
         res.status(400).json({
             error: 'You must provide phoneNumber to create a friend',
+        });
+        return;
+    }
+
+    if (!checkParam.checkEmail(xss(friendInfo.email))) {
+        res.status(400).json({
+            error: 'Not valid email',
+        });
+        return;
+    }
+
+    if (!checkParam.checkPhoneNumber(xss(friendInfo.phoneNumber))) {
+        res.status(400).json({
+            error: 'Not valid phoneNumber',
         });
         return;
     }

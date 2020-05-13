@@ -379,7 +379,6 @@ const buyTicket = async (event) => {
                 user: myself ? userId : '',
                 friends: friends,
             };
-            console.log(persons);
             await $.ajax({
                 url: '/tickets/',
                 type: 'POST',
