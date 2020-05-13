@@ -190,7 +190,6 @@ const renderDetail = async (placeId) => {
             $('#buyTicketModal').modal('show');
         });
         $('#buyTicketForm').submit(buyTicket);
-        // $('#finalConfirmBuyButton').click(buyTicket);
     }
     const date = place.displayTime.split('-');
     const year = parseInt(date[0]);
@@ -199,6 +198,7 @@ const renderDetail = async (placeId) => {
     $('#dateInput').attr('max', `${year + 1}-${month}-${day}`);
     $('#dateInput').attr('min', place.displayTime);
     $('#dateInput').val(place.displayTime);
+    $('#carousel').carousel();
 };
 
 const fetchPlaces = async (store) => {
