@@ -116,6 +116,7 @@ const renderDetail = async (placeId) => {
                                     <ul id="commentList"></ul>
                                 </div>
                                 <div class="inputContainer">
+                                    <label class="sr-only" for="commentInput"></label>
                                     <input class="form-control" type="text" name="commentInput" id="commentInput" placeholder="Add a comment"></input>
                                     <button class="btn btn-outline-primary" id="postBtn" type="submit">
                                         Post
