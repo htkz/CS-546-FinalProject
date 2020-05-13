@@ -290,7 +290,7 @@ const renderUserTickets = async () => {
     $('#self-tickets').empty();
 
     if (tickets.length !== 0) {
-        title = '<h3>User Tickets</h3>';
+        title = '<h3 class="tickets-header">User Tickets</h3>';
         $('#self-tickets').append(title);
     }
     for (ticket of tickets) {
@@ -348,13 +348,10 @@ const renderFriendTickets = async () => {
         url: `/users/tickets/friends/${userId}`,
     });
 
-    console.log(123);
-    console.log(tickets);
-
     $('#friends-tickets').empty();
 
     if (tickets.length !== 0) {
-        title = '<h3>Friend Tickets</h3>';
+        title = '<h3 class="tickets-header">Friend Tickets</h3>';
         $('#friends-tickets').append(title);
     }
 

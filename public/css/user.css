@@ -73,6 +73,8 @@ main {
     display: none;
     max-height: 80vh;
     overflow: scroll; }
+    main .container #tickets .tickets-header {
+      padding: 16px 8px; }
     main .container #tickets .ticket {
       border: 1px solid #ccc;
       padding: 8px 16px;

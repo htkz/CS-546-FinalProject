@@ -94,6 +94,9 @@ main {
             display: none;
             max-height: 80vh;
             overflow: scroll;
+            .tickets-header {
+                padding: 16px 8px;
+            }
             .ticket {
                 border: 1px solid #ccc;
                 padding: 8px 16px;
