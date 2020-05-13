@@ -35,6 +35,10 @@ router.post('/', async (req, res) => {
     const effectDate = requestBody.effectDate;
     const price = requestBody.price;
 
+    if (!persons.friends) {
+        persons.friends = [];
+    }
+
     if (!requestBody) {
         res.status(400).json({
             error: 'You must provide data to create a ticket',
@@ -102,7 +106,10 @@ router.post('/', async (req, res) => {
     }
 
     try {
-        await userData.getUserById(xss(persons.user));
+        if (persons.user.length > 0) {
+            await userData.getUserById(xss(persons.user));
+        }
+
         for (friend of persons.friends) {
             await friendData.getFriendById(friend);
         }
