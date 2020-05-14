@@ -46,8 +46,14 @@ $('#form-signup').submit(async (event) => {
         });
         //console.log(error);
         console.log(error.responseJSON.error);
-        if(error.responseJSON.error === 'The email has been existed, please choose another email') $('#emailRule').removeClass('hidden').addClass('formatRules');
-        else $('#usernameRule').removeClass('hidden').addClass('formatRules');
+        if(error.responseJSON.error === 'The email has been existed, please choose another email' ||
+        error.responseJSON.error === 'Not valid e-mail address') {
+            $('#emailRule').removeClass('hidden').addClass('formatRules');
+        } 
+        if(error.responseJSON.error === 'The user name has been existed, please choose another user name') {
+            $('#usernameRule').removeClass('hidden').addClass('formatRules');
+        }
+ 
     }
 });
 
