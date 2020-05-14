@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     if (req.session.user) {
-        res.render('private/main', { layout: false });
+        res.redirect('/main');
         return;
     }
     res.redirect('/entry');
@@ -19,7 +19,7 @@ router.get('/main', async (req, res) => {
 
 router.get('/entry', async (req, res) => {
     if (req.session.user) {
-        res.render('private/main', { layout: false });
+        res.redirect('/main');
         return;
     }
     res.render('public/entry', { layout: false });

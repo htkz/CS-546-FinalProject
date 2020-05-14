@@ -616,8 +616,8 @@ let friendsData = {};
 
 const checkNewFriendInput = async () => {
     const name = $('#friendNameInput').val().trim();
-    const email = $('#friendEmailInput').val();
-    const phone = $('#friendPhoneInput').val();
+    const email = $('#friendEmailInput').val().trim();
+    const phone = $('#friendPhoneInput').val().trim();
     const reEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
     if (!reEmail.test(email)) {
         await showSwal('error', 'The email format is not valid!');
@@ -636,8 +636,8 @@ const checkNewFriendInput = async () => {
 
 const checkFriendInput = async () => {
     const name = $('#friendName').val().trim();
-    const email = $('#friendEmail').val();
-    const phone = $('#friendPhone').val();
+    const email = $('#friendEmail').val().trim();
+    const phone = $('#friendPhone').val().trim();
     const reEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
     if (!reEmail.test(email)) {
         await showSwal('error', 'The email format is not valid!');
@@ -682,9 +682,9 @@ const renderFriends = async () => {
             $('#friendsList').find('span').removeClass('active');
             $cur.addClass('active');
             const friend = getFriendById($cur.attr('data-id'));
-            $('#friendName').val(friend.name);
-            $('#friendEmail').val(friend.email);
-            $('#friendPhone').val(friend.phoneNumber);
+            $('#friendName').val(friend.name.trim());
+            $('#friendEmail').val(friend.email.trim());
+            $('#friendPhone').val(friend.phoneNumber.trim());
         });
         if (index === 0) {
             $friend.addClass('active');
@@ -734,9 +734,9 @@ const saveFriend = async (event) => {
     }
     if (!(await checkFriendInput())) return;
     const friendId = $(curFriend[0]).attr('data-id');
-    const name = $('#friendName').val();
-    const email = $('#friendEmail').val();
-    const phoneNumber = $('#friendPhone').val();
+    const name = $('#friendName').val().trim();
+    const email = $('#friendEmail').val().trim();
+    const phoneNumber = $('#friendPhone').val().trim();
     try {
         await $.ajax({
             url: `/friends/${friendId}`,
