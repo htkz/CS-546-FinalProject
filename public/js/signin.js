@@ -36,7 +36,7 @@ $('#form-signin').submit(async (event) => {
             icon: 'error',
             title: 'Either password or username is not correct!',
             showConfirmButton: false,
-            timer: 1000
+            timer: 1500,
         });
     }
 });

@@ -183,7 +183,7 @@ const renderDetail = async (placeId) => {
                 icon: 'error',
                 title: 'Sorry, this ticket is sold out!',
                 showConfirmButton: false,
-                timer: 1000,
+                timer: 1500,
             });
         });
     } else {
@@ -339,6 +339,7 @@ const buyTicket = async (event) => {
         await Swal.fire({
             icon: 'error',
             title: 'Please select a time first!',
+            timer: 1500,
         });
         return;
     }
@@ -353,6 +354,7 @@ const buyTicket = async (event) => {
         await Swal.fire({
             icon: 'error',
             title: 'Please select at least one person!',
+            timer: 1500,
         });
         return;
     }
@@ -372,6 +374,7 @@ const buyTicket = async (event) => {
         confirmButtonColor: '#0d7eb1',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, buy it!',
+        timer: 1500,
     });
     if (result.value) {
         try {
@@ -413,7 +416,7 @@ const buyTicket = async (event) => {
                 icon: 'error',
                 title: 'No remain tickets',
                 showConfirmButton: false,
-                timer: 1000,
+                timer: 1500,
             });
         }
     }

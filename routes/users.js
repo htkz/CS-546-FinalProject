@@ -33,7 +33,7 @@ router.post('/account/username', async (req, res) => {
 router.post('/account/email', async (req, res) => {
     let email = req.body.email;
     try {
-        const user = await userData.getUserByUserName(xss(email));
+        const user = await userData.getUserByEmail(xss(email));
         res.status(200).json(user);
     } catch (error) {
         res.status(404).json({ error: `No user with email: ${xss(email)}` });
