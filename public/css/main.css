@@ -2,49 +2,84 @@ ul,
 ol {
   list-style: none;
   padding: 0;
-  margin: 0; }
+  margin: 0;
+}
 
 header .username {
   border: thick;
   color: white;
-  margin-right: 10px; }
+  margin-right: 10px;
+}
 
 header .top-btn {
   color: #9da3a8;
-  background-color: #343a40; }
+  background-color: #343a40;
+}
 
 .tickets {
-  padding: 20px; }
-  .tickets .container .topBar {
-    display: flex; }
-    .tickets .container .topBar .filter {
-      padding: 10px;
-      justify-content: center; }
-    .tickets .container .topBar .search {
-      color: #008a00;
-      background-color: white; }
-  .tickets .container .cards {
-    display: flex;
-    flex-wrap: wrap; }
-    .tickets .container .cards .card {
-      width: 30%;
-      margin: 10px 4px;
-      cursor: pointer; }
-      .tickets .container .cards .card img {
-        height: 200px; }
-      .tickets .container .cards .card .card-bottom {
-        display: flex;
-        justify-content: space-between;
-        padding: 0 20px; }
-        .tickets .container .cards .card .card-bottom .card-info {
-          color: #6c757d; }
-          .tickets .container .cards .card .card-bottom .card-info .category button {
-            margin-right: 4px;
-            margin-top: 4px;
-            margin-bottom: 10px; }
-          .tickets .container .cards .card .card-bottom .card-info .category .category-color {
-            color: white;
-            background-color: #008295; }
+  padding: 20px;
+}
+
+.tickets .container .topBar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.tickets .container .topBar .filter {
+  padding: 10px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.tickets .container .topBar .search {
+  color: #008a00;
+  background-color: white;
+}
+
+.tickets .container .cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.tickets .container .cards .card {
+  width: 30%;
+  margin: 10px 4px;
+  cursor: pointer;
+}
+
+.tickets .container .cards .card img {
+  height: 200px;
+}
+
+.tickets .container .cards .card .card-bottom {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0 20px;
+}
+
+.tickets .container .cards .card .card-bottom .card-info {
+  color: #6c757d;
+}
+
+.tickets .container .cards .card .card-bottom .card-info .category button {
+  margin-right: 4px;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
+.tickets .container .cards .card .card-bottom .card-info .category .category-color {
+  color: white;
+  background-color: #008295;
+}
 
 #buyTicketModal .friendBtn {
   border: 1px solid #6c757d;
@@ -54,83 +89,140 @@ header .top-btn {
   color: #6c757d;
   cursor: pointer;
   padding: 0.2rem 0.75rem;
-  user-select: none; }
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
 
 #buyTicketModal .friendBtn.active {
   color: white;
-  background-color: #6c757d; }
+  background-color: #6c757d;
+}
 
 #buyTicketModal h2 {
-  padding-top: 10px; }
+  padding-top: 10px;
+}
 
 #buyTicketModal .myFriends .friendsContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap; }
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
 
 #buyTicketModal .yourself .yourselfContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap; }
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
 
 #buyTicketModal .btn-primary {
   color: white;
-  background-color: #0072ee; }
+  background-color: #0072ee;
+}
 
 #detailModal .placeDetail img {
-  height: 300px; }
+  height: 300px;
+}
 
 #detailModal .placeDetail .attribute {
-  font-weight: bold; }
+  font-weight: bold;
+}
 
 #detailModal .wrapper .comment {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%; }
-  #detailModal .wrapper .comment .commentContainer h2 {
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 0;
-    padding-bottom: 10px; }
-  #detailModal .wrapper .comment .commentContainer ul {
-    max-height: 400px;
-    overflow: scroll; }
-    #detailModal .wrapper .comment .commentContainer ul li {
-      border-bottom: 1px solid #ccc;
-      padding: 8px 0; }
-      #detailModal .wrapper .comment .commentContainer ul li .username {
-        font-weight: bold; }
-  #detailModal .wrapper .comment .inputContainer {
-    margin-top: 20px;
-    display: flex;
-    align-items: center; }
-    #detailModal .wrapper .comment .inputContainer button {
-      margin-left: 4px;
-      color: #0072ee;
-      background-color: white; }
-    #detailModal .wrapper .comment .inputContainer input {
-      width: 100%;
-      box-shadow: none !important; }
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 100%;
+}
+
+#detailModal .wrapper .comment .commentContainer h2 {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 0;
+  padding-bottom: 10px;
+}
+
+#detailModal .wrapper .comment .commentContainer ul {
+  max-height: 400px;
+  overflow: scroll;
+}
+
+#detailModal .wrapper .comment .commentContainer ul li {
+  border-bottom: 1px solid #ccc;
+  padding: 8px 0;
+}
+
+#detailModal .wrapper .comment .commentContainer ul li .username {
+  font-weight: bold;
+}
+
+#detailModal .wrapper .comment .inputContainer {
+  margin-top: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#detailModal .wrapper .comment .inputContainer button {
+  margin-left: 4px;
+  color: #0072ee;
+  background-color: white;
+}
+
+#detailModal .wrapper .comment .inputContainer input {
+  width: 100%;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
 
 #detailModal .btn-primary {
   color: white;
-  background-color: #0072ee; }
+  background-color: #0072ee;
+}
 
 main {
-  min-height: 100vh; }
+  min-height: 100vh;
+}
 
 .swal2-icon-content {
   color: #cf8400;
-  background-color: white; }
+  background-color: white;
+}
 
 #carousel span.sr-only {
   color: #767676;
-  background-color: white; }
+  background-color: white;
+}
 
 footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  padding: 10px; }
-  footer .content {
-    color: #ccc; }
-    footer .content p {
-      padding: 5px 0;
-      margin: 0; }
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 10px;
+}
+
+footer .content {
+  color: #ccc;
+}
+
+footer .content p {
+  padding: 5px 0;
+  margin: 0;
+}

@@ -2,84 +2,140 @@ ul,
 ol {
   list-style: none;
   padding: 0;
-  margin: 0; }
+  margin: 0;
+}
 
 header .username {
   border: thick;
   color: white;
-  margin-right: 10px; }
+  margin-right: 10px;
+}
 
 .admin {
-  padding: 20px; }
-  .admin .container .topBar {
-    display: flex; }
-    .admin .container .topBar .filter {
-      padding: 10px;
-      justify-content: center; }
-  .admin .container .cards {
-    display: flex;
-    flex-wrap: wrap; }
-    .admin .container .cards .info {
-      position: relative;
-      width: 100%;
-      margin-top: 10px;
-      margin: 10px 4px;
-      cursor: pointer;
-      border: 1px solid rgba(0, 0, 0, 0.125);
-      border-radius: 0.25rem; }
-      .admin .container .cards .info img {
-        width: 300px;
-        margin-bottom: 20px;
-        margin-top: 20px; }
-      .admin .container .cards .info .detail {
-        margin-top: 10px;
-        margin-left: 10px;
-        margin-bottom: 10px; }
-      .admin .container .cards .info .bottom {
-        float: right; }
-        .admin .container .cards .info .bottom .btn {
-          width: 80px;
-          margin-right: 10px;
-          margin-top: 10px;
-          margin-bottom: 10px; }
-      .admin .container .cards .info .commentDeleteBtn {
-        float: right;
-        margin-right: 10px; }
-      .admin .container .cards .info .imageContainer {
-        margin-left: 15px; }
-      .admin .container .cards .info .categoryContainer {
-        margin-left: 15px; }
-      .admin .container .cards .info .commentContainer {
-        margin-left: 15px; }
-  .admin .container .float-button {
-    position: fixed;
-    height: 50px;
-    width: 50px;
-    bottom: 90px;
-    right: 50px;
-    background: #b4d145; }
+  padding: 20px;
+}
+
+.admin .container .topBar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.admin .container .topBar .filter {
+  padding: 10px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.admin .container .cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.admin .container .cards .info {
+  position: relative;
+  width: 100%;
+  margin-top: 10px;
+  margin: 10px 4px;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.admin .container .cards .info img {
+  width: 300px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.admin .container .cards .info .detail {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.admin .container .cards .info .bottom {
+  float: right;
+}
+
+.admin .container .cards .info .bottom .btn {
+  width: 80px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.admin .container .cards .info .commentDeleteBtn {
+  float: right;
+  margin-right: 10px;
+}
+
+.admin .container .cards .info .imageContainer {
+  margin-left: 15px;
+}
+
+.admin .container .cards .info .categoryContainer {
+  margin-left: 15px;
+}
+
+.admin .container .cards .info .commentContainer {
+  margin-left: 15px;
+}
+
+.admin .container .float-button {
+  position: fixed;
+  height: 50px;
+  width: 50px;
+  bottom: 90px;
+  right: 50px;
+  background: #b4d145;
+}
 
 .modal .placeDetail img {
   width: 100%;
-  height: 200px; }
+  height: 200px;
+}
 
 .modal .placeDetail .attribute {
-  font-weight: bold; }
+  font-weight: bold;
+}
 
 .modal .wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between; }
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
 
 main {
-  min-height: 100vh; }
+  min-height: 100vh;
+}
 
 footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  padding: 10px; }
-  footer .content {
-    color: #ccc; }
-    footer .content p {
-      padding: 5px 0;
-      margin: 0; }
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 10px;
+}
+
+footer .content {
+  color: #ccc;
+}
+
+footer .content p {
+  padding: 5px 0;
+  margin: 0;
+}
