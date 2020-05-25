@@ -250,6 +250,7 @@ router.put('/account/update/:id', async (req, res) => {
      address
      zipCode
      bio
+     gender
      */
     if (!userInfo) {
         res.status(400).json({
@@ -339,6 +340,15 @@ router.put('/account/update/:id', async (req, res) => {
         }
     }
 
+    if (
+        userInfo.gender !== 'Male' &&
+        userInfo.gender !== 'Female' &&
+        userInfo.gender !== 'Unknown'
+    ) {
+        res.status(400).json({ error: 'Not valid gender' });
+        return;
+    }
+
     try {
         await userData.getUserById(req.params.id);
     } catch (error) {
@@ -353,7 +363,8 @@ router.put('/account/update/:id', async (req, res) => {
             xss(userInfo.phoneNumber),
             xss(userInfo.address),
             xss(userInfo.zipCode),
-            xss(userInfo.bio)
+            xss(userInfo.bio),
+            xss(userInfo.gender)
         );
         const sessionUser = {
             _id: updatedUser._id,

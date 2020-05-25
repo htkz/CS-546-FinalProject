@@ -64,6 +64,7 @@ let exportedMethods = {
             zipCode: '',
             hashedPassword: hashedPassword,
             bio: '',
+            gender: 'Unknown',
             userTicketInfo: [],
             userComments: [],
             votedComments: [],
@@ -94,7 +95,16 @@ let exportedMethods = {
         return true;
     },
 
-    async updatedUser(id, userName, email, phoneNumber, address, zipCode, bio) {
+    async updatedUser(
+        id,
+        userName,
+        email,
+        phoneNumber,
+        address,
+        zipCode,
+        bio,
+        gender
+    ) {
         const userCollection = await users();
 
         id = await this.checkId(id);
@@ -106,6 +116,7 @@ let exportedMethods = {
             address: address,
             zipCode: zipCode,
             bio: bio,
+            gender: gender,
         };
 
         const updateInfo = await userCollection.updateOne(
