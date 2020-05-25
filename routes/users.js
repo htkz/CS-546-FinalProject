@@ -8,6 +8,17 @@ const friendData = data.friends;
 const utility = require('../utility');
 const checkParam = utility.checkInput;
 const xss = require('xss');
+const multer = require('multer');
+const upload = multer({ dest: './public/pic/avatar' });
+
+
+router.post('/avatar', upload.single('photo'), (req, res) => {
+    try {
+        res.status(200).json(req.file);
+    } catch (error) {
+        res.status(404).json({ error: error });
+    }
+});
 
 router.get('/account/:id', async (req, res) => {
     try {
