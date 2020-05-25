@@ -6,7 +6,7 @@ router.get('/', async (req, res) => {
         res.redirect('/main');
         return;
     }
-    res.redirect('/entry');
+    res.redirect('/visitor');
 });
 
 router.get('/main', async (req, res) => {
@@ -14,7 +14,7 @@ router.get('/main', async (req, res) => {
         res.render('private/main', { layout: false });
         return;
     }
-    res.redirect('/entry');
+    res.redirect('/visitor');
 });
 
 router.get('/entry', async (req, res) => {
@@ -30,8 +30,14 @@ router.get('/user', async (req, res) => {
         res.render('private/user', { layout: false });
         return;
     }
-    res.redirect('/entry');
+    res.redirect('/visitor');
 });
+
+router.get('/visitor', async (req, res) => {
+    res.render('public/visitor', { layout: false });
+});
+
+
 
 // router.get('/admin', async (req, res) => {
 //     if (req.session.user) {
