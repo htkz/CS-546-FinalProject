@@ -6,23 +6,23 @@ const placeData = data.places;
 const userData = data.users;
 const xss = require('xss');
 
-// router.get('/:id', async (req, res) => {
-//     try {
-//         const comment = await commentData.getCommentById(xss(req.params.id));
-//         res.status(200).json(comment);
-//     } catch (error) {
-//         res.status(404).json({ error: error });
-//     }
-// });
+router.get('/:id', async (req, res) => {
+    try {
+        const comment = await commentData.getCommentById(xss(req.params.id));
+        res.status(200).json(comment);
+    } catch (error) {
+        res.status(404).json({ error: error });
+    }
+});
 
-// router.get('/', async (req, res) => {
-//     try {
-//         const commentList = await commentData.getAllComments();
-//         res.status(200).json(commentList);
-//     } catch (error) {
-//         res.status(500).json({ error: error });
-//     }
-// });
+router.get('/', async (req, res) => {
+    try {
+        const commentList = await commentData.getAllComments();
+        res.status(200).json(commentList);
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+});
 
 router.post('/', async (req, res) => {
     let commentInfo = req.body;
