@@ -11,7 +11,6 @@ const xss = require('xss');
 const multer = require('multer');
 const upload = multer({ dest: './public/pic/avatar' });
 
-
 router.post('/avatar', upload.single('photo'), (req, res) => {
     try {
         res.status(200).json(req.file);
@@ -454,25 +453,25 @@ router.put('/account/password/:id', async (req, res) => {
     }
 });
 
-// router.delete('/:id', async (req, res) => {
-//     if (!req.params.id) {
-//         res.status(400).json({ error: 'You must specify an ID to delete' });
-//         return;
-//     }
+router.delete('/:id', async (req, res) => {
+    if (!req.params.id) {
+        res.status(400).json({ error: 'You must specify an ID to delete' });
+        return;
+    }
 
-//     try {
-//         await userData.getUserById(req.params.id);
-//     } catch (error) {
-//         res.status(404).json({ error: error });
-//     }
+    try {
+        await userData.getUserById(req.params.id);
+    } catch (error) {
+        res.status(404).json({ error: error });
+    }
 
-//     try {
-//         const deleteUser = await userData.removeUser(xss(req.params.id));
-//         res.status(200).json(deleteUser);
-//     } catch (error) {
-//         res.status(500).json({ error: error });
-//     }
-// });
+    try {
+        const deleteUser = await userData.removeUser(xss(req.params.id));
+        res.status(200).json(deleteUser);
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+});
 
 router.get('/logout', async (req, res) => {
     try {

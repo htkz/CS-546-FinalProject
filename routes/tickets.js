@@ -8,14 +8,14 @@ const utility = require('../utility');
 const checkParam = utility.checkInput;
 const xss = require('xss');
 
-// router.get('/:id', async (req, res) => {
-//     try {
-//         const ticket = await ticketData.getTicketById(xss(req.params.id));
-//         res.status(200).json(ticket);
-//     } catch (e) {
-//         res.status(404).json({ error: error });
-//     }
-// });
+router.get('/:id', async (req, res) => {
+    try {
+        const ticket = await ticketData.getTicketById(xss(req.params.id));
+        res.status(200).json(ticket);
+    } catch (e) {
+        res.status(404).json({ error: error });
+    }
+});
 
 router.get('/', async (req, res) => {
     try {

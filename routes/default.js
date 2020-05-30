@@ -37,14 +37,12 @@ router.get('/visitor', async (req, res) => {
     res.render('public/visitor', { layout: false });
 });
 
-
-
-// router.get('/admin', async (req, res) => {
-//     if (req.session.user) {
-//         res.render('admin/admin', { layout: false });
-//         return;
-//     }
-//     res.redirect('/entry');
-// });
+router.get('/admin', async (req, res) => {
+    if (req.session.user) {
+        res.render('admin/admin', { layout: false });
+        return;
+    }
+    res.redirect('/entry');
+});
 
 module.exports = router;
