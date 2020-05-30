@@ -9,7 +9,18 @@ const utility = require('../utility');
 const checkParam = utility.checkInput;
 const xss = require('xss');
 const multer = require('multer');
-const upload = multer({ dest: './public/pic/avatar' });
+// const upload = multer({ dest: './public/pic/avatar' });
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/pic/avatar')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now())
+    }
+  })
+   
+const upload = multer({ storage: storage })
 
 router.post('/avatar', upload.single('photo'), (req, res) => {
     try {
