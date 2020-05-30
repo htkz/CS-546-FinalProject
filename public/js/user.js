@@ -39,7 +39,8 @@ const infoPreload = async () => {
     const zipCode = userData.zipCode;
     const bio = userData.bio;
     const gender = userData.gender;
-    console.log(gender);
+    const birthDate = userData.birthDate;
+    datePreload();
 
     $('#form-username').val(userName);
     $('#form-email').val(email);
@@ -48,6 +49,18 @@ const infoPreload = async () => {
     if (zipCode) $('#form-zipcode').val(zipCode);
     if (bio) $('#form-bio').val(bio);
     $('#form-gender').val(gender);
+    $('#form-birthdate').val(birthDate);
+};
+
+const datePreload = () => {
+    let today = new Date();
+    let day = today.getDate();
+    let month = today.getMonth() + 1;
+    let year = today.getFullYear();
+    if (day < 10) day = '0' + day;
+    if (month < 10) month = '0' + month;
+    today = year + '-' + month + '-' + day;
+    $('#form-birthdate').attr("max",today);
 };
 
 const infoSubmit = async (event) => {
@@ -82,6 +95,8 @@ const infoSubmit = async (event) => {
     const inputZip = $('#form-zipcode').val();
     const bio = $('#form-bio').val();
     const gender = $('#form-gender').val();
+    const birthDate = $('#form-birthdate').val();
+    console.log(birthDate);
 
     let newInfo = {
         userName: userName,
@@ -90,7 +105,8 @@ const infoSubmit = async (event) => {
         address: inputAddress,
         zipCode: zipCode,
         bio: bio,
-        gender: gender
+        gender: gender,
+        birthDate: birthDate,
     };
 
     let inputCheck = true;
@@ -136,8 +152,6 @@ const infoSubmit = async (event) => {
         showSwal('error', 'Opps! Something went wrong!');
         return;
     }
-
-    console.log(newInfo);
 
     await $.ajax({
         url: `/users/account/update/${userId}`,
