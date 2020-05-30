@@ -146,22 +146,21 @@
                 </form>
             </div>
             <div id="infopage">
-                <form class="personalinfoPage" id="personalInfo">
-                    {{!-- Photo Upload Section --}}
-                    <div class="row mt-5">
-                        <div class="col-4 ml-3 aside">
-                            <div class="imgCover">
-                                <img src="../../public/pic/IMG_0273.jpeg" class="img" alt="Profile Photo">
-                            </div>
-                        </div>
-                        <div class="input-group col-5">
-                            <form action="/users/avatar" method="post" enctype="multipart/form-data">
-                                <input class="form-control-file" type="file" accept="image/*" name="photo" >
-                                <input class="btn btn-primary btn-sm mt-3" type="submit" value="upload">
-                            </form>
+                <div class="row mt-5 upload-container">
+                    <div class="col-4 ml-3 aside">
+                        <div class="imgCover">
+                            <img src="../../public/pic/IMG_0273.jpeg" class="img" alt="Profile Photo">
                         </div>
                     </div>
-                    {{!-- Username --}}
+                    <div class="input-group col-5">
+                        <form action="/users/avatar" method="post" id="imageUploadForm" enctype="multipart/form-data">
+                            <p class="username">htkzmo</p>
+                            <p class="changeAvatarBtn">Change Avatar</p>
+                            <input class="form-control-file d-none" type="file" id="imageUpload" accept="image/*" name="photo" >
+                        </form>
+                    </div>
+                </div>
+                <form class="personalinfoPage" id="personalInfo">
                     <div class="row mt-3">
                         <div class="col-4 ml-3 aside">
                             <label for="form-username">Username</label>

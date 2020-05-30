@@ -191,6 +191,23 @@ main .container #password #changePasswordBtn[disabled] {
   border: 1px solid #0026b2;
 }
 
+main .container #infopage .upload-container .imgCover {
+  margin-left: auto;
+}
+
+main .container #infopage .upload-container form#imageUploadForm .username {
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+main .container #infopage .upload-container form#imageUploadForm .changeAvatarBtn {
+  color: #0095f6;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
 main .container #infopage .formatRules {
   height: auto;
   color: #ee0000;
@@ -214,6 +231,7 @@ main .container #infopage .imgCover {
   height: 64px;
   width: 64px;
   margin-left: auto;
+  margin-bottom: 0;
 }
 
 main .container #infopage .imgCover .img {
