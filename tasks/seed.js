@@ -91,7 +91,7 @@ const main = async () => {
 
     const user5 = await users.addUser('Xunzhi', 'lixun@gmail.com', 'Tt123456');
 
-    // const admin = await users.addUser('Admin', 'admin@group13.com', 'Qq123456');
+    const admin = await users.addUser('Admin', 'admin@group13.com', 'Qq123456');
 
     // add friend
     const friend1 = await friends.addFriend(

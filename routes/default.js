@@ -42,7 +42,7 @@ router.get('/admin', async (req, res) => {
         res.render('admin/admin', { layout: false });
         return;
     }
-    res.redirect('/entry');
+    res.redirect('/visitor');
 });
 
 module.exports = router;
