@@ -88,14 +88,14 @@ router.post('/account/login', async (req, res) => {
     }
 });
 
-// router.get('/', async (req, res) => {
-//     try {
-//         const userList = await userData.getAllUsers();
-//         res.status(200).json(userList);
-//     } catch (error) {
-//         res.status(500).json({ error: error });
-//     }
-// });
+router.get('/', async (req, res) => {
+    try {
+        const userList = await userData.getAllUsers();
+        res.status(200).json(userList);
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+});
 
 router.get('/tickets/:id', async (req, res) => {
     try {
@@ -362,8 +362,8 @@ router.put('/account/update/:id', async (req, res) => {
     }
 
     //check birthDate field
-    if(!userInfo.birthDate){
-        res.status(400).json({error: ''})
+    if (!userInfo.birthDate) {
+        res.status(400).json({ error: '' });
     }
     try {
         await userData.getUserById(req.params.id);
