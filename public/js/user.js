@@ -62,7 +62,7 @@ const infoPreload = async () => {
     const bio = userData.bio;
     const gender = userData.gender;
     const birthDate = userData.birthDate;
-    datePreload();
+    birthDatePreload();
 
     $('#form-username').val(userName);
     $('#form-email').val(email);
@@ -71,18 +71,22 @@ const infoPreload = async () => {
     if (zipCode) $('#form-zipcode').val(zipCode);
     if (bio) $('#form-bio').val(bio);
     $('#form-gender').val(gender);
-    $('#form-birthdate').val(birthDate);
+    if (birthDate) $('#form-birthdate').val(birthDate);
 };
 
-const datePreload = () => {
-    let today = new Date();
+const birthDatePreload = () => {
+    const min = '1900-01-01';
+    const today = new Date();
     let day = today.getDate();
     let month = today.getMonth() + 1;
-    let year = today.getFullYear();
+    const year = today.getFullYear();
     if (day < 10) day = '0' + day;
     if (month < 10) month = '0' + month;
-    today = year + '-' + month + '-' + day;
-    $('#form-birthdate').attr("max",today);
+    const max = year + '-' + month + '-' + day;
+    $('#form-birthdate').attr({
+        min: min,
+        max: max,
+    });
 };
 
 const infoSubmit = async (event) => {
