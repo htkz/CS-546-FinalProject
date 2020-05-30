@@ -373,9 +373,13 @@ router.put('/account/update/:id', async (req, res) => {
     }
 
     //check birthDate field
-    if (!userInfo.birthDate) {
-        res.status(400).json({ error: '' });
+    if (!checkParam.checkDate(userInfo.birthDate)) {
+        res.status(400).json({
+            error: 'Not valid effect birth date',
+        });
+        return;
     }
+
     try {
         await userData.getUserById(req.params.id);
     } catch (error) {
