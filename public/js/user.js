@@ -27,6 +27,28 @@ const renderUsername = () => {
 };
 
 // psersonal info
+
+const uploadAvatar = async (event) => {
+    event.preventDefault();
+    const avatar = $('#imageUpload')[0].files[0];
+    var formData = new FormData();
+    formData.append('photo', avatar);
+    formData.append('name', '123');
+    $.ajax({
+        type: 'POST',
+        url: '/users/avatar',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (r) {
+            showSwal('success', 'Aready updated avatar');
+        },
+        error: function (e) {
+            showSwal('error', 'Image upload error!');
+        },
+    });
+};
+
 const infoPreload = async () => {
     const userData = await $.ajax({
         url: `/users/account/${userId}`,
@@ -90,7 +112,7 @@ const infoSubmit = async (event) => {
         address: inputAddress,
         zipCode: zipCode,
         bio: bio,
-        gender: gender
+        gender: gender,
     };
 
     let inputCheck = true;
@@ -775,6 +797,13 @@ const bindEvents = async () => {
     $('#re-enter-password').bind('input propertychange', checkPasswordEmpty);
     // personalinfo submit
     $('#personalInfo').submit(infoSubmit);
+    $('.changeAvatarBtn').click(() => {
+        $('#imageUpload').click();
+    });
+    $('#imageUpload').on('change', () => {
+        $('#imageUploadForm').submit();
+    });
+    $('#imageUploadForm').submit(uploadAvatar);
     // password submit
     $('#changePasswordBtn').click(changePassword);
     // payment submit

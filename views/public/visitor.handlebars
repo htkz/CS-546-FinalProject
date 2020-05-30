@@ -24,6 +24,10 @@
         </div>
     </header>
     <main>
+        <form action="/users/avatar" method="post" enctype="multipart/form-data">
+            <input class="form-control-file" type="file" accept="image/*" name="photo" >
+            <input class="btn mt-3" type="submit" value="upload">
+        </form>
         <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-hidden="true">
             <!-- to be rendered with data -->
         </div>
