@@ -262,6 +262,7 @@ router.put('/account/update/:id', async (req, res) => {
      zipCode
      bio
      gender
+     birthDate
      */
     if (!userInfo) {
         res.status(400).json({
@@ -351,6 +352,7 @@ router.put('/account/update/:id', async (req, res) => {
         }
     }
 
+    //check gender field
     if (
         userInfo.gender !== 'Male' &&
         userInfo.gender !== 'Female' &&
@@ -360,6 +362,10 @@ router.put('/account/update/:id', async (req, res) => {
         return;
     }
 
+    //check birthDate field
+    if(!userInfo.birthDate){
+        res.status(400).json({error: ''})
+    }
     try {
         await userData.getUserById(req.params.id);
     } catch (error) {

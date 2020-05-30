@@ -213,7 +213,7 @@ main .container #infopage .btn-primary {
 main .container #infopage .imgCover {
   height: 64px;
   width: 64px;
-  margin-bottom: 0;
+  margin-left: auto;
 }
 
 main .container #infopage .imgCover .img {

@@ -70,6 +70,7 @@ let exportedMethods = {
             votedComments: [],
             friends: [],
             bankCard: '',
+            birthDate: ''
         };
 
         const insertInfo = await userCollection.insertOne(newUser);
@@ -103,7 +104,8 @@ let exportedMethods = {
         address,
         zipCode,
         bio,
-        gender
+        gender,
+        birthDate
     ) {
         const userCollection = await users();
 
@@ -117,6 +119,7 @@ let exportedMethods = {
             zipCode: zipCode,
             bio: bio,
             gender: gender,
+            birthDate: birthDate
         };
 
         const updateInfo = await userCollection.updateOne(
