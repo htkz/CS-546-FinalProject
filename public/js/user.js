@@ -57,7 +57,7 @@ const infoPreload = async () => {
     const gender = userData.gender;
     const birthDate = userData.birthDate;
     //birthDatePreload(birthDate);
-    userBarPreload();
+    userBarPreload(userName, birthDate, gender);
 
     $('#form-username').val(userName);
     $('#form-email').val(email);
@@ -67,6 +67,12 @@ const infoPreload = async () => {
     if (bio) $('#form-bio').val(bio);
     $('#form-gender').val(gender);
     if (birthDate) $('#form-birthdate').val(birthDate);
+};
+
+const userBarPreload = (userName, birthDate, gender) => {
+    $('#username').text(userName);
+    $('#userbar-name').text(userName);
+    $('#userbar-age_gender').text(birthDatePreload(birthDate)+' '+gender);
 };
 
 const birthDatePreload = (birthDate) => {
@@ -82,17 +88,12 @@ const birthDatePreload = (birthDate) => {
         min: min,
         max: max,
     });
+    if(!birthDate) return "???";
     const yr = parseInt(birthDate.substring(0, 4));
-    const mh = parseInt(birthDate.substring(5, 7))-1;
+    const mh = parseInt(birthDate.substring(5, 7)) - 1;
     const dy = parseInt(birthDate.substring(8, 10));
-    const age = ageCaculator(new Date(yr,mh,dy));
+    const age = ageCaculator(new Date(yr, mh, dy));
     return age;
-};
-
-const userBarPreload = (birthDate, gender) => {
-    userInfo = JSON.parse(Cookies.get('user'));
-    userId = userInfo['_id'];
-    $('#username').text(userInfo['userName']);
 };
 
 const ageCaculator = (birthDate) => {
@@ -189,13 +190,14 @@ const infoSubmit = async (event) => {
         return;
     }
 
+    userBarPreload(newInfo.userName, newInfo.birthDate, newInfo.gender);
+
     await $.ajax({
         url: `/users/account/update/${userId}`,
         type: 'PUT',
         data: newInfo,
     });
 
-    userBarPreload();
     showSwal('success', 'Update success!');
 };
 
