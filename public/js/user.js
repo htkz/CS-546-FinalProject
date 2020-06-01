@@ -122,7 +122,6 @@ const infoSubmit = async (event) => {
     const bio = $('#form-bio').val();
     const gender = $('#form-gender').val();
     const birthDate = $('#form-birthdate').val();
-    console.log(birthDate);
 
     let newInfo = {
         userName: userName,
