@@ -172,6 +172,7 @@ const renderDetail = async (placeId) => {
             <li>
                 <span class="username">${comment.user}</span>:
                 <span class="content">${comment.comment}</span>
+                <div class="upvote"><i></i></div>
             </li>`);
         $commentList.append($comment);
     }
