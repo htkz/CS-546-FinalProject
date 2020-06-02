@@ -64,13 +64,14 @@ let exportedMethods = {
             zipCode: '',
             hashedPassword: hashedPassword,
             bio: '',
-            gender: 'Unknown',
+            gender: '',
+            birthDate: '',
+            avatar: '',
             userTicketInfo: [],
             userComments: [],
             votedComments: [],
             friends: [],
             bankCard: '',
-            birthDate: ''
         };
 
         const insertInfo = await userCollection.insertOne(newUser);
@@ -105,7 +106,8 @@ let exportedMethods = {
         zipCode,
         bio,
         gender,
-        birthDate
+        birthDate,
+        avatar
     ) {
         const userCollection = await users();
 
@@ -119,7 +121,8 @@ let exportedMethods = {
             zipCode: zipCode,
             bio: bio,
             gender: gender,
-            birthDate: birthDate
+            birthDate: birthDate,
+            avatar: avatar,
         };
 
         const updateInfo = await userCollection.updateOne(

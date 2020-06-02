@@ -13,14 +13,14 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './public/pic/avatar')
+        cb(null, './public/pic/avatar');
     },
     filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now())
-    }
-  })
-   
-const upload = multer({ storage: storage })
+        cb(null, file.fieldname + '-' + Date.now());
+    },
+});
+
+const upload = multer({ storage: storage });
 
 router.post('/avatar', upload.single('photo'), (req, res) => {
     try {
@@ -396,7 +396,7 @@ router.put('/account/update/:id', async (req, res) => {
             xss(userInfo.zipCode),
             xss(userInfo.bio),
             xss(userInfo.gender),
-            xss(userInfo.birthDate),
+            xss(userInfo.birthDate)
         );
         const sessionUser = {
             _id: updatedUser._id,
