@@ -26,7 +26,6 @@ let exportedMethods = {
     },
 
     checkPassword(password) {
-        // const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/;
         const re = /^[0-9a-zA-Z]*$/;
         if (!re.test(password)) {
             return false;
@@ -77,8 +76,14 @@ let exportedMethods = {
             month > 12 ||
             day < 1 ||
             day > 31
-        ) return false;
+        )
+            return false;
         return true;
+    },
+
+    checkImage(image) {
+        const re = /(.*)\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$/;
+        return re.test(image);
     },
 };
 

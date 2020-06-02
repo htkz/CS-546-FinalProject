@@ -309,6 +309,23 @@ let exportedMethods = {
         return await this.getUserById(id);
     },
 
+    async updatedAvatar(id, avatar) {
+        const userCollection = await users();
+
+        id = await this.checkId(id);
+
+        const updateAvatarInfo = await userCollection.updateOne(
+            { _id: id },
+            { $set: { avatar: avatar } }
+        );
+
+        if (!updateAvatarInfo.matchedCount && !updateAvatarInfo.modifiedCount) {
+            throw `updateAvatar Update failed by id: ${id}`;
+        }
+
+        return await this.getUserById(id);
+    },
+
     async checkId(id) {
         try {
             if (typeof id == 'string') {

@@ -21,9 +21,18 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/avatar', upload.single('photo'), (req, res) => {
+router.post('/avatar', upload.single('photo'), async (req, res) => {
     try {
-        res.status(200).json(req.file);
+        // check avatar field
+        if (!checkParam.checkImage(req.file)) {
+            res.status(400).json({ error: 'Not valid avatar formate' });
+            return;
+        }
+        const updatedAvator = await userData.updatedAvatar(
+            xss(req.body.id),
+            xss(req.file)
+        );
+        res.status(200).json(updatedAvator);
     } catch (error) {
         res.status(404).json({ error: error });
     }
@@ -373,9 +382,7 @@ router.put('/account/update/:id', async (req, res) => {
 
     //check birthDate field
     if (!checkParam.checkBirthDate(userInfo.birthDate)) {
-        res.status(400).json({
-            error: 'Not valid effect birth date',
-        });
+        res.status(400).json({ error: 'Not valid effect birth date' });
         return;
     }
 
