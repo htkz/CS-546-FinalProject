@@ -133,6 +133,16 @@ header {
                         .username {
                             font-weight: bold;
                         }
+                        i {
+                            background: url('../pic/upvote.png');
+                            width: 16px;
+                            height: 16px;
+                            cursor: pointer;
+                            display: inline-block;
+                            &:hover {
+                                background: url('../pic/upvote-hover.png');
+                            }
+                        }
                     }
                 }
             }

@@ -20,12 +20,6 @@ const logout = async (event) => {
     window.location.replace('/entry');
 };
 
-const renderUsername = () => {
-    userInfo = JSON.parse(Cookies.get('user'));
-    userId = userInfo['_id'];
-    $('#username').text(userInfo['userName']);
-};
-
 // psersonal info
 
 const uploadAvatar = async (event) => {
@@ -62,7 +56,8 @@ const infoPreload = async () => {
     const bio = userData.bio;
     const gender = userData.gender;
     const birthDate = userData.birthDate;
-    birthDatePreload();
+    //birthDatePreload(birthDate);
+    userBarPreload(userName, birthDate, gender);
 
     $('#form-username').val(userName);
     $('#form-email').val(email);
@@ -74,7 +69,13 @@ const infoPreload = async () => {
     if (birthDate) $('#form-birthdate').val(birthDate);
 };
 
-const birthDatePreload = () => {
+const userBarPreload = (userName, birthDate, gender) => {
+    $('#username').text(userName);
+    $('#userbar-name').text(userName);
+    $('#userbar-age_gender').text(birthDatePreload(birthDate)+' '+gender);
+};
+
+const birthDatePreload = (birthDate) => {
     const min = '1900-01-01';
     const today = new Date();
     let day = today.getDate();
@@ -87,6 +88,17 @@ const birthDatePreload = () => {
         min: min,
         max: max,
     });
+    if(!birthDate) return "???";
+    const yr = parseInt(birthDate.substring(0, 4));
+    const mh = parseInt(birthDate.substring(5, 7)) - 1;
+    const dy = parseInt(birthDate.substring(8, 10));
+    const age = ageCaculator(new Date(yr, mh, dy));
+    return age;
+};
+
+const ageCaculator = (birthDate) => {
+    const diff = new Date().getTime() - birthDate.getTime();
+    return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
 };
 
 const infoSubmit = async (event) => {
@@ -122,7 +134,6 @@ const infoSubmit = async (event) => {
     const bio = $('#form-bio').val();
     const gender = $('#form-gender').val();
     const birthDate = $('#form-birthdate').val();
-    console.log(birthDate);
 
     let newInfo = {
         userName: userName,
@@ -179,13 +190,14 @@ const infoSubmit = async (event) => {
         return;
     }
 
+    userBarPreload(newInfo.userName, newInfo.birthDate, newInfo.gender);
+
     await $.ajax({
         url: `/users/account/update/${userId}`,
         type: 'PUT',
         data: newInfo,
     });
 
-    renderUsername();
     showSwal('success', 'Update success!');
 };
 
@@ -837,7 +849,6 @@ const init = async () => {
     infoPreload();
     renderUserTickets();
     renderFriendTickets();
-    renderUsername();
     renderPayment();
     renderFriends();
     bindEvents();

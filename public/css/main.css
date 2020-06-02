@@ -167,6 +167,18 @@ header .top-btn {
   font-weight: bold;
 }
 
+#detailModal .wrapper .comment .commentContainer ul li i {
+  background: url("../pic/upvote.png");
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+#detailModal .wrapper .comment .commentContainer ul li i:hover {
+  background: url("../pic/upvote-hover.png");
+}
+
 #detailModal .wrapper .comment .inputContainer {
   margin-top: 20px;
   display: -webkit-box;

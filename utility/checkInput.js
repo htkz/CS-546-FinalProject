@@ -62,6 +62,24 @@ let exportedMethods = {
         const re = /^\d+$/;
         return re.test(price);
     },
+
+    checkBirthDate(date) {
+        const re = /\d{4}-\d{2}-\d{2}/;
+        if (!re.test(date)) return false;
+        const year = parseInt(date.substring(0, 4));
+        const month = parseInt(date.substring(5, 7));
+        const day = parseInt(date.substring(8, 10));
+        const nowYear = new Date().getFullYear();
+        if (
+            year < 1900 ||
+            year > nowYear ||
+            month < 1 ||
+            month > 12 ||
+            day < 1 ||
+            day > 31
+        ) return false;
+        return true;
+    },
 };
 
 module.exports = exportedMethods;

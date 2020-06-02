@@ -149,12 +149,17 @@
                 <div class="row mt-5 upload-container">
                     <div class="col-4 ml-3 aside">
                         <div class="imgCover">
-                            <img src="../../public/pic/IMG_0273.jpeg" class="img" alt="Profile Photo">
+                            <img src="./pic/IMG_0273.jpeg" class="img" id="avatar" alt="Profile Photo">
                         </div>
                     </div>
                     <div class="input-group col-5">
                         <form action="/users/avatar" method="post" id="imageUploadForm" enctype="multipart/form-data">
-                            <p class="username">htkzmo</p>
+                            <div class="userbar-name" id="userbar-name">
+                                userid
+                            </div>
+                            <div class="userbar-age&gender" id="userbar-age_gender">
+                                age
+                            </div>  
                             <p class="changeAvatarBtn">Change Avatar</p>
                             <input class="form-control-file d-none" type="file" id="imageUpload" accept="image/*" name="photo" >
                         </form>

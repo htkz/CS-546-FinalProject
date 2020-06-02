@@ -172,6 +172,7 @@ const renderDetail = async (placeId) => {
             <li>
                 <span class="username">${comment.user}</span>:
                 <span class="content">${comment.comment}</span>
+                <div class="upvote"><i></i></div>
             </li>`);
         $commentList.append($comment);
     }
@@ -329,7 +330,13 @@ const postComment = async (event) => {
     });
     $('#commentInput').val('');
     await refreshPlaces();
-    refreshComment(placeId);
+    await refreshComment(placeId);
+    $('#commentList').animate(
+        {
+            scrollTop: '99999',
+        },
+        500
+    );
 };
 
 const buyTicket = async (event) => {
