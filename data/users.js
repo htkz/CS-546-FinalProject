@@ -69,7 +69,8 @@ let exportedMethods = {
             avatar: '',
             userTicketInfo: [],
             userComments: [],
-            votedComments: [],
+            upVotedComments: [],
+            downVotedComments: [],
             friends: [],
             bankCard: '',
         };
@@ -173,37 +174,59 @@ let exportedMethods = {
         return await this.getUserById(userId);
     },
 
-    async addVotedCommentToUser(userId, votedCommentsId) {
+    async addVotedCommentToUser(userId, votedCommentsId, type) {
         const userCollection = await users();
 
         userId = await this.checkId(userId);
         votedCommentsId = await this.checkId(votedCommentsId);
 
-        const updatedInfo = await userCollection.updateOne(
-            { _id: userId },
-            { $addToSet: { votedComments: votedCommentsId.toString() } }
-        );
+        if (type === 'up') {
+            const updatedInfo = await userCollection.updateOne(
+                { _id: userId },
+                { $addToSet: { upVotedComments: votedCommentsId.toString() } }
+            );
 
-        if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
-            throw `addVotedCommentToUser Update failed by id: ${userId}`;
+            if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
+                throw `addVotedCommentToUser Update failed by id: ${userId}`;
+            }
+        } else if (type === 'down') {
+            const updatedInfo = await userCollection.updateOne(
+                { _id: userId },
+                { $addToSet: { downVotedComments: votedCommentsId.toString() } }
+            );
+
+            if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
+                throw `addVotedCommentToUser Update failed by id: ${userId}`;
+            }
         }
 
         return await this.getUserById(userId);
     },
 
-    async removeVodedCommentFromUser(userId, votedCommentsId) {
+    async removeVotedCommentFromUser(userId, votedCommentsId, type) {
         const userCollection = await users();
 
         userId = await this.checkId(userId);
         votedCommentsId = await this.checkId(votedCommentsId);
 
-        const deletedInfo = await userCollection.updateOne(
-            { _id: userId },
-            { $pull: { votedComments: votedCommentsId.toString() } }
-        );
+        if (type === 'up') {
+            const deletedInfo = await userCollection.updateOne(
+                { _id: userId },
+                { $pull: { upVotedComments: votedCommentsId.toString() } }
+            );
 
-        if (!deletedInfo.matchedCount && !deletedInfo.modifiedCount) {
-            throw `removeVodedCommentFromUser Update failed by id: ${userId}`;
+            if (!deletedInfo.matchedCount && !deletedInfo.modifiedCount) {
+                throw `removeVodedCommentFromUser Update failed by id: ${userId}`;
+            }
+        } else if (type === 'down') {
+            const deletedInfo = await userCollection.updateOne(
+                { _id: userId },
+                { $pull: { downVotedComments: votedCommentsId.toString() } }
+            );
+
+            if (!deletedInfo.matchedCount && !deletedInfo.modifiedCount) {
+                throw `removeVodedCommentFromUser Update failed by id: ${userId}`;
+            }
         }
 
         return await this.getUserById(userId);

@@ -75,19 +75,13 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+// upvote comment
+router.put('/upvote/:id', async (req, res) => {
     const requestBody = req.body;
 
     if (!requestBody) {
         res.status(400).json({
             error: 'You must provide data to update a comment',
-        });
-        return;
-    }
-
-    if (!requestBody.votedCount) {
-        res.status(400).json({
-            error: 'You must provide votedCount to update a comment',
         });
         return;
     }
@@ -109,8 +103,119 @@ router.put('/:id', async (req, res) => {
     try {
         const updatedComment = await commentData.updateComment(
             xss(req.params.id),
-            xss(requestBody.votedCount),
-            xss(requestBody.votedUserId)
+            xss(requestBody.votedUserId),
+            xss('up')
+        );
+        res.status(200).json(updatedComment);
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+});
+
+// cancel upvote comment
+router.put('/cancelupvote/:id', async (req, res) => {
+    const requestBody = req.body;
+
+    if (!requestBody) {
+        res.status(400).json({
+            error: 'You must provide data to update a comment',
+        });
+        return;
+    }
+
+    if (!requestBody.votedUserId) {
+        res.status(400).json({
+            error: 'You must provide votedUserId to update a comment',
+        });
+        return;
+    }
+
+    try {
+        await commentData.getCommentById(req.params.id);
+    } catch (error) {
+        res.status(404).json({ error: error });
+        return;
+    }
+
+    try {
+        const updatedComment = await commentData.updateCancelComment(
+            xss(req.params.id),
+            xss(requestBody.votedUserId),
+            xss('down')
+        );
+        res.status(200).json(updatedComment);
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+});
+
+// downvote comment
+router.put('/downvote/:id', async (req, res) => {
+    const requestBody = req.body;
+
+    if (!requestBody) {
+        res.status(400).json({
+            error: 'You must provide data to update a comment',
+        });
+        return;
+    }
+
+    if (!requestBody.votedUserId) {
+        res.status(400).json({
+            error: 'You must provide votedUserId to update a comment',
+        });
+        return;
+    }
+
+    try {
+        await commentData.getCommentById(req.params.id);
+    } catch (error) {
+        res.status(404).json({ error: error });
+        return;
+    }
+
+    try {
+        const updatedComment = await commentData.updateComment(
+            xss(req.params.id),
+            xss(requestBody.votedUserId),
+            xss('up')
+        );
+        res.status(200).json(updatedComment);
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+});
+
+// cancel downvote comment
+router.put('/canceldownvote/:id', async (req, res) => {
+    const requestBody = req.body;
+
+    if (!requestBody) {
+        res.status(400).json({
+            error: 'You must provide data to update a comment',
+        });
+        return;
+    }
+
+    if (!requestBody.votedUserId) {
+        res.status(400).json({
+            error: 'You must provide votedUserId to update a comment',
+        });
+        return;
+    }
+
+    try {
+        await commentData.getCommentById(req.params.id);
+    } catch (error) {
+        res.status(404).json({ error: error });
+        return;
+    }
+
+    try {
+        const updatedComment = await commentData.updateCancelComment(
+            xss(req.params.id),
+            xss(requestBody.votedUserId),
+            xss('down')
         );
         res.status(200).json(updatedComment);
     } catch (error) {
