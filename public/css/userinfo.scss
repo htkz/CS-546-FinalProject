@@ -1,0 +1,57 @@
+.hidden {
+    display: none;
+}
+
+header {
+    .username {
+        border: thick;
+        color: white;
+        margin-right: 10px;
+    }
+    .top-btn {
+        color: rgb(157, 163, 168);
+        background-color: rgb(52, 58, 64);
+    }
+}
+
+body {
+    font-size: 14px;
+}
+
+div {
+    border: solid;
+    border-color: red;
+    .container-xl {
+        max-width: 1280px;
+    }
+    .userNavBar{
+        height: 55px;
+    }
+    .userContainer{
+        height: fit-content;
+    }
+}
+
+img {
+    .avatar {
+        width: 260;
+        height: 260;
+    }
+}
+
+main {
+    min-height: 100vh;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    .content {
+        color: #ccc;
+        p {
+            padding: 5px 0;
+            margin: 0;
+        }
+    }
+}

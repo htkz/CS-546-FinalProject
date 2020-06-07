@@ -1,0 +1,65 @@
+.hidden {
+  display: none;
+}
+
+header .username {
+  border: thick;
+  color: white;
+  margin-right: 10px;
+}
+
+header .top-btn {
+  color: #9da3a8;
+  background-color: #343a40;
+}
+
+body {
+  font-size: 14px;
+}
+
+div {
+  border: solid;
+  border-color: red;
+}
+
+div .container-xl {
+  max-width: 1280px;
+}
+
+div .userNavBar {
+  height: 55px;
+}
+
+div .userContainer {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+img .avatar {
+  width: 260;
+  height: 260;
+}
+
+main {
+  min-height: 100vh;
+}
+
+footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 10px;
+}
+
+footer .content {
+  color: #ccc;
+}
+
+footer .content p {
+  padding: 5px 0;
+  margin: 0;
+}

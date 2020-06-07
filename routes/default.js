@@ -45,4 +45,9 @@ router.get('/admin', async (req, res) => {
     res.redirect('/visitor');
 });
 
+router.get('/test', (req, res) => {
+    res.render('public/userInfo', { layout: false });
+    return;
+});
+
 module.exports = router;
