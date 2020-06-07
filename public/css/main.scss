@@ -133,14 +133,32 @@ header {
                         .username {
                             font-weight: bold;
                         }
-                        i {
-                            background: url('../pic/upvote.png');
-                            width: 16px;
-                            height: 16px;
-                            cursor: pointer;
-                            display: inline-block;
-                            &:hover {
-                                background: url('../pic/upvote-hover.png');
+                        .voteIcons {
+                            display: flex;
+                            .upvote {
+                                i {
+                                    background: url('../pic/upvote.png');
+                                    width: 16px;
+                                    height: 16px;
+                                    cursor: pointer;
+                                    display: inline-block;
+                                    &:hover {
+                                        background: url('../pic/upvote-hover.png');
+                                    }
+                                }
+                                margin-right: 20px;
+                            }
+                            .downvote {
+                                i {
+                                    background: url('../pic/downvote.png');
+                                    width: 16px;
+                                    height: 16px;
+                                    cursor: pointer;
+                                    display: inline-block;
+                                    &:hover {
+                                        background: url('../pic/downvote-hover.png');
+                                    }
+                                }
                             }
                         }
                     }
