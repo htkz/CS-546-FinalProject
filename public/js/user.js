@@ -27,14 +27,15 @@ const uploadAvatar = async (event) => {
     const avatar = $('#imageUpload')[0].files[0];
     var formData = new FormData();
     formData.append('photo', avatar);
-    formData.append('name', '123');
     $.ajax({
         type: 'POST',
         url: '/users/avatar',
         data: formData,
         processData: false,
         contentType: false,
-        success: function (r) {
+        success: async function (r) {
+            const user = await $.ajax(`/users/account/${userId}`);
+            $('#avatar').attr('src', `./pic/avatar/${user.avatar}`);
             showSwal('success', 'Aready updated avatar');
         },
         error: function (e) {
@@ -56,6 +57,7 @@ const infoPreload = async () => {
     const bio = userData.bio;
     const gender = userData.gender;
     const birthDate = userData.birthDate;
+    const avatar = userData.avatar;
     //birthDatePreload(birthDate);
     userBarPreload(userName, birthDate, gender);
 
@@ -67,12 +69,13 @@ const infoPreload = async () => {
     if (bio) $('#form-bio').val(bio);
     $('#form-gender').val(gender);
     if (birthDate) $('#form-birthdate').val(birthDate);
+    if (avatar) $('#avatar').attr('src', `./pic/avatar/${avatar}`);
 };
 
 const userBarPreload = (userName, birthDate, gender) => {
     $('#username').text(userName);
     $('#userbar-name').text(userName);
-    $('#userbar-age_gender').text(birthDatePreload(birthDate)+' '+gender);
+    $('#userbar-age_gender').text(birthDatePreload(birthDate) + ' ' + gender);
 };
 
 const birthDatePreload = (birthDate) => {
@@ -88,7 +91,7 @@ const birthDatePreload = (birthDate) => {
         min: min,
         max: max,
     });
-    if(!birthDate) return "???";
+    if (!birthDate) return '???';
     const yr = parseInt(birthDate.substring(0, 4));
     const mh = parseInt(birthDate.substring(5, 7)) - 1;
     const dy = parseInt(birthDate.substring(8, 10));

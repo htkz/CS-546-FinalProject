@@ -10,12 +10,18 @@ const checkParam = utility.checkInput;
 const xss = require('xss');
 const multer = require('multer');
 
+const getFileExtension = (file) => {
+    const index = file.indexOf('/');
+    return '.' + file.substring(index + 1);
+};
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './public/pic/avatar');
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now());
+        const extension = getFileExtension(file.mimetype);
+        cb(null, req.session.user + '-avatar' + extension);
     },
 });
 
@@ -23,14 +29,10 @@ const upload = multer({ storage: storage });
 
 router.post('/avatar', upload.single('photo'), async (req, res) => {
     try {
-        // check avatar field
-        if (!checkParam.checkImage(req.file)) {
-            res.status(400).json({ error: 'Not valid avatar formate' });
-            return;
-        }
+        const extension = getFileExtension(req.file.mimetype);
         const updatedAvator = await userData.updatedAvatar(
-            xss(req.body.id),
-            xss(req.file)
+            xss(req.session.user),
+            xss(req.session.user + '-avatar' + extension)
         );
         res.status(200).json(updatedAvator);
     } catch (error) {
