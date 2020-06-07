@@ -17,7 +17,7 @@ const renderPlaces = (places) => {
     for (place of places) {
         const card = $(`
             <div class="card" id="${place._id}">
-                <img src="./pic/${place.images[0]}" class="card-img-top" alt="${place.images[0]}" />
+                <img src="./pic/places/${place.images[0]}" class="card-img-top" alt="${place.images[0]}" />
                 <div class="card-body">
                     <h3 class="h4">${place.placeName}</h3>
                     <p class="card-text">
@@ -142,7 +142,7 @@ const renderDetail = async (placeId) => {
         if (i === 0) {
             $modal.find('#carousel-inner').append(`
                 <div class="carousel-item active">
-                    <img class="d-block w-100" src="./pic/${place.images[0]}" alt="${place.images[0]}">
+                    <img class="d-block w-100" src="./pic/places/${place.images[0]}" alt="${place.images[0]}">
                 </div>
             `);
             $modal
@@ -153,7 +153,7 @@ const renderDetail = async (placeId) => {
         } else {
             $modal.find('#carousel-inner').append(`
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="./pic/${place.images[i]}" alt="${place.images[i]}">
+                    <img class="d-block w-100" src="./pic/places/${place.images[i]}" alt="${place.images[i]}">
                 </div>
             `);
             $modal
