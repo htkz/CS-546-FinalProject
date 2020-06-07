@@ -69,7 +69,12 @@ const infoPreload = async () => {
     if (bio) $('#form-bio').val(bio);
     $('#form-gender').val(gender);
     if (birthDate) $('#form-birthdate').val(birthDate);
-    if (avatar) $('#avatar').attr('src', `./pic/avatar/${avatar}`);
+    if (avatar) {
+        $('#avatar').attr('src', `./pic/avatar/${avatar}`);
+    } else {
+        $('#avatar').attr('src', `./pic/avatar/default.jpg`);
+    }
+    $('#avatar').attr('hidden', false);
 };
 
 const userBarPreload = (userName, birthDate, gender) => {
