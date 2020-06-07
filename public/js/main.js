@@ -174,16 +174,42 @@ const renderDetail = async (placeId) => {
                 <span class="content">${comment.comment}</span>
                 <div class="voteIcons">
                     <div class="upvote">
-                        <i></i>
+                        <i class="upvoteIcon"></i>
                         <span class="upvoteCount">${comment.votedCount}<span>
                     </div>
                     <div class="downvote">
-                        <i></i>
+                        <i class="downvoteIcon"></i>
                         <span class="downvoteCount">${comment.votedCount}<span>
                     </div>
                 </div>
             </li>`);
         $commentList.append($comment);
+        $comment.find('.upvoteIcon').click((event) => {
+            if ($(event.currentTarget).css('background').includes('hover')) {
+                $(event.currentTarget).css(
+                    'background',
+                    "url('../pic/upvote.png')"
+                );
+            } else {
+                $(event.currentTarget).css(
+                    'background',
+                    "url('../pic/upvote-hover.png')"
+                );
+            }
+        });
+        $comment.find('.downvoteIcon').click((event) => {
+            if ($(event.currentTarget).css('background').includes('hover')) {
+                $(event.currentTarget).css(
+                    'background',
+                    "url('../pic/downvote.png')"
+                );
+            } else {
+                $(event.currentTarget).css(
+                    'background',
+                    "url('../pic/downvote-hover.png')"
+                );
+            }
+        });
     }
     $('#commentForm').submit(postComment);
 

@@ -185,20 +185,12 @@ header .top-btn {
   display: inline-block;
 }
 
-#detailModal .wrapper .comment .commentContainer ul li .voteIcons .upvote i:hover {
-  background: url("../pic/upvote-hover.png");
-}
-
 #detailModal .wrapper .comment .commentContainer ul li .voteIcons .downvote i {
   background: url("../pic/downvote.png");
   width: 16px;
   height: 16px;
   cursor: pointer;
   display: inline-block;
-}
-
-#detailModal .wrapper .comment .commentContainer ul li .voteIcons .downvote i:hover {
-  background: url("../pic/downvote-hover.png");
 }
 
 #detailModal .wrapper .comment .inputContainer {

@@ -142,9 +142,6 @@ header {
                                     height: 16px;
                                     cursor: pointer;
                                     display: inline-block;
-                                    &:hover {
-                                        background: url('../pic/upvote-hover.png');
-                                    }
                                 }
                                 margin-right: 20px;
                             }
@@ -155,9 +152,6 @@ header {
                                     height: 16px;
                                     cursor: pointer;
                                     display: inline-block;
-                                    &:hover {
-                                        background: url('../pic/downvote-hover.png');
-                                    }
                                 }
                             }
                         }
