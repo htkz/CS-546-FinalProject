@@ -26,6 +26,12 @@ header .top-btn {
   display: flex;
 }
 
+@media screen and (max-width: 510px) {
+  .tickets .container .topBar {
+    display: block;
+  }
+}
+
 .tickets .container .topBar .filter {
   padding: 10px;
   -webkit-box-pack: center;
@@ -33,9 +39,8 @@ header .top-btn {
           justify-content: center;
 }
 
-.tickets .container .topBar .search {
-  color: #008a00;
-  background-color: white;
+.tickets .container .topBar #search {
+  padding: 0 10px;
 }
 
 .tickets .container .cards {
@@ -50,6 +55,13 @@ header .top-btn {
   width: 30%;
   margin: 10px 4px;
   cursor: pointer;
+}
+
+@media screen and (max-width: 810px) {
+  .tickets .container .cards .card {
+    width: 300px;
+    margin: 10px auto;
+  }
 }
 
 .tickets .container .cards .card img {
@@ -230,16 +242,6 @@ header .top-btn {
 
 main {
   min-height: 100vh;
-}
-
-.swal2-icon-content {
-  color: #cf8400;
-  background-color: white;
-}
-
-#carousel span.sr-only {
-  color: #767676;
-  background-color: white;
 }
 
 footer {
