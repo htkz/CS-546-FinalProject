@@ -141,7 +141,7 @@ router.put('/cancelupvote/:id', async (req, res) => {
         const updatedComment = await commentData.updateCancelComment(
             xss(req.params.id),
             xss(requestBody.votedUserId),
-            xss('down')
+            xss('up')
         );
         res.status(200).json(updatedComment);
     } catch (error) {
@@ -178,7 +178,7 @@ router.put('/downvote/:id', async (req, res) => {
         const updatedComment = await commentData.updateComment(
             xss(req.params.id),
             xss(requestBody.votedUserId),
-            xss('up')
+            xss('down')
         );
         res.status(200).json(updatedComment);
     } catch (error) {

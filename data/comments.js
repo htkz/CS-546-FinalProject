@@ -88,7 +88,7 @@ let exportedMethods = {
         } else if (type === 'down') {
             const updatedInfo = await commentCollection.updateOne(
                 { _id: id },
-                { $addToSet: { upVotedUsers: votedUserId.toString() } }
+                { $addToSet: { downVotedUsers: votedUserId.toString() } }
             );
 
             if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
@@ -104,7 +104,7 @@ let exportedMethods = {
         const commentCollection = await comments();
 
         id = await this.checkId(id);
-        canceledUserId = await this.checkId(canceledUserId);
+        votedUserId = await this.checkId(votedUserId);
 
         comment = await this.getCommentById(id);
 
@@ -121,7 +121,7 @@ let exportedMethods = {
         } else if (type === 'down') {
             const updatedInfo = await commentCollection.updateOne(
                 { _id: id },
-                { $pull: { upVotedUsers: votedUserId.toString() } }
+                { $pull: { downVotedUsers: votedUserId.toString() } }
             );
 
             if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
