@@ -117,7 +117,7 @@ let exportedMethods = {
             if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
                 throw `Could not update cancel comment successfully with id: ${id}`;
             }
-            await users.addVotedCommentToUser(votedUserId, id, type);
+            await users.removeVotedCommentFromUser(votedUserId, id, type);
         } else if (type === 'down') {
             const updatedInfo = await commentCollection.updateOne(
                 { _id: id },
@@ -127,7 +127,7 @@ let exportedMethods = {
             if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
                 throw `Could not update cancel comment successfully with id: ${id}`;
             }
-            await users.addVotedCommentToUser(votedUserId, id, type);
+            await users.removeVotedCommentFromUser(votedUserId, id, type);
         }
 
         return await this.getCommentById(id);
