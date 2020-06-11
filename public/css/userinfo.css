@@ -18,7 +18,7 @@ body {
 }
 
 div {
-  border: solid;
+  border: 1px solid;
   border-color: red;
 }
 
@@ -30,10 +30,30 @@ div .userNavBar {
   height: 55px;
 }
 
+div .userNavBar .navbar {
+  background-color: #e3f2fd;
+}
+
+div .userNavBar .navbar li {
+  color: grey;
+  font-family: Comic Sans MS;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+div .userNavBar .navbar .focus {
+  color: black;
+  font-weight: bold;
+}
+
 div .userContainer {
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
+  min-height: 600px;
+}
+
+div .userCard {
+  text-align: center;
 }
 
 img .avatar {
