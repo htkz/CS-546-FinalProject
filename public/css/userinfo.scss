@@ -19,16 +19,34 @@ body {
 }
 
 div {
-    border: solid;
+    border: 1px solid;
     border-color: red;
     .container-xl {
         max-width: 1280px;
     }
-    .userNavBar{
+    .userNavBar {
         height: 55px;
+        .navbar {
+            background-color: #e3f2fd;
+            li {
+                color: grey;
+                font-family: Comic Sans MS;
+                margin-top: 8px;
+                margin-bottom: 8px;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+            .focus {
+                color: black;
+                font-weight: bold;
+            }
+        }
     }
-    .userContainer{
-        height: fit-content;
+    .userContainer {
+        min-height: 600px;
+    }
+    .userCard {
+        text-align: center;
     }
 }
 
