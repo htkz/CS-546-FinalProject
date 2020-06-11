@@ -21,6 +21,12 @@ body {
 div {
     border: 1px solid;
     border-color: red;
+    .followBtn {
+        border: none;
+        background-color: #e3f2fd;
+        color: grey;
+        font-family: Comic Sans MS;
+    }
     .container-xl {
         max-width: 1280px;
     }
