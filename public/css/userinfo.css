@@ -17,10 +17,14 @@ body {
   font-size: 14px;
 }
 
+div .cardInfo {
+  margin: 10px;
+}
+
 div .followBtn {
   border: none;
   background-color: #e3f2fd;
-  color: grey;
+  color: black;
   font-family: Comic Sans MS;
 }
 

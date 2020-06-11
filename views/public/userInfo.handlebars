@@ -38,10 +38,17 @@
         <div class="container-xl px-3 mt-4">
             <div class="row">
                 <div class="userCard col-lg-3 col-md-4 col-12 float-md-left pr-md-3 pr-xl-6">
-                    <img alt="Profile Photo" width="240" height="240" class="rounded-2" src="../../public/pic/avatar/default.jpg">
+                    <img alt="Profile Photo" width="240" height="240" class="rounded-2" id="userAvatar" src="../../public/pic/avatar/default.jpg">
                     <div class="cardInfo mt-3" id="cardInfo">
-                        <p>Name</p>
-                        <p>Gender  Age</p>
+                        <div id="userName" class="cardInfo">
+                            Name
+                        </div>
+                        <div id="userGender" class="cardInfo">
+                            Gender
+                        </div>
+                        <div id="userAge" class="cardInfo">
+                            Age
+                        </div>
                         <button class="followBtn btn btn-primary">Follow</button>
                     </div>
                 </div>
@@ -82,6 +89,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="../../public/js/userinfo.js"></script>
 </body>
 
 </html>

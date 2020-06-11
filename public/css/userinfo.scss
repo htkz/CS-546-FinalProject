@@ -21,10 +21,13 @@ body {
 div {
     // border: 1px solid;
     // border-color: red;
+    .cardInfo{
+        margin:10px;
+    }
     .followBtn {
         border: none;
         background-color: #e3f2fd;
-        color: grey;
+        color: black;
         font-family: Comic Sans MS;
     }
     .container-xl {
