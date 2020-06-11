@@ -17,7 +17,6 @@ const dataPreload = async () => {
             'src',
             `../../public/pic/avatar/${userData.avatar}`
         );
-    //$('#userAvatar').attr("src","../../public/pic/avatar/default.jpg");
 };
 
 const birthDatePreload = (birthDate) => {

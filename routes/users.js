@@ -11,7 +11,6 @@ const utility = require('../utility');
 const checkParam = utility.checkInput;
 const xss = require('xss');
 const multer = require('multer');
-const { comments } = require('../config/mongoCollection');
 
 const getFileExtension = (file) => {
     const index = file.indexOf('/');
