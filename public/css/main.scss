@@ -22,13 +22,15 @@ header {
     .container {
         .topBar {
             display: flex;
+            @media screen and (max-width: 510px) {
+                display: block;
+            }
             .filter {
                 padding: 10px;
                 justify-content: center;
             }
-            .search {
-                color: rgb(0, 138, 0);
-                background-color: rgb(255, 255, 255);
+            #search {
+                padding: 0 10px;
             }
         }
         .cards {
@@ -37,6 +39,10 @@ header {
             .card {
                 width: 30%;
                 margin: 10px 4px;
+                @media screen and (max-width: 810px) {
+                    width: 300px;
+                    margin: 10px auto;
+                }
                 cursor: pointer;
                 img {
                     height: 200px;
@@ -198,17 +204,6 @@ main {
     min-height: 100vh;
 }
 
-.swal2-icon-content {
-    color: rgb(207, 132, 0);
-    background-color: rgb(255, 255, 255);
-}
-
-#carousel {
-    span.sr-only {
-        color: rgb(118, 118, 118);
-        background-color: rgb(255, 255, 255);
-    }
-}
 
 footer {
     display: flex;
