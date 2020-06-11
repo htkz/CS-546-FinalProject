@@ -5,10 +5,13 @@ const data = require('../data');
 const userData = data.users;
 const ticketData = data.tickets;
 const friendData = data.friends;
+const commentData = data.comments;
+const placeData = data.places;
 const utility = require('../utility');
 const checkParam = utility.checkInput;
 const xss = require('xss');
 const multer = require('multer');
+const { comments } = require('../config/mongoCollection');
 
 const getFileExtension = (file) => {
     const index = file.indexOf('/');
@@ -44,6 +47,44 @@ router.get('/account/:id', async (req, res) => {
     try {
         const user = await userData.getUserById(xss(req.params.id));
         res.status(200).json(user);
+    } catch (error) {
+        res.status(404).json({ error: error });
+    }
+});
+
+router.get('/otheruser/:id', async (req, res) => {
+    try {
+        const user = await userData.getUserById(xss(req.params.id));
+        // get user comments
+        for (let i = 0; i < user.userComments.length; i++) {
+            comment = await commentData.getCommentById(user.userComments[i]);
+            user.userComments[i] = {
+                placeName: (await placeData.getPlaceById(comment.placeId))
+                    .placeName,
+                content: comment.comment,
+            };
+        }
+        // get upvote comments
+        for (let i = 0; i < user.upVotedComments.length; i++) {
+            comment = await commentData.getCommentById(user.upVotedComments[i]);
+            user.upVotedComments[i] = {
+                placeName: (await placeData.getPlaceById(comment.placeId))
+                    .placeName,
+                content: comment.comment,
+            };
+        }
+        otherUser = {
+            name: user.userName,
+            email: user.email,
+            gender: user.gender,
+            bio: user.bio,
+            birthDate: user.birthDate,
+            zipCode: user.zipCode,
+            avatar: user.avatar,
+            comments: user.userComments,
+            upvoteComments: user.upVotedComments,
+        };
+        res.status(200).json(otherUser);
     } catch (error) {
         res.status(404).json({ error: error });
     }
