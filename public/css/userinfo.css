@@ -17,11 +17,6 @@ body {
   font-size: 14px;
 }
 
-div {
-  border: 1px solid;
-  border-color: red;
-}
-
 div .followBtn {
   border: none;
   background-color: #e3f2fd;
@@ -39,6 +34,7 @@ div .userNavBar {
 
 div .userNavBar .navbar {
   background-color: #e3f2fd;
+  border-radius: 10px;
 }
 
 div .userNavBar .navbar li {
@@ -47,7 +43,7 @@ div .userNavBar .navbar li {
   margin-top: 8px;
   margin-bottom: 8px;
   margin-left: 10px;
-  margin-right: 10px;
+  margin-right: 120px;
 }
 
 div .userNavBar .navbar .focus {

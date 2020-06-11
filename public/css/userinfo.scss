@@ -19,8 +19,8 @@ body {
 }
 
 div {
-    border: 1px solid;
-    border-color: red;
+    // border: 1px solid;
+    // border-color: red;
     .followBtn {
         border: none;
         background-color: #e3f2fd;
@@ -34,13 +34,14 @@ div {
         height: 55px;
         .navbar {
             background-color: #e3f2fd;
+            border-radius: 10px;
             li {
                 color: grey;
                 font-family: Comic Sans MS;
                 margin-top: 8px;
                 margin-bottom: 8px;
                 margin-left: 10px;
-                margin-right: 10px;
+                margin-right: 120px;
             }
             .focus {
                 color: black;
