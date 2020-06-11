@@ -155,6 +155,20 @@ header {
                                 }
                             }
                         }
+                        .voteIcons.upvote {
+                            .upvote {
+                                i {
+                                    background: url('../pic/upvote-hover.png');
+                                }
+                            }
+                        }
+                        .voteIcons.downvote {
+                            .downvote {
+                                i {
+                                    background: url('../pic/downvote-hover.png');
+                                }
+                            }
+                        }
                     }
                 }
             }

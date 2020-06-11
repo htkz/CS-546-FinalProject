@@ -193,6 +193,14 @@ header .top-btn {
   display: inline-block;
 }
 
+#detailModal .wrapper .comment .commentContainer ul li .voteIcons.upvote .upvote i {
+  background: url("../pic/upvote-hover.png");
+}
+
+#detailModal .wrapper .comment .commentContainer ul li .voteIcons.downvote .downvote i {
+  background: url("../pic/downvote-hover.png");
+}
+
 #detailModal .wrapper .comment .inputContainer {
   margin-top: 20px;
   display: -webkit-box;

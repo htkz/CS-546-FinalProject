@@ -51,7 +51,7 @@ const renderPlaces = (places) => {
 };
 
 const renderDetail = async (placeId) => {
-    const place = getPlaceById(event.currentTarget.id);
+    const place = getPlaceById(placeId);
     $('#detailModal').empty();
 
     const $modal = $(`
@@ -163,54 +163,7 @@ const renderDetail = async (placeId) => {
                 );
         }
     }
-    const comments = await $.ajax({
-        url: `/places/placeComments/${placeId}`,
-    });
-    const $commentList = $modal.find('#commentList');
-    for (comment of comments) {
-        $comment = $(`
-            <li>
-                <span class="username">${comment.user}</span>:
-                <span class="content">${comment.comment}</span>
-                <div class="voteIcons">
-                    <div class="upvote">
-                        <i class="upvoteIcon"></i>
-                        <span class="upvoteCount">${comment.votedCount}<span>
-                    </div>
-                    <div class="downvote">
-                        <i class="downvoteIcon"></i>
-                        <span class="downvoteCount">${comment.votedCount}<span>
-                    </div>
-                </div>
-            </li>`);
-        $commentList.append($comment);
-        $comment.find('.upvoteIcon').click((event) => {
-            if ($(event.currentTarget).css('background').includes('hover')) {
-                $(event.currentTarget).css(
-                    'background',
-                    "url('../pic/upvote.png')"
-                );
-            } else {
-                $(event.currentTarget).css(
-                    'background',
-                    "url('../pic/upvote-hover.png')"
-                );
-            }
-        });
-        $comment.find('.downvoteIcon').click((event) => {
-            if ($(event.currentTarget).css('background').includes('hover')) {
-                $(event.currentTarget).css(
-                    'background',
-                    "url('../pic/downvote.png')"
-                );
-            } else {
-                $(event.currentTarget).css(
-                    'background',
-                    "url('../pic/downvote-hover.png')"
-                );
-            }
-        });
-    }
+    await renderComment(placeId);
     $('#commentForm').submit(postComment);
 
     if (place.remainNum === '0' || place.remainNum === 0) {
@@ -236,6 +189,94 @@ const renderDetail = async (placeId) => {
     $('#dateInput').attr('min', place.displayTime);
     $('#dateInput').val(place.displayTime);
     $('#carousel').carousel();
+};
+
+const renderComment = async (placeId) => {
+    const comments = await $.ajax({
+        url: `/places/placeComments/${placeId}`,
+    });
+    const $commentList = $('#commentList');
+    $commentList.empty();
+    const userId = userInfo['_id'];
+    for (comment of comments) {
+        const id = comment['_id'];
+        $comment = $(`
+            <li data-id=${id}>
+                <span class="username">${comment.user}</span>:
+                <span class="content">${comment.comment}</span>
+                <div class="voteIcons">
+                    <div class="upvote">
+                        <i class="upvoteIcon"></i>
+                        <span class="upvoteCount">${comment.upVotedUsers.length}<span>
+                    </div>
+                    <div class="downvote">
+                        <i class="downvoteIcon"></i>
+                        <span class="downvoteCount">${comment.downVotedUsers.length}<span>
+                    </div>
+                </div>
+            </li>`);
+        if (comment.upVotedUsers.includes(userId)) {
+            $comment.find('.voteIcons').addClass('upvote');
+        }
+        if (comment.downVotedUsers.includes(userId)) {
+            $comment.find('.voteIcons').addClass('downvote');
+        }
+        $commentList.append($comment);
+        $comment.find('.upvoteIcon').click(async (event) => {
+            const $voteIcons = $(event.currentTarget).parent().parent();
+            const classes = $voteIcons.attr('class');
+            const isUpvoted = classes.includes('upvote');
+            const isDownvoted = classes.includes('downvote');
+            const commentId = $voteIcons.parent().data('id');
+            const action = isUpvoted ? 'cancelupvote' : 'upvote';
+            await $.ajax({
+                url: `comments/${action}/${commentId}`,
+                type: 'PUT',
+                data: {
+                    votedUserId: userId,
+                },
+            });
+            if (isDownvoted) {
+                await $.ajax({
+                    url: `comments/canceldownvote/${commentId}`,
+                    type: 'PUT',
+                    data: {
+                        votedUserId: userId,
+                    },
+                });
+            }
+            const placeId = $('#place').data('id');
+            await renderComment(placeId);
+            $voteIcons.toggleClass('upvote').removeClass('downvote');
+        });
+        $comment.find('.downvoteIcon').click(async (event) => {
+            const $voteIcons = $(event.currentTarget).parent().parent();
+            const classes = $voteIcons.attr('class');
+            const isUpvoted = classes.includes('upvote');
+            const isDownvoted = classes.includes('downvote');
+            const commentId = $voteIcons.parent().data('id');
+            const action = isDownvoted ? 'canceldownvote' : 'downvote';
+            await $.ajax({
+                url: `comments/${action}/${commentId}`,
+                type: 'PUT',
+                data: {
+                    votedUserId: userId,
+                },
+            });
+            if (isUpvoted) {
+                await $.ajax({
+                    url: `comments/cancelupvote/${commentId}`,
+                    type: 'PUT',
+                    data: {
+                        votedUserId: userId,
+                    },
+                });
+            }
+            const placeId = $('#place').data('id');
+            await renderComment(placeId);
+            $voteIcons.toggleClass('downvote').removeClass('upvote');
+        });
+    }
 };
 
 const fetchPlaces = async (store) => {
