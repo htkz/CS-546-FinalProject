@@ -145,31 +145,39 @@ let exportedMethods = {
             throw error;
         }
 
-        if (comment.upVotedUsers.length !== 0) {
-            await users.removeVotedCommentFromUser(comment.user, id, 'up');
-        }
-
-        if (comment.downVotedUsers.length !== 0) {
-            await users.removeVotedCommentFromUser(comment.user, id, 'down');
-        }
-
         const deleteInfo = await commentCollection.removeOne({ _id: id });
         if (deleteInfo.deletedCount === 0) {
             throw `Could not delete comment with id: ${id}`;
         }
 
+        // remove comment from posted user
         await users.removeCommentFromUser(comment.user, id);
-        await places.removeCommentFromPlace(comment.placeId, id);
 
-        // if the comments have votes, delete all user vote from users
-        if (comment.votedUsers !== null) {
-            for (let item in comment.votedUsers) {
-                await users.removeVodedCommentFromUser(
-                    await this.checkId(comment.votedUsers[item]),
-                    id
+        // remove comment from up voted user
+        if (comment.upVotedUsers.length !== 0) {
+            for (let i = 0; i < comment.upVotedUsers.length; i++) {
+                await users.removeVotedCommentFromUser(
+                    comment.upVotedUsers[i],
+                    id,
+                    'up'
                 );
             }
         }
+
+        // remove comment from down voted user
+        if (comment.downVotedUsers.length !== 0) {
+            for (let i = 0; i < comment.downVotedUsers.length; i++) {
+                await users.removeVotedCommentFromUser(
+                    comment.downVotedUsers[i],
+                    id,
+                    'down'
+                );
+            }
+        }
+
+        // remove comment from places
+        await places.removeCommentFromPlace(comment.placeId, id);
+
         return true;
     },
 
