@@ -17,9 +17,18 @@ const dataPreload = async () => {
         $('#userGender').text(userData.gender);
         $('#renderGender').text(userData.gender);
     }
-    $('#userAge').text(birthDatePreload(userData.birthDate) + ' Years Old');
-    $('#renderAge').text(birthDatePreload(userData.birthDate) + ' Years Old');
-    $('#renderBirthday').text(userData.birthDate);
+    if (!userData.birthDate) {
+        $('#userAge').text('???');
+        $('#renderAge').text('???');
+        $('#renderBirthday').text('Unknown');
+    } else {
+        $('#userAge').text(birthDatePreload(userData.birthDate) + ' Years Old');
+        $('#renderAge').text(
+            birthDatePreload(userData.birthDate) + ' Years Old'
+        );
+        $('#renderBirthday').text(userData.birthDate);
+    }
+
     $('#renderBio').text(userData.bio);
     if (userData.avatar)
         $('#userAvatar').attr(
