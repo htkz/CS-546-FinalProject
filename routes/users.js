@@ -542,6 +542,7 @@ router.delete('/:id', async (req, res) => {
         // delete downvoted
         // delete tickets
         // delete friends
+        // delete bank
         res.status(200).json(deleteUser);
     } catch (error) {
         res.status(500).json({ error: error });
