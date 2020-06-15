@@ -64,7 +64,7 @@ let exportedMethods = {
             zipCode: '',
             hashedPassword: hashedPassword,
             bio: '',
-            gender: '',
+            gender: 'unknown',
             birthDate: '',
             avatar: '',
             userTicketInfo: [],
