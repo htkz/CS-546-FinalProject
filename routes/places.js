@@ -246,20 +246,25 @@ router.patch('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     let id = xss(req.params.id);
+    let place = null;
+
     if (!id) {
         res.status(400).json({ error: 'You must specify an ID to delete' });
         return;
     }
 
     try {
-        await placeData.getAllPlaces(id);
+        place = await placeData.getAllPlaces(id);
     } catch (error) {
         res.status(404).json({ error: 'Place not found' });
     }
 
     try {
         const deletePlace = await placeData.removePlace(id);
-        res.status(200).json(deletePlace);
+        for (let i = 0; i < place.placeUserComments.length(); i++) {
+            await commentData.removeComment(place.placeUserComments[i]);
+        }
+        res.status(200).json({ place: deletePlace });
     } catch (error) {
         res.status(500).json({ error: error });
     }

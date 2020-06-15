@@ -63,6 +63,7 @@ router.get('/otheruser/:id', async (req, res) => {
                 content: comment.comment,
             };
         }
+
         // get upvote comments
         for (let i = 0; i < user.upVotedComments.length; i++) {
             comment = await commentData.getCommentById(user.upVotedComments[i]);
@@ -72,6 +73,7 @@ router.get('/otheruser/:id', async (req, res) => {
                 content: comment.comment,
             };
         }
+
         otherUser = {
             name: user.userName,
             email: user.email,
@@ -518,19 +520,29 @@ router.put('/account/password/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
+    let user = null;
     if (!req.params.id) {
         res.status(400).json({ error: 'You must specify an ID to delete' });
         return;
     }
 
     try {
-        await userData.getUserById(req.params.id);
+        user = await userData.getUserById(req.params.id);
     } catch (error) {
         res.status(404).json({ error: error });
     }
 
     try {
         const deleteUser = await userData.removeUser(xss(req.params.id));
+        // delete comments
+        for (let i = 0; i < user.userComments.length; i++) {
+            await commentData.removeComment(user.userComments[i]);
+        }
+        // delete upvoted
+        // delete downvoted
+        // delete tickets
+        // delete friends
+        // delete bank
         res.status(200).json(deleteUser);
     } catch (error) {
         res.status(500).json({ error: error });
