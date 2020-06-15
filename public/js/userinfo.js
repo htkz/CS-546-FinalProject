@@ -9,9 +9,18 @@ const dataPreload = async () => {
     });
     console.log(userData);
     $('#userName').text(userData.name);
-    if (!userData.gender) $('#userGender').text('Unknown');
-    else $('#userGender').text(userData.gender);
+    $('#renderUserName').text(userData.name);
+    if (!userData.gender) {
+        $('#userGender').text('Unknown');
+        $('#renderGender').text('Unknown');
+    } else {
+        $('#userGender').text(userData.gender);
+        $('#renderGender').text(userData.gender);
+    }
     $('#userAge').text(birthDatePreload(userData.birthDate) + ' Years Old');
+    $('#renderAge').text(birthDatePreload(userData.birthDate) + ' Years Old');
+    $('#renderBirthday').text(userData.birthDate);
+    $('#renderBio').text(userData.bio);
     if (userData.avatar)
         $('#userAvatar').attr(
             'src',
