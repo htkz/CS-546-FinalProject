@@ -64,7 +64,7 @@ let exportedMethods = {
             zipCode: '',
             hashedPassword: hashedPassword,
             bio: '',
-            gender: '',
+            gender: 'Unknown',
             birthDate: '',
             avatar: '',
             userTicketInfo: [],
@@ -123,7 +123,6 @@ let exportedMethods = {
             bio: bio,
             gender: gender,
             birthDate: birthDate,
-            avatar: avatar,
         };
 
         const updateInfo = await userCollection.updateOne(
