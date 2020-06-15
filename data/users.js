@@ -123,7 +123,6 @@ let exportedMethods = {
             bio: bio,
             gender: gender,
             birthDate: birthDate,
-            avatar: avatar,
         };
 
         const updateInfo = await userCollection.updateOne(
