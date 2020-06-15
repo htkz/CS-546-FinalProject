@@ -7,6 +7,15 @@ const getPlaceById = (id) => {
     return undefined;
 };
 
+const renderPlaceEditModal = (placeId) => {
+    $('#editDetailModal').append(place);
+};
+
+const showEditModal = () => {
+    renderPlaceEditModal();
+    $('#editDetailModal').modal('show');
+};
+
 const renderPlaces = async (places) => {
     $('#cards').empty();
 
@@ -15,7 +24,7 @@ const renderPlaces = async (places) => {
             <div class="info" id=${place._id}>
                 <div class="row">
                     <div class="col">
-                        <img src="./pic/${place.images[0]}" class="img rounded mx-auto d-block" alt="${place.images[0]}" />
+                        <img src="./pic/places/${place.images[0]}" class="img rounded mx-auto d-block" alt="${place.images[0]}" />
                     </div>
                     <div class="col-8 detail">
                         <div>
@@ -30,22 +39,22 @@ const renderPlaces = async (places) => {
                             </div>
                         </div>
                         <div>
-                            <b>Description</b>: <span class="description" contenteditable="false">${place.description}</span>
+                            <b>Description</b>: <span class="description">${place.description}</span>
                         </div>
                         <div>
-                            <b>Place Address</b>: <span class="placeAddress" contenteditable="false">${place.placeAddress}</span>
+                            <b>Place Address</b>: <span class="placeAddress">${place.placeAddress}</span>
                         </div>
                         <div>
-                            <b>Place Zipcode</b>: <span class="placeZipCode" contenteditable="false">${place.placeZipCode}</span>
+                            <b>Place Zipcode</b>: <span class="placeZipCode">${place.placeZipCode}</span>
                         </div>
                         <div>
-                            <b>Place Price</b>: <span class="placePrice" contenteditable="false">${place.placePrice}</span>
+                            <b>Place Price</b>: <span class="placePrice">${place.placePrice}</span>
                         </div>
                         <div>
-                            <b>Display Time</b>: <span class="displayTime" contenteditable="false">${place.displayTime}</span>
+                            <b>Display Time</b>: <span class="displayTime">${place.displayTime}</span>
                         </div>
                         <div>
-                            <b>Tickets</b>: <span class="remainNum" contenteditable="false">${place.remainNum}</span>
+                            <b>Tickets</b>: <span class="remainNum">${place.remainNum}</span>
                         </div>
                         <div>
                             <button class="showHideCategory"/>
@@ -65,10 +74,10 @@ const renderPlaces = async (places) => {
                     </div>
                 </div>
                 <div class="bottom">
-                    <button type="button" class="btn editBtn btn-secondary" id=${place._id}>
+                    <button type="button" class="btn editBtn btn-secondary" data-id=${place._id}>
                         Edit
                     </button>
-                    <button type="button" class="btn deleteBtn btn-primary" id=${place._id}>
+                    <button type="button" class="btn deleteBtn btn-primary" data-id=${place._id}>
                         Delete
                     </button>
                 </div>
@@ -117,7 +126,7 @@ const renderPlaces = async (places) => {
         }
 
         card.find('.editBtn').click((event) => {
-            editPlace(event);
+            showEditModal();
         });
         card.find('.deleteBtn').click((event) => {
             deletePlace(event);
@@ -478,19 +487,19 @@ const renderUsers = async (users) => {
                         <b>Email</b>: <span class=email>${user.email}</span>
                     </div>
                     <div>
-                        <b>Phone Number</b>: <span class="phoneNumber" contenteditable="false">${user.phoneNumber}</span>
+                        <b>Phone Number</b>: <span class="phoneNumber">${user.phoneNumber}</span>
                     </div>
                     <div>
-                        <b>Address</b>: <span class="address" contenteditable="false">${user.address}</span>
+                        <b>Address</b>: <span class="address">${user.address}</span>
                     </div>
                     <div>
-                        <b>Zipcode</b>: <span class="zipCode" contenteditable="false">${user.zipCode}</span>
+                        <b>Zipcode</b>: <span class="zipCode">${user.zipCode}</span>
                     </div>
                     <div>
-                        <b>Password</b>: <span class="password" contenteditable="false">${user.hashedPassword}</span>
+                        <b>Password</b>: <span class="password">${user.hashedPassword}</span>
                     </div>
                     <div>
-                        <b>Bio</b>: <span class="bio" contenteditable="false">${user.bio}</span>
+                        <b>Bio</b>: <span class="bio">${user.bio}</span>
                     </div>
                     <div>
                         <button class="showHideTicket"/>
@@ -514,7 +523,7 @@ const renderUsers = async (users) => {
                         </div>
                     </div>
                     <div>
-                        <b>Bank Card</b>: <span class="bankCard" contenteditable="false">${user.bankCard}</span>
+                        <b>Bank Card</b>: <span class="bankCard">${user.bankCard}</span>
                     </div>
                 </div>
                 <div class="bottom">
