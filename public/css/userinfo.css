@@ -17,6 +17,10 @@ body {
   font-size: 14px;
 }
 
+div .row {
+  margin: 0px;
+}
+
 div .cardInfo {
   margin: 10px;
 }
@@ -34,6 +38,7 @@ div .container-xl {
 
 div .userNavBar {
   height: 55px;
+  width: 100%;
 }
 
 div .userNavBar .navbar {
@@ -47,7 +52,7 @@ div .userNavBar .navbar li {
   margin-top: 8px;
   margin-bottom: 8px;
   margin-left: 10px;
-  margin-right: 120px;
+  margin-right: 110px;
 }
 
 div .userNavBar .navbar .focus {
@@ -57,6 +62,21 @@ div .userNavBar .navbar .focus {
 
 div .userContainer {
   min-height: 600px;
+  width: 100%;
+}
+
+div .userContainer .title {
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: right;
+  font-size: 24px;
+}
+
+div .userContainer .text {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: left;
+  font-size: 24px;
+  padding-left: 0px;
 }
 
 div .userCard {

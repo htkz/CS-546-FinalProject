@@ -53,26 +53,85 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-8 col-12 float-md-left pl-md-2">
-                    <div class="userNavBar mb-3">
-                        <nav class="navbar navbar-expand-lg navbar-dark">
-                            <ul class="navbar-nav mr-auto">
-                                <li class="focus">
-                                    Personal Info
-                                </li>
-                                <li >
-                                    Comments
-                                </li>
-                                <li >
-                                    Upvote
-                                </li>
-                                <li >
-                                    Relations
-                                </li>
-                            </ul>
-                        </nav>
+                    <div class="row">
+                        <div class="userNavBar mb-3">
+                            <nav class="navbar navbar-expand-lg navbar-dark">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="focus" id="personalInfo">
+                                        Personal Info
+                                    </li>
+                                    <li class="" id="comments">
+                                        Comments
+                                    </li>
+                                    <li class="" id="upvote">
+                                        Upvote
+                                    </li>
+                                    <li class="" id="relations">
+                                        Relations
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
-                    <div class="userContainer">
-                        Container
+                    <div class="row">
+                        <div class="userContainer">
+                            <div id="personInfo" class="">
+                                {{!-- username --}}
+                                <div class="row m-3">
+                                    <div class="col-3 col-sm-4 title">
+                                        Username:
+                                    </div>
+                                    <div class="col text" id="renderUserName">
+                                        xxx
+                                    </div>
+                                </div>
+                                {{!-- gender --}}
+                                <div class="row m-3">
+                                    <div class="col-3 col-sm-4 title">
+                                        Gender:
+                                    </div>
+                                    <div class="col text" id="renderGender">
+                                        xxx
+                                    </div>
+                                </div>
+                                {{!-- age --}}
+                                <div class="row m-3">
+                                    <div class="col-3 col-sm-4 title">
+                                        Age:
+                                    </div>
+                                    <div class="col text" id="renderAge">
+                                        xxx
+                                    </div>
+                                </div>
+                                {{!-- birthday --}}
+                                <div class="row m-3">
+                                    <div class="col-3 col-sm-4 title">
+                                        Birthday:
+                                    </div>
+                                    <div class="col text" id="renderBirthday">
+                                        xxx
+                                    </div>
+                                </div>
+                                {{!-- Bio --}}
+                                <div class="row m-3">
+                                    <div class="col-3 col-sm-4 title">
+                                        Bio:
+                                    </div>
+                                    <div class="col text" id="renderBio">
+                                        xxx
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="comments" class="hidden">
+
+                            </div>
+                            <div id="upvote" class="hidden">
+
+                            </div>
+                            <div id="relations" class="hidden">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
