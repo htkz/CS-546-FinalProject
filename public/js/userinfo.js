@@ -1,12 +1,17 @@
 const userInfo = JSON.parse(Cookies.get('user'));
 const userId = userInfo['_id'];
-const id = '5ee28b31667e35ac0e8cbc31';
+const id = '5ee7d616bbe970deb49e0b49';
 
 const dataPreload = async () => {
     const userData = await $.ajax({
         type: 'GET',
         url: `/users/otheruser/${id}`,
     });
+    // const userComments = await $.ajax({
+    //     type:'GET',
+    //     url:`/comments/${id}`,
+    // });
+    // console.log(userComments);
     console.log(userData);
     $('#userName').text(userData.name);
     $('#renderUserName').text(userData.name);
@@ -28,8 +33,8 @@ const dataPreload = async () => {
         );
         $('#renderBirthday').text(userData.birthDate);
     }
-
-    $('#renderBio').text(userData.bio);
+    if(!userData.bio) $('#renderBio').text('None');
+    else $('#renderBio').text(userData.bio);
     if (userData.avatar)
         $('#userAvatar').attr(
             'src',
