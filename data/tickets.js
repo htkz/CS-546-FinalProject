@@ -196,7 +196,9 @@ let exportedMethods = {
             await friends.removeTicketFromFriend(ticket.userId, id);
         }
 
-        await places.updateRemainNum(ticket.placeId, 1, 'delete');
+        if (ticket.fourfacechusong === 'valid') {
+            await places.updateRemainNum(ticket.placeId, 1, 'delete');
+        }
 
         return true;
     },
