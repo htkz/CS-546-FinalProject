@@ -149,17 +149,29 @@ const renderPlaces = async (places) => {
 };
 
 const deletePlace = async (event) => {
-    const placeId = event.currentTarget.id;
-    try {
-        await $.ajax({
-            url: `/places/${placeId}`,
-            type: 'DELETE',
-        });
-        $('#detailModal').modal('hide');
-        await refreshPlaces();
-    } catch (error) {
-        alert(error);
-        console.log(error);
+    const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to delete this place?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#0d7eb1',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, buy it!',
+        timer: 1500,
+    });
+    if (result.value) {
+        const placeId = event.currentTarget.id;
+        try {
+            await $.ajax({
+                url: `/places/${placeId}`,
+                type: 'DELETE',
+            });
+            $('#detailModal').modal('hide');
+            await refreshPlaces();
+        } catch (error) {
+            alert(error);
+            console.log(error);
+        }
     }
 };
 
@@ -671,15 +683,27 @@ const showHideUserComment = async () => {
 };
 
 const deleteUser = async (event) => {
-    const id = event.currentTarget.id;
-    try {
-        await $.ajax({
-            url: `/users/${id}`,
-            type: 'DELETE',
-        });
-    } catch (error) {
-        alert(error);
-        console.log(error);
+    const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to delete this user?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#0d7eb1',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        timer: 1500,
+    });
+    if (result.value) {
+        const id = event.currentTarget.id;
+        try {
+            await $.ajax({
+                url: `/users/${id}`,
+                type: 'DELETE',
+            });
+        } catch (error) {
+            alert(error);
+            console.log(error);
+        }
     }
 };
 

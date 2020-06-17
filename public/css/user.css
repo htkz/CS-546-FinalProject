@@ -308,11 +308,6 @@ main .container #friends .btn-primary {
   background-color: #0072ee;
 }
 
-.swal2-icon-content {
-  color: #cf8400;
-  background-color: white;
-}
-
 footer {
   display: -webkit-box;
   display: -ms-flexbox;
