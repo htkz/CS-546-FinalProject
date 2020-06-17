@@ -31,6 +31,7 @@ router.post('/', async (req, res) => {
 
     const persons = requestBody.persons;
     const placeId = requestBody.placeId;
+    const placeName = requestBody.placeName;
     const orderedDate = requestBody.orderedDate;
     const effectDate = requestBody.effectDate;
     const price = requestBody.price;
@@ -56,6 +57,13 @@ router.post('/', async (req, res) => {
     if (!placeId) {
         res.status(400).json({
             error: 'You must provide placeId to create a ticket',
+        });
+        return;
+    }
+
+    if (!placeName) {
+        res.status(400).json({
+            error: 'You must provide placeName to create a ticket',
         });
         return;
     }
@@ -122,6 +130,7 @@ router.post('/', async (req, res) => {
         const newTickets = await ticketData.addTicket(
             persons,
             xss(placeId),
+            xss(placeName),
             xss(orderedDate),
             xss(effectDate),
             xss(price)

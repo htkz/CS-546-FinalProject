@@ -63,7 +63,14 @@ let exportedMethods = {
         return ticket;
     },
 
-    async addTicket(persons, placeId, orderedDate, effectDate, price) {
+    async addTicket(
+        persons,
+        placeId,
+        placeName,
+        orderedDate,
+        effectDate,
+        price
+    ) {
         const ticketCollection = await tickets();
 
         if ((await counts.findDataById('ticketNo')) === null) {
@@ -90,10 +97,12 @@ let exportedMethods = {
             let newTicket = {
                 userId: xss(persons.user),
                 placeId: placeId,
+                placeName: placeName,
                 ticketNo: ticketNo,
                 orderedDate: orderedDate,
                 effectDate: effectDate,
                 price: price,
+                fourfacechusong: 'valid',
             };
 
             const insertInfo = await ticketCollection.insertOne(newTicket);
