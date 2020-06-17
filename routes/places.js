@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const placeData = data.places;
 const commentData = data.comments;
+const ticketData = data.tickets;
 const userData = data.users;
 const xss = require('xss');
 
@@ -261,8 +262,18 @@ router.delete('/:id', async (req, res) => {
 
     try {
         const deletePlace = await placeData.removePlace(id);
+        // delete comment
         for (let i = 0; i < place.placeUserComments.length(); i++) {
             await commentData.removeComment(place.placeUserComments[i]);
+        }
+        // make ticket invalid
+        allTickets = await ticketData.getTicketByPlaceId(xss(id));
+        for (let i = 0; i < allTickets.length; i++) {
+            await ticketData.changeValidTicket(
+                allTickets[i],
+                'invalid',
+                'delete'
+            );
         }
         res.status(200).json({ place: deletePlace });
     } catch (error) {

@@ -54,13 +54,32 @@ let exportedMethods = {
             throw `No ticket with id: ${id}`;
         }
 
-        const placeId = ticket.placeId;
-        const place = await places.getPlaceById(placeId);
-        ticket['images'] = place.images;
-        ticket['name'] = place.placeName;
-        ticket['description'] = place.description;
+        if (ticket.fourfacechusong === 'valid') {
+            const placeId = ticket.placeId;
+            const place = await places.getPlaceById(placeId);
+            ticket['images'] = place.images;
+            ticket['name'] = place.placeName;
+            ticket['description'] = place.description;
+        } else if (ticket.fourfacechusong === 'invalid') {
+            ticket['name'] = ticket.palceName;
+            ticket['description'] = 'This ticket is invalid!';
+        }
 
         return ticket;
+    },
+
+    async getTicketByPlaceId(id) {
+        const ticketCollection = await ticket();
+
+        id = await this.checkId(id);
+
+        const allTickets = await ticketCollection
+            .find({
+                placeId: id.toString(),
+            })
+            .toArray();
+
+        return allTickets;
     },
 
     async addTicket(
@@ -197,6 +216,36 @@ let exportedMethods = {
         );
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
             throw `Could not update ticket successfully by id: ${id}`;
+        }
+
+        return await this.getTicketById(id);
+    },
+
+    async changeValidTicket(id, fourfacechusong, type) {
+        const ticketCollection = await tickets();
+
+        id = await this.checkId(id);
+
+        let updateTicket = null;
+
+        if (type === 'delete') {
+            updateInfo = {
+                fourfacechusong: fourfacechusong,
+                ticketNo: '',
+            };
+        } else if (type === 'delay') {
+            updateInfo = {
+                fourfacechusong: fourfacechusong,
+            };
+        }
+
+        const updateInfo = await ticketCollection.updateOne(
+            { _id: id },
+            { $set: updateTicket }
+        );
+
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw `Could not changeValidTicket successfully by id: ${id}`;
         }
 
         return await this.getTicketById(id);
