@@ -362,7 +362,7 @@ const renderUserTickets = async () => {
         const $ticket = $(`
             <div class="ticket">
                 <div class="imgContainer">
-                    <img src="./pic/${ticket.images[0]}" alt="${ticket.images[0]}">
+                    <img src="./pic/places/${ticket.images[0]}" alt="${ticket.images[0]}">
                 </div>
                 <div class="ticketInfo">
                     <h2 class="h4">${ticket.name}</h2>
@@ -424,7 +424,7 @@ const renderFriendTickets = async () => {
         const $ticket = $(`
             <div class="ticket">
                 <div class="imgContainer">
-                    <img src="./pic/${ticket.images[0]}" alt="${ticket.images[0]}">
+                    <img src="./pic/places/${ticket.images[0]}" alt="${ticket.images[0]}">
                 </div>
                 <div class="ticketInfo">
                     <h2 class="h4">${ticket.name}</h2>
