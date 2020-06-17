@@ -1,3 +1,14 @@
+currentPlaceId = undefined;
+
+const showSwal = async (icon, title) => {
+    await Swal.fire({
+        icon: icon,
+        title: title,
+        showConfirmButton: false,
+        timer: 1500,
+    });
+};
+
 const getPlaceById = (id) => {
     for (place of store['places']) {
         if (place._id === id) {
@@ -7,12 +18,43 @@ const getPlaceById = (id) => {
     return undefined;
 };
 
-const renderPlaceEditModal = (placeId) => {
-    $('#editDetailModal').append(place);
+const renderPlaceEditModal = async (placeId) => {
+    const place = await $.ajax(`/places/${placeId}`);
+    $('#edit-palceName').val(place.placeName);
+    $('#edit-description').val(place.description);
+    $('#edit-address').val(place.placeAddress);
+    $('#edit-zipcode').val(place.placeZipCode);
+    $('#edit-price').val(place.placePrice);
+    $('#edit-displayTime').val(place.displayTime);
+    $('#edit-remainNum').val(place.remainNum);
 };
 
-const showEditModal = () => {
-    renderPlaceEditModal();
+const updatePlace = async () => {
+    const placeData = {
+        newPlaceName: $('#edit-palceName').val(),
+        newDescription: $('#edit-description').val(),
+        newPlaceAddress: $('#edit-address').val(),
+        newPlaceZipCode: $('#edit-zipcode').val(),
+        newPlacePrice: $('#edit-price').val(),
+        newDisplayTime: $('#edit-displayTime').val(),
+        newRemainNum: $('#edit-remainNum').val(),
+    };
+    try {
+        await $.ajax({
+            url: `places/${currentPlaceId}`,
+            type: 'patch',
+            data: placeData,
+        });
+        await showSwal('success', 'Update palce successfully!');
+    } catch (error) {
+        await showSwal('error', error);
+    }
+};
+
+const showEditModal = (event) => {
+    const placeId = $(event.currentTarget).data('id');
+    currentPlaceId = placeId;
+    renderPlaceEditModal(placeId);
     $('#editDetailModal').modal('show');
 };
 
@@ -126,7 +168,7 @@ const renderPlaces = async (places) => {
         }
 
         card.find('.editBtn').click((event) => {
-            showEditModal();
+            showEditModal(event);
         });
         card.find('.deleteBtn').click((event) => {
             deletePlace(event);
@@ -747,6 +789,7 @@ const bindEvents = async () => {
     $('#placeBtn').click((event) => {
         renderPlaces(store['places']);
     });
+    $('#updatePlaceBtn').click(updatePlace);
     $('#search').submit((event) => {
         event.preventDefault();
         filterBySearch($('#searchInput').val());

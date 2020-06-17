@@ -30,26 +30,74 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">New message</h5>
+                    <h5 class="modal-title">Place</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Place Name</label>
-                            <input type="text" class="form-control" id="edit-placeName">
+                        <div class="row mt-1">
+                            <div class="col-4 ml-3 aside">
+                                <label for="edit-placeName">Place Name</label>
+                            </div>
+                            <div class="input-group col-5">
+                                <input type="text" class="form-control" id="edit-palceName">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Images</label>
-                            <input type="text" class="form-control" id="edit-images">
+                        <div class="row mt-3">
+                            <div class="col-4 ml-3 aside">
+                                <label for="edit-description">Description</label>
+                            </div>
+                            <div class="input-group col-5">
+                                <input type="text" class="form-control" id="edit-description">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-4 ml-3 aside">
+                                <label for="edit-address">Address</label>
+                            </div>
+                            <div class="input-group col-5">
+                                <input type="text" class="form-control" id="edit-address">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-4 ml-3 aside">
+                                <label for="edit-zipcode">ZipCode</label>
+                            </div>
+                            <div class="input-group col-5">
+                                <input type="text" class="form-control" id="edit-zipcode">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-4 ml-3 aside">
+                                <label for="edit-price">Price</label>
+                            </div>
+                            <div class="input-group col-5">
+                                <input type="text" class="form-control" id="edit-price">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-4 ml-3 aside">
+                                <label for="edit-displayTime">Display Time</label>
+                            </div>
+                            <div class="input-group col-5">
+                                <input type="text" class="form-control" id="edit-displayTime">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-4 ml-3 aside">
+                                <label for="edit-remainNum">Remain Number</label>
+                            </div>
+                            <div class="input-group col-5">
+                                <input type="text" class="form-control" id="edit-remainNum">
+                            </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
+                    <button type="button" id="updatePlaceBtn" class="btn btn-primary">Update Place</button>
                 </div>
             </div>
         </div>

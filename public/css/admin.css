@@ -116,6 +116,26 @@ header .username {
           justify-content: space-between;
 }
 
+#editDetailModal form .aside {
+  font-weight: 600;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  float: right;
+}
+
+#editDetailModal form .aside label {
+  text-align: right;
+  margin-bottom: 0;
+}
+
 main {
   min-height: 100vh;
 }

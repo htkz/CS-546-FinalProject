@@ -96,6 +96,22 @@ header {
     }
 }
 
+#editDetailModal {
+    form {
+        .aside {
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            float: right;
+            label {
+                text-align: right;
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
 main {
     min-height: 100vh;
 }
