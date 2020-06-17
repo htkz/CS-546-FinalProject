@@ -105,6 +105,19 @@ let exportedMethods = {
         return await this.getFriendById(friendId);
     },
 
+    async removeFriend(id) {
+        const friendCollection = await friends();
+
+        id = await this.checkId(id);
+
+        const deleteInfo = await friendCollection.removeOne({ _id: id });
+        if (deleteInfo.deletedCount === 0) {
+            throw `Could not delete friend with id: ${id}`;
+        }
+
+        return true;
+    },
+
     async checkId(id) {
         try {
             if (typeof id == 'string') {
