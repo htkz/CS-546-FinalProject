@@ -7,11 +7,6 @@ const dataPreload = async () => {
         type: 'GET',
         url: `/users/otheruser/${id}`,
     });
-    // const userComments = await $.ajax({
-    //     type:'GET',
-    //     url:`/comments/${id}`,
-    // });
-    // console.log(userComments);
     console.log(userData);
     $('#userName').text(userData.name);
     $('#renderUserName').text(userData.name);
@@ -33,13 +28,42 @@ const dataPreload = async () => {
         );
         $('#renderBirthday').text(userData.birthDate);
     }
-    if(!userData.bio) $('#renderBio').text('None');
+    if (!userData.bio) $('#renderBio').text('None');
     else $('#renderBio').text(userData.bio);
-    if (userData.avatar)
+    if (userData.avatar) {
         $('#userAvatar').attr(
             'src',
             `../../public/pic/avatar/${userData.avatar}`
         );
+    }
+    if (!userData.comments)
+        $('#comments').append('<div class="">This user has no comment.<div>');
+    else {
+        let counter = 0;
+        for (let i of userData.comments) {
+            $('#comments').append(`
+            <div class="textBlock">
+                <div class="textContent" id="${counter}">
+                    ${i.content} 
+                </div>
+                <Button type="button" class="btn btn-secondary btn-sm" onclick="btnClick(${counter})" id="btn${counter}">More</Button>
+                <div class="textTitle">
+                This user has comment on ${i.placeName}
+                </div>
+            </div>`);
+            counter++;
+        }
+    }
+};
+
+const btnClick = (counter) => {
+    if($(`#${counter}`).css('max-height') === '100px'){
+        $(`#${counter}`).css('max-height', 'none');
+        $(`#btn${counter}`).text('Fold');
+    }else{
+        $(`#${counter}`).css('max-height', '100px');
+        $(`#btn${counter}`).text('More');
+    }
 };
 
 const birthDatePreload = (birthDate) => {
