@@ -265,10 +265,7 @@ router.delete('/:id', async (req, res) => {
         const deletePlace = await placeData.removePlace(id);
         // delete comment
         for (let i = 0; i < place.placeUserComments.length; i++) {
-            await commentData.removeComment(
-                place.placeUserComments[i],
-                'delete'
-            );
+            await commentData.removeComment(place.placeUserComments[i]);
         }
         // make ticket invalid
         allTickets = await ticketData.getTicketByPlaceId(xss(id));

@@ -236,7 +236,7 @@ router.delete('/:id', async (req, res) => {
     }
 
     try {
-        const deleteComment = await commentData.removeComment(id);
+        const deleteComment = await commentData.removeComment(id, 'delete');
         res.status(200).json(deleteComment);
     } catch (error) {
         res.status(500).json({ error: error });
