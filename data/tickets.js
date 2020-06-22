@@ -54,16 +54,43 @@ let exportedMethods = {
             throw `No ticket with id: ${id}`;
         }
 
-        const placeId = ticket.placeId;
-        const place = await places.getPlaceById(placeId);
-        ticket['images'] = place.images;
-        ticket['name'] = place.placeName;
-        ticket['description'] = place.description;
+        if (ticket.fourfacechusong === 'valid') {
+            const placeId = ticket.placeId;
+            const place = await places.getPlaceById(placeId);
+            ticket['images'] = place.images;
+            ticket['name'] = place.placeName;
+            ticket['description'] = place.description;
+        } else if (ticket.fourfacechusong === 'invalid') {
+            ticket['placeId'] = '';
+            ticket['name'] = ticket.palceName;
+            ticket['description'] = 'This ticket is invalid!';
+        }
 
         return ticket;
     },
 
-    async addTicket(persons, placeId, orderedDate, effectDate, price) {
+    async getTicketByPlaceId(id) {
+        const ticketCollection = await ticket();
+
+        id = await this.checkId(id);
+
+        const allTickets = await ticketCollection
+            .find({
+                placeId: id.toString(),
+            })
+            .toArray();
+
+        return allTickets;
+    },
+
+    async addTicket(
+        persons,
+        placeId,
+        placeName,
+        orderedDate,
+        effectDate,
+        price
+    ) {
         const ticketCollection = await tickets();
 
         if ((await counts.findDataById('ticketNo')) === null) {
@@ -90,10 +117,12 @@ let exportedMethods = {
             let newTicket = {
                 userId: xss(persons.user),
                 placeId: placeId,
+                placeName: placeName,
                 ticketNo: ticketNo,
                 orderedDate: orderedDate,
                 effectDate: effectDate,
                 price: price,
+                fourfacechusong: 'valid',
             };
 
             const insertInfo = await ticketCollection.insertOne(newTicket);
@@ -123,10 +152,12 @@ let exportedMethods = {
                 let newTicket = {
                     userId: xss(friendId),
                     placeId: placeId,
+                    placeName: placeName,
                     ticketNo: ticketNo,
                     orderedDate: orderedDate,
                     effectDate: effectDate,
                     price: price,
+                    fourfacechusong: 'valid',
                 };
 
                 const insertInfo = await ticketCollection.insertOne(newTicket);
@@ -168,7 +199,10 @@ let exportedMethods = {
             await friends.removeTicketFromFriend(ticket.userId, id);
         }
 
-        await places.updateRemainNum(ticket.placeId, 1, 'delete');
+        // add delay logic
+        if (ticket.fourfacechusong === 'valid') {
+            await places.updateRemainNum(ticket.placeId, 1, 'delete');
+        }
 
         return true;
     },
@@ -188,6 +222,36 @@ let exportedMethods = {
         );
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
             throw `Could not update ticket successfully by id: ${id}`;
+        }
+
+        return await this.getTicketById(id);
+    },
+
+    async changeValidTicket(id, fourfacechusong, type) {
+        const ticketCollection = await tickets();
+
+        id = await this.checkId(id);
+
+        let updateTicket = null;
+
+        if (type === 'delete') {
+            updateTicket = {
+                fourfacechusong: fourfacechusong,
+                ticketNo: '',
+            };
+        } else if (type === 'delay') {
+            updateTicket = {
+                fourfacechusong: fourfacechusong,
+            };
+        }
+
+        const updateInfo = await ticketCollection.updateOne(
+            { _id: id },
+            { $set: updateTicket }
+        );
+
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw `Could not changeValidTicket successfully by id: ${id}`;
         }
 
         return await this.getTicketById(id);

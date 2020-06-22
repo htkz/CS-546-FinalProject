@@ -176,7 +176,7 @@ let exportedMethods = {
         }
 
         // remove comment from places
-        await places.removeCommentFromPlace(comment.placeId, id);
+        // await places.removeCommentFromPlace(comment.placeId, id);
 
         return true;
     },

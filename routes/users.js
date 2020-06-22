@@ -7,6 +7,7 @@ const ticketData = data.tickets;
 const friendData = data.friends;
 const commentData = data.comments;
 const placeData = data.places;
+const bankData = data.banks;
 const utility = require('../utility');
 const checkParam = utility.checkInput;
 const xss = require('xss');
@@ -536,13 +537,39 @@ router.delete('/:id', async (req, res) => {
         const deleteUser = await userData.removeUser(xss(req.params.id));
         // delete comments
         for (let i = 0; i < user.userComments.length; i++) {
-            await commentData.removeComment(user.userComments[i]);
+            await commentData.removeComment(xss(user.userComments[i]));
         }
         // delete upvoted
+        for (let i = 0; i < user.upVotedComments.length; i++) {
+            await commentData.updateCancelComment(
+                user.upVotedComments[i],
+                req.params.id,
+                'up'
+            );
+        }
         // delete downvoted
+        for (let i = 0; i < user.downVotedComments.length; i++) {
+            await commentData.updateCancelComment(
+                user.upVotedComments[i],
+                req.params.id,
+                'down'
+            );
+        }
         // delete tickets
+        for (let i = 0; i < user.userTicketInfo.length; i++) {
+            await ticketData.removeTicket(xss(user.userTicketInfo[i]));
+        }
         // delete friends
+        for (let i = 0; i < user.friends.length; i++) {
+            // delete tickets
+            const friend = await friendData.getFriendById(xss(user.friends[i]));
+            for (let x = 0; x < friend.tickets.length; x++) {
+                await ticketData.removeTicket(xss(friend.tickets[i]));
+            }
+            await friendData.removeFriend(xss(user.friends[i]));
+        }
         // delete bank
+        await bankData.removeBank(xss(user.bankCard));
         res.status(200).json(deleteUser);
     } catch (error) {
         res.status(500).json({ error: error });

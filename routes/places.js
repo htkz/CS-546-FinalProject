@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const placeData = data.places;
 const commentData = data.comments;
+const ticketData = data.tickets;
 const userData = data.users;
 const xss = require('xss');
 
@@ -254,18 +255,31 @@ router.delete('/:id', async (req, res) => {
     }
 
     try {
-        place = await placeData.getAllPlaces(id);
+        place = await placeData.getPlaceById(id);
     } catch (error) {
         res.status(404).json({ error: 'Place not found' });
     }
 
     try {
         const deletePlace = await placeData.removePlace(id);
-        for (let i = 0; i < place.placeUserComments.length(); i++) {
+        // delete comment
+        for (let i = 0; i < place.placeUserComments.length; i++) {
             await commentData.removeComment(place.placeUserComments[i]);
+        }
+        // make ticket invalid
+        if (deletePlace.userTicketInfo !== undefined) {
+            allTickets = await ticketData.getTicketByPlaceId(xss(id));
+            for (let i = 0; i < allTickets.length; i++) {
+                await ticketData.changeValidTicket(
+                    allTickets[i],
+                    'invalid',
+                    'delete'
+                );
+            }
         }
         res.status(200).json({ place: deletePlace });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: error });
     }
 });
