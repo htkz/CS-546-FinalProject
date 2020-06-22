@@ -131,43 +131,37 @@ const renderPlaces = async (places) => {
             url: `/places/placeComments/${place._id}`,
         });
 
-        let i = 0;
-        for (comment of comments) {
+        comments.forEach((comment, index) => {
             com = $(`
                 <li id=${comment._id}>
-                    ${i}:
+                    ${index}:
                     <span class="username"> ${comment.user}</span>:
                     <span class="content">${comment.comment}</span>
                     <button type="button" class="commentDeleteBtn">
                     </button>
                 </li>`);
-            i++;
             card.find('.commentList').append(com);
-        }
+        });
 
-        let x = 0;
-        for (image of place.images) {
+        place.images.forEach((image, index) => {
             im = $(`
                 <li>
-                    ${x}:
+                    ${index}:
                     <span class="image"> ${image}</span>
                 </li>
             `);
-            x++;
             card.find(`.imageList`).append(im);
-        }
+        });
 
-        let y = 0;
-        for (category of place.category) {
+        place.category.forEach((category, index) => {
             cat = $(`
                 <li>
-                    ${y}:
+                    ${index}:
                     <span class="category"> ${category}</span>
                 </li>
             `);
-            y++;
             card.find(`.categoryList`).append(cat);
-        }
+        });
 
         card.find('.editBtn').click((event) => {
             showEditModal(event);
@@ -396,9 +390,21 @@ const addImage = async (root) => {
 };
 
 const commentDelete = async (event) => {
-    commentId = $(event.currentTarget).parent()[0].id;
-    await deleteComment(commentId);
-    $(event.currentTarget).parent().remove();
+    const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to delete this comment?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#0d7eb1',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+    });
+    if (result.value) {
+        commentId = $(event.currentTarget).parent()[0].id;
+        await deleteComment(commentId);
+        await showSwal('success', 'Already delete comment!');
+        $(event.currentTarget).parent().remove();
+    }
 };
 
 const addForm = async () => {
