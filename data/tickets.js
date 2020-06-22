@@ -199,6 +199,7 @@ let exportedMethods = {
             await friends.removeTicketFromFriend(ticket.userId, id);
         }
 
+        // add delay logic
         if (ticket.fourfacechusong === 'valid') {
             await places.updateRemainNum(ticket.placeId, 1, 'delete');
         }
@@ -234,12 +235,12 @@ let exportedMethods = {
         let updateTicket = null;
 
         if (type === 'delete') {
-            updateInfo = {
+            updateTicket = {
                 fourfacechusong: fourfacechusong,
                 ticketNo: '',
             };
         } else if (type === 'delay') {
-            updateInfo = {
+            updateTicket = {
                 fourfacechusong: fourfacechusong,
             };
         }
