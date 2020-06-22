@@ -12,6 +12,7 @@ const utility = require('../utility');
 const checkParam = utility.checkInput;
 const xss = require('xss');
 const multer = require('multer');
+const { tickets } = require('../config/mongoCollection');
 
 const getFileExtension = (file) => {
     const index = file.indexOf('/');
@@ -162,12 +163,25 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/tickets/:id', async (req, res) => {
+    const userId = xss(req.params.id);
+    let user = null;
+
     try {
-        const userId = xss(req.params.id);
-        const tickets = await ticketData.getTicketsByUserId(userId);
-        res.status(200).json(tickets);
+        user = await userData.getUserById(userId);
     } catch (error) {
         res.status(404).json({ error: error });
+    }
+
+    let tickets = user.userTicketInfo;
+    let ticketList = [];
+    try {
+        for (let i = 0; i < tickets.length; i++) {
+            tickets[i] = await ticketData.getTicketById(tickets[i]);
+            ticketList.push(tickets[i]);
+        }
+        res.status(200).json(ticketList);
+    } catch (error) {
+        res.status(500).json({ error: error });
     }
 });
 
