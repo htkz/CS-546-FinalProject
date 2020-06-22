@@ -49,6 +49,10 @@ div {
                 margin-bottom: 8px;
                 margin-left: 10px;
                 margin-right: 110px;
+                cursor: pointer;
+                &:hover {
+                    background-color: #eee;
+                }
             }
             .focus {
                 color: black;
@@ -76,8 +80,11 @@ div {
             border: 3px solid;
             border-color: #ccc;
             padding: 5px;
-            .btn-sm{
-                padding:1px;
+            .btn-sm {
+                padding: 1px;
+            }
+            .btnDiv {
+                text-align: right;
             }
             .textTitle {
                 margin-bottom: 3px;
@@ -98,7 +105,6 @@ div {
                 max-height: 100px;
             }
         }
-        
     }
     .userCard {
         text-align: center;

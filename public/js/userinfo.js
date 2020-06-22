@@ -2,12 +2,33 @@ const userInfo = JSON.parse(Cookies.get('user'));
 const userId = userInfo['_id'];
 const id = '5ee7d616bbe970deb49e0b49';
 
+let counter = 0;
+
+const changeFocus = (id) => {
+    $('.navbar li').each((index, li) => {
+        const $li = $(li);
+        if ($li.attr('id') === id) {
+            $li.attr('class', 'focus');
+            $($li.attr('data-id')).fadeIn(1000);
+            for (let i = 0; i < counter; i++) overflowCheck(i);
+        } else {
+            $li.attr('class', '');
+            $($li.attr('data-id')).hide();
+        }
+    });
+};
+
 const dataPreload = async () => {
+    
+    changeFocus('personalInfoNav');
+
     const userData = await $.ajax({
         type: 'GET',
         url: `/users/otheruser/${id}`,
     });
     console.log(userData);
+
+    //PersonalInfo Page
     $('#userName').text(userData.name);
     $('#renderUserName').text(userData.name);
     if (!userData.gender) {
@@ -36,17 +57,20 @@ const dataPreload = async () => {
             `../../public/pic/avatar/${userData.avatar}`
         );
     }
+
+    //userComments Page
     if (!userData.comments)
         $('#comments').append('<div class="">This user has no comment.<div>');
     else {
-        let counter = 0;
         for (let i of userData.comments) {
             $('#comments').append(`
             <div class="textBlock">
                 <div class="textContent" id="${counter}">
                     ${i.content} 
                 </div>
-                <Button type="button" class="btn btn-secondary btn-sm" onclick="btnClick(${counter})" id="btn${counter}">More</Button>
+                <div class="btnDiv">
+                    <Button type="button" class="btn btn-secondary btn-sm" onclick="btnClick(${counter})" id="btn${counter}">More</Button>
+                </div>
                 <div class="textTitle">
                 This user has comment on ${i.placeName}
                 </div>
@@ -54,16 +78,51 @@ const dataPreload = async () => {
             counter++;
         }
     }
+
+    //upvoteComments Page
+    if (!userData.upvoteComments)
+        $('#upvotes').append(
+            '<div class="">This user has no upvoted comment.<div>'
+        );
+    else {
+        for (let i of userData.upvoteComments) {
+            $('#upvotes').append(`
+            <div class="textBlock">
+                <div class="textContent" id="${counter}">
+                    ${i.content} 
+                </div>
+                <div class="btnDiv">
+                    <Button type="button" class="btn btn-secondary btn-sm" onclick="btnClick(${counter})" id="btn${counter}">More</Button>
+                </div>
+                <div class="textTitle">
+                This user has upvoted this comment on ${i.placeName}
+                </div>
+            </div>`);
+            overflowCheck(counter);
+            counter++;
+        }
+    }
+
+    //Relation Page
+    $('#relations').append('没写');
 };
 
 const btnClick = (counter) => {
-    if($(`#${counter}`).css('max-height') === '100px'){
+    if ($(`#${counter}`).css('max-height') === '100px') {
         $(`#${counter}`).css('max-height', 'none');
         $(`#btn${counter}`).text('Fold');
-    }else{
+    } else {
         $(`#${counter}`).css('max-height', '100px');
         $(`#btn${counter}`).text('More');
     }
+};
+
+const overflowCheck = (id) => {
+    const content = document.getElementById(id);
+    const offset = content.offsetHeight;
+    const scroll = content.scrollHeight;
+    if (offset == scroll) $(`#btn${id}`).addClass('hidden');
+    else $(`#btn${id}`).removeClass('hidden');
 };
 
 const birthDatePreload = (birthDate) => {
@@ -82,6 +141,12 @@ const ageCaculator = (birthDate) => {
 
 const init = async () => {
     dataPreload();
+    $('.navbar li').each((index, li) => {
+        const $li = $(li);
+        $li.click(() => {
+            changeFocus($li.attr('id'));
+        });
+    });
 };
 
 init();
