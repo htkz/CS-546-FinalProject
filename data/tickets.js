@@ -151,10 +151,12 @@ let exportedMethods = {
                 let newTicket = {
                     userId: xss(friendId),
                     placeId: placeId,
+                    placeName: placeName,
                     ticketNo: ticketNo,
                     orderedDate: orderedDate,
                     effectDate: effectDate,
                     price: price,
+                    fourfacechusong: 'valid',
                 };
 
                 const insertInfo = await ticketCollection.insertOne(newTicket);
