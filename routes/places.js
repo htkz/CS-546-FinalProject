@@ -206,7 +206,8 @@ router.patch('/:id', async (req, res) => {
             requestBody.newCategory &&
             requestBody.newCategory !== oldPlace.category
         ) {
-            updatedObject.category = xss(requestBody.newCategory.split(','));
+            updatedObject.category = xss(requestBody.newCategory).split(',');
+            console.log(updatedObject);
         }
 
         if (
@@ -224,7 +225,7 @@ router.patch('/:id', async (req, res) => {
             requestBody.newImages &&
             requestBody.newImages !== oldPlace.images
         ) {
-            updatedObject.images = xss(requestBody.newImages.split(','));
+            updatedObject.images = xss(requestBody.newImages).split(',');
         }
     } catch (error) {
         res.status(404).json({ error: error });
