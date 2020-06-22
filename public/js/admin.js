@@ -27,6 +27,7 @@ const renderPlaceEditModal = async (placeId) => {
     $('#edit-price').val(place.placePrice);
     $('#edit-displayTime').val(place.displayTime);
     $('#edit-remainNum').val(place.remainNum);
+    $('#edit-category').val(place.category.join(','));
 };
 
 const updatePlace = async () => {
@@ -38,6 +39,7 @@ const updatePlace = async () => {
         newPlacePrice: $('#edit-price').val(),
         newDisplayTime: $('#edit-displayTime').val(),
         newRemainNum: $('#edit-remainNum').val(),
+        newCategory: $('#edit-category').val(),
     };
     try {
         await $.ajax({
