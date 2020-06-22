@@ -61,6 +61,7 @@ let exportedMethods = {
             ticket['name'] = place.placeName;
             ticket['description'] = place.description;
         } else if (ticket.fourfacechusong === 'invalid') {
+            ticket['placeId'] = '';
             ticket['name'] = ticket.palceName;
             ticket['description'] = 'This ticket is invalid!';
         }
