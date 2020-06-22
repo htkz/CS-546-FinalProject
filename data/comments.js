@@ -133,7 +133,7 @@ let exportedMethods = {
         return await this.getCommentById(id);
     },
 
-    async removeComment(id) {
+    async removeComment(id, type) {
         const commentCollection = await comments();
         let comment = null;
 
@@ -176,7 +176,9 @@ let exportedMethods = {
         }
 
         // remove comment from places
-        // await places.removeCommentFromPlace(comment.placeId, id);
+        if (type === 'delete') {
+            await places.removeCommentFromPlace(comment.placeId, id);
+        }
 
         return true;
     },
