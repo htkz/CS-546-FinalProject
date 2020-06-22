@@ -198,11 +198,10 @@ const deletePlace = async (event) => {
         showCancelButton: true,
         confirmButtonColor: '#0d7eb1',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, buy it!',
-        timer: 1500,
+        confirmButtonText: 'Yes, delete it!',
     });
     if (result.value) {
-        const placeId = event.currentTarget.id;
+        const placeId = $(event.currentTarget).data('id');
         try {
             await $.ajax({
                 url: `/places/${placeId}`,

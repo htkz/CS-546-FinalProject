@@ -464,6 +464,7 @@ const buyTicket = async (event) => {
             const placeId = $('#place').attr('data-id');
             const userId = userInfo['_id'];
             const placeInfo = getPlaceById(placeId);
+            const placeName = placeInfo.placeName;
             const date = new Date();
             const orderDate = `${date.getFullYear()}-${
                 date.getMonth() + 1
@@ -479,6 +480,7 @@ const buyTicket = async (event) => {
                 data: {
                     persons: persons,
                     placeId: placeId,
+                    placeName: placeName,
                     orderedDate: orderDate,
                     effectDate: effectDate,
                     price: placeInfo.placePrice,

@@ -255,7 +255,7 @@ router.delete('/:id', async (req, res) => {
     }
 
     try {
-        place = await placeData.getAllPlaces(id);
+        place = await placeData.getPlaceById(id);
     } catch (error) {
         res.status(404).json({ error: 'Place not found' });
     }
@@ -263,7 +263,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const deletePlace = await placeData.removePlace(id);
         // delete comment
-        for (let i = 0; i < place.placeUserComments.length(); i++) {
+        for (let i = 0; i < place.placeUserComments.length; i++) {
             await commentData.removeComment(place.placeUserComments[i]);
         }
         // make ticket invalid
@@ -277,6 +277,7 @@ router.delete('/:id', async (req, res) => {
         }
         res.status(200).json({ place: deletePlace });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: error });
     }
 });
