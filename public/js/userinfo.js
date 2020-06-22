@@ -19,7 +19,6 @@ const changeFocus = (id) => {
 };
 
 const dataPreload = async () => {
-    
     changeFocus('personalInfoNav');
 
     const userData = await $.ajax({
