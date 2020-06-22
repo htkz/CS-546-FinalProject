@@ -53,6 +53,11 @@ div .userNavBar .navbar li {
   margin-bottom: 8px;
   margin-left: 10px;
   margin-right: 110px;
+  cursor: pointer;
+}
+
+div .userNavBar .navbar li:hover {
+  background-color: #eee;
 }
 
 div .userNavBar .navbar .focus {
@@ -88,6 +93,10 @@ div .userContainer .textBlock {
 
 div .userContainer .textBlock .btn-sm {
   padding: 1px;
+}
+
+div .userContainer .textBlock .btnDiv {
+  text-align: right;
 }
 
 div .userContainer .textBlock .textTitle {

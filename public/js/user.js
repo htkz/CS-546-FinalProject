@@ -337,6 +337,7 @@ const checkPasswordEmpty = () => {
 const changeFocus = (id) => {
     $('.navbar li').each((index, li) => {
         const $li = $(li);
+        console.log($li);
         if ($li.attr('id') === id) {
             $li.attr('class', 'active');
             $($li.attr('data-id')).fadeIn(1000);
