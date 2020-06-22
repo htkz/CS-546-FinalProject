@@ -161,8 +161,6 @@ let exportedMethods = {
         userId = await this.checkId(userId);
         commentId = await this.checkId(commentId);
 
-        console.log(commentId);
-
         const deletedInfo = await userCollection.updateOne(
             { _id: userId },
             { $pull: { userComments: commentId.toString() } }

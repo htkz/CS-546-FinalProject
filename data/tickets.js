@@ -61,7 +61,6 @@ let exportedMethods = {
             ticket['name'] = place.placeName;
             ticket['description'] = place.description;
         } else if (ticket.fourfacechusong === 'invalid') {
-            ticket['placeId'] = '';
             ticket['name'] = ticket.palceName;
             ticket['description'] = 'This ticket is invalid!';
         }
@@ -70,7 +69,7 @@ let exportedMethods = {
     },
 
     async getTicketByPlaceId(id) {
-        const ticketCollection = await ticket();
+        const ticketCollection = await tickets();
 
         id = await this.checkId(id);
 
@@ -237,7 +236,7 @@ let exportedMethods = {
         if (type === 'delete') {
             updateTicket = {
                 fourfacechusong: fourfacechusong,
-                ticketNo: '',
+                ticketNo: null,
             };
         } else if (type === 'delay') {
             updateTicket = {

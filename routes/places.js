@@ -267,11 +267,12 @@ router.delete('/:id', async (req, res) => {
             await commentData.removeComment(place.placeUserComments[i]);
         }
         // make ticket invalid
-        if (deletePlace.userTicketInfo !== undefined) {
-            allTickets = await ticketData.getTicketByPlaceId(xss(id));
+        allTickets = await ticketData.getTicketByPlaceId(xss(id));
+        console.log(allTickets);
+        if (allTickets.length !== 0) {
             for (let i = 0; i < allTickets.length; i++) {
                 await ticketData.changeValidTicket(
-                    allTickets[i],
+                    allTickets[i]._id,
                     'invalid',
                     'delete'
                 );
