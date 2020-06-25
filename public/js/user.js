@@ -337,7 +337,6 @@ const checkPasswordEmpty = () => {
 const changeFocus = (id) => {
     $('.navbar li').each((index, li) => {
         const $li = $(li);
-        console.log($li);
         if ($li.attr('id') === id) {
             $li.attr('class', 'active');
             $($li.attr('data-id')).fadeIn(1000);
@@ -360,52 +359,85 @@ const renderUserTickets = async () => {
         $('#self-tickets').append(title);
     }
     for (ticket of tickets) {
-        const $ticket = $(`
-            <div class="ticket">
-                <div class="imgContainer">
-                    <img src="./pic/places/${ticket.images[0]}" alt="${ticket.images[0]}">
+        if (ticket.fourfacechusong === 'valid') {
+            const $ticket = $(`
+                <div class="ticket">
+                    <div class="imgContainer">
+                        <img src="./pic/places/${ticket.images[0]}" alt="${ticket.images[0]}">
+                    </div>
+                    <div class="ticketInfo">
+                        <h2 class="h4">${ticket.name}</h2>
+                        <p>${ticket.description}</p>
+                        <p>Effect Date: ${ticket.effectDate}</p>
+                        <p>Price: $${ticket.price}</p>
+                        <p>Ticket Number: ${ticket.ticketNo}</p>
+                    </div>
                 </div>
-                <div class="ticketInfo">
-                    <h2 class="h4">${ticket.name}</h2>
-                    <p>${ticket.description}</p>
-                    <p>Effect Date: ${ticket.effectDate}</p>
-                    <p>Price: $${ticket.price}</p>
-                    <p>Ticket Number: ${ticket.ticketNo}</p>
+            `);
+            const cancelBtn = $(
+                `<button class="btn btn-sm btn-outline-info" class="cancelBtn" data-id="${ticket['_id']}">Cancel</button>`
+            );
+            const rescheduleBtn = $(
+                `<button class="btn btn-sm btn-outline-info" class="rescheduleBtn" data-id="${ticket['_id']}" effectDate="${ticket.effectDate}">Reschedule</button>`
+            );
+            cancelBtn.click((event) => {
+                cancelTicket(event, 'user');
+            });
+            rescheduleBtn.click((event) => {
+                $('#rescheduleModal').data(
+                    'id',
+                    $(event.currentTarget).attr('data-id')
+                );
+                $('#rescheduleInput').val(
+                    $(event.currentTarget).attr('effectDate')
+                );
+                $('#rescheduleInput').attr(
+                    'min',
+                    $(event.currentTarget).attr('effectDate')
+                );
+                const date = $(event.currentTarget)
+                    .attr('effectDate')
+                    .split('-');
+                const year = parseInt(date[0]);
+                const month = date[1];
+                const day = date[2];
+                $('#rescheduleInput').attr(
+                    'max',
+                    `${year + 1}-${month}-${day}`
+                );
+                $('#rescheduleModal').modal('show');
+            });
+            $($ticket.find('.ticketInfo')[0])
+                .append(cancelBtn)
+                .append(rescheduleBtn);
+            $('#self-tickets').append($ticket);
+        } else {
+            console.log('1');
+            const $ticket = $(`
+                <div class="ticket">
+                    <div class="imgContainer">
+                        <img src="./pic/avatar/default.jpg" alt="default">
+                    </div>
+                    <div class="ticketInfo">
+                        <h2 class="h4">${ticket.placeName}</h2>
+                        <p>${ticket.description}</p>
+                    </div>
                 </div>
-            </div>
-        `);
-        const cancelBtn = $(
-            `<button class="btn btn-sm btn-outline-info" class="cancelBtn" data-id="${ticket['_id']}">Cancel</button>`
-        );
-        const rescheduleBtn = $(
-            `<button class="btn btn-sm btn-outline-info" class="rescheduleBtn" data-id="${ticket['_id']}" effectDate="${ticket.effectDate}">Reschedule</button>`
-        );
-        cancelBtn.click((event) => {
-            cancelTicket(event, 'user');
-        });
-        rescheduleBtn.click((event) => {
-            $('#rescheduleModal').data(
-                'id',
-                $(event.currentTarget).attr('data-id')
+            `);
+            const cancelBtn = $(
+                `<button class="btn btn-sm btn-outline-info" class="cancelBtn" data-id="${ticket['_id']}">Delete</button>`
             );
-            $('#rescheduleInput').val(
-                $(event.currentTarget).attr('effectDate')
+            const rescheduleBtn = $(
+                `<button class="btn btn-sm btn-outline-info" disabled class="rescheduleBtn" data-id="${ticket['_id']}" effectDate="${ticket.effectDate}">Reschedule</button>`
             );
-            $('#rescheduleInput').attr(
-                'min',
-                $(event.currentTarget).attr('effectDate')
-            );
-            const date = $(event.currentTarget).attr('effectDate').split('-');
-            const year = parseInt(date[0]);
-            const month = date[1];
-            const day = date[2];
-            $('#rescheduleInput').attr('max', `${year + 1}-${month}-${day}`);
-            $('#rescheduleModal').modal('show');
-        });
-        $($ticket.find('.ticketInfo')[0])
-            .append(cancelBtn)
-            .append(rescheduleBtn);
-        $('#self-tickets').append($ticket);
+            cancelBtn.click((event) => {
+                cancelTicket(event, 'user');
+            });
+            $($ticket.find('.ticketInfo')[0])
+                .append(cancelBtn)
+                .append(rescheduleBtn);
+            $('#self-tickets').append($ticket);
+        }
     }
 };
 

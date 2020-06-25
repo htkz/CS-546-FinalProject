@@ -1,6 +1,7 @@
 const userInfo = JSON.parse(Cookies.get('user'));
 const userId = userInfo['_id'];
-const id = '5ee7d616bbe970deb49e0b49';
+// const id = '5ee7d616bbe970deb49e0b49';
+const id = $('#data').data('id');
 
 let counter = 0;
 

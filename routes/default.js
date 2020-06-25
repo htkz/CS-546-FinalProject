@@ -50,4 +50,9 @@ router.get('/test', (req, res) => {
     return;
 });
 
+router.get('/userinfo/:id', (req, res) => {
+    res.render('public/userInfo', { layout: false, userId: req.params.id });
+    return;
+});
+
 module.exports = router;
