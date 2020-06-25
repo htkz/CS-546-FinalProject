@@ -45,11 +45,6 @@ router.get('/admin', async (req, res) => {
     res.redirect('/visitor');
 });
 
-router.get('/test', (req, res) => {
-    res.render('public/userInfo', { layout: false });
-    return;
-});
-
 router.get('/userinfo/:id', (req, res) => {
     res.render('public/userInfo', { layout: false, userId: req.params.id });
     return;

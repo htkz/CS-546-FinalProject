@@ -170,9 +170,13 @@ const renderDetail = async (placeId) => {
     for (comment of comments) {
         $comment = $(`
             <li>
-                <span class="username">${comment.user}</span>:
+                <span class="username" data-id=${comment.user}>${comment.userName}</span>:
                 <span class="content">${comment.comment}</span>
             </li>`);
+        $comment.find('.username').click((event) => {
+            const id = $(event.currentTarget).data('id');
+            window.location.replace(`/userinfo/${id}`);
+        });
         $commentList.append($comment);
     }
     $('#commentForm').submit(alertSignIn);
@@ -253,7 +257,7 @@ const alertSignIn = async (event) => {
         showConfirmButton: false,
         timer: 1500,
     });
-}
+};
 
 const bindEvent = () => {
     $('#latestBtn').click(filterByLatest);
@@ -275,5 +279,3 @@ const main = async () => {
 };
 
 main();
-
-
