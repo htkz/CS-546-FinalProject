@@ -138,6 +138,10 @@ header {
                         padding: 8px 0;
                         .username {
                             font-weight: bold;
+                            cursor: pointer;
+                            &:hover {
+                                color: #999;
+                            }
                         }
                         .voteIcons {
                             display: flex;

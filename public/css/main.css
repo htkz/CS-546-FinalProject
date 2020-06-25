@@ -177,6 +177,11 @@ header .top-btn {
 
 #detailModal .wrapper .comment .commentContainer ul li .username {
   font-weight: bold;
+  cursor: pointer;
+}
+
+#detailModal .wrapper .comment .commentContainer ul li .username:hover {
+  color: #999;
 }
 
 #detailModal .wrapper .comment .commentContainer ul li .voteIcons {

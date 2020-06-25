@@ -202,7 +202,7 @@ const renderComment = async (placeId) => {
         const id = comment['_id'];
         $comment = $(`
             <li data-id=${id}>
-                <span class="username">${comment.user}</span>:
+                <span class="username" data-id=${comment.user}>${comment.userName}</span>:
                 <span class="content">${comment.comment}</span>
                 <div class="voteIcons">
                     <div class="upvote">
@@ -215,6 +215,11 @@ const renderComment = async (placeId) => {
                     </div>
                 </div>
             </li>`);
+        $comment.find('.username').click((event) => {
+            const id = $(event.currentTarget).data('id');
+            window.location.replace(`/userinfo/${id}`);
+        });
+
         if (comment.upVotedUsers.includes(userId)) {
             $comment.find('.voteIcons').addClass('upvote');
         }

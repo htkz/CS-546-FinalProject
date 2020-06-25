@@ -34,7 +34,7 @@ router.get('/placeComments/:id', async (req, res) => {
         );
         for (let i = 0; i < allComments.length; i++) {
             const thisUser = await userData.getUserById(allComments[i].user);
-            allComments[i].user = thisUser.userName;
+            allComments[i].userName = thisUser.userName;
         }
         res.status(200).json(allComments);
     } catch (error) {
