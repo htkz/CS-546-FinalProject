@@ -5,6 +5,29 @@ const id = $('#data').data('id');
 
 let counter = 0;
 
+const navBarPreLoad = () => {
+    console.log(userId);
+    if(userId) {
+        $('#visitorHeader').addClass("hidden");
+        $('#userHeader').removeClass("hidden");
+        $('#logoutBtn').click(logout);
+        $('#userBarName').text(userInfo['userName']);
+    }else $('#signinBtn').click(signin);
+}
+
+const logout = async (event) => {
+    event.preventDefault();
+    await $.ajax({
+        url: `/users/logout`,
+    });
+    window.location.replace('/entry');
+};
+
+const signin = async (event) => {
+    event.preventDefault();
+    window.location.replace('/entry');
+};
+
 const changeFocus = (id) => {
     $('.navbar li').each((index, li) => {
         const $li = $(li);
@@ -26,7 +49,6 @@ const dataPreload = async () => {
         type: 'GET',
         url: `/users/otheruser/${id}`,
     });
-    console.log(userData);
 
     //PersonalInfo Page
     $('#userName').text(userData.name);
@@ -141,6 +163,7 @@ const ageCaculator = (birthDate) => {
 
 const init = async () => {
     dataPreload();
+    navBarPreLoad();
     $('.navbar li').each((index, li) => {
         const $li = $(li);
         $li.click(() => {

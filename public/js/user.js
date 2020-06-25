@@ -58,7 +58,6 @@ const infoPreload = async () => {
     const gender = userData.gender;
     const birthDate = userData.birthDate;
     const avatar = userData.avatar;
-    //birthDatePreload(birthDate);
     userBarPreload(userName, birthDate, gender);
 
     $('#form-username').val(userName);
