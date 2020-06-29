@@ -155,7 +155,7 @@ let exportedMethods = {
         }
 
         // remove comment from posted user
-        if (type === 'comment') {
+        if (type === 'comment' || type === 'comments') {
             await users.removeCommentFromUser(comment.user, id);
         }
 
