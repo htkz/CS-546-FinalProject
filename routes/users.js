@@ -526,7 +526,29 @@ router.put('/account/password/:id', async (req, res) => {
         const updatePassword = await userData.updatePassword(
             xss(req.params.id),
             xss(passwordInfo.oldPassword),
-            xss(passwordInfo.newPassword)
+            xss(passwordInfo.newPassword),
+            xss('user')
+        );
+        res.status(200).json(updatePassword);
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+});
+
+router.put('/admin/password/:id', async (req, res) => {
+    let password = req.body.password;
+
+    if (!password) {
+        res.status(400).json({ error: 'You must provide a password' });
+        return;
+    }
+
+    try {
+        const updatePassword = await userData.updatePassword(
+            xss(req.params.id),
+            xss(passwordInfo.oldPassword),
+            xss(password),
+            xss('admin')
         );
         res.status(200).json(updatePassword);
     } catch (error) {

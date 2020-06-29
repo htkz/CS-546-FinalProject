@@ -303,15 +303,17 @@ let exportedMethods = {
         return await this.getUserById(userId);
     },
 
-    async updatePassword(id, oldPassword, newPassword) {
+    async updatePassword(id, oldPassword, newPassword, type) {
         const userCollection = await users();
 
         id = await this.checkId(id);
 
         password = (await this.getUserById(id)).hashedPassword;
 
-        if (!(await bcrypt.compare(oldPassword, password))) {
-            throw 'Old password does not match';
+        if (type === 'user') {
+            if (!(await bcrypt.compare(oldPassword, password))) {
+                throw 'Old password does not match';
+            }
         }
 
         const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
