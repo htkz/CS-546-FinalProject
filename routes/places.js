@@ -6,6 +6,7 @@ const commentData = data.comments;
 const ticketData = data.tickets;
 const userData = data.users;
 const xss = require('xss');
+const { comments } = require('../config/mongoCollection');
 
 router.get('/:id', async (req, res) => {
     try {
@@ -265,7 +266,10 @@ router.delete('/:id', async (req, res) => {
         const deletePlace = await placeData.removePlace(id);
         // delete comment
         for (let i = 0; i < place.placeUserComments.length; i++) {
-            await commentData.removeComment(place.placeUserComments[i]);
+            await commentData.removeComment(
+                place.placeUserComments[i],
+                xss('comment')
+            );
         }
         // make ticket invalid
         allTickets = await ticketData.getTicketByPlaceId(xss(id));
