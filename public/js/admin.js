@@ -19,6 +19,22 @@ const getPlaceById = (id) => {
     return undefined;
 };
 
+const updatePassword = async (event) => {
+    const password = $('#edit-password').val();
+    try {
+        await $.ajax({
+            url: `/users/admin/password/${currentUserId}`,
+            type: 'put',
+            data: {
+                password: password,
+            },
+        });
+        await showSwal('success', 'Already changed password!');
+    } catch (error) {
+        await showSwal('error', 'Cannot change password!');
+    }
+};
+
 const renderPlaceEditModal = async (placeId) => {
     const place = await $.ajax(`/places/${placeId}`);
     $('#edit-palceName').val(place.placeName);
@@ -552,6 +568,9 @@ const renderUsers = async (users) => {
                     <button type="button" class="btn editBtn btn-secondary" data-id=${user._id}>
                         Edit
                     </button>
+                    <button type="button" class="btn btn-secondary" id='changePasswordBtn' data-id=${user._id}>
+                        Password
+                    </button>
                     <button type="button" class="btn deleteBtn btn-primary" id=${user._id}>
                         Delete
                     </button>
@@ -600,6 +619,9 @@ const renderUsers = async (users) => {
         card.find('.deleteBtn').click((event) => {
             deleteUser(event);
         });
+        card.find('#changePasswordBtn').click((event) => {
+            showPasswordEditModal(event);
+        });
         card.find('.showHideTicket').click((event) => {
             showHideTicket(event);
         });
@@ -618,9 +640,10 @@ let friendFlag = false;
 let ticketFlag = false;
 let userCommentFlag = false;
 
-
 const showHideTicket = async () => {
-    const $userTicketInfoList = $(event.currentTarget).parent().find('.userTicketInfoList');
+    const $userTicketInfoList = $(event.currentTarget)
+        .parent()
+        .find('.userTicketInfoList');
     if ($userTicketInfoList.css('display') === 'none') {
         $userTicketInfoList.css('display', 'block');
         $(event.currentTarget)
@@ -650,7 +673,9 @@ const showHideFriend = async () => {
 };
 
 const showHideUserComment = async () => {
-    const $userCommentList = $(event.currentTarget).parent().find('.userCommentsList');
+    const $userCommentList = $(event.currentTarget)
+        .parent()
+        .find('.userCommentsList');
     if ($userCommentList.css('display') === 'none') {
         $userCommentList.css('display', 'block');
         $(event.currentTarget)
@@ -717,6 +742,13 @@ const showUserEditModal = (event) => {
     $('#editUserDetailModal').modal('show');
 };
 
+const showPasswordEditModal = (event) => {
+    console.log('123');
+    const userId = $(event.currentTarget).data('id');
+    currentUserId = userId;
+    $('#passwordEditModal').modal('show');
+};
+
 const renderUserEditModal = async (userId) => {
     const user = await $.ajax(`/users/account/${userId}`);
     console.log(user);
@@ -778,6 +810,7 @@ const bindEvents = async () => {
     });
     $('#updatePlaceBtn').click(updatePlace);
     $('#updateUserBtn').click(updateUser);
+    $('#updatePasswordBtn').click(updatePassword);
     $('#search').submit((event) => {
         event.preventDefault();
         filterBySearch($('#searchInput').val());

@@ -195,6 +195,34 @@
             </div>
         </div>
     </div>
+        <div class="modal fade" tabindex="-1" id="passwordEditModal" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row mt-1">
+                            <div class="col-4 ml-3 aside">
+                                <label for="edit-userName">Password</label>
+                            </div>
+                            <div class="input-group col-5">
+                                <input type="text" class="form-control" id="edit-password" value="123456">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="updatePasswordBtn" class="btn btn-primary">Update Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <main>
         <div class="admin">
             <div class="container">
