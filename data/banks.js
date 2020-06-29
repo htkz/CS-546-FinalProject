@@ -96,11 +96,13 @@ let exportedMethods = {
     async removeBank(id) {
         const bankCollection = await banks();
 
-        id = await this.checkId(id);
+        if (id.length() !== 0 || id !== null || id !== undefined) {
+            id = await this.checkId(id);
 
-        const deleteInfo = await bankCollection.removeOne({ _id: id });
-        if (deleteInfo.deletedCount === 0) {
-            throw `Could not delete bank with id: ${id}`;
+            const deleteInfo = await bankCollection.removeOne({ _id: id });
+            if (deleteInfo.deletedCount === 0) {
+                throw `Could not delete bank with id: ${id}`;
+            }
         }
 
         return true;
