@@ -69,7 +69,7 @@ const renderPlaces = async (places) => {
         const card = $(`
             <div class="info" id=${place._id}>
                 <div class="row">
-                    <div class="col">
+                    <div class="col imgContainer">
                         <img src="./pic/places/${place.images[0]}" class="img rounded mx-auto d-block" alt="${place.images[0]}" />
                     </div>
                     <div class="col-8 detail">
@@ -77,7 +77,7 @@ const renderPlaces = async (places) => {
                             <b>Place Name</b>: <span class=placeName>${place.placeName}</span>
                         </div>
                         <div>
-                            <button class="showHideImage"/>
+                            <div class='showHideImage tirangle'><img src='./pic/triangle_right.png' /></div>
                             <b>Images</b>: <span class="images">Array</span>
                             <div class="imageContainer">
                                 <ul class="imageList" style="display: none;"></ul>
@@ -103,7 +103,7 @@ const renderPlaces = async (places) => {
                             <b>Tickets</b>: <span class="remainNum">${place.remainNum}</span>
                         </div>
                         <div>
-                            <button class="showHideCategory"/>
+                            <div class='showHideCategory tirangle'><img src='./pic/triangle_right.png' /></div>
                             <b>Category</b>: <span class="categories">Array</span>
                             <div class="categoryContainer">
                                 <ul class="categoryList" style="display: none;"></ul>
@@ -111,7 +111,7 @@ const renderPlaces = async (places) => {
                             </div>
                         </div>
                         <div>
-                            <button class="showHideComment"/>
+                            <div class='showHideComment tirangle'><img src='./pic/triangle_right.png' /></div>
                             <b>Comments</b>: <span class="comments">Array</span>
                             <div class="commentContainer">
                                 <ul class="commentList" style="display: none;"></ul>
@@ -220,61 +220,46 @@ let categoryFlag = false;
 
 const showHideComment = async (event) => {
     const $commentList = $(event.currentTarget).parent().find('.commentList');
-
-    if ($commentList.css('display') === 'none' && commentFlag === true) {
-        commentFlag = false;
-    }
-
-    if ($commentList.css('display') === 'block' && commentFlag === false) {
-        commentFlag = true;
-    }
-
-    if (!commentFlag) {
-        $commentList.css('display', '');
-        commentFlag = true;
+    if ($commentList.css('display') === 'none') {
+        $commentList.css('display', 'block');
+        $(event.currentTarget)
+            .find('img')
+            .attr('src', './pic/triangle_down.png');
     } else {
         $commentList.css('display', 'none');
-        commentFlag = false;
+        $(event.currentTarget)
+            .find('img')
+            .attr('src', './pic/triangle_right.png');
     }
 };
 
 const showHideImage = async () => {
     const $imageList = $(event.currentTarget).parent().find('.imageList');
-
-    if ($imageList.css('display') === 'none' && imageFlag === true) {
-        imageFlag = false;
-    }
-
-    if ($imageList.css('display') === 'block' && imageFlag === false) {
-        imageFlag = true;
-    }
-
-    if (!imageFlag) {
-        $imageList.css('display', '');
-        imageFlag = true;
+    if ($imageList.css('display') === 'none') {
+        $imageList.css('display', 'block');
+        $(event.currentTarget)
+            .find('img')
+            .attr('src', './pic/triangle_down.png');
     } else {
         $imageList.css('display', 'none');
-        imageFlag = false;
+        $(event.currentTarget)
+            .find('img')
+            .attr('src', './pic/triangle_right.png');
     }
 };
 
 const showHideCategory = async () => {
     const $categoryList = $(event.currentTarget).parent().find('.categoryList');
-
-    if ($categoryList.css('display') === 'none' && categoryFlag === true) {
-        categoryFlag = false;
-    }
-
-    if ($categoryList.css('display') === 'block' && categoryFlag === false) {
-        categoryFlag = true;
-    }
-
-    if (!categoryFlag) {
-        $categoryList.css('display', '');
-        categoryFlag = true;
+    if ($categoryList.css('display') === 'none') {
+        $categoryList.css('display', 'block');
+        $(event.currentTarget)
+            .find('img')
+            .attr('src', './pic/triangle_down.png');
     } else {
         $categoryList.css('display', 'none');
-        categoryFlag = false;
+        $(event.currentTarget)
+            .find('img')
+            .attr('src', './pic/triangle_right.png');
     }
 };
 
@@ -637,12 +622,9 @@ const showHideTicket = async () => {
     const $ticketList = $(event.currentTarget)
         .parent()
         .find('.userTicketInfoList');
-
-    console.log($ticketList);
     if ($ticketList.css('display') === 'none' && ticketFlag === true) {
         ticketFlag = false;
     }
-
     if (!ticketFlag) {
         $ticketList.css('display', '');
         ticketFlag = true;
@@ -709,7 +691,6 @@ const deleteUser = async (event) => {
         confirmButtonColor: '#0d7eb1',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!',
-        timer: 1500,
     });
     if (result.value) {
         const id = event.currentTarget.id;
@@ -804,10 +785,12 @@ const bindEvents = async () => {
         addForm();
         $('#addDetailModal').modal('show');
     });
-    $('#userBtn').click((event) => {
+    $('#userBtn').click(async (event) => {
+        await fetchUsers(store);
         renderUsers(store['users']);
     });
-    $('#placeBtn').click((event) => {
+    $('#placeBtn').click(async (event) => {
+        await fetchPlaces(store);
         renderPlaces(store['places']);
     });
     $('#updatePlaceBtn').click(updatePlace);

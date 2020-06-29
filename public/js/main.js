@@ -365,22 +365,6 @@ const refreshPlaces = async () => {
     await fetchPlaces(store);
 };
 
-const refreshComment = async (placeId) => {
-    const comments = await $.ajax({
-        url: `/places/placeComments/${placeId}`,
-    });
-    const $commentList = $('#commentList');
-    $commentList.empty();
-    for (comment of comments) {
-        $comment = $(`
-            <li>
-                <span class="username">${comment.user}</span>:
-                <span class="content">${comment.comment}</span>
-            </li>`);
-        $commentList.append($comment);
-    }
-};
-
 const refreshTicket = async (placeId) => {
     const place = await $.ajax({
         url: `/places/${placeId}`,
@@ -411,7 +395,7 @@ const postComment = async (event) => {
     });
     $('#commentInput').val('');
     await refreshPlaces();
-    await refreshComment(placeId);
+    await renderComment(placeId);
     $('#commentList').animate(
         {
             scrollTop: '99999',
