@@ -586,6 +586,7 @@ router.delete('/:id', async (req, res) => {
         await bankData.removeBank(xss(user.bankCard));
         res.status(200).json(deleteUser);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: error });
     }
 });
