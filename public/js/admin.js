@@ -524,21 +524,21 @@ const renderUsers = async (users) => {
                         <b>Bio</b>: <span class="bio">${user.bio}</span>
                     </div>
                     <div>
-                        <button class="showHideTicket"/>
+                        <div class='showHideTicket tirangle'><img src='./pic/triangle_right.png' /></div>
                         <b>Ticket Infomation</b>: <span class="userTicketInfo">Array</span>
                         <div class="userTicketInfoContainer">
                             <ul class="userTicketInfoList" style="display: none;"></ul>
                         </div>
                     </div>
                     <div>
-                        <button class="showHideUserComments"/>
+                        <div class='showHideUserComments tirangle'><img src='./pic/triangle_right.png' /></div>
                         <b>Comments</b>: <span class="userComments">Array</span>
                         <div class="userCommentContainer">
                             <ul class="userCommentsList" style="display: none;"></ul>
                         </div>
                     </div>
                     <div>
-                        <button class="showHideFriends"/>
+                        <div class='showHideFriends tirangle'><img src='./pic/triangle_right.png' /></div>
                         <b>Friends</b>: <span class="friends">Array</span>
                         <div class="friendContainer">
                             <ul class="friendsList" style="display: none;"></ul>
@@ -618,67 +618,49 @@ let friendFlag = false;
 let ticketFlag = false;
 let userCommentFlag = false;
 
+
 const showHideTicket = async () => {
-    const $ticketList = $(event.currentTarget)
-        .parent()
-        .find('.userTicketInfoList');
-    if ($ticketList.css('display') === 'none' && ticketFlag === true) {
-        ticketFlag = false;
-    }
-    if (!ticketFlag) {
-        $ticketList.css('display', '');
-        ticketFlag = true;
+    const $userTicketInfoList = $(event.currentTarget).parent().find('.userTicketInfoList');
+    if ($userTicketInfoList.css('display') === 'none') {
+        $userTicketInfoList.css('display', 'block');
+        $(event.currentTarget)
+            .find('img')
+            .attr('src', './pic/triangle_down.png');
     } else {
-        $ticketList.css('display', 'none');
-        ticketFlag = false;
+        $userTicketInfoList.css('display', 'none');
+        $(event.currentTarget)
+            .find('img')
+            .attr('src', './pic/triangle_right.png');
     }
 };
 
 const showHideFriend = async () => {
-    const $friendList = $(event.currentTarget).parent().find('.friendsList');
-
-    if ($friendList.css('display') === 'none' && friendFlag === true) {
-        friendFlag = false;
-    }
-
-    if ($friendList.css('display') === 'block' && friendFlag === false) {
-        friendFlag = true;
-    }
-
-    if (!friendFlag) {
-        $friendList.css('display', '');
-        friendFlag = true;
+    const $friendsList = $(event.currentTarget).parent().find('.friendsList');
+    if ($friendsList.css('display') === 'none') {
+        $friendsList.css('display', 'block');
+        $(event.currentTarget)
+            .find('img')
+            .attr('src', './pic/triangle_down.png');
     } else {
-        $friendList.css('display', 'none');
-        friendFlag = false;
+        $friendsList.css('display', 'none');
+        $(event.currentTarget)
+            .find('img')
+            .attr('src', './pic/triangle_right.png');
     }
 };
 
 const showHideUserComment = async () => {
-    const $userCommentList = $(event.currentTarget)
-        .parent()
-        .find('.userCommentsList');
-
-    if (
-        $userCommentList.css('display') === 'none' &&
-        userCommentFlag === true
-    ) {
-        userCommentFlag = false;
-    }
-
-    if (
-        $userCommentList.css('display') === 'block' &&
-        userCommentFlag === false
-    ) {
-        userCommentFlag = true;
-    }
-
-    if (!userCommentFlag) {
-        $userCommentList.css('display', '');
-        userCommentFlag = true;
+    const $userCommentList = $(event.currentTarget).parent().find('.userCommentsList');
+    if ($userCommentList.css('display') === 'none') {
+        $userCommentList.css('display', 'block');
+        $(event.currentTarget)
+            .find('img')
+            .attr('src', './pic/triangle_down.png');
     } else {
         $userCommentList.css('display', 'none');
-        userCommentFlag = false;
+        $(event.currentTarget)
+            .find('img')
+            .attr('src', './pic/triangle_right.png');
     }
 };
 
@@ -694,6 +676,7 @@ const deleteUser = async (event) => {
     });
     if (result.value) {
         const id = event.currentTarget.id;
+        console.log(id);
         try {
             await $.ajax({
                 url: `/users/${id}`,
