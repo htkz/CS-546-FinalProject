@@ -546,7 +546,7 @@ router.put('/admin/password/:id', async (req, res) => {
     try {
         const updatePassword = await userData.updatePassword(
             xss(req.params.id),
-            xss(passwordInfo.oldPassword),
+            xss(password),
             xss(password),
             xss('admin')
         );
