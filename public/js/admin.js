@@ -137,7 +137,7 @@ const renderPlaces = async (places) => {
             com = $(`
                 <li id=${comment._id}>
                     ${index}:
-                    <span class="username"> ${comment.user}</span>:
+                    <span class="username"> ${comment.userName}</span>:
                     <span class="content">${comment.comment}</span>
                     <button type="button" class="commentDeleteBtn">
                     </button>
@@ -276,37 +276,6 @@ const showHideCategory = async () => {
         $categoryList.css('display', 'none');
         categoryFlag = false;
     }
-};
-
-const editPlace = async (event) => {
-    const root = $(event.currentTarget).parent().parent();
-    root.find('.placeName').attr('contenteditable', 'true');
-    root.find('.description').attr('contenteditable', 'true');
-    root.find('.placeAddress').attr('contenteditable', 'true');
-    root.find('.placeZipCode').attr('contenteditable', 'true');
-    root.find('.placePrice').attr('contenteditable', 'true');
-    root.find('.displayTime').attr('contenteditable', 'true');
-    root.find('.remainNum').attr('contenteditable', 'true');
-    root.find('.category').attr('contenteditable', 'true');
-    root.find('.image').attr('contenteditable', 'true');
-    root.find('.addImage').css('display', '');
-    root.find('.addCategory').css('display', '');
-
-    root.find('.addImage').click((event) => {
-        addImage(root);
-    });
-
-    root.find('.addCategory').click((event) => {
-        addCategory(root);
-    });
-
-    $(event.currentTarget)
-        .parent()
-        .find('.editBtn')
-        .text('Save')
-        .click((event) => {
-            saveEdit(event);
-        });
 };
 
 const saveEdit = async (event) => {
@@ -537,7 +506,6 @@ const fetchPlaces = async (store) => {
 
 const renderUsers = async (users) => {
     $('#cards').empty();
-    console.log(users);
 
     for (user of users) {
         const card = $(`
@@ -605,48 +573,41 @@ const renderUsers = async (users) => {
                 </div>
             </div>
         `);
-
-        let i = 0;
-        for (ticketId of user.userTicketInfo) {
+        user.userTicketInfo.forEach(async (ticketId, index) => {
             const ticket = await $.ajax({
                 url: `/tickets/${ticketId}`,
             });
-            t = $(`
-                <li id=${ticket._id}>
-                    ${i}:
-                    <span> ${ticket.ticketNo}</span>
-                </li>
-            `);
-            i++;
-        }
+            $ticket = $(`
+            <li id=${ticket._id}>
+                ${index}:
+                <span> ${ticket.ticketNo}</span>
+            </li>`);
+            card.find('.userTicketInfoList').append($ticket);
+        });
 
-        let x = 0;
-        for (commentId of user.userComments) {
+        user.userComments.forEach(async (commentId, index) => {
             const comment = await $.ajax({
                 url: `/comments/${commentId}`,
             });
-            c = $(`
-                <li id=${comment._id}>
-                    ${x}:
-                    <span> ${comment}</span>
-                </li>
-            `);
-            x++;
-        }
+            $comment = $(`
+            <li id=${comment._id}>
+                ${index}:
+                <span> ${comment.comment}</span>
+            </li>`);
+            card.find('.userCommentsList').append($comment);
+        });
 
-        let y = 0;
-        for (friendId of user.friends) {
+        user.friends.forEach(async (friendId, index) => {
             const friend = await $.ajax({
                 url: `/friends/${friendId}`,
             });
-            f = $(`
-                <li id=${friend._id}>
-                    ${y}:
-                    <span> ${friend}</span>
-                </li>
-            `);
-            y++;
-        }
+            $friend = $(`
+            <li id=${friend._id}>
+                ${index}:
+                <span> ${friend.name}</span>
+            </li>`);
+            card.find('.friendsList').append($friend);
+        });
 
         card.find('.editBtn').click((event) => {
             showUserEditModal(event);
@@ -677,12 +638,9 @@ const showHideTicket = async () => {
         .parent()
         .find('.userTicketInfoList');
 
+    console.log($ticketList);
     if ($ticketList.css('display') === 'none' && ticketFlag === true) {
         ticketFlag = false;
-    }
-
-    if ($categoryList.css('display') === 'block' && ticketFlag === false) {
-        ticketFlag = true;
     }
 
     if (!ticketFlag) {

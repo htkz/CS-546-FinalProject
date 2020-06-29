@@ -199,7 +199,11 @@ router.delete('/user/:id', async (req, res) => {
     }
 
     try {
-        const deleteTicket = await ticketData.removeTicket(id, 'user');
+        const deleteTicket = await ticketData.removeTicket(
+            id,
+            'user',
+            'ticket'
+        );
         res.status(200).json(deleteTicket);
     } catch (error) {
         res.status(500).json({ error: error });
@@ -223,7 +227,11 @@ router.delete('/friend/:id', async (req, res) => {
     }
 
     try {
-        const deleteTicket = await ticketData.removeTicket(id, 'friend');
+        const deleteTicket = await ticketData.removeTicket(
+            id,
+            xss('friend'),
+            xss('ticket')
+        );
         res.status(200).json(deleteTicket);
     } catch (error) {
         res.status(500).json({ error: error });
