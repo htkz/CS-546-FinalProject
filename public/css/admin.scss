@@ -5,6 +5,15 @@ ol {
     margin: 0;
 }
 
+.tirangle {
+    display: inline;
+    cursor: pointer;
+    img {
+        height: 16px;
+        width: auto;
+    }
+}
+
 header {
     .username {
         border: thick;
@@ -33,10 +42,12 @@ header {
                 margin: 10px 4px;
                 border: 1px solid rgba(0, 0, 0, 0.125);
                 border-radius: 0.25rem;
-                img {
-                    width: 300px;
-                    margin-bottom: 20px;
-                    margin-top: 20px;
+                .imgContainer {
+                    img {
+                        width: 300px;
+                        margin-bottom: 20px;
+                        margin-top: 20px;
+                    }
                 }
                 .detail {
                     margin-top: 10px;

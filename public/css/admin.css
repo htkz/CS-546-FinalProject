@@ -5,6 +5,16 @@ ol {
   margin: 0;
 }
 
+.tirangle {
+  display: inline;
+  cursor: pointer;
+}
+
+.tirangle img {
+  height: 16px;
+  width: auto;
+}
+
 header .username {
   border: thick;
   color: white;
@@ -45,7 +55,7 @@ header .username {
   border-radius: 0.25rem;
 }
 
-.admin .container .cards .info img {
+.admin .container .cards .info .imgContainer img {
   width: 300px;
   margin-bottom: 20px;
   margin-top: 20px;
