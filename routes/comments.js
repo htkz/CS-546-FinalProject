@@ -215,7 +215,8 @@ router.put('/canceldownvote/:id', async (req, res) => {
         const updatedComment = await commentData.updateCancelComment(
             xss(req.params.id),
             xss(requestBody.votedUserId),
-            xss('down')
+            xss('down'),
+            xss('comment')
         );
         res.status(200).json(updatedComment);
     } catch (error) {
@@ -236,7 +237,7 @@ router.delete('/:id', async (req, res) => {
     }
 
     try {
-        const deleteComment = await commentData.removeComment(id, 'delete');
+        const deleteComment = await commentData.removeComment(id, 'comment');
         res.status(200).json(deleteComment);
     } catch (error) {
         res.status(500).json({ error: error });

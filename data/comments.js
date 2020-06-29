@@ -100,7 +100,7 @@ let exportedMethods = {
         return await this.getCommentById(id);
     },
 
-    async updateCancelComment(id, votedUserId, type) {
+    async updateCancelComment(id, votedUserId, type, deleteType) {
         const commentCollection = await comments();
 
         id = await this.checkId(id);
@@ -117,7 +117,9 @@ let exportedMethods = {
             if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
                 throw `Could not update cancel comment successfully with id: ${id}`;
             }
-            await users.removeVotedCommentFromUser(votedUserId, id, type);
+            if (deleteType === 'comment') {
+                await users.removeVotedCommentFromUser(votedUserId, id, type);
+            }
         } else if (type === 'down') {
             const updatedInfo = await commentCollection.updateOne(
                 { _id: id },
@@ -127,7 +129,9 @@ let exportedMethods = {
             if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount) {
                 throw `Could not update cancel comment successfully with id: ${id}`;
             }
-            await users.removeVotedCommentFromUser(votedUserId, id, type);
+            if (deleteType === 'comment') {
+                await users.removeVotedCommentFromUser(votedUserId, id, type);
+            }
         }
 
         return await this.getCommentById(id);
@@ -151,7 +155,9 @@ let exportedMethods = {
         }
 
         // remove comment from posted user
-        await users.removeCommentFromUser(comment.user, id);
+        if (type === 'comment') {
+            await users.removeCommentFromUser(comment.user, id);
+        }
 
         // remove comment from up voted user
         if (comment.upVotedUsers.length !== 0) {
@@ -176,7 +182,7 @@ let exportedMethods = {
         }
 
         // remove comment from places
-        if (type === 'delete') {
+        if (type === 'comment') {
             await places.removeCommentFromPlace(comment.placeId, id);
         }
 

@@ -153,7 +153,7 @@ let exportedMethods = {
         return result;
     },
 
-    async removeTicket(id, operator) {
+    async removeTicket(id, operator, type) {
         const ticketCollection = await tickets();
 
         id = await this.checkId(id);
@@ -170,9 +170,9 @@ let exportedMethods = {
             throw `Could not delete ticket with id: ${id}`;
         }
 
-        if (operator === 'user') {
+        if (operator === 'user' && type === 'ticket') {
             await users.removeTicketFromUser(ticket.userId, id);
-        } else if (operator === 'friend') {
+        } else if (operator === 'friend' && type === 'ticket') {
             await friends.removeTicketFromFriend(ticket.userId, id);
         }
 
