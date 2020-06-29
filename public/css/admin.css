@@ -116,6 +116,7 @@ header .username {
           justify-content: space-between;
 }
 
+#editUserDetailModal form .aside,
 #editDetailModal form .aside {
   font-weight: 600;
   display: -webkit-box;
@@ -131,6 +132,7 @@ header .username {
   float: right;
 }
 
+#editUserDetailModal form .aside label,
 #editDetailModal form .aside label {
   text-align: right;
   margin-bottom: 0;

@@ -1,4 +1,5 @@
 currentPlaceId = undefined;
+currentUserId = undefined;
 
 const showSwal = async (icon, title) => {
     await Swal.fire({
@@ -53,7 +54,8 @@ const updatePlace = async () => {
     }
 };
 
-const showEditModal = (event) => {
+const showPlaceEditModal = (event) => {
+    console.log($(event.currentTarget));
     const placeId = $(event.currentTarget).data('id');
     currentPlaceId = placeId;
     renderPlaceEditModal(placeId);
@@ -164,7 +166,7 @@ const renderPlaces = async (places) => {
         });
 
         card.find('.editBtn').click((event) => {
-            showEditModal(event);
+            showPlaceEditModal(event);
         });
         card.find('.deleteBtn').click((event) => {
             deletePlace(event);
@@ -548,6 +550,12 @@ const renderUsers = async (users) => {
                         <b>Email</b>: <span class=email>${user.email}</span>
                     </div>
                     <div>
+                        <b>Gender</b>: <span class=gender>${user.gender}</span>
+                    </div>
+                    <div>
+                        <b>Birth Date</b>: <span class=birthdate>${user.birthDate}</span>
+                    </div>
+                    <div>
                         <b>Phone Number</b>: <span class="phoneNumber">${user.phoneNumber}</span>
                     </div>
                     <div>
@@ -588,7 +596,7 @@ const renderUsers = async (users) => {
                     </div>
                 </div>
                 <div class="bottom">
-                    <button type="button" class="btn editBtn btn-secondary" id=${user._id}>
+                    <button type="button" class="btn editBtn btn-secondary" data-id=${user._id}>
                         Edit
                     </button>
                     <button type="button" class="btn deleteBtn btn-primary" id=${user._id}>
@@ -640,6 +648,9 @@ const renderUsers = async (users) => {
             y++;
         }
 
+        card.find('.editBtn').click((event) => {
+            showUserEditModal(event);
+        });
         card.find('.deleteBtn').click((event) => {
             deleteUser(event);
         });
@@ -777,6 +788,51 @@ const filterBySearch = (tag) => {
     renderPlaces(places);
 };
 
+const showUserEditModal = (event) => {
+    const userId = $(event.currentTarget).data('id');
+    currentUserId = userId;
+    renderUserEditModal(userId);
+    $('#editUserDetailModal').modal('show');
+};
+
+const renderUserEditModal = async (userId) => {
+    const user = await $.ajax(`/users/account/${userId}`);
+    console.log(user);
+    $('#edit-userName').val(user.userName);
+    $('#edit-email').val(user.email);
+    $('#edit-phoneNumber').val(user.phoneNumber);
+    $('#edit-userAddress').val(user.address);
+    $('#edit-userZipCode').val(user.zipCode);
+    $('#edit-password').val(user.hashedPassword);
+    $('#edit-userBio').val(user.bio);
+    $('#edit-bankCard').val(user.bankCard);
+    $('#edit-gender').val(user.gender);
+    $('#edit-birthDate').val(user.birthDate);
+};
+
+const updateUser = async () => {
+    const userData = {
+        userName: $('#edit-userName').val(),
+        email: $('#edit-email').val(),
+        phoneNumber: $('#edit-phoneNumber').val(),
+        address: $('#edit-userAddress').val(),
+        zipCode: $('#edit-userZipCode').val(),
+        bio: $('#edit-userBio').val(),
+        gender: $('#edit-gender').val(),
+        birthDate: $('#edit-birthDate').val(),
+    };
+    try {
+        await $.ajax({
+            url: `users/account/update/${currentUserId}`,
+            type: 'put',
+            data: userData,
+        });
+        await showSwal('success', 'Update user successfully!');
+    } catch (error) {
+        await showSwal('error', error);
+    }
+};
+
 const logout = async (event) => {
     event.preventDefault();
     await $.ajax({
@@ -797,6 +853,7 @@ const bindEvents = async () => {
         renderPlaces(store['places']);
     });
     $('#updatePlaceBtn').click(updatePlace);
+    $('#updateUserBtn').click(updateUser);
     $('#search').submit((event) => {
         event.preventDefault();
         filterBySearch($('#searchInput').val());
