@@ -95,10 +95,6 @@ let exportedMethods = {
 
     async removeBank(id) {
         const bankCollection = await banks();
-        console.log('===========');
-        console.log(id);
-        console.log(id.length);
-        console.log('===========');
 
         if (id.length !== 0) {
             id = await this.checkId(id);
