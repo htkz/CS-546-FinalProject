@@ -551,7 +551,7 @@ router.delete('/:id', async (req, res) => {
         const deleteUser = await userData.removeUser(xss(req.params.id));
         // delete comments
         for (let i = 0; i < user.userComments.length; i++) {
-            await commentData.removeComment(xss(user.userComments[i]));
+            await commentData.removeComment(user.userComments[i]);
         }
         // delete upvoted
         for (let i = 0; i < user.upVotedComments.length; i++) {
