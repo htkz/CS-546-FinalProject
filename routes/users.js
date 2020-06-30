@@ -215,7 +215,7 @@ router.get('/', async (req, res) => {
             // bank
             if (userList[i].bankCard.length !== 0) {
                 userList[i].bankCard = (
-                    await bankData.getBankById(bank)
+                    await bankData.getBankById(userList[i].bankCard)
                 ).cardNumber;
             }
         }
