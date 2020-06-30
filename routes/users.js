@@ -160,29 +160,37 @@ router.get('/', async (req, res) => {
             // comments
             userComments = userList[i].userComments;
             for (let j = 0; j < userComments.length; j++) {
-                userComments[j] = (
-                    await commentData.getCommentById(userComments[j])
-                ).comment;
+                id = userComments[j];
+                userComments[j] = {
+                    id: id,
+                    comment: (await commentData.getCommentById(id)).comment,
+                };
             }
             // upVotedComment
             upVotedComments = userList[i].upVotedComments;
             for (let j = 0; j < upVotedComments.length; j++) {
-                upVotedComments[j] = (
-                    await commentData.getCommentById(upVotedComments[i])
-                ).comment;
+                id = upVotedComments[i];
+                upVotedComments[j] = {
+                    id: id,
+                    comment: (await commentData.getCommentById(id)).comment,
+                };
             }
             // downVotedComment
             downVotedComments = userList[i].downVotedComments;
             for (let j = 0; j < downVotedComments.length; j++) {
-                downVotedComments[j] = (
-                    await commentData.getCommentById(downVotedComments[i])
-                ).comment;
+                id = downVotedComments[i];
+                downVotedComments[j] = {
+                    id: id,
+                    comment: (await commentData.getCommentById(id)).comment,
+                };
             }
             // tickets
             ticketInfo = userList[i].userTicketInfo;
             for (let j = 0; j < ticketInfo.length; j++) {
-                const data = await ticketData.getTicketById(ticketInfo[j]);
+                ticketId = ticketInfo[j];
+                const data = await ticketData.getTicketById(ticketId);
                 ticketInfo[j] = {
+                    id: ticketId,
                     ticketNo: data.ticketNo,
                     placeName: data.placeName,
                     orderedDate: data.orderedDate,
@@ -193,11 +201,14 @@ router.get('/', async (req, res) => {
             // friend
             friendList = userList[i].friends;
             for (let j = 0; j < friendList.length; j++) {
-                const data = await friendData.getFriendById(friendList[j]);
+                friendId = friendList[j];
+                const data = await friendData.getFriendById(friendId);
                 let tickets = data.tickets;
                 for (let x = 0; x < tickets.length; x++) {
-                    const ticket = await ticketData.getTicketById(tickets[x]);
+                    id = tickets[x];
+                    const ticket = await ticketData.getTicketById(id);
                     tickets = {
+                        id: id,
                         ticketNo: ticket.ticketNo,
                         placeName: ticket.placeName,
                         orderedDate: ticket.orderedDate,
@@ -206,6 +217,7 @@ router.get('/', async (req, res) => {
                     };
                 }
                 friendList[j] = {
+                    id: friendId,
                     name: data.name,
                     email: data.email,
                     phoneNumber: data.phoneNumber,
@@ -214,9 +226,11 @@ router.get('/', async (req, res) => {
             }
             // bank
             if (userList[i].bankCard.length !== 0) {
-                userList[i].bankCard = (
-                    await bankData.getBankById(userList[i].bankCard)
-                ).cardNumber;
+                id = userList[i].bankCard;
+                userList[i].bankCard = {
+                    id: id,
+                    cardNumber: (await bankData.getBankById(id)).cardNumber,
+                };
             }
         }
         res.status(200).json(userList);
