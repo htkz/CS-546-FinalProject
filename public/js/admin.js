@@ -596,7 +596,8 @@ const renderUsers = async (users) => {
             $comment = $(`
             <li id=${comment._id}>
                 ${index}:
-                <span> ${comment.comment}</span>
+                <span> ${comment.comment}</span> 
+                <button class="commentDeleteBtn"}></button>
             </li>`);
             card.find('.userCommentsList').append($comment);
         });
@@ -630,6 +631,9 @@ const renderUsers = async (users) => {
         });
         card.find('.showHideFriends').click((event) => {
             showHideFriend(event);
+        });
+        card.find('.commentDeleteBtn').click((event) => {
+            commentDelete(event);
         });
 
         $('#cards').append(card);
