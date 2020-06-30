@@ -608,6 +608,8 @@ const renderUsers = async (users) => {
             card.find('.userCommentsList').append($comment);
         });
 
+
+        
         await asyncForEach(user.friends, async (friendId, index) => {
             const friend = await $.ajax({
                 url: `/friends/${friendId}`,
