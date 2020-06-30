@@ -1,6 +1,12 @@
 currentPlaceId = undefined;
 currentUserId = undefined;
 
+const asyncForEach = async (array, callback) => {
+    for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array);
+    }
+};
+
 const showSwal = async (icon, title) => {
     await Swal.fire({
         icon: icon,
@@ -577,7 +583,7 @@ const renderUsers = async (users) => {
                 </div>
             </div>
         `);
-        user.userTicketInfo.forEach(async (ticketId, index) => {
+        await asyncForEach(user.userTicketInfo, async (ticketId, index) => {
             const ticket = await $.ajax({
                 url: `/tickets/${ticketId}`,
             });
@@ -589,19 +595,20 @@ const renderUsers = async (users) => {
             card.find('.userTicketInfoList').append($ticket);
         });
 
-        user.userComments.forEach(async (commentId, index) => {
+        await asyncForEach(user.userComments, async (commentId, index) => {
             const comment = await $.ajax({
                 url: `/comments/${commentId}`,
             });
             $comment = $(`
             <li id=${comment._id}>
                 ${index}:
-                <span> ${comment.comment}</span>
+                <span> ${comment.comment}</span> 
+                <button class="commentDeleteBtn"}></button>
             </li>`);
             card.find('.userCommentsList').append($comment);
         });
 
-        user.friends.forEach(async (friendId, index) => {
+        await asyncForEach(user.friends, async (friendId, index) => {
             const friend = await $.ajax({
                 url: `/friends/${friendId}`,
             });
@@ -630,6 +637,9 @@ const renderUsers = async (users) => {
         });
         card.find('.showHideFriends').click((event) => {
             showHideFriend(event);
+        });
+        card.find('.commentDeleteBtn').click((event) => {
+            commentDelete(event);
         });
 
         $('#cards').append(card);
