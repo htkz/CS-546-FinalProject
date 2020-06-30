@@ -1,12 +1,6 @@
 currentPlaceId = undefined;
 currentUserId = undefined;
 
-const asyncForEach = async (array, callback) => {
-    for (let index = 0; index < array.length; index++) {
-        await callback(array[index], index, array);
-    }
-};
-
 const showSwal = async (icon, title) => {
     await Swal.fire({
         icon: icon,
@@ -513,6 +507,7 @@ const fetchPlaces = async (store) => {
 
 const renderUsers = async (users) => {
     $('#cards').empty();
+    console.log(users);
 
     for (user of users) {
         const card = $(`
@@ -549,21 +544,21 @@ const renderUsers = async (users) => {
                         <div class='showHideTicket tirangle'><img src='./pic/triangle_right.png' /></div>
                         <b>Ticket Infomation</b>: <span class="userTicketInfo">Array</span>
                         <div class="userTicketInfoContainer">
-                            <ul class="userTicketInfoList" style="display: none;"></ul>
+                            <ul class="userTicketInfoList" style="display: none; padding-left: 20px;"></ul>
                         </div>
                     </div>
                     <div>
                         <div class='showHideUserComments tirangle'><img src='./pic/triangle_right.png' /></div>
                         <b>Comments</b>: <span class="userComments">Array</span>
                         <div class="userCommentContainer">
-                            <ul class="userCommentsList" style="display: none;"></ul>
+                            <ul class="userCommentsList" style="display: none; padding-left: 20px;"></ul>
                         </div>
                     </div>
                     <div>
                         <div class='showHideFriends tirangle'><img src='./pic/triangle_right.png' /></div>
                         <b>Friends</b>: <span class="friends">Array</span>
                         <div class="friendContainer">
-                            <ul class="friendsList" style="display: none;"></ul>
+                            <ul class="friendsList" style="display: none; padding-left: 20px;"></ul>
                         </div>
                     </div>
                     <div>
@@ -583,37 +578,30 @@ const renderUsers = async (users) => {
                 </div>
             </div>
         `);
-        await asyncForEach(user.userTicketInfo, async (ticketId, index) => {
-            const ticket = await $.ajax({
-                url: `/tickets/${ticketId}`,
-            });
+
+        user.userTicketInfo.forEach((ticket, index) => {
+            $ticketList = card.find('.userTicketInfoList');
             $ticket = $(`
-            <li id=${ticket._id}>
+            <li id=${ticket.id}>
                 ${index}:
                 <span> ${ticket.ticketNo}</span>
             </li>`);
-            card.find('.userTicketInfoList').append($ticket);
+            $ticketList.append($ticket);
         });
 
-        await asyncForEach(user.userComments, async (commentId, index) => {
-            const comment = await $.ajax({
-                url: `/comments/${commentId}`,
-            });
+        user.userComments.forEach((comment, index) => {
             $comment = $(`
-            <li id=${comment._id}>
-                ${index}:
-                <span> ${comment.comment}</span> 
-                <button class="commentDeleteBtn"}></button>
-            </li>`);
+                <li id=${comment.id}>
+                    ${index}:
+                    <span> ${comment.comment}</span>
+                    <button class="commentDeleteBtn"}></button>
+                </li>`);
             card.find('.userCommentsList').append($comment);
         });
 
-        await asyncForEach(user.friends, async (friendId, index) => {
-            const friend = await $.ajax({
-                url: `/friends/${friendId}`,
-            });
+        user.friends.forEach((friend, index) => {
             $friend = $(`
-            <li id=${friend._id}>
+            <li id=${friend.id}>
                 ${index}:
                 <span> ${friend.name}</span>
             </li>`);
