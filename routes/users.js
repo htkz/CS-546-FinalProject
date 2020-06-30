@@ -12,7 +12,7 @@ const utility = require('../utility');
 const checkParam = utility.checkInput;
 const xss = require('xss');
 const multer = require('multer');
-const { tickets } = require('../config/mongoCollection');
+const { friends, tickets } = require('../config/mongoCollection');
 
 const getFileExtension = (file) => {
     const index = file.indexOf('/');
@@ -155,9 +155,73 @@ router.post('/account/login', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const userList = await userData.getAllUsers();
+        let userList = await userData.getAllUsers();
+        for (let i = 0; i < userList.length; i++) {
+            // comments
+            userComments = userList[i].userComments;
+            for (let j = 0; j < userComments.length; j++) {
+                userComments[j] = (
+                    await commentData.getCommentById(userComments[j])
+                ).comment;
+            }
+            // upVotedComment
+            upVotedComments = userList[i].upVotedComments;
+            for (let j = 0; j < upVotedComments.length; j++) {
+                upVotedComments[j] = (
+                    await commentData.getCommentById(upVotedComments[i])
+                ).comment;
+            }
+            // downVotedComment
+            downVotedComments = userList[i].downVotedComments;
+            for (let j = 0; j < downVotedComments.length; j++) {
+                downVotedComments[j] = (
+                    await commentData.getCommentById(downVotedComments[i])
+                ).comment;
+            }
+            // tickets
+            ticketInfo = userList[i].userTicketInfo;
+            for (let j = 0; j < ticketInfo.length; j++) {
+                const data = await ticketData.getTicketById(ticketInfo[j]);
+                ticketInfo[j] = {
+                    ticketNo: data.ticketNo,
+                    placeName: data.placeName,
+                    orderedDate: data.orderedDate,
+                    effectDate: data.effectDate,
+                    status: data.fourfacechusong,
+                };
+            }
+            // friend
+            friendList = userList[i].friends;
+            for (let j = 0; j < friendList.length; j++) {
+                const data = await friendData.getFriendById(friendList[j]);
+                let tickets = data.tickets;
+                for (let x = 0; x < tickets.length; x++) {
+                    const ticket = await ticketData.getTicketById(tickets[x]);
+                    tickets = {
+                        ticketNo: ticket.ticketNo,
+                        placeName: ticket.placeName,
+                        orderedDate: ticket.orderedDate,
+                        effectDate: ticket.effectDate,
+                        status: ticket.fourfacechusong,
+                    };
+                }
+                friendList[j] = {
+                    name: data.name,
+                    email: data.email,
+                    phoneNumber: data.phoneNumber,
+                    tickets: tickets,
+                };
+            }
+            // bank
+            if (userList[i].bankCard.length !== 0) {
+                userList[i].bankCard = (
+                    await bankData.getBankById(bank)
+                ).cardNumber;
+            }
+        }
         res.status(200).json(userList);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: error });
     }
 });
