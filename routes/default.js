@@ -38,11 +38,11 @@ router.get('/visitor', async (req, res) => {
 });
 
 router.get('/admin', async (req, res) => {
-    if (req.session.user) {
+    if (req.session.isAdmin) {
         res.render('admin/admin', { layout: false });
         return;
     }
-    res.redirect('/visitor');
+    res.redirect('/main');
 });
 
 router.get('/userinfo/:id', (req, res) => {

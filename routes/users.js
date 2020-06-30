@@ -147,6 +147,7 @@ router.post('/account/login', async (req, res) => {
         let sessionUser = { _id: user._id, userName: xss(user.userName) };
         res.cookie('user', JSON.stringify(sessionUser));
         req.session.user = user._id;
+        req.session.isAdmin = !!(user.userName === 'Admin');
         res.status(200).json(user);
     } catch (error) {
         res.status(404).json({ error: 'Wrong password or username' });
