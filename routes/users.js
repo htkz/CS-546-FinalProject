@@ -170,7 +170,7 @@ router.get('/', async (req, res) => {
             // upVotedComment
             upVotedComments = userList[i].upVotedComments;
             for (let j = 0; j < upVotedComments.length; j++) {
-                id = upVotedComments[i];
+                id = upVotedComments[j];
                 upVotedComments[j] = {
                     id: id,
                     comment: (await commentData.getCommentById(id)).comment,
@@ -179,7 +179,7 @@ router.get('/', async (req, res) => {
             // downVotedComment
             downVotedComments = userList[i].downVotedComments;
             for (let j = 0; j < downVotedComments.length; j++) {
-                id = downVotedComments[i];
+                id = downVotedComments[j];
                 downVotedComments[j] = {
                     id: id,
                     comment: (await commentData.getCommentById(id)).comment,
